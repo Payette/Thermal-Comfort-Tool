@@ -9,3 +9,11 @@
     font-family: sans-serif;
     font-size: 11px;
 }
+
+#graph {
+	float: left;
+}
+
+#inputs {
+	float: right;
+}

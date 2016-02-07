@@ -34,18 +34,17 @@ function makeGraph() {
 	var svg = d3.select("body")
 				.append("svg")
 				.attr("width", width + margin.left + margin.right)
-				.attr("height", height + margin.top + margin.bottom)
-				.attr("transform", "translate(" + margin.left*2 + "," + margin.top*2 + ")");
+				.attr("height", height + margin.top + margin.bottom);
 
 	// add axes
 	svg.append("g")
 		.attr("class", "axis")
-		.attr("transform", "translate(" + margin.left + "," + (height - margin.top) + ")")
+		.attr("transform", "translate(" + margin.left + "," + (height + margin.top) + ")")
     	.call(xAxis);
 
 	svg.append("g")
 	    .attr("class", "axis")
-	    .attr("transform", "translate(" + margin.left + "," + (-margin.top) + ")")
+	    .attr("transform", "translate(" + margin.left + "," + (margin.top) + ")")
 	    .call(yAxis);
 
 

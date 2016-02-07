@@ -26,6 +26,55 @@
 
 	<div id="graph"></div> 
 
+	<div id="inputs">
+		<form id="form">
+		<fieldset>
+			<legend>Climate Inputs</legend>
+			<label for="outdoortemp">Outdoor Temperature:</label>
+			<input type="text" name="outdoortemp" id="outdoortemp"><br>
+		</fieldset>
+		<fieldset>
+			<legend>Geometry Inputs</legend>
+			<label for="ceiling">Ceiling Height:</label>
+			<input type="text" name="ceiling" id="ceiling"><br>
+			<label for="glazing">Glazing Ratio:</label>
+			<input type="text" name="glazing" id="glazing"><br>
+			<label for="window">Window Height:</label>
+			<input type="text" name="window" id="window"><br>
+			<label for="sill">Sill Height:</label>
+			<input type="text" name="sill" id="sill"><br>
+		</fieldset>
+		<fieldset>
+			<legend>Performance Inputs</legend>
+			<label for="uvalue">Window U-Value:</label>
+			<input type="text" name="uvalue" id="uvalue"><br>
+			<label for="rvalue">Wall R-Value:</label>
+			<input type="text" name="rvalue" id="rvalue"><br>
+			<label for="ppd">PPD:</label>
+			<input type="text" name="ppd" id="ppd"><br>
+		</fieldset>
+		<fieldset>
+			<legend>Advanced Options</legend>
+			<label for="airtemp">Indoor Air Temperature:</label>
+			<input type="text" name="airtemp"><br>
+			<label for="srftemp">Indoor Surface Temperature:</label>
+			<input type="text" name="srftemp"><br>
+			<label for="airspeed">Air Speed:</label>
+			<input type="text" name="airspeed"><br>
+			<label for="humidity">Humidity:</label>
+			<input type="text" name="humidity"><br>
+			<label for="clothing">Clothing:</label>
+			<input type="text" name="clothing"><br>
+			<label for="metabolid">Metabolic Rate:</label>
+			<input type="text" name="metabolic"><br>
+		</fieldset>
+		<input id="submit" type="submit" value="Submit"/>
+		</form>
+	</div>
+
+	<div id="test">
+	<div>
+
  
  	<!-- Make Chart -->
 	<script type="text/javascript" src="static/js/render.js"></script> 
