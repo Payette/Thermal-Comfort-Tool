@@ -33,6 +33,7 @@ function makeGraph() {
 	//Create SVG
 	var svg = d3.select("body")
 				.append("svg")
+				.attr("id", "graph")
 				.attr("width", width + margin.left + margin.right)
 				.attr("height", height + margin.top + margin.bottom);
 
@@ -78,4 +79,76 @@ function makeGraph() {
 				return "blue";
 			}
 		})
+
+
+
+	
+	// add horizontal reference line
+	// TO DO: if PPD vs UValue, change detection should call different functions
+	function drawHorizontalReferenceLine(data) {
+		// add line for UValue
+		var lineMarker = svg.append("line")
+			.attr("class","refLine")
+			.attr("x1", 0)
+			.attr("x2", width)
+			.attr("y1", y(data))
+			.attr("y2", y(data))
+			.attr("transform", function() {
+					return "translate(" + margin.left + "," + margin.top + ")";})
+			.style("stroke", "black");
+	}
+
+
+	function updateReferenceLine(data) {
+		d3.selectAll(".refLine")
+			.transition()
+			.duration(400)
+			.attr("y1", y(data))
+			.attr("y2", y(data));
+	}
+
+
+
+
+	// variables for non-computed elements on graph
+	var uvalueValue = $("#uvalue").val();
+	var ppdValue = $("#ppd").val();
+
+
+	
+
+	// if in UValue graph mode...
+	// TO DO: RIGHT IF STATEMENTS
+		drawHorizontalReferenceLine(uvalueValue);
+
+		// change to UValue updates horizontal reference line
+		$('#uvalue').change(function()
+		{
+			var newUValue = $(this).val();
+			console.log('uvalue change detected. new uvalue is ' + newUValue);
+
+			updateReferenceLine(newUValue);
+			
+		})
+
+
+	
+	// if in PPD graph mode
+		/*drawHorizontalReferenceLine(ppdValue);
+
+		// change to PPD Value updates horizontal reference line
+		$('#ppd').change(function()
+		{
+			var newPPDValue = $(this).val();
+			console.log('ppd value change detected. new ppd is ' + newPPDValue);
+
+			updateReferenceLine(newPPDValue);
+			
+		})*/
+
+
+
 } //end makeGraph()
+
+
+

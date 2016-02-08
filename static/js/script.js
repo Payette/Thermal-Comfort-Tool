@@ -3,6 +3,8 @@
 
 
 
+
+// submit form - not needed, but holding on for now...
 $('#form').on('submit', function(event) {
 	event.preventDefault();
 	console.log("Inputs have been submitted")
@@ -25,6 +27,7 @@ function doSomethingWithValues() {
 	var ceilingHeightValue = $("#ceiling").val();
 	var windowHeightValue = $("#window").val();
 	var sillHeightValue = $("#sill").val();
+	var distanceWindows = $('#distWindow').val();
 	var uvalueValue = $("#uvalue").val();
 	var rvalueValue = $("#rvalue").val();
 	var ppdValue = $("#ppd").val();
