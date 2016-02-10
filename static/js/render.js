@@ -1,4 +1,6 @@
-function makeGraph() {
+var render = render || {}
+
+render.makeGraph = function () {
 
 	console.log("making graph");
 

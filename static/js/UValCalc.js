@@ -4,7 +4,7 @@ var max = Math.max;
 var abs = Math.abs;
 var sqrt = Math.sqrt;
 
-var comf = comf || {}
+var uVal = uVal || {}
 
 
 
@@ -20,26 +20,26 @@ var winViewFacs = [0.03167,0.051193,0.040781,0.040347,0.033839,0.0282,0.024729,0
 
 // Function that computes U-Values acceptable with MRT threshold.
 
-comf.calcOpaqueTemp = function(airTemp, outTemp, wallR) {
+uVal.calcOpaqueTemp = function(airTemp, outTemp, wallR) {
     return airTemp-(((1/wallR)*(airTemp-outTemp))/8.29);
 }
 
-comf.MRTCondtribOfOpaque = function(opaqueTemp, opaqueView, windowView, airTemp) {
+uVal.MRTCondtribOfOpaque = function(opaqueTemp, opaqueView, windowView, airTemp) {
     return (pow((airTemp+273),4)*(1-(opaqueView+windowView))) + (pow((opaqueTemp+273),4)*(opaqueView));
 }
 
-comf.maxUOfMRT = function(minAcceptMRT, airTemp, outTemp, winViewFac, opaqueContrib, filmCoeff) {
+uVal.maxUOfMRT = function(minAcceptMRT, airTemp, outTemp, winViewFac, opaqueContrib, filmCoeff) {
     return (((airTemp+273) - (pow(abs(((pow((minAcceptMRT+273),4))-opaqueContrib)/winViewFac), 0.25))) * filmCoeff) / (airTemp-outTemp)
 }
 
 
-var opaqueTemp = comf.calcOpaqueTemp(airTemp, outdoorTemp, wallRVal)
+var opaqueTemp = uVal.calcOpaqueTemp(airTemp, outdoorTemp, wallRVal)
 
 var opaqueContrib = []
 for (var i = 0; i < opaqueViewFacs.length; i++) {
   var opaViewFac_i = opaqueViewFacs[i];
   var winViewFac_i = winViewFacs[i];
-  var opaqContrib_i = comf.MRTCondtribOfOpaque(opaqueTemp, opaViewFac_i, winViewFac_i, airTemp);
+  var opaqContrib_i = uVal.MRTCondtribOfOpaque(opaqueTemp, opaViewFac_i, winViewFac_i, airTemp);
   opaqueContrib.push(opaqContrib_i);
 }
 
@@ -48,7 +48,7 @@ var UVals = []
 for (var i = 0; i < winViewFacs.length; i++) {
   var winViewFac_i = winViewFacs[i];
   var opaqContrib_i = opaqueContrib[i];
-  var UMax = comf.maxUOfMRT(minAcceptMRT, airTemp, outdoorTemp, winViewFac_i, opaqContrib_i, filmCoeff);
+  var UMax = uVal.maxUOfMRT(minAcceptMRT, airTemp, outdoorTemp, winViewFac_i, opaqContrib_i, filmCoeff);
   if (filmCoeff > 5) {
     UVals.push(UMax);
   } else {
