@@ -7,17 +7,45 @@ var sqrt = Math.sqrt;
 var comf = comf || {}
 
 
+// ***FUNCTIONS THAT COMPUTE GENERAL PHYSICAL PROPERTIES.
 
-//Define some dummy variables.
-var airTemp = 22.2
-var outdoorTemp = -9
-var wallRVal = 5
-var minAcceptMRT = 20.87
-var filmCoeff = 8.29
-var opaqueViewFacs =[0.359653,0.261388,0.219306,0.178742,0.155965,0.137527,0.121041,0.108894,0.096529,0.087636,0.080694,0.079176]
-var winViewFacs = [0.03167,0.051193,0.040781,0.040347,0.033839,0.0282,0.024729,0.020824,0.021692,0.02039,0.016486,0.01128]
+// Function that returns the interior surface temperature given the temperature gradient across it, surface resistance, and film coefficient.
+comf.calcInteriorTemp = function(airTemp, outTemp, wallR, filmCoeff){
+    return (airTemp-(((1/wallR)*(airTemp-outTemp))/filmCoeff))
+}
+
+// Functions that compute the temperature and speed of air from downdraft.
+// These functions are taken from the following paper:
+// Heiselberg, Per. (1994). Draught Risk From Cold Vertical Surfaces. Building and Envrionment, Vol. 29, No. 3, pp. 297-301.
+comf.calcFloorAirTemp = function(airTemp, dist, deltaT){
+    return airTemp - ((0.3-(0.034*dist))*deltaT)
+}
+comf.velMaxClose = function(deltaT, windowHgt){
+    return (0.055*(sqrt(deltaT*windowHgt)))
+}
+comf.velMaxMid = function(dist, deltaT, windowHgt){
+    return (0.095*((sqrt(deltaT*windowHgt))/(dist+1.32)))
+}
+comf.velMaxFar = function(deltaT, windowHgt){
+    return (0.028*(sqrt(deltaT*windowHgt)))
+}
 
 
+// ***FUNCTIONS THAT COMPUTE COMFORT / PPD VALUES.
+
+// Function that returns the radiant assymetry PPD due to a cold wall for a given interior temperature and average wall temperature.
+comf.calcPPDFromAssym = function(interiorTemp, avgWallTemp){
+    var delta = interiorTemp - avgWallTemp
+    return (0.0006*(pow(delta, 3.8602)))
+}
+
+// Function that computes PPD given a certain downdraft velocity.
+// This function is taken from this paper:
+// Fanger, PO and Christensen, NK. (1986). Perception of Draught in Ventilated Spaces. rgonomics, 29:2, 215-235.
+comf.calcPPDFromDowndraft = function(windSpd, airTemp){
+    return (13800*(math.pow((((windSpd*0.8)-0.04)/(airTemp-13.7))+0.0293, 2) - 0.000857))
+}
+	
 // Computes PPD given the 6 factors of PMV comfort.
 // This javascript function for calculating PMV comes from the CBE Comfort Tool.
 // Hoyt Tyler, Schiavon Stefano, Piccioli Alberto, Moon Dustin, and Steinfeld Kyle, 2013, CBE Thermal Comfort Tool.
@@ -100,4 +128,65 @@ comf.pmv = function(ta, tr, vel, rh, met, clo, wme) {
 
     return r
 }
+
+
+
+// ***FUNCTIONS THAT COMPUTE FINAL RESULTS.
+
+//Calculates the MRT and radiant assymetry PPD given a set of interior conditions and points 
+comf.getMRTandRadAssym = function(winViewFacs, opaqueViewFacs, winFilmCoeff, airTemp, outdoorTemp, indoorSrfTemp, wallRVal, windowUVal){
+	var opaqueTemp = comf.calcInteriorTemp(airTemp, outdoorTemp, wallRVal, 8.29)
+	var windowTemp = comf.calcInteriorTemp(airTemp, outdoorTemp, 1/windowUVal, winFilmCoeff)
+	var MRT = []
+	var radAssymPPD = []
+	//Caclulate an MRT and the average temperature of the wall for the point
+	for (var i = 0; i < winViewFacs.length; i++) {
+		var winView = winViewFacs[i]
+		var opaView = opaqueViewFacs[i]
+		if (winFilmCoeff > 5){
+			var ptMRT = winView*windowTemp + opaView*opaqueTemp + (1-winView-opaView)*indoorSrfTemp
+			var avgWallTemp = (winView*windowTemp + opaView*opaqueTemp)/(winView+opaView)
+		} else {
+			var ptMRT = (winView*windowTemp*0.2 + opaView*opaqueTemp*0.9 + (1-winView-opaView)*indoorSrfTemp*0.9)/(winView*0.2 + (1-winView)*0.9)
+			var avgWallTemp = (winView*windowTemp*0.2 + opaView*opaqueTemp*0.9)/(winView*0.2 + opaView*0.9)
+		}
+		
+		MRT.push(ptMRT)
+		radAssymPPD.push(comf.calcPPDFromAssym(indoorSrfTemp, avgWallTemp))
+	}
+	// Return the results.
+	var r = {}
+    r.mrt = MRT;
+    r.ppd = radAssymPPD;
+	return r 
+}
+
+// Calculates the PPD from downdraft given a set of interior conditions.
+comf.getDowndraftPPD = function(distToFacade, windowHgt, filmCoeff, airTemp, outdoorTemp, windowUVal){
+	// Get the difference between the surface temperature and the air
+	var glassAirDelta = airTemp - comf.calcInteriorTemp(airTemp, outdoorTemp, 1/windowUVal, filmCoeff)
+	
+	// Calculate the PPD at each point.
+	var PPD = []
+	for (var i = 0; i < distToFacade.length; i++) {
+		var dist = distToFacade[i]
+		var distSI = dist/3.28084
+		var windowHgtSI = windowHgt/3.28084
+		if (distSI < 0.4){
+			var windSpd = comf.velMaxClose(glassAirDelta, windowHgtSI)
+		} else if (distSI < 2){
+			var windSpd = comf.velMaxMid(distSI, glassAirDelta, windowHgtSI)
+		} else{
+			var windSpd = comf.velMaxFar(glassAirDelta, windowHgtSI)
+		}
+		//Code to calculate the temperature of the downdraft (this is not necessary for PPD calculation).
+		//var floorAirTemp = comf.calcFloorAirTemp(airTemp, dist, glassAirDelta)
+		PPD.push(calcPPD(windSpd, airTemp))
+	}
+	return PPD
+}
+
+
+// Constructs a dictionary of PPD and the limiting factors from a given set of interior conditions.
+
 
