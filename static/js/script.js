@@ -13,7 +13,9 @@ $('#form').on('submit', function(event) {
 
 
 script.computeData = function() {
-
+	//define a variable that holds all of the results.
+	var r = {}
+	
 	//returns name value objects in an array
 	//var inputValues = $('#form').serializeArray();
 	//console.log(inputValues);
@@ -37,18 +39,18 @@ script.computeData = function() {
 	var clothingValue = $("#clothing").val();
 	var metabolic = $("#metabolic").val();
 	
-	// Compute the window geometry.
+	// Compute the window and wall geometry.
 	var geoResult = geo.createGlzForRect(ceilingHeightValue, glzRatioValue, windowHeightValue, sillHeightValue, distanceWindows);
-	var wallCoords = geoResult.wallCoords
-	var glzCoords = geoResult.glzCoords
+	r.wallCoords = geoResult.wallCoords
+	r.glzCoords = geoResult.glzCoords
 	
 	// Compute the view factors.
 	
 	
 	// Compute the PPD for each point.
-	var r = {}
+	
+	
 	return r
-
 }
 
 //Function that calculates the real data based on the inputs

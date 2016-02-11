@@ -19,6 +19,9 @@ var winViewFacs = [0.03167,0.051193,0.040781,0.040347,0.033839,0.0282,0.024729,0
 
 
 // Computes PPD given the 6 factors of PMV comfort.
+// This javascript function for calculating PMV comes from the CBE Comfort Tool.
+// Hoyt Tyler, Schiavon Stefano, Piccioli Alberto, Moon Dustin, and Steinfeld Kyle, 2013, CBE Thermal Comfort Tool.
+// Center for the Built Environment, University of California Berkeley, http://cbe.berkeley.edu/comforttool/ 
 comf.pmv = function(ta, tr, vel, rh, met, clo, wme) {
     // returns [pmv, ppd]
     // ta, air temperature (°C)
