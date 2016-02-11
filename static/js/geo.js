@@ -17,6 +17,7 @@ for (var i = 0; i < numPts; i++) {
 }
 
 // Function that generates the geometry of the windows based on the input window parameters.
+// Originally developed by Chris Mackey (Chris@MackeyArchitecture.com) for Ladybug + Honeybee (https://github.com/mostaphaRoudsari/Honeybee)
 geo.createGlazingForRect = function(rectHeight, glazingRatio, winHeight, silHeight, distBreakup) {
 	//Check to be sure that the user is not assiging crazy values and, if so, set limits on them.
 	if (glazingRatio > 0.95) {
@@ -154,7 +155,9 @@ geo.createGlazingForRect = function(rectHeight, glazingRatio, winHeight, silHeig
 //Tredre, Barbara. (1965). Assessment of Mean Radiant Temperature in Indoor Envrionments.
 //Britich Journal of Indutrial Medecine, 22, 58.
 geo.calcViewFacs = function(srfCoords) {
-    var viewFact = []
+    // Define a list to be filled up with view factors.
+	var viewFact = []
+	
 	for (var i = 0; i < locationPts.length; i++) {
 		var pt = locationPts[i]
         //Define variables to catch when we should be subtracting quadrants instead of summing them.
@@ -183,7 +186,7 @@ geo.calcViewFacs = function(srfCoords) {
             a = -a;
             removeLeftQuads = true;
 		}
-        if (b < 0){}
+        if (b < 0){
             b = -b;
             removeRightQuads = true;
 		}
@@ -197,48 +200,76 @@ geo.calcViewFacs = function(srfCoords) {
         var distRH = b/(sin(atan(b/z)))
         
         var angP1 = atan(d/distLH)
-        try {
-			distP1 = d/(sin(angP1))
-        } catch(err) {
-			distP1 = 0
+        if (angP1 != 0){
+			var distP1 = d/(sin(angP1))
+        } else {
+			var distP1 = 0
 		}
         var angP2 = (atan((d+c)/distLH))-angP1
-        try {
-			distP2 = c/(sin(angP2))
-        } catch(err) {
-			distP2 = 0
+        if (angP2 != 0){
+			var distP2 = c/(sin(angP2))
+        } else {
+			var distP2 = 0
 		}
         
-        angP3 = atan(d/distRH)
-        try: distP3 = d/(sin(angP1))
-        except: distP3 = 0
-        angP4 = (atan((d+c)/distRH))-angP3
-        try: distP4 = c/(sin(angP4))
-        except: distP4 = 0
+        var angP3 = atan(d/distRH)
+        if (angP3 != 0){
+			var distP3 = d/(sin(angP1))
+		} else {
+			var distP3 = 0
+		}
+        var angP4 = (atan((d+c)/distRH))-angP3
+        if (angP4 != 0){
+			var distP4 = c/(sin(angP4))
+		} else {
+			var distP4 = 0
+		}
         
-        try: viewP1 = atan(ad/(z*distP1))
-        except: viewP1 = 0
-        try: viewP2 = atan(ac/(z*distP2))
-        except: viewP2 = 0
-        try: viewP3 = atan(bd/(z*distP3))
-        except: viewP3 = 0
-        try: viewP4 = atan(bc/(z*distP4))
-        except: viewP4 = 0
+        if (distP1 != 0){
+			viewP1 = atan(ad/(z*distP1))
+		} else {
+			viewP1 = 0
+		}
+        if (distP2 != 0){
+			viewP2 = atan(ac/(z*distP2))
+		} else {
+			viewP2 = 0
+		}
+        if (distP3 != 0){
+			viewP3 = atan(bd/(z*distP3))
+		} else {
+			viewP3 = 0
+		}
+        if (distP4 != 0){
+			viewP4 = atan(bc/(z*distP4))
+		} else {
+			viewP4 = 0
+		}
         
         //Make sure that the solid angles have the right sign for computing the full solid angle to the window.
-        if removeLowQuads == True and removeLeftQuads: solid1, solid2, solid3, solid4 = -viewP1, -viewP2, -viewP3, viewP4
-        elif removeLowQuads == True and removeRightQuads: solid1, solid2, solid3, solid4 = -viewP1, viewP2, -viewP3, -viewP4
-        elif removeLowQuads == True: solid1, solid2, solid3, solid4 = -viewP1, viewP2, -viewP3, viewP4
-        elif removeHiQuads == True and removeLeftQuads: solid1, solid2, solid3, solid4 = -viewP1, -viewP2, viewP3, -viewP4
-        elif removeHiQuads == True and removeRightQuads: solid1, solid2, solid3, solid4 = viewP1, -viewP2, -viewP3, -viewP4
-        elif removeHiQuads == True: solid1, solid2, solid3, solid4 = viewP1, -viewP2, viewP3, -viewP4
-        elif removeLeftQuads == True: solid1, solid2, solid3, solid4 = -viewP1, -viewP2, viewP3, viewP4
-        elif removeRightQuads == True: solid1, solid2, solid3, solid4 = viewP1, viewP2, -viewP3, -viewP4
-        else: solid1, solid2, solid3, solid4 = viewP1, viewP2, viewP3, viewP4
+        if (removeLowQuads == true && removeLeftQuads == true){
+			var solid1 = -viewP1, solid2 = -viewP2, solid3 = -viewP3, solid4 = viewP4
+		} else if (removeLowQuads == true && removeRightQuads == true){
+			var solid1 = -viewP1, solid2 = viewP2, solid3 = -viewP3, solid4 = -viewP4
+		} else if (removeLowQuads == true){
+			var solid1 = -viewP1, solid2 = viewP2, solid3 = -viewP3, solid4 = viewP4
+		} else if (removeHiQuads == true && removeLeftQuads == true){
+			var solid1 = -viewP1, solid2 = -viewP2, solid3 = viewP3, solid4 = -viewP4
+		} else if (removeHiQuads == true && removeRightQuads == true){
+			var solid1 = viewP1, solid2 = -viewP2, solid3 = -viewP3, solid4 = -viewP4
+		} else if (removeHiQuads == true){
+			var solid1 = viewP1, solid2 = -viewP2, solid3 = viewP3, solid4 = -viewP4
+		} else if (removeLeftQuads == true){
+			var solid1 = -viewP1, solid2 = -viewP2, solid3 = viewP3, solid4 = viewP4
+		} else if (removeRightQuads == true){
+			var solid1 = viewP1, solid2 = viewP2, solid3 = -viewP3, solid4 = -viewP4
+		} else {
+			var solid1 = viewP1, solid2 = viewP2, solid3 = viewP3, solid4 = viewP4
+		}
         
         //Compute the view factors.
-        wallView = (solid1+solid2+solid3+solid4)/12.566
+        var wallView = (solid1+solid2+solid3+solid4)/12.566
         viewFact.push(wallView)
-    
+    }
     return viewFact
-
+}
