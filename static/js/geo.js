@@ -8,7 +8,7 @@ var geo = geo || {}
 //Define some default global variables that we do not want to change or expose in the interface.
 var wallLen = 20 // The length of the exterior wall that we are observing in feet.
 var seatH = 2 // The average height above the ground that the occupan is located in feet.
-var numPts = 12 // The number of points to generate.
+var numPts = 12 // The number of points to generate.  They will be generated at each foot.
 var facadeDist = []// The distance from the facade at which we are evaluating comfort.
 var locationPts = [] // The pointlocations in relation to the facade where we are evaluating comfort.
 for (var i = 0; i < numPts; i++) {
@@ -273,3 +273,33 @@ geo.calcViewFacs = function(srfCoords) {
     }
     return viewFact
 }
+
+
+//Calculate all viewFactors from surfcace coordinates.
+geo.computeAllViewFac = function(wallCoords, glzCoords){
+	var fullWallViewFac = geo.calcViewFacs(wallCoords)
+	var glzViewFac = []
+	for (var i = 0; i < glzCoords.length; i++){
+		var glzSrf = glzCoords[i]
+		var viewFa = calcViewFacs(glzSrf)
+		if glzCount == 0{
+			var glzViewFac = viewFa.slice()
+		} else {
+			for (var i = 0; i < viewFa.length; i++){
+				var pt = viewFa[i]
+				glzViewFac[i] = glzViewFac[i] + pt
+			}
+		}
+	}
+	var wallViewFac = []
+	for (var i = 0; i < fullWallViewFac.length; i++){
+		var wallView = fullWallViewFac[i]
+		wallViewFac.push(wallView - glzViewFac[i])
+	}
+	//Return the coordinates of the wall.
+	var r = {}
+    r.wallViews = wallViewFac;
+    r.glzViews = glzViewFac;
+	return r
+}
+	

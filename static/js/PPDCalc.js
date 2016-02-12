@@ -188,5 +188,80 @@ comf.getDowndraftPPD = function(distToFacade, windowHgt, filmCoeff, airTemp, out
 
 
 // Constructs a dictionary of PPD and the limiting factors from a given set of interior conditions.
+comf.getFullPPD = function(wallViewFac, glzViewFac, windowHgt, glzUVal, intLowE, wallRVal, indoorTemp, outTemp, radiantFloor, clo, met, airSpeed, rh){	
+	// Convert window height to meters (yay for SI!!)
+	var windowHgtSI = windowHgt/3.28084
+	
+	// Convert air velocity to m/s.
+	var vel = airSpeed*0.00508
+	
+	// Convert U-Vals and R-Vals to SI.
+	var windowUVal = glzUVal*5.678263337
+	var opaqueRVal = wallRVal/5.678263337
+	
+	// Convert all Tempreatures ot Celcius.
+	var airTemp = (indoorTemp-32) * 5 / 9
+	var outdoorTemp = (outTemp-32) * 5 / 9
+	
+	// Assign variable for average indoor surface temperature based on specification of radiant floor vs. air system.
+	if radiantFloor == true {
+		var indoorSrfTemp = airTemp + 3
+	} else {
+		var indoorSrfTemp = airTemp
+	}
+	
+	//Assign variable for film coefficient and  based on interior Low-E coating.
+	if intLowE == true {
+		winFilmCoeff = 4.2
+	} else {
+		winFilmCoeff = 8.29
+	}
+
+	
+	// Get the radiant assymetry PPD results.
+	var radAssymResult = comf.getMRTandRadAssym(glzViewFac, wallViewFac, winFilmCoeff, airTemp, outdoorTemp, indoorSrfTemp, opaqueRVal, windowUVal)
+	var radAssymPPD = radAssymResult.ppd
+	var MRTvals = adAssymResult.mrt
+	
+	// Get the MRT PPD results.
+	var mrtPPD = []
+	for (var i = 0; i < MRTvals.length; i++) {
+		var MRT = MRTvals[i]
+		var mrtResult = comf.pmv(airTemp, MRT, vel, rh, met, clo, 0)
+		mrtPPD.push(mrtResult.ppd)
+	}
+	
+	// Get the Downdraft PPD results.
+	var downDPPD = comf.getDowndraftPPD(facadeDist, windowHgtSI, winFilmCoeff, airTemp, outdoorTemp, windowUVal)
+	
+	
+	// Construct the dictionary of the PPD values with the governing factors.
+	var dataset = []
+	for (var i = 0; i < radAssymPPD.length; i++) {
+		var ptInfo = {}
+		dist: 1,
+		ppd: 0.15,
+		govfact: "dwn"
+		
+		if radAssymPPD[i] > mrtPPD[i] && radAssymPPD[i] > downDPPD[i]{
+			ptInfo.dist = i+1
+			ptInfo.ppd = radAssymPPD[i]
+			ptInfo.govfact: "asym"
+		} else if mrtPPD[i] > radAssymPPD[i] && mrtPPD[i] > downDPPD[i] {
+			ptInfo.dist = i+1
+			ptInfo.ppd = mrtPPD[i]
+			ptInfo.govfact: "mrt"
+		} else {
+			ptInfo.dist = i+1
+			ptInfo.ppd = downDPPD[i]
+			ptInfo.govfact: "dwn"
+		}
+		dataset.push(ptInfo)
+	}
+	
+	
+	return dataset
+}
+
 
 

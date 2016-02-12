@@ -14,7 +14,6 @@ var rvalueValue = $("#rvalue").val();
 var ppdValue = $("#ppd").val();
 
 var airtempValue = $("#airtemp").val();
-var srftempValue = $("#srftemp").val();
 var airspeedValue = $("#airspeed").val();
 var humidityValue = $("#humidity").val();
 var clothingValue = $("#clothing").val();
@@ -33,27 +32,28 @@ $('#form').on('submit', function(event) {
 
 
 script.computeData = function() {
-	//define a variable that holds all of the results.
-	var r = {}
+	//let the console know the function is running.
 	console.log("cmpute Data Running!")
 	
-
 	// Compute the window and wall geometry.
 	var geoResult = geo.createGlzForRect(ceilingHeightValue, glzRatioValue, windowHeightValue, sillHeightValue, distanceWindows);
-	r.wallCoords = geoResult.wallCoords
-	r.glzCoords = geoResult.glzCoords
 	
 	// Compute the view factors.
-	
+	var viewResult = geo.computeAllViewFac(geoResult.wallCoords, geoResult.glzCoords)
 	
 	// Compute the PPD for each point.
+	var dataset = comf.getFullPPD = function(viewResult.wallViews, viewResult.glzViews, windowHeightValue, uvalueValue, false, rvalueValue, airtempValue, outdoorTempValue, false, clothingValue, metabolic, airspeedValue, humidityValue)
 	
+	// Return all of the information in one dictionary
+	var r = {}
+	r.wallCoords = geoResult.wallCoords
+	r.glzCoords = geoResult.glzCoords
+	r.dataSet = dataset
 	
 	return r
 }
 
 //Function that calculates the real data based on the inputs
-//var dataset = script.computeData()
 // Dummy data for the time being.
 var dataset = [
 		{
