@@ -281,8 +281,8 @@ geo.computeAllViewFac = function(wallCoords, glzCoords){
 	var glzViewFac = []
 	for (var i = 0; i < glzCoords.length; i++){
 		var glzSrf = glzCoords[i]
-		var viewFa = calcViewFacs(glzSrf)
-		if glzCount == 0{
+		var viewFa = geo.calcViewFacs(glzSrf)
+		if (i == 0){
 			var glzViewFac = viewFa.slice()
 		} else {
 			for (var i = 0; i < viewFa.length; i++){

@@ -43,7 +43,7 @@ comf.calcPPDFromAssym = function(interiorTemp, avgWallTemp){
 // This function is taken from this paper:
 // Fanger, PO and Christensen, NK. (1986). Perception of Draught in Ventilated Spaces. rgonomics, 29:2, 215-235.
 comf.calcPPDFromDowndraft = function(windSpd, airTemp){
-    return (13800*(math.pow((((windSpd*0.8)-0.04)/(airTemp-13.7))+0.0293, 2) - 0.000857))
+    return (13800*(pow((((windSpd*0.8)-0.04)/(airTemp-13.7))+0.0293, 2) - 0.000857))
 }
 	
 // Computes PPD given the 6 factors of PMV comfort.
@@ -181,7 +181,7 @@ comf.getDowndraftPPD = function(distToFacade, windowHgt, filmCoeff, airTemp, out
 		}
 		//Code to calculate the temperature of the downdraft (this is not necessary for PPD calculation).
 		//var floorAirTemp = comf.calcFloorAirTemp(airTemp, dist, glassAirDelta)
-		PPD.push(calcPPD(windSpd, airTemp))
+		PPD.push(comf.calcPPDFromDowndraft(windSpd, airTemp))
 	}
 	return PPD
 }
@@ -204,14 +204,14 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, windowHgt, glzUVal, intLowE,
 	var outdoorTemp = (outTemp-32) * 5 / 9
 	
 	// Assign variable for average indoor surface temperature based on specification of radiant floor vs. air system.
-	if radiantFloor == true {
+	if (radiantFloor == true) {
 		var indoorSrfTemp = airTemp + 3
 	} else {
 		var indoorSrfTemp = airTemp
 	}
 	
 	//Assign variable for film coefficient and  based on interior Low-E coating.
-	if intLowE == true {
+	if (intLowE == true) {
 		winFilmCoeff = 4.2
 	} else {
 		winFilmCoeff = 8.29
@@ -221,7 +221,7 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, windowHgt, glzUVal, intLowE,
 	// Get the radiant assymetry PPD results.
 	var radAssymResult = comf.getMRTandRadAssym(glzViewFac, wallViewFac, winFilmCoeff, airTemp, outdoorTemp, indoorSrfTemp, opaqueRVal, windowUVal)
 	var radAssymPPD = radAssymResult.ppd
-	var MRTvals = adAssymResult.mrt
+	var MRTvals = radAssymResult.mrt
 	
 	// Get the MRT PPD results.
 	var mrtPPD = []
@@ -239,22 +239,19 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, windowHgt, glzUVal, intLowE,
 	var dataset = []
 	for (var i = 0; i < radAssymPPD.length; i++) {
 		var ptInfo = {}
-		dist: 1,
-		ppd: 0.15,
-		govfact: "dwn"
 		
-		if radAssymPPD[i] > mrtPPD[i] && radAssymPPD[i] > downDPPD[i]{
-			ptInfo.dist = i+1
-			ptInfo.ppd = radAssymPPD[i]
-			ptInfo.govfact: "asym"
-		} else if mrtPPD[i] > radAssymPPD[i] && mrtPPD[i] > downDPPD[i] {
-			ptInfo.dist = i+1
-			ptInfo.ppd = mrtPPD[i]
-			ptInfo.govfact: "mrt"
+		if (radAssymPPD[i] > mrtPPD[i] && radAssymPPD[i] > downDPPD[i]){
+			ptInfo.dist = i+1;
+			ptInfo.ppd = radAssymPPD[i];
+			ptInfo.govfact = "asym";
+		} else if (mrtPPD[i] > radAssymPPD[i] && mrtPPD[i] > downDPPD[i]) {
+			ptInfo.dist = i+1;
+			ptInfo.ppd = mrtPPD[i];
+			ptInfo.govfact = "mrt";
 		} else {
-			ptInfo.dist = i+1
-			ptInfo.ppd = downDPPD[i]
-			ptInfo.govfact: "dwn"
+			ptInfo.dist = i+1;
+			ptInfo.ppd = downDPPD[i];
+			ptInfo.govfact = "dwn";
 		}
 		dataset.push(ptInfo)
 	}

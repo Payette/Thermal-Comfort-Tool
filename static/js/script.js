@@ -36,13 +36,13 @@ script.computeData = function() {
 	console.log("cmpute Data Running!")
 	
 	// Compute the window and wall geometry.
-	var geoResult = geo.createGlzForRect(ceilingHeightValue, glzRatioValue, windowHeightValue, sillHeightValue, distanceWindows);
+	var geoResult = geo.createGlazingForRect(ceilingHeightValue, glzRatioValue, windowHeightValue, sillHeightValue, distanceWindows);
 	
 	// Compute the view factors.
 	var viewResult = geo.computeAllViewFac(geoResult.wallCoords, geoResult.glzCoords)
 	
 	// Compute the PPD for each point.
-	var dataset = comf.getFullPPD = function(viewResult.wallViews, viewResult.glzViews, windowHeightValue, uvalueValue, false, rvalueValue, airtempValue, outdoorTempValue, false, clothingValue, metabolic, airspeedValue, humidityValue)
+	var dataset = comf.getFullPPD(viewResult.wallViews, viewResult.glzViews, windowHeightValue, uvalueValue, false, rvalueValue, airtempValue, outdoorTempValue, false, clothingValue, metabolic, airspeedValue, humidityValue)
 	
 	// Return all of the information in one dictionary
 	var r = {}
@@ -54,70 +54,8 @@ script.computeData = function() {
 }
 
 //Function that calculates the real data based on the inputs
-// Dummy data for the time being.
-var dataset = [
-		{
-			dist: 1,
-			ppd: 0.15,
-			govfact: "dwn"
-		},
-		{
-			dist: 2,
-			ppd: 0.17,
-			govfact: "dwn"
-		},
-		{
-			dist: 3,
-			ppd: 0.22,
-			govfact: "dwn"
-		},
-		{
-			dist: 4,
-			ppd: 0.27,
-			govfact: "mrt"
-		},
-		{
-			dist: 5,
-			ppd: 0.31,
-			govfact: "mrt"
-		},
-		{
-			dist: 6,
-			ppd: 0.35,
-			govfact: "mrt"
-		},
-		{
-			dist: 7,
-			ppd: 0.4,
-			govfact: "mrt"
-		},
-		{
-			dist: 8,
-			ppd: 0.47,
-			govfact: "mrt"
-		},
-		{
-			dist: 9,
-			ppd: 0.51,
-			govfact: "dwn"
-		},
-		{
-			dist: 10,
-			ppd: 0.51,
-			govfact: "dwn"
-		},
-		{
-			dist: 11,
-			ppd: 0.51,
-			govfact: "dwn"
-		},
-		{
-			dist: 12,
-			ppd: 0.51,
-			govfact: "dwn"
-		}
+var dataset = script.computeData().dataSet
 
-	];
 
 //Call the function to render the graph.
 render.makeGraph();
