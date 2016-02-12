@@ -15,6 +15,7 @@ $('#form').on('submit', function(event) {
 script.computeData = function() {
 	//define a variable that holds all of the results.
 	var r = {}
+	console.log("cmpute Data Running!")
 	
 	//returns name value objects in an array
 	//var inputValues = $('#form').serializeArray();
