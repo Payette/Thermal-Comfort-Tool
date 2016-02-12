@@ -1,6 +1,26 @@
 var script = script || {}
 
 
+//Pull the individual values from the form.
+var ceilingHeightValue = $("#ceiling").val();
+var glzRatioValue = $("#glazing").val();
+var windowHeightValue = $("#window").val();
+var sillHeightValue = $("#sill").val();
+var distanceWindows = $('#distWindow').val();
+
+var outdoorTempValue = $("#outdoortemp").val();
+var uvalueValue = $("#uvalue").val();
+var rvalueValue = $("#rvalue").val();
+var ppdValue = $("#ppd").val();
+
+var airtempValue = $("#airtemp").val();
+var srftempValue = $("#srftemp").val();
+var airspeedValue = $("#airspeed").val();
+var humidityValue = $("#humidity").val();
+var clothingValue = $("#clothing").val();
+var metabolic = $("#metabolic").val();
+
+	
 // submit form - not needed, but holding on for now...
 $('#form').on('submit', function(event) {
 	event.preventDefault();
@@ -17,29 +37,7 @@ script.computeData = function() {
 	var r = {}
 	console.log("cmpute Data Running!")
 	
-	//returns name value objects in an array
-	//var inputValues = $('#form').serializeArray();
-	//console.log(inputValues);
 
-	//Pull the individual values from the form.
-	var ceilingHeightValue = $("#ceiling").val();
-	var glzRatioValue = $("#glazing").val();
-	var windowHeightValue = $("#window").val();
-	var sillHeightValue = $("#sill").val();
-	var distanceWindows = $('#distWindow').val();
-	
-	var outdoorTempValue = $("#outdoortemp").val();
-	var uvalueValue = $("#uvalue").val();
-	var rvalueValue = $("#rvalue").val();
-	var ppdValue = $("#ppd").val();
-	
-	var airtempValue = $("#airtemp").val();
-	var srftempValue = $("#srftemp").val();
-	var airspeedValue = $("#airspeed").val();
-	var humidityValue = $("#humidity").val();
-	var clothingValue = $("#clothing").val();
-	var metabolic = $("#metabolic").val();
-	
 	// Compute the window and wall geometry.
 	var geoResult = geo.createGlzForRect(ceilingHeightValue, glzRatioValue, windowHeightValue, sillHeightValue, distanceWindows);
 	r.wallCoords = geoResult.wallCoords
