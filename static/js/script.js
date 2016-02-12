@@ -54,7 +54,7 @@ script.computeData = function() {
 }
 
 //Function that calculates the real data based on the inputs
-var dataset = script.computeData()
+//var dataset = script.computeData()
 // Dummy data for the time being.
 var dataset = [
 		{

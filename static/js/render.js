@@ -69,7 +69,7 @@ render.makeGraph = function () {
 		.attr("class","dot") // set the class to match selection criteria
 		.attr("r", 3)
 		.attr("cx", function(d) { return x(d.dist); })
-		.attr("cy", function(d) { return y(d.uval); })
+		.attr("cy", function(d) { return y(d.ppd); })
 		.attr("transform", function() {
 				return "translate(" + margin.left + "," + margin.top + ")";})
 		.style("fill", function(d) { 
