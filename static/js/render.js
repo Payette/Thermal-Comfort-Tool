@@ -21,7 +21,7 @@ render.makeGraph = function () {
 	// y-axis: U-Value
 	var y = d3.scale.linear()
 			.range([height, 0])
-			.domain([0, 1]);
+			.domain([0, 100]);
 
 
 	// Define axes
@@ -51,12 +51,6 @@ render.makeGraph = function () {
 	    .call(yAxis);
 
 
-	/*var xAxisG = svg.append("g")
-		.attr("class","axis")
-		.attr("transform", "translate(" + margin.left + ",34)")
-		.call(xAxis);*/
-
-
 
 
 
@@ -82,6 +76,17 @@ render.makeGraph = function () {
 			}
 		})
 
+
+
+	// DETECT CHANGES TO INPUT FIELDS
+	$("#ceiling", "#glazing", "#window", "#sill", '#distWindow', "#outdoortemp", "#uvalue","#rvalue","#ppd","#airtemp","#srftemp","#airspeed","#humidity","#clothing","#metabolic").change(function() {
+		
+		//recalculate data
+
+		//update graph with revised data
+
+		})
+	
 
 
 	
@@ -119,24 +124,9 @@ render.makeGraph = function () {
 
 	
 
-	// if in UValue graph mode...
+	// if in VERIFICATION graph mode...
 	// TO DO: RIGHT IF STATEMENTS
-		drawHorizontalReferenceLine(uvalueValue);
-
-		// change to UValue updates horizontal reference line
-		$('#uvalue').change(function()
-		{
-			var newUValue = $(this).val();
-			console.log('uvalue change detected. new uvalue is ' + newUValue);
-
-			updateReferenceLine(newUValue);
-			
-		})
-
-
-	
-	// if in PPD graph mode
-		/*drawHorizontalReferenceLine(ppdValue);
+		drawHorizontalReferenceLine(ppdValue);
 
 		// change to PPD Value updates horizontal reference line
 		$('#ppd').change(function()
@@ -146,7 +136,7 @@ render.makeGraph = function () {
 
 			updateReferenceLine(newPPDValue);
 			
-		})*/
+		})
 
 
 
