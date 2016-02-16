@@ -93,16 +93,88 @@ render.makeGraph = function () {
 	}
 
 
-	// DETECT CHANGES TO INPUT FIELDS
-	$("#window").change(function() {
+
+//Pull the individual values from the form.
+
+
+
+
+
+	/*// DETECT CHANGES TO INPUT FIELDS
+	$("#windowHeight").change(function() {
 		//get changed value
 		windowHeightValue = $(this).val();
+		//update dataset and graph with new value
+		var newDataset = script.computeData().dataSet;
+		updateGraphData(newDataset);
+	})
+*/
+
+
+	$("#outdoortemp, #ceiling, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowECheck, #lowE, #rvalue, #airtemp, #humidity, #clothing, #metabolic").change(function(event) {
+		
+		//figure out what input changed
+		var triggeredChange = event.target.id;
+		
+		if (triggeredChange == "outdoortemp") {
+			outdoorTempValue = $(this).val();
+		}
+		else if(triggeredChange == "ceiling") {
+			ceilingHeightValue = $(this).val();
+		}
+		else if (triggeredChange == "windowHeight") {
+			windowHeightValue = $(this).val();
+		}
+		else if (triggeredChange == "windowWidth") {
+			windowWidthValue = $(this).val();
+		}
+		else if (triggeredChange == "glazing") {
+			glzRatioValue = $(this).val();
+		}
+		else if (triggeredChange == "sill") {
+			sillHeightValue = $(this).val();
+		}
+		else if (triggeredChange == "distWindow") {
+			distanceWindows = $(this).val();
+		}
+		else if (triggeredChange == "uvalue") {
+			uvalueValue = $(this).val();
+		}
+//ADD CHANGES FOR LOW E COATING / EMISSIVITY
+		else if (triggeredChange == "lowE") {
+			intLowEEmissivity = $(this).val();
+		}
+		else if (triggeredChange == "rvalue") {
+			rvalueValue = $(this).val();
+		}
+		else if (triggeredChange == "airtemp") {
+			airtempValue = $(this).val();
+		}
+		else if (triggeredChange == "airspeed") {
+			airspeedValue = $(this).val();
+		}
+		else if (triggeredChange == "humidity") {
+			humidityValue = $(this).val();
+		}
+		else if (triggeredChange == "clothing") {
+			clothingValue = $(this).val();
+		}
+		else if (triggeredChange == "metabolic") {
+			metabolic = $(this).val();
+		}
+		else {
+			alert("Don't know what changed!");
+		}
+
 
 		//update dataset and graph with new value
 		var newDataset = script.computeData().dataSet;
 		updateGraphData(newDataset);
-
 	})
+
+
+
+
 
 
 
