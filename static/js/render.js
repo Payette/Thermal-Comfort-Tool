@@ -22,7 +22,7 @@ render.makeGraph = function () {
 	// y-axis: U-Value
 	var y = d3.scale.linear()
 			.range([height, 0])
-			.domain([0, 100]);
+			.domain([0, 30]);
 
 
 	// Define axes
@@ -84,8 +84,7 @@ render.makeGraph = function () {
 
 		console.log("updating plotted points");
 		//update graph with revised data
-		svg.selectAll(".dot")
-			.data(dataset)
+		graphPoints.data(dataset)
 			.attr("cx", function(d) { return x(d.dist); })
 			.attr("cy", function(d) { return y(d.ppd); })
 			.transition()
@@ -96,18 +95,15 @@ render.makeGraph = function () {
 
 	// DETECT CHANGES TO INPUT FIELDS
 	$("#window").change(function() {
-
-		console.log(dataset);
-
+		//get changed value
 		windowHeightValue = $(this).val();
 
+		//update dataset and graph with new value
 		var newDataset = script.computeData().dataSet;
-		console.log(newDataset);
-
 		updateGraphData(newDataset);
 
 	})
-	
+
 
 
 	
@@ -162,4 +158,11 @@ render.makeFacade = function () {
 	//var windowPoints = script.computeData().glzCoords;
 	//console.log(wallPoints);
 
+
+		//var newWallCoords = script.computeData().wallCoords;
+		//var newGlzCoords = script.computeData().glzCoords;
+
 } //end makeFacade()
+
+
+

@@ -3,13 +3,16 @@ var script = script || {}
 
 //Pull the individual values from the form.
 var ceilingHeightValue = $("#ceiling").val();
+var windowHeightValue = $("#windowHeight").val();
+var windowWidthValue = $("#windowWidth").val();
 var glzRatioValue = $("#glazing").val();
-var windowHeightValue = $("#window").val();
 var sillHeightValue = $("#sill").val();
 var distanceWindows = $('#distWindow').val();
 
 var outdoorTempValue = $("#outdoortemp").val();
 var uvalueValue = $("#uvalue").val();
+var intLowEChecked = $("#lowECheck").val();
+var intLowEEmissivity = $("#lowE").val();
 var rvalueValue = $("#rvalue").val();
 var ppdValue = $("#ppd").val();
 
