@@ -19,16 +19,6 @@ var humidityValue = $("#humidity").val();
 var clothingValue = $("#clothing").val();
 var metabolic = $("#metabolic").val();
 
-	
-// submit form - not needed, but holding on for now...
-$('#form').on('submit', function(event) {
-	event.preventDefault();
-	console.log("Inputs have been submitted")
-	//call function to validate the inputs
-	//validate();
-	//use values
-	script.computeData();
-})
 
 
 script.computeData = function() {
@@ -47,11 +37,13 @@ script.computeData = function() {
 
 	// Return all of the information in one dictionary
 	var r = {}
-	r.wallCoords = geoResult.wallCoords
-	r.glzCoords = geoResult.glzCoords
-	r.dataSet = dataset
-	
+	r.wallCoords = geoResult.wallCoords;
+	r.glzCoords = geoResult.glzCoords;
+	r.dataSet = dataset;
+
 	return r
+
+
 }
 
 //Function that calculates the real data based on the inputs

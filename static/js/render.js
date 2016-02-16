@@ -57,7 +57,7 @@ render.makeGraph = function () {
 
     /* ------ PLOT THE DATA ------ */
     // PLOT EACH POINT
-	var objects = svg.selectAll(".dot") //select all class "dot" in <svg> (empty)
+	var graphPoints = svg.selectAll(".dot") //select all class "dot" in <svg> (empty)
 		.data(dataset) // join the selection to a data array
 		.enter() // create a selection for the data objects that didn't match elements (all)
 		.append("circle") // add a new circle for each data object
@@ -79,20 +79,38 @@ render.makeGraph = function () {
 
 
 
-	// DETECT CHANGES TO INPUT FIELDS
-	$("#ceiling", "#glazing", "#window", "#sill", '#distWindow', "#outdoortemp", "#uvalue","#rvalue","#ppd","#airtemp","#srftemp","#airspeed","#humidity","#clothing","#metabolic").change(function() {
-		
-		//recalculate data
 
+	function updateGraphData(dataset) {
+
+		console.log("updating plotted points");
 		//update graph with revised data
+		svg.selectAll(".dot")
+			.data(dataset)
+			.attr("cx", function(d) { return x(d.dist); })
+			.attr("cy", function(d) { return y(d.ppd); })
+			.transition()
+			.duration(500);
 
-		})
+	}
+
+
+	// DETECT CHANGES TO INPUT FIELDS
+	$("#window").change(function() {
+
+		console.log(dataset);
+
+		windowHeightValue = $(this).val();
+
+		var newDataset = script.computeData().dataSet;
+		console.log(newDataset);
+
+		updateGraphData(newDataset);
+
+	})
 	
 
 
 	
-	// add horizontal reference line
-	// TO DO: if PPD vs UValue, change detection should call different functions
 	function drawHorizontalReferenceLine(data) {
 		// add line for UValue
 		var lineMarker = svg.append("line")
@@ -118,26 +136,17 @@ render.makeGraph = function () {
 
 
 
-	// variables for non-computed elements on graph
-	var uvalueValue = $("#uvalue").val();
-	var ppdValue = $("#ppd").val();
-
-
-	
 
 	// if in VERIFICATION graph mode...
-	// TO DO: RIGHT IF STATEMENTS
-		drawHorizontalReferenceLine(ppdValue);
+	drawHorizontalReferenceLine(ppdValue);
 
-		// change to PPD Value updates horizontal reference line
-		$('#ppd').change(function()
-		{
-			var newPPDValue = $(this).val();
-			console.log('ppd value change detected. new ppd is ' + newPPDValue);
-
-			updateReferenceLine(newPPDValue);
-			
-		})
+	// detect change to PPD Value, then update horizontal reference line
+	$('#ppd').change(function()
+	{
+		var newPPDValue = $(this).val();
+		updateReferenceLine(newPPDValue);
+		
+	})
 
 
 
@@ -148,9 +157,9 @@ render.makeGraph = function () {
 //function to make graph
 render.makeFacade = function () {
 
-	console.log("rendering facade");
-	var wallPoints = script.computeData().wallCoords;
-	var windowPoints = script.computeData().glzCoords;
-	console.log(wallPoints);
+	//console.log("rendering facade");
+	//var wallPoints = script.computeData().wallCoords;
+	//var windowPoints = script.computeData().glzCoords;
+	//console.log(wallPoints);
 
 } //end makeFacade()
