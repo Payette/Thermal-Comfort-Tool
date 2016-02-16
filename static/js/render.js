@@ -1,5 +1,6 @@
 var render = render || {}
 
+//function to make graph
 render.makeGraph = function () {
 
 	console.log("making graph");
@@ -144,3 +145,12 @@ render.makeGraph = function () {
 
 
 
+//function to make graph
+render.makeFacade = function () {
+
+	console.log("rendering facade");
+	var wallPoints = script.computeData().wallCoords;
+	var windowPoints = script.computeData().glzCoords;
+	console.log(wallPoints);
+
+} //end makeFacade()

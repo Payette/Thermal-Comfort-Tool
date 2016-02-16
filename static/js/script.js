@@ -43,7 +43,8 @@ script.computeData = function() {
 	
 	// Compute the PPD for each point.
 	var dataset = comf.getFullPPD(viewResult.wallViews, viewResult.glzViews, windowHeightValue, uvalueValue, false, rvalueValue, airtempValue, outdoorTempValue, false, clothingValue, metabolic, airspeedValue, humidityValue)
-	
+	//console.log(dataset);
+
 	// Return all of the information in one dictionary
 	var r = {}
 	r.wallCoords = geoResult.wallCoords
@@ -54,8 +55,10 @@ script.computeData = function() {
 }
 
 //Function that calculates the real data based on the inputs
-var dataset = script.computeData().dataSet
-
+var dataset = script.computeData().dataSet;
 
 //Call the function to render the graph.
 render.makeGraph();
+
+//Call the function to render the facade
+render.makeFacade();
