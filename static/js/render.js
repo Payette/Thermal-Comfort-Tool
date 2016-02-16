@@ -93,24 +93,7 @@ render.makeGraph = function () {
 	}
 
 
-
-//Pull the individual values from the form.
-
-
-
-
-
-	/*// DETECT CHANGES TO INPUT FIELDS
-	$("#windowHeight").change(function() {
-		//get changed value
-		windowHeightValue = $(this).val();
-		//update dataset and graph with new value
-		var newDataset = script.computeData().dataSet;
-		updateGraphData(newDataset);
-	})
-*/
-
-
+	// DETECT CHANGES TO INPUT FIELDS
 	$("#outdoortemp, #ceiling, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowECheck, #lowE, #rvalue, #airtemp, #humidity, #clothing, #metabolic").change(function(event) {
 		
 		//figure out what input changed
