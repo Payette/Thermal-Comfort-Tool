@@ -26,10 +26,10 @@ var metabolic = $("#metabolic").val();
 
 script.computeData = function() {
 	//let the console know the function is running.
-	console.log("cmpute Data Running!")
+	console.log("Compute Data is Running!")
 	
 	// Compute the window and wall geometry.
-	var geoResult = geo.createGlazingForRect(ceilingHeightValue, glzRatioValue, windowWidthValue, windowHeightValue, sillHeightValue, distanceWindows, true);
+	var geoResult = geo.createGlazingForRect(ceilingHeightValue, glzRatioValue/100, windowWidthValue, windowHeightValue, sillHeightValue, distanceWindows, true);
 	
 	// Compute the view factors.
 	var viewResult = geo.computeAllViewFac(geoResult.wallCoords, geoResult.glzCoords)
@@ -42,11 +42,13 @@ script.computeData = function() {
 	var r = {}
 	r.wallCoords = geoResult.wallCoords;
 	r.glzCoords = geoResult.glzCoords;
+	r.glzRatio = geoResult.glzRatio;
+	r.windowWidth = geoResult.windowWidth;
 	r.dataSet = dataset;
-
+	
+	console.log(geoResult.windowWidth)
+	
 	return r
-
-
 }
 
 //Function that calculates the real data based on the inputs

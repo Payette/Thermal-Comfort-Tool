@@ -53,7 +53,7 @@ geo.createGlazingForRect = function(rectHeight, glazingRatio, windowWidth, winHe
 	
 	if (ratioOrWidth == true) {
 		//Calculate the target area to make the glazing.
-		var targetArea = 20* rectHeight * glazingRatio
+		var targetArea = wallLen * rectHeight * glazingRatio
 		
 		//Find the maximum acceptable area for breaking up the window into smaller, taller windows.
 		var maxAreaBreakUp = (wallLen * 0.98) * winHeight
@@ -97,6 +97,7 @@ geo.createGlazingForRect = function(rectHeight, glazingRatio, windowWidth, winHe
 			var winLineBaseLength = winLinesStart[0][0][0] - winLinesStart[0][1][0]
 			var winLineReqLength = (targetArea / winHeightFinal) / numDivisions
 			var winLineScale = winLineReqLength / winLineBaseLength
+			var windowWidth = winLineReqLength
 			
 			for (var i = 0; i < winLinesStart.length; i++) {
 				var line = winLinesStart[i]
@@ -136,7 +137,7 @@ geo.createGlazingForRect = function(rectHeight, glazingRatio, windowWidth, winHe
 			var newStartPt = [winLinesStart[0][0] - ((winLinesStart[0][0]-lineCentPt[0])*(1-winLineScale)), 0, winLinesStart[0][2]]
 			var newEndPt = [winLinesStart[1][0] + ((lineCentPt[0]-winLinesStart[1][0])*(1-winLineScale)), 0, winLinesStart[0][2]]
 			var winLinesStart = [newStartPt,newEndPt]
-			windowWidth = newEndPt[0] - newStartPt[0]
+			windowWidth = newStartPt[0] - newEndPt[0]
 			
 			//Extrude the lines to create windows.
 			var finalGlzCoords = [[]]
@@ -148,7 +149,7 @@ geo.createGlazingForRect = function(rectHeight, glazingRatio, windowWidth, winHe
 		}
 	} else {
 		//Find the maximum acceptable width for breaking up the window into smaller, taller windows.
-		var maxWidthBreakUp = (wallLen * 0.98)/2
+		var maxWidthBreakUp = wallLen/2
 		
 		//Find the window geometry in the case that the target width is below that of the maximum width acceptable area for breaking up the window into smaller windows.
 		if (windowWidth < maxWidthBreakUp) {
@@ -185,10 +186,52 @@ geo.createGlazingForRect = function(rectHeight, glazingRatio, windowWidth, winHe
 				var line = winLinesStart[i]
 				lineCentPt.push([line[1][0]+((line[0][0]-line[1][0])/2), 0, line[0][2]])
 			}
+			var winLineScale = windowWidth / divDist
+			
+			for (var i = 0; i < winLinesStart.length; i++) {
+				var line = winLinesStart[i]
+				var lineCenterPt = lineCentPt[i]
+				var newStartPt = (line[0][0] - ((line[0][0]-lineCenterPt[0])*(1-winLineScale)), 0, line[0][2])
+				var newEndPt = (line[1][0] + ((lineCenterPt[0]-line[1][0])*(1-winLineScale)), 0, line[0][2])
+				winLinesStart[i] = [newStartPt, newEndPt]
+			}
+			
+			//Extrude the lines to create windows and calculate the glazing area.
+			var glzArea = 0
+			var finalGlzCoords = []
+			for (var i = 0; i < winLinesStart.length; i++) {
+				var line = winLinesStart[i]
+				var windowCoord = []
+				windowCoord.push(line[1])
+				windowCoord.push(line[0])
+				windowCoord.push((line[0][0], 0, line[0][2] + winHeightFinal))
+				windowCoord.push((line[1][0], 0, line[1][2] + winHeightFinal))
+				finalGlzCoords.push(windowCoord)
+				glzArea += (winHeightFinal*windowWidth)
+			}
 		}
-		
-		
-		var finalGlzCoords = []
+		//Find the window geometry in the case that the target width is above the maximum width acceptable area for breaking up the window into smaller windows.
+		if (windowWidth >= maxWidthBreakUp) {
+			var winLinesStart = [[wallLen/2,0,silHeightFinal],[-wallLen/2,0,silHeightFinal]]
+			
+			//Scale the curve so that it is not touching the edges of the surface.
+			var winLineScale = windowWidth / wallLen
+			var lineCentPt = [0,0,0]
+			var newStartPt = [winLinesStart[0][0] - ((winLinesStart[0][0]-lineCentPt[0])*(1-winLineScale)), 0, winLinesStart[0][2]]
+			var newEndPt = [winLinesStart[1][0] + ((lineCentPt[0]-winLinesStart[1][0])*(1-winLineScale)), 0, winLinesStart[0][2]]
+			var winLinesStart = [newStartPt,newEndPt]
+			
+			//Extrude the lines to create windows and calculate the glazing area.
+			var glzArea = (winHeightFinal*windowWidth)
+			var finalGlzCoords = [[]]
+			var extruVec = winHeightFinal
+			finalGlzCoords[0].push(winLinesStart[1])
+			finalGlzCoords[0].push(winLinesStart[0])
+			finalGlzCoords[0].push([winLinesStart[0][0], 0, winLinesStart[0][2] + extruVec])
+			finalGlzCoords[0].push([winLinesStart[1][0], 0, winLinesStart[1][2] + extruVec])
+		}
+		//Calculate the glazing ratio.
+		var glazingRatio = glzArea/(wallLen*rectHeight)
 	}
 	
 	//Return the coordinates of the wall.
