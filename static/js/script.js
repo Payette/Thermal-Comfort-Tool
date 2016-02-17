@@ -29,14 +29,13 @@ script.computeData = function() {
 	console.log("Compute Data is Running!")
 	
 	// Compute the window and wall geometry.
-	var geoResult = geo.createGlazingForRect(ceilingHeightValue, glzRatioValue/100, windowWidthValue, windowHeightValue, sillHeightValue, distanceWindows, true);
+	var geoResult = geo.createGlazingForRect(parseFloat(ceilingHeightValue), glzRatioValue/100, parseFloat(windowWidthValue), parseFloat(windowHeightValue), parseFloat(sillHeightValue), parseFloat(distanceWindows), true);
 	
 	// Compute the view factors.
 	var viewResult = geo.computeAllViewFac(geoResult.wallCoords, geoResult.glzCoords)
 	
 	// Compute the PPD for each point.
 	var dataset = comf.getFullPPD(viewResult.wallViews, viewResult.glzViews, windowHeightValue, uvalueValue, false, rvalueValue, airtempValue, outdoorTempValue, false, clothingValue, metabolic, airspeedValue, humidityValue)
-	//console.log(dataset);
 
 	// Return all of the information in one dictionary
 	var r = {}

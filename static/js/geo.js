@@ -24,7 +24,7 @@ geo.createGlazingForRect = function(rectHeight, glazingRatio, windowWidth, winHe
 	if (glazingRatio > 0.95) {
 		glazingRatio = 0.95;
 	}
-    
+	
     //Define wall coordinates for the given wall length.
     var wallCoord = [[-wallLen/2,0,0],[wallLen/2,0,0],[wallLen/2,0,rectHeight],[-wallLen/2,0,rectHeight]]
     
@@ -49,7 +49,6 @@ geo.createGlazingForRect = function(rectHeight, glazingRatio, windowWidth, winHe
     if (winHeightFinal + silHeightFinal > rectHeight) {
         var silHeightFinal = rectHeight - winHeightFinal;
 	}
-	
 	
 	
 	if (ratioOrWidth == true) {
@@ -334,6 +333,7 @@ geo.calcViewFacs = function(srfCoords) {
         
         //Compute the view factors by summin and dividing by 4*Pi
         var wallView = (solid1+solid2+solid3+solid4)/12.566
+		
         viewFact.push(wallView)
     }
     return viewFact
@@ -361,6 +361,7 @@ geo.computeAllViewFac = function(wallCoords, glzCoords){
 		var wallView = fullWallViewFac[i]
 		wallViewFac.push(wallView - glzViewFac[i])
 	}
+	
 	//Return the coordinates of the wall.
 	var r = {}
     r.wallViews = wallViewFac;

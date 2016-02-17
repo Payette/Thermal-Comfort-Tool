@@ -139,6 +139,7 @@ comf.getMRTandRadAssym = function(winViewFacs, opaqueViewFacs, winFilmCoeff, air
 	var windowTemp = comf.calcInteriorTemp(airTemp, outdoorTemp, 1/windowUVal, winFilmCoeff)
 	var MRT = []
 	var radAssymPPD = []
+	
 	//Caclulate an MRT and the average temperature of the wall for the point
 	for (var i = 0; i < winViewFacs.length; i++) {
 		var winView = winViewFacs[i]
@@ -150,7 +151,6 @@ comf.getMRTandRadAssym = function(winViewFacs, opaqueViewFacs, winFilmCoeff, air
 			var ptMRT = (winView*windowTemp*0.2 + opaView*opaqueTemp*0.9 + (1-winView-opaView)*indoorSrfTemp*0.9)/(winView*0.2 + (1-winView)*0.9)
 			var avgWallTemp = (winView*windowTemp*0.2 + opaView*opaqueTemp*0.9)/(winView*0.2 + opaView*0.9)
 		}
-		
 		MRT.push(ptMRT)
 		radAssymPPD.push(comf.calcPPDFromAssym(indoorSrfTemp, avgWallTemp))
 	}
@@ -171,13 +171,12 @@ comf.getDowndraftPPD = function(distToFacade, windowHgt, filmCoeff, airTemp, out
 	for (var i = 0; i < distToFacade.length; i++) {
 		var dist = distToFacade[i]
 		var distSI = dist/3.28084
-		var windowHgtSI = windowHgt/3.28084
 		if (distSI < 0.4){
-			var windSpd = comf.velMaxClose(glassAirDelta, windowHgtSI)
+			var windSpd = comf.velMaxClose(glassAirDelta, windowHgt)
 		} else if (distSI < 2){
-			var windSpd = comf.velMaxMid(distSI, glassAirDelta, windowHgtSI)
+			var windSpd = comf.velMaxMid(distSI, glassAirDelta, windowHgt)
 		} else{
-			var windSpd = comf.velMaxFar(glassAirDelta, windowHgtSI)
+			var windSpd = comf.velMaxFar(glassAirDelta, windowHgt)
 		}
 		//Code to calculate the temperature of the downdraft (this is not necessary for PPD calculation).
 		//var floorAirTemp = comf.calcFloorAirTemp(airTemp, dist, glassAirDelta)
