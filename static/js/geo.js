@@ -294,16 +294,16 @@ geo.calcViewFacs = function(srfCoords) {
         
 		// Compute the P distances by pythagorean theorem.
         var PA = sqrt((a*a)+(d*d))
-        distP4 = sqrt((PA*PA)+(z*z))
+        var distP4 = sqrt((PA*PA)+(z*z))
         
-        PB = sqrt((a*a)+(c*c))
-        distP1 = sqrt((PB*PB)+(z*z))
+        var PB = sqrt((a*a)+(c*c))
+        var distP1 = sqrt((PB*PB)+(z*z))
         
-        PC = sqrt((b*b)+(c*c))
-        distP2 = sqrt((PC*PC)+(z*z))
+        var PC = sqrt((b*b)+(c*c))
+        var distP2 = sqrt((PC*PC)+(z*z))
         
-        PD = sqrt((b*b)+(d*d))
-        distP3 = sqrt((PD*PD)+(z*z))
+        var PD = sqrt((b*b)+(d*d))
+        var distP3 = sqrt((PD*PD)+(z*z))
         
 		// Compute the solid angles to the quadrants.
 		var viewP1 = atan(ac/(z*distP1)) // Upper Left
