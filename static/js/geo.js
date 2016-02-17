@@ -1,6 +1,7 @@
 var round = Math.round;
 var sin = Math.sin;
 var atan = Math.atan;
+var sqrt = Math.sqrt;
 
 var geo = geo || {}
 
@@ -261,10 +262,10 @@ geo.calcViewFacs = function(srfCoords) {
         var removeRightQuads = false
         
         //Define the dimensions of the windows in relation to the point.
-        var a = -srfCoords[0][0]
-        var b = srfCoords[1][0]
-        var c = srfCoords[2][2]-pt[2]
-        var d = pt[2]-srfCoords[1][2]
+        var a = -srfCoords[0][0] //a = left
+        var b = srfCoords[1][0] //b = right
+        var c = srfCoords[2][2]-pt[2] //c = upper
+        var d = pt[2]-srfCoords[1][2] //d = lower
         var z = pt[1]
         
         //Check to see if any value are negative, indicating that we must subtract quads instead of summing them.
@@ -285,83 +286,53 @@ geo.calcViewFacs = function(srfCoords) {
             removeRightQuads = true;
 		}
         
-        //Compute the solid angles.
+        //Compute the product of the dimensions.
         var ac = a*c
         var bc = b*c
         var ad = a*d
         var bd = b*d
-        var distLH = a/(sin(atan(a/z)))
-        var distRH = b/(sin(atan(b/z)))
         
-        var angP1 = atan(d/distLH)
-        if (angP1 != 0){
-			var distP1 = d/(sin(angP1))
-        } else {
-			var distP1 = 0
-		}
-        var angP2 = (atan((d+c)/distLH))-angP1
-        if (angP2 != 0){
-			var distP2 = c/(sin(angP2))
-        } else {
-			var distP2 = 0
-		}
+		// Compute the P distances by pythagorean theorem.
+        var PA = sqrt((a*a)+(d*d))
+        distP4 = sqrt((PA*PA)+(z*z))
         
-        var angP3 = atan(d/distRH)
-        if (angP3 != 0){
-			var distP3 = d/(sin(angP1))
-		} else {
-			var distP3 = 0
-		}
-        var angP4 = (atan((d+c)/distRH))-angP3
-        if (angP4 != 0){
-			var distP4 = c/(sin(angP4))
-		} else {
-			var distP4 = 0
-		}
+        PB = sqrt((a*a)+(c*c))
+        distP1 = sqrt((PB*PB)+(z*z))
         
-        if (distP1 != 0){
-			viewP1 = atan(ad/(z*distP1))
-		} else {
-			viewP1 = 0
-		}
-        if (distP2 != 0){
-			viewP2 = atan(ac/(z*distP2))
-		} else {
-			viewP2 = 0
-		}
-        if (distP3 != 0){
-			viewP3 = atan(bd/(z*distP3))
-		} else {
-			viewP3 = 0
-		}
-        if (distP4 != 0){
-			viewP4 = atan(bc/(z*distP4))
-		} else {
-			viewP4 = 0
-		}
+        PC = sqrt((b*b)+(c*c))
+        distP2 = sqrt((PC*PC)+(z*z))
         
-        //Make sure that the solid angles have the right sign for computing the full solid angle to the window.
+        PD = sqrt((b*b)+(d*d))
+        distP3 = sqrt((PD*PD)+(z*z))
+        
+		// Compute the solid angles to the quadrants.
+		var viewP1 = atan(ac/(z*distP1)) // Upper Left
+		var viewP2 = atan(bc/(z*distP2)) // Upper Right
+		var viewP3 = atan(bd/(z*distP3)) // Lower Right
+		var viewP4 = atan(ad/(z*distP4)) // Lower Left
+        
+        //Make sure that the quadrant solid angles have the right sign for computing the full solid angle to the window.
         if (removeLowQuads == true && removeLeftQuads == true){
-			var solid1 = -viewP1, solid2 = -viewP2, solid3 = -viewP3, solid4 = viewP4
-		} else if (removeLowQuads == true && removeRightQuads == true){
-			var solid1 = -viewP1, solid2 = viewP2, solid3 = -viewP3, solid4 = -viewP4
-		} else if (removeLowQuads == true){
 			var solid1 = -viewP1, solid2 = viewP2, solid3 = -viewP3, solid4 = viewP4
-		} else if (removeHiQuads == true && removeLeftQuads == true){
-			var solid1 = -viewP1, solid2 = -viewP2, solid3 = viewP3, solid4 = -viewP4
-		} else if (removeHiQuads == true && removeRightQuads == true){
-			var solid1 = viewP1, solid2 = -viewP2, solid3 = -viewP3, solid4 = -viewP4
-		} else if (removeHiQuads == true){
+		} else if (removeLowQuads == true && removeRightQuads == true){
 			var solid1 = viewP1, solid2 = -viewP2, solid3 = viewP3, solid4 = -viewP4
-		} else if (removeLeftQuads == true){
-			var solid1 = -viewP1, solid2 = -viewP2, solid3 = viewP3, solid4 = viewP4
-		} else if (removeRightQuads == true){
+		} else if (removeLowQuads == true){
 			var solid1 = viewP1, solid2 = viewP2, solid3 = -viewP3, solid4 = -viewP4
+		} else if (removeHiQuads == true && removeLeftQuads == true){
+			var solid1 = viewP1, solid2 = -viewP2, solid3 = viewP3, solid4 = -viewP4
+		} else if (removeHiQuads == true && removeRightQuads == true){
+			var solid1 = -viewP1, solid2 = viewP2, solid3 = -viewP3, solid4 = viewP4
+		} else if (removeHiQuads == true){
+			var solid1 = -viewP1, solid2 = -viewP2, solid3 = viewP3, solid4 = viewP4
+		} else if (removeLeftQuads == true){
+			var solid1 = -viewP1, solid2 = viewP2, solid3 = viewP3, solid4 = -viewP4
+		} else if (removeRightQuads == true){
+			var solid1 = viewP1, solid2 = -viewP2, solid3 = -viewP3, solid4 = viewP4
 		} else {
 			var solid1 = viewP1, solid2 = viewP2, solid3 = viewP3, solid4 = viewP4
 		}
         
-        //Compute the view factors.
+        //Compute the view factors by summin and dividing by 4*Pi
         var wallView = (solid1+solid2+solid3+solid4)/12.566
         viewFact.push(wallView)
     }
