@@ -234,7 +234,6 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, windowHgt, glzUVal, intLowE,
 	// Get the Downdraft PPD results.
 	var downDPPD = comf.getDowndraftPPD(facadeDist, windowHgtSI, winFilmCoeff, airTemp, outdoorTemp, windowUVal)
 	
-	
 	// Construct the dictionary of the PPD values with the governing factors.
 	var dataset = []
 	for (var i = 0; i < radAssymPPD.length; i++) {
@@ -244,7 +243,7 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, windowHgt, glzUVal, intLowE,
 			ptInfo.dist = i+1;
 			ptInfo.ppd = radAssymPPD[i];
 			ptInfo.govfact = "asym";
-		} else if (mrtPPD[i] > radAssymPPD[i] && mrtPPD[i] > downDPPD[i]) {
+		} else if (mrtPPD[i] > downDPPD[i]) {
 			ptInfo.dist = i+1;
 			ptInfo.ppd = mrtPPD[i];
 			ptInfo.govfact = "mrt";

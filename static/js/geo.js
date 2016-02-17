@@ -102,8 +102,8 @@ geo.createGlazingForRect = function(rectHeight, glazingRatio, windowWidth, winHe
 			for (var i = 0; i < winLinesStart.length; i++) {
 				var line = winLinesStart[i]
 				var lineCenterPt = lineCentPt[i]
-				var newStartPt = (line[0][0] - ((line[0][0]-lineCenterPt[0])*(1-winLineScale)), 0, line[0][2])
-				var newEndPt = (line[1][0] + ((lineCenterPt[0]-line[1][0])*(1-winLineScale)), 0, line[0][2])
+				var newStartPt = [line[0][0] - ((line[0][0]-lineCenterPt[0])*(1-winLineScale)), 0, line[0][2]]
+				var newEndPt = [line[1][0] + ((lineCenterPt[0]-line[1][0])*(1-winLineScale)), 0, line[0][2]]
 				winLinesStart[i] = [newStartPt, newEndPt]
 			}
 			
@@ -114,10 +114,11 @@ geo.createGlazingForRect = function(rectHeight, glazingRatio, windowWidth, winHe
 				var windowCoord = []
 				windowCoord.push(line[1])
 				windowCoord.push(line[0])
-				windowCoord.push((line[0][0], 0, line[0][2] + winHeightFinal))
-				windowCoord.push((line[1][0], 0, line[1][2] + winHeightFinal))
+				windowCoord.push([line[0][0], 0, line[0][2] + winHeightFinal])
+				windowCoord.push([line[1][0], 0, line[1][2] + winHeightFinal])
 				finalGlzCoords.push(windowCoord)
 			}
+			
 		}
 		
 		//Find the window geometry in the case that the target area is above that of the maximum acceptable area for breaking up the window in which case we have to make one big window.
@@ -191,8 +192,8 @@ geo.createGlazingForRect = function(rectHeight, glazingRatio, windowWidth, winHe
 			for (var i = 0; i < winLinesStart.length; i++) {
 				var line = winLinesStart[i]
 				var lineCenterPt = lineCentPt[i]
-				var newStartPt = (line[0][0] - ((line[0][0]-lineCenterPt[0])*(1-winLineScale)), 0, line[0][2])
-				var newEndPt = (line[1][0] + ((lineCenterPt[0]-line[1][0])*(1-winLineScale)), 0, line[0][2])
+				var newStartPt = [line[0][0] - ((line[0][0]-lineCenterPt[0])*(1-winLineScale)), 0, line[0][2]]
+				var newEndPt = [line[1][0] + ((lineCenterPt[0]-line[1][0])*(1-winLineScale)), 0, line[0][2]]
 				winLinesStart[i] = [newStartPt, newEndPt]
 			}
 			
@@ -204,8 +205,8 @@ geo.createGlazingForRect = function(rectHeight, glazingRatio, windowWidth, winHe
 				var windowCoord = []
 				windowCoord.push(line[1])
 				windowCoord.push(line[0])
-				windowCoord.push((line[0][0], 0, line[0][2] + winHeightFinal))
-				windowCoord.push((line[1][0], 0, line[1][2] + winHeightFinal))
+				windowCoord.push([line[0][0], 0, line[0][2] + winHeightFinal])
+				windowCoord.push([line[1][0], 0, line[1][2] + winHeightFinal])
 				finalGlzCoords.push(windowCoord)
 				glzArea += (winHeightFinal*windowWidth)
 			}

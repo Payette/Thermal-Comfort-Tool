@@ -46,8 +46,6 @@ script.computeData = function() {
 	r.windowWidth = geoResult.windowWidth;
 	r.dataSet = dataset;
 	
-	console.log(geoResult.windowWidth)
-	
 	return r
 }
 
