@@ -14,6 +14,15 @@ comf.calcInteriorTemp = function(airTemp, outTemp, wallR, filmCoeff){
     return (airTemp-(((1/wallR)*(airTemp-outTemp))/filmCoeff))
 }
 
+// Function that computes a film coefficient based on emissivity and a dimensionless orientation.
+// Derived from data published in ASHRAE Fundementals.
+comf.calcFilmCoeff = function(glzSysEmiss){
+	var dimHeatFlow = 0.5 // Indicates a vertically-oriented surface.  0 is a horizontal surface with upward heat flow.  1 is a horizontal surface with downward heat flow.
+	var heatFlowFactor = (-12.443 * (pow(dimHeatFlow,3))) + (24.28 * (pow(dimHeatFlow,2))) - (16.898 * dimHeatFlow) + 8.1275
+    var filmCoeff = (heatFlowFactor * dimHeatFlow) + (5.81176 * glzSysEmiss) + 0.9629
+	return filmCoeff
+}
+
 // Functions that compute the temperature and speed of air from downdraft.
 // These functions are taken from the following paper:
 // Heiselberg, Per. (1994). Draught Risk From Cold Vertical Surfaces. Building and Envrionment, Vol. 29, No. 3, pp. 297-301.
@@ -187,7 +196,7 @@ comf.getDowndraftPPD = function(distToFacade, windowHgt, filmCoeff, airTemp, out
 
 
 // Constructs a dictionary of PPD and the limiting factors from a given set of interior conditions.
-comf.getFullPPD = function(wallViewFac, glzViewFac, windowHgt, glzUVal, intLowE, wallRVal, indoorTemp, outTemp, radiantFloor, clo, met, airSpeed, rh){	
+comf.getFullPPD = function(wallViewFac, glzViewFac, windowHgt, glzUVal, intLowE, lowEmissivity, wallRVal, indoorTemp, outTemp, radiantFloor, clo, met, airSpeed, rh){	
 	// Convert window height to meters (yay for SI!!)
 	var windowHgtSI = windowHgt/3.28084
 	
@@ -210,12 +219,12 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, windowHgt, glzUVal, intLowE,
 	}
 	
 	//Assign variable for film coefficient and  based on interior Low-E coating.
-	if (intLowE == true) {
-		winFilmCoeff = 4.2
+	if (intLowE == 'checked'){
+		var winFilmCoeff = comf.calcFilmCoeff(lowEmissivity)
 	} else {
-		winFilmCoeff = 8.29
+		var winFilmCoeff = 8.29
 	}
-
+	
 	
 	// Get the radiant assymetry PPD results.
 	var radAssymResult = comf.getMRTandRadAssym(glzViewFac, wallViewFac, winFilmCoeff, airTemp, outdoorTemp, indoorSrfTemp, opaqueRVal, windowUVal)

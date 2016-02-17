@@ -35,7 +35,7 @@ script.computeData = function() {
 	var viewResult = geo.computeAllViewFac(geoResult.wallCoords, geoResult.glzCoords)
 	
 	// Compute the PPD for each point.
-	var dataset = comf.getFullPPD(viewResult.wallViews, viewResult.glzViews, windowHeightValue, uvalueValue, false, rvalueValue, airtempValue, outdoorTempValue, false, clothingValue, metabolic, airspeedValue, humidityValue)
+	var dataset = comf.getFullPPD(viewResult.wallViews, viewResult.glzViews, windowHeightValue, uvalueValue, intLowEChecked, intLowEEmissivity, rvalueValue, airtempValue, outdoorTempValue, false, clothingValue, metabolic, airspeedValue, humidityValue)
 
 	// Return all of the information in one dictionary
 	var r = {}
