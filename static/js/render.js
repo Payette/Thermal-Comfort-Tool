@@ -149,8 +149,11 @@ render.makeGraph = function () {
 
 			if (($("#lowECheck").is(":checked")) == true) {
 				intLowEChecked = true;
+				$("#lowE").val(0.2);
+				intLowEEmissivity = 0.2;
 			} else if (($("#lowECheck").is(":checked")) == false) {
 				intLowEChecked = false;
+				$("#lowE").val(" ");
 			}
 		}
 		else if (triggeredChange == "lowE") {
