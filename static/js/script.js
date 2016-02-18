@@ -11,12 +11,13 @@ var distanceWindows = $('#distWindow').val();
 
 var outdoorTempValue = $("#outdoortemp").val();
 var uvalueValue = $("#uvalue").val();
-var intLowEChecked = $("#lowECheck").val();
+var intLowEChecked = $("#lowECheck").is(":checked"); //provides a true/false
 var intLowEEmissivity = $("#lowE").val();
 var rvalueValue = $("#rvalue").val();
 var ppdValue = $("#ppd").val();
 
 var airtempValue = $("#airtemp").val();
+var radiantFloorChecked = $("#radiant").is(":checked"); //provides a true/false
 var airspeedValue = $("#airspeed").val();
 var humidityValue = $("#humidity").val();
 var clothingValue = $("#clothing").val();

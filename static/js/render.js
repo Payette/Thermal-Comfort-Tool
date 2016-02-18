@@ -93,8 +93,9 @@ render.makeGraph = function () {
 	}
 
 
+
 	// DETECT CHANGES TO INPUT FIELDS
-	$("#outdoortemp, #ceiling, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowECheck, #lowE, #rvalue, #airtemp, #humidity, #clothing, #metabolic").change(function(event) {
+	$("#outdoortemp, #ceiling, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowECheck, #lowE, #rvalue, #airtemp, #radiant, #airspeed, #humidity, #clothing, #metabolic").change(function(event) {
 		
 		//figure out what input changed
 		var triggeredChange = event.target.id;
@@ -123,7 +124,14 @@ render.makeGraph = function () {
 		else if (triggeredChange == "uvalue") {
 			uvalueValue = $(this).val();
 		}
-//ADD CHANGES FOR LOW E COATING / EMISSIVITY
+		else if (triggeredChange == "lowECheck") {
+
+			if (($("#lowECheck").is(":checked")) == true) {
+				intLowEChecked = true;
+			} else if (($("#lowECheck").is(":checked")) == false) {
+				intLowEChecked = false;
+			}
+		}
 		else if (triggeredChange == "lowE") {
 			intLowEEmissivity = $(this).val();
 		}
@@ -132,6 +140,13 @@ render.makeGraph = function () {
 		}
 		else if (triggeredChange == "airtemp") {
 			airtempValue = $(this).val();
+		}
+		else if (triggeredChange == "radiant") {
+			if (($("#radiant").is(":checked")) == true) {
+				radiantFloorChecked = true;
+			} else if (($("#radiant").is(":checked")) == false) {
+				radiantFloorChecked = false;
+			}
 		}
 		else if (triggeredChange == "airspeed") {
 			airspeedValue = $(this).val();
