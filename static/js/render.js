@@ -87,6 +87,15 @@ render.makeGraph = function () {
 		graphPoints.data(dataset)
 			.attr("cx", function(d) { return x(d.dist); })
 			.attr("cy", function(d) { return y(d.ppd); })
+			.style("fill", function(d) { 
+				if (d.govfact = "mrt") {
+					return "red";
+				} else if (d.govfact = "dwn") {
+					return "green";
+				} else if (d.govfact = "asym") {
+					return "blue";
+				}
+			})
 			.transition()
 			.duration(500);
 
