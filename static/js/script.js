@@ -45,6 +45,7 @@ script.computeData = function() {
 	r.glzCoords = geoResult.glzCoords;
 	r.glzRatio = geoResult.glzRatio;
 	r.windowWidth = geoResult.windowWidth;
+	r.windowHeight = geoResult.windowHeight;
 	r.dataSet = dataset;
 	
 	return r
@@ -57,4 +58,4 @@ var dataset = script.computeData().dataSet;
 render.makeGraph();
 
 //Call the function to render the facade
-//render.makeFacade();
+render.makeFacade();
