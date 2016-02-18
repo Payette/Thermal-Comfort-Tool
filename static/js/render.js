@@ -119,8 +119,8 @@ render.makeGraph = function () {
 				.domain([0, wallPoints[0].wallWidth]); 
 
 	var facadeScaleHeight = d3.scale.linear()
-				.range([facHeight, 0]) 
-				.domain([wallPoints[0].wallHeight, 0]);
+				.range([0, facHeight]) 
+				.domain([0, wallPoints[0].wallHeight]);
 
 
 
