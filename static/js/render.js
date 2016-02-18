@@ -124,15 +124,17 @@ render.makeGraph = function () {
 			glzOrWidth = false;
 			//update glazing ratio
 			glzRatioValue = script.computeData().glzRatio*100;
+			//display updated glazing ratio
+			$("#glazing").val((Math.round(glzRatioValue)));
 		}
 		else if (triggeredChange == "glazing") {
 			glzRatioValue = $(this).val();
 			//update boolean
-			console.log("old: " + windowWidthValue);
 			glzOrWidth = true;
 			//update window width
 			windowWidthValue = script.computeData().windowWidth;
-			console.log("new: " + windowWidthValue);
+			//display updated window width
+			$("#windowWidth").val(windowWidthValue);
 		}
 		else if (triggeredChange == "sill") {
 			sillHeightValue = $(this).val();
