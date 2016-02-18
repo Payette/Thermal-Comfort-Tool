@@ -68,11 +68,11 @@ render.makeGraph = function () {
 		.attr("transform", function() {
 				return "translate(" + margin.left + "," + margin.top + ")";})
 		.style("fill", function(d) { 
-			if (d.govfact == "mrt") {
+			if (d.govfact = "mrt") {
 				return "red";
-			} else if (d.govfact == "dwn") {
+			} else if (d.govfact = "dwn") {
 				return "green";
-			} else {
+			} else if (d.govfact = "asym") {
 				return "blue";
 			}
 		})
@@ -99,6 +99,7 @@ render.makeGraph = function () {
 		
 		//figure out what input changed
 		var triggeredChange = event.target.id;
+		console.log(triggeredChange);
 		
 		if (triggeredChange == "outdoortemp") {
 			outdoorTempValue = $(this).val();
