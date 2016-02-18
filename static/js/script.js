@@ -6,6 +6,7 @@ var ceilingHeightValue = $("#ceiling").val();
 var windowHeightValue = $("#windowHeight").val();
 var windowWidthValue = $("#windowWidth").val();
 var glzRatioValue = $("#glazing").val();
+var glzOrWidth = true;
 var sillHeightValue = $("#sill").val();
 var distanceWindows = $('#distWindow').val();
 
@@ -30,13 +31,13 @@ script.computeData = function() {
 	console.log("Compute Data is Running!")
 	
 	// Compute the window and wall geometry.
-	var geoResult = geo.createGlazingForRect(parseFloat(ceilingHeightValue), glzRatioValue/100, parseFloat(windowWidthValue), parseFloat(windowHeightValue), parseFloat(sillHeightValue), parseFloat(distanceWindows), true);
+	var geoResult = geo.createGlazingForRect(parseFloat(ceilingHeightValue), glzRatioValue/100, parseFloat(windowWidthValue), parseFloat(windowHeightValue), parseFloat(sillHeightValue), parseFloat(distanceWindows), glzOrWidth);
 	
 	// Compute the view factors.
 	var viewResult = geo.computeAllViewFac(geoResult.wallCoords, geoResult.glzCoords)
 	
 	// Compute the PPD for each point.
-	var dataset = comf.getFullPPD(viewResult.wallViews, viewResult.glzViews, windowHeightValue, uvalueValue, intLowEChecked, intLowEEmissivity, rvalueValue, airtempValue, outdoorTempValue, false, clothingValue, metabolic, airspeedValue, humidityValue)
+	var dataset = comf.getFullPPD(viewResult.wallViews, viewResult.glzViews, windowHeightValue, uvalueValue, intLowEChecked, intLowEEmissivity, rvalueValue, airtempValue, outdoorTempValue, radiantFloorChecked, clothingValue, metabolic, airspeedValue, humidityValue)
 
 	// Return all of the information in one dictionary
 	var r = {}

@@ -108,7 +108,6 @@ render.makeGraph = function () {
 		
 		//figure out what input changed
 		var triggeredChange = event.target.id;
-		console.log(triggeredChange);
 		
 		if (triggeredChange == "outdoortemp") {
 			outdoorTempValue = $(this).val();
@@ -121,9 +120,19 @@ render.makeGraph = function () {
 		}
 		else if (triggeredChange == "windowWidth") {
 			windowWidthValue = $(this).val();
+			//update boolean
+			glzOrWidth = false;
+			//update glazing ratio
+			glzRatioValue = script.computeData().glzRatio*100;
 		}
 		else if (triggeredChange == "glazing") {
 			glzRatioValue = $(this).val();
+			//update boolean
+			console.log("old: " + windowWidthValue);
+			glzOrWidth = true;
+			//update window width
+			windowWidthValue = script.computeData().windowWidth;
+			console.log("new: " + windowWidthValue);
 		}
 		else if (triggeredChange == "sill") {
 			sillHeightValue = $(this).val();
