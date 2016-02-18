@@ -219,7 +219,7 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, windowHgt, glzUVal, intLowE,
 	}
 	
 	//Assign variable for film coefficient and  based on interior Low-E coating.
-	if (intLowE == 'checked'){
+	if (intLowE == true){
 		var winFilmCoeff = comf.calcFilmCoeff(lowEmissivity)
 	} else {
 		var winFilmCoeff = 8.29
