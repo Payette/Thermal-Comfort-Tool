@@ -5,8 +5,7 @@ render.makeGraph = function () {
 
 	console.log("making graph");
 
-	/* ------ SET UP VARIABLES AND DATA FUNCTIONS ------ */
-
+	/* ------ SET UP GRAPH VARIABLES AND DATA FUNCTIONS ------ */
 	var margin = {top: 20, right: 40, bottom: 20, left: 40},
     	width = 570 - margin.left - margin.right,
     	height = 470 - margin.top - margin.bottom;
@@ -32,21 +31,19 @@ render.makeGraph = function () {
 
 
 	/* ------ MAKE THE GRAPH ------ */
-
 	//Create SVG
-	var svg = d3.select("body")
+	var graphSvg = d3.select("#graphWrapper")
 				.append("svg")
 				.attr("id", "graph")
 				.attr("width", width + margin.left + margin.right)
 				.attr("height", height + margin.top + margin.bottom);
-
 	// add axes
-	svg.append("g")
+	graphSvg.append("g")
 		.attr("class", "axis")
 		.attr("transform", "translate(" + margin.left + "," + (height + margin.top) + ")")
     	.call(xAxis);
 
-	svg.append("g")
+	graphSvg.append("g")
 	    .attr("class", "axis")
 	    .attr("transform", "translate(" + margin.left + "," + (margin.top) + ")")
 	    .call(yAxis);
@@ -56,23 +53,22 @@ render.makeGraph = function () {
 
 
     /* ------ PLOT THE DATA ------ */
+    // Add line between points
+	var line = d3.svg.line()
+				.x(function(d) {return x(d.dist);})
+				.y(function(d) {return y(d.ppd);});
 
-    	// Add line between points
-	var lineFunction = d3.svg.line()
-						.x(function(d) {return x(d.dist);})
-						.y(function(d) {return y(d.ppd);});
-
-	var gLine = svg.append("g");
-		gLine.append("path")
-			 .attr("d", lineFunction(dataset))
-			 .attr("transform", function() {
+	graphSvg.append("path")
+			.attr("class", "connectLine")
+			.attr("d", line(dataset))
+			.attr("transform", function() {
 				return "translate(" + margin.left + "," + margin.top + ")";})
-			 .style("fill", "none")
-			 .style("stroke", "black");
+			.style("fill", "none")
+			.style("stroke", "black");
 
-    
+
     // Add dots at each point
-	var graphPoints = svg.selectAll(".dot") //select all class "dot" in <svg> (empty)
+	var graphPoints = graphSvg.selectAll(".dot") //select all class "dot" in <svg> (empty)
 		.data(dataset) // join the selection to a data array
 		.enter() // create a selection for the data objects that didn't match elements (all)
 		.append("circle") // add a new circle for each data object
@@ -98,31 +94,82 @@ render.makeGraph = function () {
 
 
 
+	/* ------ MAKE THE FACADE ------ */
 
-	function updateGraphData(dataset) {
+	// wall coordinates
+	var wallPoints = [{
+		wallX: 0,
+		wallY: 0,
+		wallWidth: wallLen, //use wallLen from geo.js as width
+		wallHeight: ceilingHeightValue
+	}];
 
-		console.log("updating plotted points");
-		//update graph with revised data
-		graphPoints.data(dataset)
-			.attr("cx", function(d) { return x(d.dist); })
-			.attr("cy", function(d) { return y(d.ppd); })
-			.style("fill", function(d) { 
-				if (d.govfact = "mrt") {
-					return "red";
-				} else if (d.govfact = "dwn") {
-					return "green";
-				} else if (d.govfact = "asym") {
-					return "blue";
-				}
-			})
-			.transition()
-			.duration(500);
-
-	}
+	var facMargin = {top: 20, right: 40, bottom: 20, left: 40},
+    	facWidth = 570 - facMargin.left - facMargin.right,
+    	facHeight = 270 - facMargin.top - facMargin.bottom;
 
 
 
-	// DETECT CHANGES TO INPUT FIELDS
+
+
+
+    var facadeScaleWidth = d3.scale.linear()
+				.range([0, facWidth]) 
+				.domain([0, wallPoints[0].wallWidth]); 
+
+	var facadeScaleHeight = d3.scale.linear()
+				.range([facHeight, 0]) 
+				.domain([wallPoints[0].wallHeight, 0]);
+
+
+
+
+
+	/* ------ MAKE THE FACADE ------ */
+	//Initialize SVG
+	var facadeSvg = d3.select("#facadeWrapper")
+				.append("svg")
+				.attr("id", "facade")
+				.attr("width", facWidth + facMargin.left + facMargin.right)
+				.attr("height", facHeight + facMargin.top + facMargin.bottom);
+
+
+	//Initialize wall facade
+	var wall = facadeSvg.selectAll(".wall") 
+		.data(wallPoints) // join the selection to a data array
+		.enter() 
+		.append("rect") // add a new circle for each data object
+		.attr("class","wall") // set the class to match selection criteria
+		.attr("x", function(d) {return (d.wallX)})
+		.attr("y", function(d) {return (d.wallY)})
+		.attr("width", function(d) { 
+			if (d.wallWidth > d.wallHeight) {
+				return facadeScaleWidth(d.wallWidth); 
+			} else if (d.wallWidth <= d.wallHeight) {
+				return facadeScaleHeight(d.wallWidth);
+			}
+		})
+		.attr("height", function(d) { 
+			if (d.wallWidth > d.wallHeight) {
+				return facadeScaleWidth(d.wallHeight); 
+			} else if (d.wallWidth <= d.wallHeight) {
+				return facadeScaleHeight(d.wallHeight);
+			}
+		})
+		.attr("transform", function() {
+				return "translate(" + facMargin.left + "," + facMargin.top + ")";})
+		.style("fill", "lightgrey");
+
+
+
+
+
+
+
+
+
+	/* ------ DETECT CHANGES TO INPUT VALUES ------ */
+	// Trigger change events
 	$("#outdoortemp, #ceiling, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowECheck, #lowE, #rvalue, #airtemp, #radiant, #airspeed, #humidity, #clothing, #metabolic").change(function(event) {
 		
 		//figure out what input changed
@@ -133,6 +180,7 @@ render.makeGraph = function () {
 		}
 		else if(triggeredChange == "ceiling") {
 			ceilingHeightValue = $(this).val();
+			wallPoints[0].wallHeight = $(this).val(); //udpate wall geometry array
 		}
 		else if (triggeredChange == "windowHeight") {
 			windowHeightValue = $(this).val();
@@ -210,7 +258,9 @@ render.makeGraph = function () {
 
 		//update dataset and graph with new value
 		var newDataset = script.computeData().dataSet;
+
 		updateGraphData(newDataset);
+		updateFacade(wallPoints); //wallPoints should have new ceiling value
 	})
 
 
@@ -218,11 +268,58 @@ render.makeGraph = function () {
 
 
 
+	function updateGraphData(dataset) {
+		//update graph with revised data
+		graphPoints.data(dataset)
+			.attr("cx", function(d) { return x(d.dist); })
+			.attr("cy", function(d) { return y(d.ppd); })
+			.style("fill", function(d) { 
+				if (d.govfact = "mrt") {
+					return "red";
+				} else if (d.govfact = "dwn") {
+					return "green";
+				} else if (d.govfact = "asym") {
+					return "blue";
+				}
+			})
+			.transition()
+			.duration(500);
 
-	
+		//update connection line
+		graphSvg.selectAll(".connectLine")
+			.attr("d", line(dataset))
+			.transition()
+			.duration(500);
+	}
+
+
+	function updateFacade(dataset) {
+		//update facade with revised data
+		wall.data(dataset)
+			.attr("width", function(d) { 
+				if (d.wallWidth > d.wallHeight) {
+					return facadeScaleWidth(d.wallWidth); 
+				} else if (d.wallWidth <= d.wallHeight) {
+					return facadeScaleHeight(d.wallWidth);
+				}
+			})
+			.attr("height", function(d) { 
+				if (d.wallWidth > d.wallHeight) {
+					return facadeScaleWidth(d.wallHeight); 
+				} else if (d.wallWidth <= d.wallHeight) {
+					return facadeScaleHeight(dd.wallHeight);
+				}
+			})
+			.transition()
+			.duration(500);
+	}
+
+
+
+
 	function drawHorizontalReferenceLine(data) {
 		// add line for UValue
-		var lineMarker = svg.append("line")
+		var lineMarker = graphSvg.append("line")
 			.attr("class","refLine")
 			.attr("x1", 0)
 			.attr("x2", width)
@@ -232,7 +329,6 @@ render.makeGraph = function () {
 					return "translate(" + margin.left + "," + margin.top + ")";})
 			.style("stroke", "black");
 	}
-
 
 	function updateReferenceLine(data) {
 		d3.selectAll(".refLine")
@@ -244,38 +340,22 @@ render.makeGraph = function () {
 
 
 
-
-
 	// if in VERIFICATION graph mode...
 	drawHorizontalReferenceLine(ppdValue);
-
 	// detect change to PPD Value, then update horizontal reference line
-	$('#ppd').change(function()
-	{
+	$('#ppd').change(function() {
 		var newPPDValue = $(this).val();
-		updateReferenceLine(newPPDValue);
-		
+		updateReferenceLine(newPPDValue);	
 	})
-
 
 
 } //end makeGraph()
 
 
 
-//function to make graph
-render.makeFacade = function () {
-
-	//console.log("rendering facade");
-	//var wallPoints = script.computeData().wallCoords;
-	//var windowPoints = script.computeData().glzCoords;
-	//console.log(wallPoints);
 
 
-		//var newWallCoords = script.computeData().wallCoords;
-		//var newGlzCoords = script.computeData().glzCoords;
 
-} //end makeFacade()
 
 
 

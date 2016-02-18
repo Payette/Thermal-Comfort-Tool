@@ -10,8 +10,16 @@
     font-size: 11px;
 }
 
-#graph {
+#visual {
 	float: left;
+}
+
+#graphWrapper {
+	
+}
+
+#facadeWrapper {
+
 }
 
 #inputs {
