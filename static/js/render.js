@@ -7,9 +7,9 @@ render.makeGraph = function () {
 
 	/* ------ SET UP VARIABLES AND DATA FUNCTIONS ------ */
 
-	var margin = {top: 40, right: 60, bottom: 40, left: 60},
-    	width = 600 - margin.left - margin.right,
-    	height = 600 - margin.top - margin.bottom;
+	var margin = {top: 20, right: 40, bottom: 20, left: 40},
+    	width = 570 - margin.left - margin.right,
+    	height = 470 - margin.top - margin.bottom;
     	//padding = allObjectsDataset.length * 1.35;
 
 
@@ -56,7 +56,22 @@ render.makeGraph = function () {
 
 
     /* ------ PLOT THE DATA ------ */
-    // PLOT EACH POINT
+
+    	// Add line between points
+	var lineFunction = d3.svg.line()
+						.x(function(d) {return x(d.dist);})
+						.y(function(d) {return y(d.ppd);});
+
+	var gLine = svg.append("g");
+		gLine.append("path")
+			 .attr("d", lineFunction(dataset))
+			 .attr("transform", function() {
+				return "translate(" + margin.left + "," + margin.top + ")";})
+			 .style("fill", "none")
+			 .style("stroke", "black");
+
+    
+    // Add dots at each point
 	var graphPoints = svg.selectAll(".dot") //select all class "dot" in <svg> (empty)
 		.data(dataset) // join the selection to a data array
 		.enter() // create a selection for the data objects that didn't match elements (all)
@@ -76,6 +91,10 @@ render.makeGraph = function () {
 				return "blue";
 			}
 		})
+
+
+
+
 
 
 
