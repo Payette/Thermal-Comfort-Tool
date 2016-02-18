@@ -56,6 +56,3 @@ var dataset = script.computeData().dataSet;
 
 //Call the function to render the graph.
 render.makeGraph();
-
-//Call the function to render the facade
-render.makeFacade();

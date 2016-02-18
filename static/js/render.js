@@ -104,15 +104,16 @@ render.makeGraph = function () {
 		wallHeight: ceilingHeightValue
 	}];
 
+
+	
 	var facMargin = {top: 20, right: 40, bottom: 20, left: 40},
     	facWidth = 570 - facMargin.left - facMargin.right,
-    	facHeight = 270 - facMargin.top - facMargin.bottom;
+    	facHeight = 300 - facMargin.top - facMargin.bottom;
 
 
 
 
-
-
+//change SVG height to be responsive to ceiling height....
     var facadeScaleWidth = d3.scale.linear()
 				.range([0, facWidth]) 
 				.domain([0, wallPoints[0].wallWidth]); 
@@ -143,22 +144,44 @@ render.makeGraph = function () {
 		.attr("x", function(d) {return (d.wallX)})
 		.attr("y", function(d) {return (d.wallY)})
 		.attr("width", function(d) { 
-			if (d.wallWidth > d.wallHeight) {
 				return facadeScaleWidth(d.wallWidth); 
-			} else if (d.wallWidth <= d.wallHeight) {
-				return facadeScaleHeight(d.wallWidth);
-			}
 		})
 		.attr("height", function(d) { 
-			if (d.wallWidth > d.wallHeight) {
-				return facadeScaleWidth(d.wallHeight); 
-			} else if (d.wallWidth <= d.wallHeight) {
-				return facadeScaleHeight(d.wallHeight);
-			}
+				return facadeScaleHeight(d.wallHeight); 
 		})
 		.attr("transform", function() {
 				return "translate(" + facMargin.left + "," + facMargin.top + ")";})
 		.style("fill", "lightgrey");
+
+
+
+
+
+
+	// window coordinates
+	var glzCoords = script.computeData().glzCoords;
+	var glzWidth = script.computeData().windowWidth;
+	var glzHeight = script.computeData().windowHeight;
+
+	console.log(glzCoords);
+
+
+	//Add windows
+	var windows = facadeSvg.selectAll(".window")
+		.data(glzCoords)
+		.enter()
+		.append("rect")
+		.attr("class", "window")
+		.attr("x", function(d,i) {return facadeScaleWidth(d[3][0])})
+		.attr("y", function(d) {return facadeScaleHeight(d[3][2])})
+		.attr("width", facadeScaleWidth(glzWidth))
+		.attr("height", facadeScaleHeight(glzHeight))
+		.attr("transform", function() {
+			return "translate(" + (facWidth/2 + facMargin.left) + "," + (facMargin.top+facMargin.bottom)*-1  + ")";
+		});
+		//who knows if the transform is correct? I DON'T!
+
+
 
 
 
@@ -256,17 +279,20 @@ render.makeGraph = function () {
 		}
 
 
-		//update dataset and graph with new value
+		//update datasets and graph with new value
 		var newDataset = script.computeData().dataSet;
+		var newGlzCoords = script.computeData().glzCoords;
+		var newGlzWidth = script.computeData().windowWidth;
+		var newGlzHeight = script.computeData().windowHeight;
 
 		updateGraphData(newDataset);
-		updateFacade(wallPoints); //wallPoints should have new ceiling value
+		updateFacade(wallPoints, newGlzCoords, newGlzWidth, newGlzHeight); 
 	})
 
 
 
 
-
+	/* ------ FUNCTIONS TO UPDATE VISUALS ------ */
 
 	function updateGraphData(dataset) {
 		//update graph with revised data
@@ -293,25 +319,34 @@ render.makeGraph = function () {
 	}
 
 
-	function updateFacade(dataset) {
-		//update facade with revised data
-		wall.data(dataset)
+	function updateFacade(wallData, glzData, newGlzWidth, newGlzHeight) {
+
+
+		//update svg with change in heights....
+
+
+		//update wall with revised data
+		wall.data(wallData)
 			.attr("width", function(d) { 
-				if (d.wallWidth > d.wallHeight) {
-					return facadeScaleWidth(d.wallWidth); 
-				} else if (d.wallWidth <= d.wallHeight) {
-					return facadeScaleHeight(d.wallWidth);
-				}
+				return facadeScaleWidth(d.wallWidth); 
 			})
 			.attr("height", function(d) { 
-				if (d.wallWidth > d.wallHeight) {
-					return facadeScaleWidth(d.wallHeight); 
-				} else if (d.wallWidth <= d.wallHeight) {
-					return facadeScaleHeight(dd.wallHeight);
-				}
+				return facadeScaleHeight(d.wallHeight); 
 			})
 			.transition()
 			.duration(500);
+
+		//update windows
+		windows.data(glzData)
+			.attr("x", function(d,i) {return facadeScaleWidth(d[3][0])})
+			.attr("y", function(d) {return facadeScaleHeight(d[3][2])})
+			.attr("width", facadeScaleWidth(newGlzWidth))
+			.attr("height", facadeScaleHeight(newGlzHeight))
+			.attr("transform", function() {
+				return "translate(" + (facWidth/2 + facMargin.left) + "," + (facMargin.top+facMargin.bottom)  + ")";
+		});
+
+
 	}
 
 
