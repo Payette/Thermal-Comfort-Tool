@@ -246,6 +246,7 @@ render.makeGraph = function () {
 		else if (triggeredChange == "distWindow") {
 			distanceWindows = $(this).val();
 		}
+
 		else if (triggeredChange == "uvalue") {
 			uvalueValue = $(this).val();
 		}
@@ -335,9 +336,7 @@ render.makeGraph = function () {
 
 
 	function updateFacade(wallData, glzData, newGlzWidth, newGlzHeight) {
-
-
-		//update svg with change in heights....
+		//update svg size with change in heights....
 
 		//update wall with revised data
 		wall.data(wallData)
@@ -352,10 +351,9 @@ render.makeGraph = function () {
 			.attr("x", function(d) {return facadeScaleWidth(d[3][0])})
 			.attr("y", function(d) {return facadeScaleHeight(d[3][2])})
 			.attr("width", facadeScaleWidth(newGlzWidth))
-			.attr("height", facadeScaleHeight(maxWallHeight - glzHeight))
+			.attr("height", facadeScaleHeight(maxWallHeight - newGlzHeight))
 			.transition()
 			.duration(500);
-
 	}
 
 
