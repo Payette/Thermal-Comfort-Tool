@@ -25,7 +25,7 @@ var clothingValue = $("#clothing").val();
 var metabolic = $("#metabolic").val();
 
 
-
+// Main function to run the analysis.
 script.computeData = function() {
 	//let the console know the function is running.
 	console.log("Compute Data is Running!")
@@ -37,8 +37,8 @@ script.computeData = function() {
 	var viewResult = geo.computeAllViewFac(geoResult.wallCoords, geoResult.glzCoords)
 	
 	// Compute the PPD for each point.
-	var dataset = comf.getFullPPD(viewResult.wallViews, viewResult.glzViews, windowHeightValue, uvalueValue, intLowEChecked, intLowEEmissivity, rvalueValue, airtempValue, outdoorTempValue, radiantFloorChecked, clothingValue, metabolic, airspeedValue, humidityValue)
-
+	var theDataset = comf.getFullPPD(viewResult.wallViews, viewResult.glzViews, windowHeightValue, uvalueValue, intLowEChecked, intLowEEmissivity, rvalueValue, airtempValue, outdoorTempValue, radiantFloorChecked, clothingValue, metabolic, airspeedValue, humidityValue)
+	
 	// Return all of the information in one dictionary
 	var r = {}
 	r.wallCoords = geoResult.wallCoords;
@@ -46,7 +46,7 @@ script.computeData = function() {
 	r.glzRatio = geoResult.glzRatio;
 	r.windowWidth = geoResult.windowWidth;
 	r.windowHeight = geoResult.windowHeight;
-	r.dataSet = dataset;
+	r.dataSet = theDataset;
 	
 	return r
 }

@@ -82,11 +82,11 @@ render.makeGraph = function () {
 		.attr("transform", function() {
 				return "translate(" + margin.left + "," + margin.top + ")";})
 		.style("fill", function(d) { 
-			if (d.govfact = "mrt") {
+			if (d.govfact == "mrt") {
 				return "red";
-			} else if (d.govfact = "dwn") {
+			} else if (d.govfact == "dwn") {
 				return "green";
-			} else if (d.govfact = "asym") {
+			} else if (d.govfact == "asym") {
 				return "blue";
 			}
 		})
@@ -298,17 +298,17 @@ render.makeGraph = function () {
 
 	/* ------ FUNCTIONS TO UPDATE VISUALS ------ */
 
-	function updateGraphData(dataset) {
+	function updateGraphData(upDataset) {
 		//update graph with revised data
-		graphPoints.data(dataset)
+		graphPoints.data(upDataset)
 			.attr("cx", function(d) { return x(d.dist); })
 			.attr("cy", function(d) { return y(d.ppd); })
 			.style("fill", function(d) { 
-				if (d.govfact = "mrt") {
+				if (d.govfact == "mrt") {
 					return "red";
-				} else if (d.govfact = "dwn") {
+				} else if (d.govfact == "dwn") {
 					return "green";
-				} else if (d.govfact = "asym") {
+				} else if (d.govfact == "asym") {
 					return "blue";
 				}
 			})
@@ -317,7 +317,7 @@ render.makeGraph = function () {
 
 		//update connection line
 		graphSvg.selectAll(".connectLine")
-			.attr("d", line(dataset))
+			.attr("d", line(upDataset))
 			.transition()
 			.duration(500);
 	}
