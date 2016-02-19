@@ -51,8 +51,6 @@ script.computeData = function() {
 	return r
 }
 
-//Function that calculates the real data based on the inputs
-var dataset = script.computeData().dataSet;
 
 //Call the function to render the graph.
 render.makeGraph();

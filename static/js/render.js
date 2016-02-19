@@ -4,6 +4,9 @@ var render = render || {}
 render.makeGraph = function () {
 
 	console.log("making graph");
+	var allData = script.computeData()
+	var dataset = allData.dataSet
+	//console.log(dataset)
 
 	/* ------ SET UP GRAPH VARIABLES AND DATA FUNCTIONS ------ */
 	var margin = {top: 20, right: 40, bottom: 20, left: 40},
@@ -159,9 +162,9 @@ render.makeGraph = function () {
 
 
 	// window coordinates
-	var glzCoords = script.computeData().glzCoords;
-	var glzWidth = script.computeData().windowWidth;
-	var glzHeight = script.computeData().windowHeight;
+	var glzCoords = allData.glzCoords;
+	var glzWidth = allData.windowWidth;
+	var glzHeight = allData.windowHeight;
 
 	console.log(glzCoords);
 
@@ -213,7 +216,7 @@ render.makeGraph = function () {
 			//update boolean
 			glzOrWidth = false;
 			//update glazing ratio
-			glzRatioValue = script.computeData().glzRatio*100;
+			glzRatioValue = allData.glzRatio*100;
 			//display updated glazing ratio
 			$("#glazing").val((Math.round(glzRatioValue)));
 		}
@@ -222,7 +225,7 @@ render.makeGraph = function () {
 			//update boolean
 			glzOrWidth = true;
 			//update window width
-			windowWidthValue = script.computeData().windowWidth;
+			windowWidthValue = allData.windowWidth;
 			//display updated window width
 			$("#windowWidth").val(windowWidthValue);
 		}
@@ -280,10 +283,11 @@ render.makeGraph = function () {
 
 
 		//update datasets and graph with new value
-		var newDataset = script.computeData().dataSet;
-		var newGlzCoords = script.computeData().glzCoords;
-		var newGlzWidth = script.computeData().windowWidth;
-		var newGlzHeight = script.computeData().windowHeight;
+		var fullData = script.computeData()
+		var newDataset = fullData.dataSet;
+		var newGlzCoords = fullData.glzCoords;
+		var newGlzWidth = fullData.windowWidth;
+		var newGlzHeight = fullData.windowHeight;
 
 		updateGraphData(newDataset);
 		updateFacade(wallPoints, newGlzCoords, newGlzWidth, newGlzHeight); 
