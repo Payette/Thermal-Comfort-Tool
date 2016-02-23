@@ -347,6 +347,7 @@ render.makeGraph = function () {
 			.duration(500);
 
 		//update windows
+//TO DO - windows not centering properly on update...
 		windows.data(glzData)
 			.attr("x", function(d) {return facadeScaleWidth(d[3][0])})
 			.attr("y", function(d) {return facadeScaleHeight(d[3][2])})
