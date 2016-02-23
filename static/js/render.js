@@ -6,7 +6,6 @@ render.makeGraph = function () {
 	console.log("making graph");
 	var allData = script.computeData()
 	var dataset = allData.dataSet
-	//console.log(dataset)
 
 	/* ------ SET UP GRAPH VARIABLES AND DATA FUNCTIONS ------ */
 	var margin = {top: 20, right: 40, bottom: 20, left: 40},
@@ -111,23 +110,24 @@ render.makeGraph = function () {
 	var facMargin = {top: 20, right: 40, bottom: 20, left: 40},
     	facWidth = 570 - facMargin.left - facMargin.right,
     	facHeight = 300 - facMargin.top - facMargin.bottom;
+    //TO DO change SVG height to be responsive to ceiling height....
 
 
 
 
-//change SVG height to be responsive to ceiling height....
     var facadeScaleWidth = d3.scale.linear()
 				.domain([0, wallPoints[0].wallWidth]) //input domain
 				.range([0, facWidth]); //output range
 
 
+	//set max wall height to map to SVG dimensions
 	var maxWallHeight = 20;
 	var facadeScaleHeight = d3.scale.linear()
 				.domain([0, maxWallHeight]) //input domain
 				.range([facHeight, 0]); //output fance
 				
 
-// Define axes
+	// Define axes
 	var xFacAxis = d3.svg.axis().scale(facadeScaleWidth).orient("bottom").ticks(20);
 	var yFacAxis = d3.svg.axis().scale(facadeScaleHeight).orient("left").ticks(20);
 
@@ -336,7 +336,7 @@ render.makeGraph = function () {
 
 
 	function updateFacade(wallData, glzData, newGlzWidth, newGlzHeight) {
-		//update svg size with change in heights....
+		//TO DO update svg size if ceiling height is above max dim....
 
 		//update wall with revised data
 		wall.data(wallData)
