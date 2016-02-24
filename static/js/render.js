@@ -187,12 +187,12 @@ render.makeGraph = function () {
 		.enter()
 		.append("rect")
 		.attr("class", "window")
-		.attr("x", function(d) {return facadeScaleWidth(d[3][0])})
+		.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facWidth/2)})
 		.attr("y", function(d) {return facadeScaleHeight(wallPoints[0].wallHeight - glzHeight - sillHeightValue)})
 		.attr("width", facadeScaleWidth(glzWidth))
 		.attr("height", facadeScaleHeight(glzHeight))
 		.attr("transform", function() {
-			return "translate(" + (facWidth/2 + facMargin.left) + "," + facMargin.top + ")";
+			return "translate(" + facMargin.left + "," + facMargin.top + ")";
 		});
 
 
@@ -353,10 +353,10 @@ render.makeGraph = function () {
 		//update windows
 //TO DO - windows not centering properly on update, nor is width always updating......
 		windows.data(glzData)
-			.attr("x", function(d) {return facadeScaleWidth(d[3][0])})
+			.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facWidth/2)})
 			.attr("y", function(d) {return facadeScaleHeight(wallPoints[0].wallHeight - glzHeight - sillHeightValue)})
-			.attr("width", facadeScaleWidth(glzWidth))
-			.attr("height", facadeScaleHeight(glzHeight))
+			.attr("width", facadeScaleWidth(newGlzWidth))
+			.attr("height", facadeScaleHeight(newGlzHeight))
 			.transition()
 			.duration(500);
 	}
