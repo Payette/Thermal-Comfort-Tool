@@ -3,13 +3,17 @@ var render = render || {}
 //function to make graph
 render.makeGraph = function () {
 
+
+	var maxContainerWidth = 570; // based on Payette website layout
+
+
 	console.log("making graph");
 	var allData = script.computeData()
 	var dataset = allData.dataSet
 
 	/* ------ SET UP GRAPH VARIABLES AND DATA FUNCTIONS ------ */
 	var margin = {top: 20, right: 40, bottom: 20, left: 40},
-    	width = 570 - margin.left - margin.right,
+    	width = maxContainerWidth - margin.left - margin.right,
     	height = 470 - margin.top - margin.bottom;
     	//padding = allObjectsDataset.length * 1.35;
 
@@ -105,16 +109,22 @@ render.makeGraph = function () {
 		wallHeight: ceilingHeightValue
 	}];
 
+	// window coordinates
+	var glzCoords = allData.glzCoords;
+	var glzWidth = allData.windowWidth;
+	var glzHeight = allData.windowHeight;
+
+	console.log(glzCoords);
+
 
 	//Set SVG height to be proportionate to wall length and extend of wall height
-	var proportionateSVGHeight = (570/wallLen)*wallPoints[0].wallHeight;
+	var proportionateSVGHeight = (maxContainerWidth/wallLen)*wallPoints[0].wallHeight;
 
 	
 	var facMargin = {top: 40, right: 40, bottom: 40, left: 40},
-    	facWidth = 570 - facMargin.left - facMargin.right,
+    	facWidth = maxContainerWidth - facMargin.left - facMargin.right,
     	facHeight = proportionateSVGHeight - facMargin.top - facMargin.bottom;
     
-
 
 
     var facadeScaleWidth = d3.scale.linear()
@@ -122,8 +132,6 @@ render.makeGraph = function () {
 				.range([0, facWidth]); //output range
 
 
-	//set max wall height to map to SVG dimensions
-	//var maxWallHeight = 20;
 	var facadeScaleHeight = d3.scale.linear()
 				.domain([0, wallPoints[0].wallHeight]) //input domain
 				.range([0, facHeight]); //output range
@@ -146,11 +154,13 @@ render.makeGraph = function () {
 	// add axes for reference
 	facadeSvg.append("g")
 		.attr("class", "axis")
+		.attr("id", "xAxis")
 		.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top) + ")")
     	.call(xFacAxis);
 
 	facadeSvg.append("g")
 	    .attr("class", "axis")
+	    .attr("id", "yAxis")
 	    .attr("transform", "translate(" + facMargin.left + "," + (facMargin.top) + ")")
 	    .call(yFacAxis);
 
@@ -170,17 +180,6 @@ render.makeGraph = function () {
 				return "translate(" + facMargin.left + "," + facMargin.top + ")";})
 		.style("fill", "lightgrey");
 
-
-
-
-
-
-	// window coordinates
-	var glzCoords = allData.glzCoords;
-	var glzWidth = allData.windowWidth;
-	var glzHeight = allData.windowHeight;
-
-	console.log(glzCoords);
 
 
 	var windows = facadeSvg.selectAll(".window")
@@ -330,10 +329,15 @@ render.makeGraph = function () {
 
 
 	function updateFacade(wallData, glzData, newGlzWidth, newGlzHeight) {
-		//TO DO update svg size if ceiling height is above max dim....
-		facadeSvg = d3.select("#facade")
-				.attr("width", facWidth + facMargin.left + facMargin.right)
-				.attr("height", facHeight + facMargin.top + facMargin.bottom);
+		//Update svg size to match new ceiling height
+		var newProportionateSVGHeight = (maxContainerWidth/wallData[0].wallWidth)*wallData[0].wallHeight;
+		//redefine facade height
+		facHeight = newProportionateSVGHeight - facMargin.top - facMargin.bottom;
+		//update SVG with new height
+		d3.select("#facade")
+			.attr("height", facHeight + facMargin.top + facMargin.bottom)
+			.transition()
+			.duration(500);
 
 
 
