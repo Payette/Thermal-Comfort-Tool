@@ -22,20 +22,28 @@
 
 
 <body>
-	<h1>Evaluating Thermal Discomfort</h1>
+
+	<div id="visual">
+
+		<div id="graphWrapper">
+		</div>
+
+		<div id="facadeWrapper">
+		</div>
+
+	</div>
 
 
-	<div id="graph"></div> 
 
 	<div id="inputs">
 		<form id="form">
-		<fieldset>
-			<legend>Climate Inputs</legend>
+		<fieldset class="inputgroup">
+			<legend class="heading">Climate Inputs</legend>
 			<label for="outdoortemp">Outdoor Temperature (F):</label>
 			<input type="text" name="outdoortemp" id="outdoortemp" value="15"><br>
 		</fieldset>
-		<fieldset>
-			<legend>Geometry Inputs</legend>
+		<fieldset class="inputgroup">
+			<legend class="heading">Geometry Inputs</legend>
 			<label for="ceiling">Ceiling Height (ft):</label>
 			<input type="text" name="ceiling" id="ceiling" value="12"><br>
 			<label for="height">Window Height (ft):</label>
@@ -49,12 +57,12 @@
 			<label for="sill">Dist Between Window Centerlines (ft):</label>
 			<input type="text" name="distWindow" id="distWindow" value="6"><br>
 		</fieldset>
-		<fieldset>
-			<legend>Performance Inputs</legend>
+		<fieldset class="inputgroup">
+			<legend class="heading">Performance Inputs</legend>
 			<label for="uvalue">Window U-Value:</label>
 			<input type="text" name="uvalue" id="uvalue" value="0.25"><br>
 			<label for="lowECheck">Interior Low E Coating:</label>
-			<input type="checkbox" name="lowECheck" id="lowECheck" >
+			<input type="checkbox" name="lowECheck" id="lowECheck"><br>
 			<label for="lowE">Emissivity:</label>
 			<input type="text" name="lowE" id="lowE" value=""><br>
 			<label for="rvalue">Wall R-Value:</label>
@@ -62,8 +70,8 @@
 			<label for="ppd">PPD (%):</label>
 			<input type="text" name="ppd" id="ppd" value="10"><br>
 		</fieldset>
-		<fieldset>
-			<legend>Advanced Options</legend>
+		<fieldset class="inputgroup">
+			<legend class="heading">Advanced Options</legend>
 			<label for="airtemp">Indoor Ambient Temperature (F):</label>
 			<input type="text" name="airtemp" id="airtemp" value="72"><br>
 			<label for="radiant">Radiant Floor:</label>
@@ -80,16 +88,7 @@
 		</form>
 	</div>
 
-	<div id="visual">
-
-		<div id="graphWrapper">
-		</div>
-
-		<div id="facadeWrapper">
-		</div>
-
-	</div>
-
+	
  
  	<!-- Make Chart -->
 	<script type="text/javascript" src="static/js/render.js"></script> 

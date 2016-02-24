@@ -1,17 +1,7 @@
-.axis path,
-.axis line {
-    fill: none;
-    stroke: black;
-    shape-rendering: crispEdges;
-}
-
-.axis text {
-    font-family: sans-serif;
-    font-size: 11px;
-}
-
 #visual {
 	float: left;
+	width: 550px;
+	padding: 0 20px 0 0;
 }
 
 #graphWrapper {
@@ -23,5 +13,116 @@
 }
 
 #inputs {
-	float: right;
+	float: left;
+	width: 390px;
+
+	font-family: "museo-sans", sans-serif;
 }
+
+#inputs legend {
+	font-weight: 700;
+	font-size: 12px;
+	text-transform: uppercase;
+	padding: 0 0 10px 0;
+}
+
+#inputs .inputgroup {
+	border: none;
+	padding: 0 0 10px 0;
+}
+
+#inputs input {
+	padding: 0;
+	margin: 3px 0;
+	display: inline-block;
+	float: left;
+	width: 38px;
+
+	border-style: solid;
+	border-width: 1px;
+	border-color: #b9b9b9;
+
+	font-weight: 300;
+	font-size: 10px;
+	color: black;
+	
+}
+
+#inputs label {
+	padding: 0;
+	margin: 3px 0;
+	float: left;
+	clear: left;
+	width: 140px;
+	text-align: left;
+
+	color: #b9b9b9;
+	font-weight: 300;
+	font-size: 12px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* remove below here */
+.facadeaxis path,
+.facadeaxis line {
+	fill: none;
+	stroke-width: 1;
+	stroke: black;
+}
+
+.facadeaxis text {
+    font-family: "museo-sans", sans-serif;
+    font-size: 11px;
+}
+/* remove above here */
+
+
+
+.axis text {
+    font-family: "museo-sans", sans-serif;
+    font-size: 11px;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+}
+
+.grid line {
+	stroke-width: .5;
+	stroke: rgb(190,190,190);
+}
+
+.grid path {
+	stroke-width: 0;
+}
+
+#graphXAxis line {
+	stroke-width: .5;
+	stroke: rgb(90,90,90);
+}
+
+#graphYAxis line {
+	stroke-width: 0;
+}
+
+
+
+
+
+
+@font-face {
+	font-family: "museo-sans";
+	src: url('../fonts/museosans.otf');
+}
+

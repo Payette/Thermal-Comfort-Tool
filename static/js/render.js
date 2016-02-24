@@ -5,6 +5,10 @@ render.makeGraph = function () {
 
 
 	var maxContainerWidth = 570; // based on Payette website layout
+	var blue = "rgb(0,160,221)";
+	var orange = "rgb(248,151,29)";
+	var green = "rgb(176,199,44)";
+
 
 
 	console.log("making graph");
@@ -46,13 +50,25 @@ render.makeGraph = function () {
 	// add axes
 	graphSvg.append("g")
 		.attr("class", "axis")
+		.attr("id", "graphXAxis")
 		.attr("transform", "translate(" + margin.left + "," + (height + margin.top) + ")")
-    	.call(xAxis);
+    	.call(xAxis.ticks(7));
 
 	graphSvg.append("g")
 	    .attr("class", "axis")
-	    .attr("transform", "translate(" + margin.left + "," + (margin.top) + ")")
-	    .call(yAxis);
+	    .attr("id", "graphYAxis")
+	    .attr("transform", "translate(" + (margin.left) + "," + margin.top + ")")
+	    .call(yAxis.ticks(4));
+
+	// add horizontal grid
+	graphSvg.append("g")         
+        .attr("class", "grid")
+        .attr("transform", "translate(" + (margin.left) + "," + margin.top + ")")
+        .call(yAxis
+            .tickSize(-width, 0, 0)
+            .tickFormat("")
+            .ticks(7)
+        );
 
 
 
@@ -70,7 +86,8 @@ render.makeGraph = function () {
 			.attr("transform", function() {
 				return "translate(" + margin.left + "," + margin.top + ")";})
 			.style("fill", "none")
-			.style("stroke", "black");
+			.style("stroke", "rgb(90,90,90)")
+			.style("stroke-width", .5);
 
 
     // Add dots at each point
@@ -86,11 +103,11 @@ render.makeGraph = function () {
 				return "translate(" + margin.left + "," + margin.top + ")";})
 		.style("fill", function(d) { 
 			if (d.govfact == "mrt") {
-				return "red";
+				return blue;
 			} else if (d.govfact == "dwn") {
-				return "green";
+				return orange;
 			} else if (d.govfact == "asym") {
-				return "blue";
+				return green;
 			}
 		})
 
@@ -153,14 +170,12 @@ render.makeGraph = function () {
 
 	// add axes for reference
 	facadeSvg.append("g")
-		.attr("class", "axis")
-		.attr("id", "xAxis")
+		.attr("class", "facadeaxis")
 		.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top) + ")")
     	.call(xFacAxis);
 
 	facadeSvg.append("g")
-	    .attr("class", "axis")
-	    .attr("id", "yAxis")
+	    .attr("class", "facadeaxis")
 	    .attr("transform", "translate(" + facMargin.left + "," + (facMargin.top) + ")")
 	    .call(yFacAxis);
 
