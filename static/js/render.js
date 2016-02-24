@@ -3,13 +3,17 @@ var render = render || {}
 //function to make graph
 render.makeGraph = function () {
 
+
+	var maxContainerWidth = 570; // based on Payette website layout
+
+
 	console.log("making graph");
 	var allData = script.computeData()
 	var dataset = allData.dataSet
 
 	/* ------ SET UP GRAPH VARIABLES AND DATA FUNCTIONS ------ */
 	var margin = {top: 20, right: 40, bottom: 20, left: 40},
-    	width = 570 - margin.left - margin.right,
+    	width = maxContainerWidth - margin.left - margin.right,
     	height = 470 - margin.top - margin.bottom;
     	//padding = allObjectsDataset.length * 1.35;
 
@@ -105,14 +109,22 @@ render.makeGraph = function () {
 		wallHeight: ceilingHeightValue
 	}];
 
+	// window coordinates
+	var glzCoords = allData.glzCoords;
+	var glzWidth = allData.windowWidth;
+	var glzHeight = allData.windowHeight;
+
+	console.log(glzCoords);
+
+
+	//Set SVG height to be proportionate to wall length and extend of wall height
+	var proportionateSVGHeight = (maxContainerWidth/wallLen)*wallPoints[0].wallHeight;
 
 	
-	var facMargin = {top: 20, right: 40, bottom: 20, left: 40},
-    	facWidth = 570 - facMargin.left - facMargin.right,
-    	facHeight = 300 - facMargin.top - facMargin.bottom;
-    //TO DO change SVG height to be responsive to ceiling height....
-
-
+	var facMargin = {top: 40, right: 40, bottom: 40, left: 40},
+    	facWidth = maxContainerWidth - facMargin.left - facMargin.right,
+    	facHeight = proportionateSVGHeight - facMargin.top - facMargin.bottom;
+    
 
 
     var facadeScaleWidth = d3.scale.linear()
@@ -120,16 +132,14 @@ render.makeGraph = function () {
 				.range([0, facWidth]); //output range
 
 
-	//set max wall height to map to SVG dimensions
-	var maxWallHeight = 20;
 	var facadeScaleHeight = d3.scale.linear()
-				.domain([0, maxWallHeight]) //input domain
-				.range([facHeight, 0]); //output fance
+				.domain([0, wallPoints[0].wallHeight]) //input domain
+				.range([0, facHeight]); //output range
 				
 
 	// Define axes
-	var xFacAxis = d3.svg.axis().scale(facadeScaleWidth).orient("bottom").ticks(20);
-	var yFacAxis = d3.svg.axis().scale(facadeScaleHeight).orient("left").ticks(20);
+	var xFacAxis = d3.svg.axis().scale(facadeScaleWidth).orient("top").ticks(20);
+	var yFacAxis = d3.svg.axis().scale(facadeScaleHeight).orient("left").ticks(10);
 
 
 
@@ -144,12 +154,13 @@ render.makeGraph = function () {
 	// add axes for reference
 	facadeSvg.append("g")
 		.attr("class", "axis")
-		//.attr("transform", "translate(" + facMargin.left + "," + (facHeight + facMargin.top) + ")")
-		.attr("transform", "translate(" + facMargin.left + "," + (facHeight + facMargin.top) + ")")
+		.attr("id", "xAxis")
+		.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top) + ")")
     	.call(xFacAxis);
 
 	facadeSvg.append("g")
 	    .attr("class", "axis")
+	    .attr("id", "yAxis")
 	    .attr("transform", "translate(" + facMargin.left + "," + (facMargin.top) + ")")
 	    .call(yFacAxis);
 
@@ -162,45 +173,27 @@ render.makeGraph = function () {
 		.append("rect") 
 		.attr("class","wall") 
 		.attr("x", 0)
-		.attr("y", function(d) {return facadeScaleHeight(d.wallHeight)})
-		.attr("width", function(d) { return facadeScaleWidth(d.wallWidth)})
-		.attr("height", function(d) {return facadeScaleHeight(maxWallHeight - d.wallHeight)})
+		.attr("y", 0)
+		.attr("width", function(d) {return facadeScaleWidth(d.wallWidth)})
+		.attr("height", function(d) {return facadeScaleHeight(d.wallHeight)})
 		.attr("transform", function() {
-				return "translate(" + facMargin.left + "," + (facMargin.top) + ")";})
+				return "translate(" + facMargin.left + "," + facMargin.top + ")";})
 		.style("fill", "lightgrey");
 
 
 
-
-
-
-	// window coordinates
-	var glzCoords = allData.glzCoords;
-	var glzWidth = allData.windowWidth;
-	var glzHeight = allData.windowHeight;
-
-	console.log(glzCoords);
-
-
-	//Add windows
 	var windows = facadeSvg.selectAll(".window")
 		.data(glzCoords)
 		.enter()
 		.append("rect")
 		.attr("class", "window")
-		.attr("x", function(d) {return facadeScaleWidth(d[3][0])})
-		.attr("y", function(d) {return facadeScaleHeight(d[3][2])})
+		.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facWidth/2)})
+		.attr("y", function(d) {return facadeScaleHeight(wallPoints[0].wallHeight - glzHeight - sillHeightValue)})
 		.attr("width", facadeScaleWidth(glzWidth))
-		.attr("height", facadeScaleHeight(maxWallHeight - glzHeight))
+		.attr("height", facadeScaleHeight(glzHeight))
 		.attr("transform", function() {
-			return "translate(" + (facWidth/2 + facMargin.left) + "," + facMargin.top + ")";
+			return "translate(" + facMargin.left + "," + facMargin.top + ")";
 		});
-
-
-
-
-
-
 
 
 
@@ -336,23 +329,34 @@ render.makeGraph = function () {
 
 
 	function updateFacade(wallData, glzData, newGlzWidth, newGlzHeight) {
-		//TO DO update svg size if ceiling height is above max dim....
-
-		//update wall with revised data
-		wall.data(wallData)
-			.attr("y", function(d) {return facadeScaleHeight(d.wallHeight)})
-			.attr("width", function(d) { return facadeScaleWidth(d.wallWidth)})
-			.attr("height", function(d) {return facadeScaleHeight(maxWallHeight - d.wallHeight)})
+		//Update svg size to match new ceiling height
+		var newProportionateSVGHeight = (maxContainerWidth/wallData[0].wallWidth)*wallData[0].wallHeight;
+		//redefine facade height
+		facHeight = newProportionateSVGHeight - facMargin.top - facMargin.bottom;
+		//update SVG with new height
+		d3.select("#facade")
+			.attr("height", facHeight + facMargin.top + facMargin.bottom)
 			.transition()
 			.duration(500);
 
+
+
+		//update wall with revised data
+		wall.data(wallData)
+			.attr("width", function(d) {return facadeScaleWidth(d.wallWidth)})
+			.attr("height", function(d) {return facadeScaleHeight(d.wallHeight)})
+			.transition()
+			.duration(500);
+
+
+
 		//update windows
-//TO DO - windows not centering properly on update...
+//TO DO - windows not centering properly on update, nor is width always updating......
 		windows.data(glzData)
-			.attr("x", function(d) {return facadeScaleWidth(d[3][0])})
-			.attr("y", function(d) {return facadeScaleHeight(d[3][2])})
+			.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facWidth/2)})
+			.attr("y", function(d) {return facadeScaleHeight(wallPoints[0].wallHeight - glzHeight - sillHeightValue)})
 			.attr("width", facadeScaleWidth(newGlzWidth))
-			.attr("height", facadeScaleHeight(maxWallHeight - newGlzHeight))
+			.attr("height", facadeScaleHeight(newGlzHeight))
 			.transition()
 			.duration(500);
 	}
