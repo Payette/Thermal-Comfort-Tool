@@ -4,23 +4,20 @@ var render = render || {}
 render.makeGraph = function () {
 
 
-	var maxContainerWidth = 570; // based on Payette website layout
+	var maxContainerWidth = 550; // based on Payette website layout
 	var blue = "rgb(0,160,221)";
 	var orange = "rgb(248,151,29)";
 	var green = "rgb(176,199,44)";
+	var grey = "rgb(190,190,190";
+	var lightblue = "rgb(194,224,255)"
 
-
-
-	console.log("making graph");
 	var allData = script.computeData()
 	var dataset = allData.dataSet
 
 	/* ------ SET UP GRAPH VARIABLES AND DATA FUNCTIONS ------ */
-	var margin = {top: 20, right: 40, bottom: 20, left: 40},
+	var margin = {top: 50, right: 0, bottom: 50, left: 50},
     	width = maxContainerWidth - margin.left - margin.right,
     	height = 470 - margin.top - margin.bottom;
-    	//padding = allObjectsDataset.length * 1.35;
-
 
 
 	// Set up scale functions
@@ -40,8 +37,8 @@ render.makeGraph = function () {
 
 
 
-	/* ------ MAKE THE GRAPH ------ */
-	//Create SVG
+	/* ------------------ MAKE THE GRAPH ------------------ */
+	// Add SVG
 	var graphSvg = d3.select("#graphWrapper")
 				.append("svg")
 				.attr("id", "graph")
@@ -52,7 +49,7 @@ render.makeGraph = function () {
 		.attr("class", "axis")
 		.attr("id", "graphXAxis")
 		.attr("transform", "translate(" + margin.left + "," + (height + margin.top) + ")")
-    	.call(xAxis.ticks(7));
+    	.call(xAxis.ticks(6).tickValues([2, 4, 6, 8, 10, 12]));
 
 	graphSvg.append("g")
 	    .attr("class", "axis")
@@ -70,6 +67,21 @@ render.makeGraph = function () {
             .ticks(7)
         );
 
+    // add axes labels
+   	graphSvg.append("text")
+	    .attr("class", "axislabel")
+	    .attr("text-anchor", "middle")
+	    .attr("x", width/2 + margin.left)
+	    .attr("y", height + margin.bottom*1.8)
+	    .text("PPD (Percentage of People Dissatisfied)");
+
+	graphSvg.append("g")
+	.attr("transform", "translate(" + margin.left*.2 + "," + (height/2 + margin.top) + ")")
+	.append("text")
+    .attr("class", "axislabel")
+    .attr("text-anchor", "middle")
+    .attr("transform", "rotate(-90)")
+    .text("Distance from Façade (ft)");
 
 
 
@@ -117,7 +129,7 @@ render.makeGraph = function () {
 
 
 
-	/* ------ MAKE THE FACADE ------ */
+	/* ------ SET UP FACADE VARIABLES AND DATA FUNCTIONS ------ */
 
 	// wall coordinates
 	var wallPoints = [{
@@ -132,20 +144,20 @@ render.makeGraph = function () {
 	var glzHeight = allData.windowHeight;
 
 
-	//Set SVG height to be proportionate to wall length and extend of wall height
-	var proportionateSVGHeight = (maxContainerWidth/wallLen)*wallPoints[0].wallHeight;
 
-	
-	var facMargin = {top: 40, right: 40, bottom: 40, left: 40},
-    	facWidth = maxContainerWidth - facMargin.left - facMargin.right,
-    	facHeight = proportionateSVGHeight - facMargin.top - facMargin.bottom;
-    
+	var facMargin = {top: 50, right: 0, bottom: 50, left: 50};
 
+	// Set SVG height to be proportionate to wall length and extend of wall height
 
+	var facWidth = maxContainerWidth - facMargin.left - facMargin.right;
+
+	var proportinateMultiplier = facWidth/wallPoints[0].wallWidth;
+    var facHeight = proportinateMultiplier*wallPoints[0].wallHeight;
+
+	// Set up scale functions
     var facadeScaleWidth = d3.scale.linear()
 				.domain([0, wallPoints[0].wallWidth]) //input domain
 				.range([0, facWidth]); //output range
-
 
 	var facadeScaleHeight = d3.scale.linear()
 				.domain([0, wallPoints[0].wallHeight]) //input domain
@@ -154,7 +166,7 @@ render.makeGraph = function () {
 
 	// Define axes
 	var xFacAxis = d3.svg.axis().scale(facadeScaleWidth).orient("top").ticks(20);
-	var yFacAxis = d3.svg.axis().scale(facadeScaleHeight).orient("left").ticks(10);
+	var yFacAxis = d3.svg.axis().scale(facadeScaleHeight).orient("left").ticks(15);
 
 
 
@@ -166,7 +178,7 @@ render.makeGraph = function () {
 				.attr("width", facWidth + facMargin.left + facMargin.right)
 				.attr("height", facHeight + facMargin.top + facMargin.bottom);
 
-	// add axes for reference
+/*//------ add axes for reference - TO BE DELETED
 	facadeSvg.append("g")
 		.attr("class", "facadeaxis")
 		.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top) + ")")
@@ -176,7 +188,7 @@ render.makeGraph = function () {
 	    .attr("class", "facadeaxis")
 	    .attr("transform", "translate(" + facMargin.left + "," + (facMargin.top) + ")")
 	    .call(yFacAxis);
-
+*/
 
 
 	//Initialize wall facade
@@ -191,7 +203,7 @@ render.makeGraph = function () {
 		.attr("height", function(d) {return facadeScaleHeight(d.wallHeight)})
 		.attr("transform", function() {
 				return "translate(" + facMargin.left + "," + facMargin.top + ")";})
-		.style("fill", "lightgrey");
+		.style("fill", grey);
 
 	
 	for (var i = 0; i < glzCoords.length; i++) {
@@ -211,8 +223,14 @@ render.makeGraph = function () {
 		.attr("height", facadeScaleHeight(glzHeight))
 		.attr("transform", function() {
 			return "translate(" + facMargin.left + "," + facMargin.top + ")";
-		});
+		})
+		.style("fill", lightblue);
 
+
+
+
+	//Add facade dimensions
+	drawHorziontalDimensions(wallPoints[0].wallWidth, facHeight);
 
 
 
@@ -347,10 +365,12 @@ render.makeGraph = function () {
 
 
 	function updateFacade(wallData, glzData, newGlzWidth, newGlzHeight) {
-		//Update svg size to match new ceiling height
-		var newProportionateSVGHeight = (maxContainerWidth/wallData[0].wallWidth)*wallData[0].wallHeight;
+		///Update svg size to match new ceiling height
+		var newProportinateMultiplier = facWidth/wallData[0].wallWidth;
+
 		//redefine facade height
-		facHeight = newProportionateSVGHeight - facMargin.top - facMargin.bottom;
+		facHeight = newProportinateMultiplier*wallData[0].wallHeight;
+
 		//update SVG with new height
 		d3.select("#facade")
 			.attr("height", facHeight + facMargin.top + facMargin.bottom)
@@ -380,12 +400,69 @@ render.makeGraph = function () {
 				.attr("height", facadeScaleHeight(newGlzHeight))
 				.attr("transform", function() {
 					return "translate(" + facMargin.left + "," + facMargin.top + ")";
-				});
+				})
+				.style("fill","lightblue");
 		}
-		
-		
-		
+
+		//update dimensions
+		d3.select("#facadeWidth")
+			.transition()
+			.duration(500)
+			.attr("transform", "translate(" + facMargin.left + "," + (facHeight + facMargin.bottom*1.4) + ")");
+
 	}
+
+
+
+
+	//create arrowhead marker
+	facadeSvg.append("defs").append("marker")
+	    .attr("id", "arrowhead")
+	    .attr("refX", 6)
+	    .attr("refY", 2)
+	    .attr("viewBox", "0 0 6 6")
+	    .attr("markerWidth", 8)
+	    .attr("markerHeight", 8)
+	    .attr("orient", "auto")
+	    .append("path")
+        .attr("d", "M 0,0 V 4 L6,2 Z"); //this is actual shape for arrowhead
+
+
+	function drawHorziontalDimensions(length, svgHeight) {
+
+		facadeSvg.append("g")
+			.attr("class", "dimensions")
+			.attr("id", "facadeWidth")
+			.attr("transform", "translate(" + facMargin.left + "," + (svgHeight + facMargin.bottom*1.4) + ")");
+
+		var facWidthDimensions = facadeSvg.selectAll("#facadeWidth");
+
+		facWidthDimensions.append("text") // add width label
+			.attr("class", "axislabel")
+			.attr("text-anchor", "middle")
+		    .attr("x", function() {return facadeScaleWidth(length/2)})
+		    .attr("y", 0)
+		    .text(length + " ft");
+
+		facWidthDimensions.append("line") // add line on left side of text
+		    .attr("class", "dimline")
+		    .attr("x2", 0)
+			.attr("x1", function() {return facadeScaleWidth(length/2) - 20})
+			.attr("y1", -4)
+			.attr("y2", -4)
+			.attr("marker-end", "url(#arrowhead)");
+
+		facWidthDimensions.append("line") // add line on right side of text
+		    .attr("class", "dimline")
+		    .attr("x1", function() {return facadeScaleWidth(length/2) + 20})
+			.attr("x2", function() {return facadeScaleWidth(length)})
+			.attr("y1", -4)
+			.attr("y2", -4)
+			.attr("marker-end", "url(#arrowhead)");
+	}
+
+
+
 
 
 	function drawHorizontalReferenceLine(data) {

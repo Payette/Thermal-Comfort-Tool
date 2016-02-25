@@ -1,16 +1,80 @@
 #visual {
 	float: left;
 	width: 550px;
-	padding: 0 20px 0 0;
+	padding: 0;
+	margin: 0 20px 0 0;
 }
 
 #graphWrapper {
 	
 }
 
+#graph .axislabel {
+	font-family: "museo-sans", sans-serif;
+	font-size: 10px;
+	font-weight: 700;
+}
+
+#graph .axis text {
+    font-family: "museo-sans", sans-serif;
+    font-size: 10px;
+}
+
+#graph .axis path,
+#graph .axis line {
+    fill: none;
+}
+
+
+#graph .grid line { /* horizontal reference lines */
+	stroke-width: 1;
+	stroke: #000;
+	stroke-linecap: round;
+	stroke-dasharray: 0 4;
+}
+
+#graph .grid path {
+	stroke-width: 0;
+}
+
+#graph #graphXAxis line {
+	stroke-width: .5;
+	stroke: rgb(90,90,90);
+}
+
+#graph #graphYAxis line {
+	stroke-width: 0;
+}
+
+
+
+
+
+
 #facadeWrapper {
 
 }
+
+#facade .axislabel {
+	font-family: "museo-sans", sans-serif;
+	font-size: 10px;
+	font-weight: 300;
+	background-color: #fff;
+}
+
+
+#facade .dimline {
+	stroke-width: .8;
+	stroke: #000;
+	stroke-linecap: butt;
+}
+
+
+
+
+
+
+
 
 #inputs {
 	float: left;
@@ -19,16 +83,26 @@
 	font-family: "museo-sans", sans-serif;
 }
 
+#inputs .inputgroup {
+	border: none;
+	padding: 0 0 10px 0;
+}
+
 #inputs legend {
 	font-weight: 700;
 	font-size: 12px;
 	text-transform: uppercase;
-	padding: 0 0 10px 0;
+	padding: 0 0 5px 0;
 }
 
-#inputs .inputgroup {
+#inputs hr {
+	padding: 0;
+	margin: 0 0 5px 0;
+	background: #000;
 	border: none;
-	padding: 0 0 10px 0;
+	color: #000;
+	height: 1px;
+	width: 100%;
 }
 
 #inputs input {
@@ -44,8 +118,8 @@
 
 	font-weight: 300;
 	font-size: 10px;
+	text-align: right;
 	color: black;
-	
 }
 
 #inputs label {
@@ -87,34 +161,6 @@
 /* remove above here */
 
 
-
-.axis text {
-    font-family: "museo-sans", sans-serif;
-    font-size: 11px;
-}
-
-.axis path,
-.axis line {
-    fill: none;
-}
-
-.grid line {
-	stroke-width: .5;
-	stroke: rgb(190,190,190);
-}
-
-.grid path {
-	stroke-width: 0;
-}
-
-#graphXAxis line {
-	stroke-width: .5;
-	stroke: rgb(90,90,90);
-}
-
-#graphYAxis line {
-	stroke-width: 0;
-}
 
 
 
