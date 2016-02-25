@@ -346,11 +346,11 @@ render.makeGraph = function () {
 			.attr("cy", function(d) { return y(d.ppd); })
 			.style("fill", function(d) { 
 				if (d.govfact == "mrt") {
-					return "red";
+					return blue;
 				} else if (d.govfact == "dwn") {
-					return "green";
+					return orange;
 				} else if (d.govfact == "asym") {
-					return "blue";
+					return green;
 				}
 			})
 			.transition()
