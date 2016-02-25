@@ -131,8 +131,6 @@ render.makeGraph = function () {
 	var glzWidth = allData.windowWidth;
 	var glzHeight = allData.windowHeight;
 
-	console.log(glzCoords);
-
 
 	//Set SVG height to be proportionate to wall length and extend of wall height
 	var proportionateSVGHeight = (maxContainerWidth/wallLen)*wallPoints[0].wallHeight;
@@ -195,15 +193,20 @@ render.makeGraph = function () {
 				return "translate(" + facMargin.left + "," + facMargin.top + ")";})
 		.style("fill", "lightgrey");
 
-
-
-	var windows = facadeSvg.selectAll(".window")
+	
+	for (var i = 0; i < glzCoords.length; i++) {
+		console.log(wallPoints[0].wallHeight - glzCoords[i][3][2])
+		
+		console.log(facadeScaleHeight(glzCoords[i][3][2])+facHeight/2)
+	}
+	//Initialize the windows.
+	facadeSvg.selectAll(".window")
 		.data(glzCoords)
 		.enter()
 		.append("rect")
 		.attr("class", "window")
 		.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facWidth/2)})
-		.attr("y", function(d) {return facadeScaleHeight(wallPoints[0].wallHeight - glzHeight - sillHeightValue)})
+		.attr("y", function(d) {return (facadeScaleHeight(wallPoints[0].wallHeight - d[3][2]))})
 		.attr("width", facadeScaleWidth(glzWidth))
 		.attr("height", facadeScaleHeight(glzHeight))
 		.attr("transform", function() {
@@ -365,18 +368,24 @@ render.makeGraph = function () {
 
 
 
-		//update windows
-//TO DO - windows not centering properly on update, nor is width always updating......
-		windows.data(glzData)
-			.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facWidth/2)})
-			.attr("y", function(d) {return facadeScaleHeight(wallPoints[0].wallHeight - glzHeight - sillHeightValue)})
-			.attr("width", facadeScaleWidth(newGlzWidth))
-			.attr("height", facadeScaleHeight(newGlzHeight))
-			.transition()
-			.duration(500);
+		//update windows		
+		d3.selectAll("rect.window").remove()
+		
+		for (var i = 0; i < glzData.length; i++) {
+			facadeSvg.append("rect")
+				.attr("class", "window")
+				.attr("x", function() {return (facadeScaleWidth(glzData[i][3][0])+facWidth/2)})
+				.attr("y", function() {return (facadeScaleHeight(wallPoints[0].wallHeight - glzData[i][3][2]))})
+				.attr("width", facadeScaleWidth(newGlzWidth))
+				.attr("height", facadeScaleHeight(newGlzHeight))
+				.attr("transform", function() {
+					return "translate(" + facMargin.left + "," + facMargin.top + ")";
+				});
+		}
+		
+		
+		
 	}
-
-
 
 
 	function drawHorizontalReferenceLine(data) {
