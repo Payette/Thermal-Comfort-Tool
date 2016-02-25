@@ -206,11 +206,6 @@ render.makeGraph = function () {
 		.style("fill", grey);
 
 	
-	for (var i = 0; i < glzCoords.length; i++) {
-		console.log(wallPoints[0].wallHeight - glzCoords[i][3][2])
-		
-		console.log(facadeScaleHeight(glzCoords[i][3][2])+facHeight/2)
-	}
 	//Initialize the windows.
 	facadeSvg.selectAll(".window")
 		.data(glzCoords)

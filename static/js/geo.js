@@ -94,6 +94,7 @@ geo.createGlazingForRect = function(rectHeight, glazingRatio, windowWidth, winHe
 				lineCentPt.push([line[1][0]+((line[0][0]-line[1][0])/2), 0, line[0][2]])
 			}
 			
+			var distCentLine = lineCentPt[0][0] - lineCentPt[1][0]
 			var winLineBaseLength = winLinesStart[0][0][0] - winLinesStart[0][1][0]
 			var winLineReqLength = (targetArea / winHeightFinal) / numDivisions
 			var winLineScale = winLineReqLength / winLineBaseLength
@@ -133,6 +134,7 @@ geo.createGlazingForRect = function(rectHeight, glazingRatio, windowWidth, winHe
 			var winLinesStart = [[wallLen/2,0,sillVec],[-wallLen/2,0,sillVec]]
 			
 			//Scale the curve so that it is not touching the edges of the surface.
+			var distCentLine = 20
 			var winLineScale = 0.98
 			var lineCentPt = [0,0,0]
 			var newStartPt = [winLinesStart[0][0] - ((winLinesStart[0][0]-lineCentPt[0])*(1-winLineScale)), 0, winLinesStart[0][2]]
@@ -161,6 +163,10 @@ geo.createGlazingForRect = function(rectHeight, glazingRatio, windowWidth, winHe
 				var numDivisions = 1;
 			}
 			
+			if (numDivisions*windowWidth > wallLen){
+				numDivisions = numDivisions = 1
+			}
+			
 			var btmDivPts = [[(wallLen/2),0,silHeightFinal]]
 			var divDist = wallLen/numDivisions
 			var totalDist = 0
@@ -187,6 +193,8 @@ geo.createGlazingForRect = function(rectHeight, glazingRatio, windowWidth, winHe
 				var line = winLinesStart[i]
 				lineCentPt.push([line[1][0]+((line[0][0]-line[1][0])/2), 0, line[0][2]])
 			}
+			var distCentLine = lineCentPt[0][0] - lineCentPt[1][0]
+			
 			var winLineScale = windowWidth / divDist
 			
 			for (var i = 0; i < winLinesStart.length; i++) {
@@ -215,7 +223,9 @@ geo.createGlazingForRect = function(rectHeight, glazingRatio, windowWidth, winHe
 		if (windowWidth >= maxWidthBreakUp) {
 			var winLinesStart = [[wallLen/2,0,silHeightFinal],[-wallLen/2,0,silHeightFinal]]
 			
+			
 			//Scale the curve so that it is not touching the edges of the surface.
+			var distCentLine = 20
 			var winLineScale = windowWidth / wallLen
 			var lineCentPt = [0,0,0]
 			var newStartPt = [winLinesStart[0][0] - ((winLinesStart[0][0]-lineCentPt[0])*(1-winLineScale)), 0, winLinesStart[0][2]]
@@ -239,6 +249,8 @@ geo.createGlazingForRect = function(rectHeight, glazingRatio, windowWidth, winHe
 	r.glzRatio = glazingRatio;
 	r.windowWidth = windowWidth;
 	r.windowHeight = winHeightFinal;
+	r.sillHeight = silHeightFinal;
+	r.centLineDist = distCentLine;
     r.wallCoords = wallCoord;
     r.glzCoords = finalGlzCoords;
 	return r

@@ -32,7 +32,7 @@ script.computeData = function() {
 	
 	// Compute the window and wall geometry.
 	var geoResult = geo.createGlazingForRect(parseFloat(ceilingHeightValue), glzRatioValue/100, parseFloat(windowWidthValue), parseFloat(windowHeightValue), parseFloat(sillHeightValue), parseFloat(distanceWindows), glzOrWidth);
-	
+	console.log(geoResult.centLineDist)
 	// Compute the view factors.
 	var viewResult = geo.computeAllViewFac(geoResult.wallCoords, geoResult.glzCoords)
 	
@@ -46,6 +46,8 @@ script.computeData = function() {
 	r.glzRatio = geoResult.glzRatio;
 	r.windowWidth = geoResult.windowWidth;
 	r.windowHeight = geoResult.windowHeight;
+	r.sillHeight = geoResult.sillHeight
+	r.centLineDist = geoResult.centLineDist
 	r.dataSet = theDataset;
 	
 	return r
