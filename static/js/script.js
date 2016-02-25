@@ -10,6 +10,13 @@ var glzOrWidth = true;
 var sillHeightValue = $("#sill").val();
 var distanceWindows = $('#distWindow').val();
 
+/*
+if ($("#windowWidthCheck").is(":checked")) {
+	glzOrWidth = true;
+} //provides a true/false
+
+*/
+
 var outdoorTempValue = $("#outdoortemp").val();
 var uvalueValue = $("#uvalue").val();
 var intLowEChecked = $("#lowECheck").is(":checked"); //provides a true/false

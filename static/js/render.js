@@ -235,6 +235,9 @@ render.makeGraph = function () {
 		
 		//figure out what input changed
 		var triggeredChange = event.target.id;
+
+		//update datasets with new value
+		var fullData = script.computeData()
 		
 		if (triggeredChange == "outdoortemp") {
 			outdoorTempValue = $(this).val();
@@ -318,8 +321,7 @@ render.makeGraph = function () {
 		}
 
 
-		//update datasets and graph with new value
-		var fullData = script.computeData()
+		
 		var newDataset = fullData.dataSet;
 		var newGlzCoords = fullData.glzCoords;
 		var newGlzWidth = fullData.windowWidth;
@@ -396,7 +398,7 @@ render.makeGraph = function () {
 				.attr("transform", function() {
 					return "translate(" + facMargin.left + "," + facMargin.top + ")";
 				})
-				.style("fill","lightblue");
+				.style("fill", lightblue);
 		}
 
 		//update dimensions

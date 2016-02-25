@@ -88,12 +88,32 @@
 	padding: 0 0 10px 0;
 }
 
-#inputs legend {
+
+#inputs #legend {
+	border: none;
+	padding: 0 0 10px 0;
+	margin-bottom: 20px;
+}
+
+#inputs legend, #inputs h1 {
 	font-weight: 700;
 	font-size: 12px;
 	text-transform: uppercase;
 	padding: 0 0 5px 0;
+	margin: 0;
 }
+
+#inputs ul {
+	font-family: "museo-sans", sans-serif;
+	color: #b9b9b9;
+	font-weight: 300;
+	font-size: 12px;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+
 
 #inputs hr {
 	padding: 0;
