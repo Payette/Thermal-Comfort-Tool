@@ -11,6 +11,7 @@ var glzOrWidth = true;
 var sillHeightValue = $("#sill").val();
 var distanceWindows = $('#distWindow').val();
 var occDistToWallCenter = $('#occupantDist').val();
+var occDistFromFacade = $('#distFromFacade').val();
 
 if ($("#windowWidthCheck").is(":checked")) {
 	glzOrWidth = false;
@@ -35,9 +36,6 @@ var metabolic = $("#metabolic").val();
 
 // Main function to run the analysis.
 script.computeData = function() {
-	//let the console know the function is running.
-	console.log("Compute Data is Running!")
-	
 	// Compute the window and wall geometry.
 	var geoResult = geo.createGlazingForRect(parseFloat(ceilingHeightValue), wallLen, glzRatioValue/100, parseFloat(windowWidthValue), parseFloat(windowHeightValue), parseFloat(sillHeightValue), parseFloat(distanceWindows), glzOrWidth);
 	
