@@ -156,13 +156,14 @@
 }
 
 #inputs label.inactive {
-	color: #eaeaea;
+	color: #d5d5d5;
 	font-style: italic;
+	font-weight: 100;
 }
 
 #inputs input.inactive {
-	border-color: #eaeaea;
-	color: #eaeaea;
+	border-color: #d5d5d5;
+	color: #d5d5d5;
 	font-style: italic;
 }
 
