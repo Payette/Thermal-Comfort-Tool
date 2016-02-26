@@ -225,7 +225,7 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windowHgt, glzUV
 	}
 	
 	
-	// Get the radiant assymetry PPD results.
+	// Get the radiant assymetry PPD results and the MRT values.
 	var radAssymResult = comf.getMRTandRadAssym(glzViewFac, wallViewFac, winFilmCoeff, airTemp, outdoorTemp, indoorSrfTemp, opaqueRVal, windowUVal)
 	var radAssymPPD = radAssymResult.ppd
 	var MRTvals = radAssymResult.mrt
@@ -243,14 +243,10 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windowHgt, glzUV
 	
 	// Construct the dictionary of the PPD values with the governing factors.
 	var myDataset = []
-	for (var i = 0; i < radAssymPPD.length; i++) {
+	for (var i = 0; i < mrtPPD.length; i++) {
 		var ptInfo = {}
 		
-		if (radAssymPPD[i] > mrtPPD[i] && radAssymPPD[i] > downDPPD[i]){
-			ptInfo.dist = i+1;
-			ptInfo.ppd = radAssymPPD[i];
-			ptInfo.govfact = "asym";
-		} else if (mrtPPD[i] > downDPPD[i]) {
+		if (mrtPPD[i] > downDPPD[i]) {
 			ptInfo.dist = i+1;
 			ptInfo.ppd = mrtPPD[i];
 			ptInfo.govfact = "mrt";
