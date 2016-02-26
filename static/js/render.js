@@ -346,7 +346,7 @@ render.makeGraph = function () {
 		// Update the geometry values in the form.
 		//update window width
 		windowWidthValue = newGlzWidth;
-		$("#windowWidth").val(windowWidthValue);
+		$("#windowWidth").val(Math.round(windowWidthValue));
 
 		//update glazing ratio
 		glzRatioValue = newGlzRatio*100;
