@@ -180,6 +180,7 @@ comf.getDowndraftPPD = function(distToFacade, windowHgt, filmCoeff, airTemp, out
 	for (var i = 0; i < distToFacade.length; i++) {
 		var dist = distToFacade[i]
 		var distSI = dist/3.28084
+		var downDraftTemp = comf.calcFloorAirTemp(airTemp, distSI, glassAirDelta)
 		if (distSI < 0.4){
 			var windSpd = comf.velMaxClose(glassAirDelta, windowHgt)
 		} else if (distSI < 2){
@@ -187,9 +188,7 @@ comf.getDowndraftPPD = function(distToFacade, windowHgt, filmCoeff, airTemp, out
 		} else{
 			var windSpd = comf.velMaxFar(glassAirDelta, windowHgt)
 		}
-		//Code to calculate the temperature of the downdraft (this is not necessary for PPD calculation).
-		//var floorAirTemp = comf.calcFloorAirTemp(airTemp, dist, glassAirDelta)
-		PPD.push(comf.calcPPDFromDowndraft(windSpd, airTemp))
+		PPD.push(comf.calcPPDFromDowndraft(windSpd, downDraftTemp))
 	}
 	return PPD
 }
