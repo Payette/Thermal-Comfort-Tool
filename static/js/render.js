@@ -228,14 +228,13 @@ render.makeGraph = function () {
 	drawHorziontalDimensions(wallPoints[0].wallWidth, facHeight);
 
 
-
 	/* ------ DETECT CHANGES TO INPUT VALUES ------ */
 	// Trigger change events
-	$("#outdoortemp, #ceiling, #windowWidthCheck, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowECheck, #lowE, #rvalue, #airtemp, #radiant, #airspeed, #humidity, #clothing, #metabolic").change(function(event) {
+	$("#outdoortemp, #ceiling, #wallWidth, #windowWidthCheck, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowECheck, #lowE, #rvalue, #airtemp, #radiant, #airspeed, #humidity, #clothing, #metabolic").change(function(event) {
 		
 		//figure out what input changed
 		var triggeredChange = event.target.id;
-		
+		console.log(wallLen)
 		
 		if (triggeredChange == "outdoortemp") {
 			outdoorTempValue = $(this).val();
@@ -243,6 +242,10 @@ render.makeGraph = function () {
 		else if(triggeredChange == "ceiling") {
 			ceilingHeightValue = $(this).val();
 			wallPoints[0].wallHeight = $(this).val(); //udpate wall geometry array
+		}
+		else if(triggeredChange == "wallWidth") {
+			wallLen = $(this).val();
+			wallPoints[0].wallWidth = $(this).val(); //udpate wall geometry array
 		}
 		else if (triggeredChange == "windowWidthCheck") {
 			if (($("#windowWidthCheck").is(":checked")) == true) {

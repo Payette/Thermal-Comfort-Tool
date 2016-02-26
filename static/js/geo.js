@@ -7,7 +7,6 @@ var geo = geo || {}
 
 
 //Define some default global variables that we do not want to change or expose in the interface.
-var wallLen = 20 // The length of the exterior wall that we are observing in feet.
 var seatH = 2 // The average height above the ground that the occupan is located in feet.
 var numPts = 12 // The number of points to generate.  They will be generated at each foot.
 var facadeDist = []// The distance from the facade at which we are evaluating comfort.
@@ -19,7 +18,7 @@ for (var i = 0; i < numPts; i++) {
 
 // Function that generates the geometry of the windows based on the input window parameters.
 // Originally developed by Chris Mackey (Chris@MackeyArchitecture.com) for Ladybug + Honeybee (https://github.com/mostaphaRoudsari/Honeybee)
-geo.createGlazingForRect = function(rectHeight, glazingRatio, windowWidth, winHeight, silHeight, distBreakup, ratioOrWidth) {
+geo.createGlazingForRect = function(rectHeight, wallLen, glazingRatio, windowWidth, winHeight, silHeight, distBreakup, ratioOrWidth) {
 	//Check to be sure that the user is not assiging crazy values and, if so, set limits on them.
 	if (glazingRatio > 0.95) {
 		glazingRatio = 0.95;

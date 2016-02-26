@@ -3,6 +3,7 @@ var script = script || {}
 
 //Pull the individual values from the form.
 var ceilingHeightValue = $("#ceiling").val();
+var wallLen = $("#wallWidth").val();
 var windowHeightValue = $("#windowHeight").val();
 var windowWidthValue = $("#windowWidth").val();
 var glzRatioValue = $("#glazing").val();
@@ -38,7 +39,7 @@ script.computeData = function() {
 	console.log("Compute Data is Running!")
 	
 	// Compute the window and wall geometry.
-	var geoResult = geo.createGlazingForRect(parseFloat(ceilingHeightValue), glzRatioValue/100, parseFloat(windowWidthValue), parseFloat(windowHeightValue), parseFloat(sillHeightValue), parseFloat(distanceWindows), glzOrWidth);
+	var geoResult = geo.createGlazingForRect(parseFloat(ceilingHeightValue), wallLen, glzRatioValue/100, parseFloat(windowWidthValue), parseFloat(windowHeightValue), parseFloat(sillHeightValue), parseFloat(distanceWindows), glzOrWidth);
 	
 	// Compute the view factors.
 	var viewResult = geo.computeAllViewFac(geoResult.wallCoords, geoResult.glzCoords)
