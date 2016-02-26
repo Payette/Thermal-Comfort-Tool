@@ -73,7 +73,7 @@ render.makeGraph = function () {
 	    .attr("text-anchor", "middle")
 	    .attr("x", width/2 + margin.left)
 	    .attr("y", height + margin.bottom*1.8)
-	    .text("PPD (Percentage of People Dissatisfied)");
+	    .text("Distance from Façade (ft)");
 
 	graphSvg.append("g")
 	.attr("transform", "translate(" + margin.left*.2 + "," + (height/2 + margin.top) + ")")
@@ -81,7 +81,7 @@ render.makeGraph = function () {
     .attr("class", "axislabel")
     .attr("text-anchor", "middle")
     .attr("transform", "rotate(-90)")
-    .text("Distance from Façade (ft)");
+    .text("PPD (Percentage of People Dissatisfied)");
 
 
 
@@ -284,9 +284,15 @@ render.makeGraph = function () {
 				intLowEChecked = true;
 				$("#lowE").val(0.2);
 				intLowEEmissivity = 0.2;
+
+				$("#lowE").removeClass("inactive");
+				$("#lowELabel").removeClass("inactive");
+
 			} else if (($("#lowECheck").is(":checked")) == false) {
 				intLowEChecked = false;
 				$("#lowE").val(" ");
+				$("#lowE").addClass("inactive");
+				$("#lowELabel").addClass("inactive");
 			}
 		}
 		else if (triggeredChange == "lowE") {
