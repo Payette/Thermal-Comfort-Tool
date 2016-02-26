@@ -231,13 +231,11 @@ render.makeGraph = function () {
 
 	/* ------ DETECT CHANGES TO INPUT VALUES ------ */
 	// Trigger change events
-	$("#outdoortemp, #ceiling, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowECheck, #lowE, #rvalue, #airtemp, #radiant, #airspeed, #humidity, #clothing, #metabolic").change(function(event) {
+	$("#outdoortemp, #ceiling, #windowWidthCheck, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowECheck, #lowE, #rvalue, #airtemp, #radiant, #airspeed, #humidity, #clothing, #metabolic").change(function(event) {
 		
 		//figure out what input changed
 		var triggeredChange = event.target.id;
-
-		//update datasets with new value
-		var fullData = script.computeData()
+		
 		
 		if (triggeredChange == "outdoortemp") {
 			outdoorTempValue = $(this).val();
@@ -246,26 +244,21 @@ render.makeGraph = function () {
 			ceilingHeightValue = $(this).val();
 			wallPoints[0].wallHeight = $(this).val(); //udpate wall geometry array
 		}
+		else if (triggeredChange == "windowWidthCheck") {
+			if (($("#windowWidthCheck").is(":checked")) == true) {
+				glzOrWidth = false;
+			} else if (($("#windowWidthCheck").is(":checked")) == false) {
+				glzOrWidth = true;
+			}
+		}
 		else if (triggeredChange == "windowHeight") {
 			windowHeightValue = $(this).val();
 		}
 		else if (triggeredChange == "windowWidth") {
 			windowWidthValue = $(this).val();
-			//update boolean
-			glzOrWidth = false;
-			//update glazing ratio
-			glzRatioValue = allData.glzRatio*100;
-			//display updated glazing ratio
-			$("#glazing").val((Math.round(glzRatioValue)));
 		}
 		else if (triggeredChange == "glazing") {
 			glzRatioValue = $(this).val();
-			//update boolean
-			glzOrWidth = true;
-			//update window width
-			windowWidthValue = allData.windowWidth;
-			//display updated window width
-			$("#windowWidth").val(windowWidthValue);
 		}
 		else if (triggeredChange == "sill") {
 			sillHeightValue = $(this).val();
@@ -319,14 +312,41 @@ render.makeGraph = function () {
 		else {
 			alert("Don't know what changed!");
 		}
-
-
 		
+		// Re-run the functions with the new inputs.
+		var fullData = script.computeData()
+		
+		//update datasets with new value
 		var newDataset = fullData.dataSet;
 		var newGlzCoords = fullData.glzCoords;
 		var newGlzWidth = fullData.windowWidth;
 		var newGlzHeight = fullData.windowHeight;
+		var newGlzRatio = fullData.glzRatio;
+		var newSillHeight = fullData.sillHeight
+		var newCentLineDist = fullData.centLineDist
+		
+		
+		// Update the geometry values in the form.
+		//update window width
+		windowWidthValue = newGlzWidth;
+		$("#windowWidth").val(windowWidthValue);
 
+		//update glazing ratio
+		glzRatioValue = newGlzRatio*100;
+		$("#glazing").val((Math.round(glzRatioValue)));
+
+		//update window height.
+		windowHeightValue = newGlzHeight;
+		$("#windowHeight").val(Math.round(windowHeightValue * 100) / 100);
+		//update sill
+		sillHeightValue = newSillHeight;
+		$("#sill").val(Math.round(sillHeightValue * 100) / 100);
+		//update dist btwn windows.
+		distanceWindows = newCentLineDist;
+		$("#distWindow").val(Math.round(distanceWindows * 100) / 100);
+		
+		
+		// Update the PPD graph and facade SVG.
 		updateGraphData(newDataset);
 		updateFacade(wallPoints, newGlzCoords, newGlzWidth, newGlzHeight); 
 	})

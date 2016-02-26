@@ -94,7 +94,11 @@ geo.createGlazingForRect = function(rectHeight, glazingRatio, windowWidth, winHe
 				lineCentPt.push([line[1][0]+((line[0][0]-line[1][0])/2), 0, line[0][2]])
 			}
 			
-			var distCentLine = lineCentPt[0][0] - lineCentPt[1][0]
+			if (numDivisions != 1) {
+				var distCentLine = lineCentPt[0][0] - lineCentPt[1][0]
+			} else{
+				var distCentLine = 20
+			}
 			var winLineBaseLength = winLinesStart[0][0][0] - winLinesStart[0][1][0]
 			var winLineReqLength = (targetArea / winHeightFinal) / numDivisions
 			var winLineScale = winLineReqLength / winLineBaseLength
@@ -126,12 +130,10 @@ geo.createGlazingForRect = function(rectHeight, glazingRatio, windowWidth, winHe
 		if (targetArea > maxAreaBreakUp) {
 			//Move the bottom curve of the window to the appropriate sill height.
 			var maxSillHeight = (rectHeight*0.99) - (targetArea / (wallLen * 0.98))
-			if (silHeightFinal < maxSillHeight){
-				sillVec = silHeightFinal
-			} else{
-				sillVec = maxSillHeight
+			if (silHeightFinal > maxSillHeight){
+				silHeightFinal = maxSillHeight
 			}
-			var winLinesStart = [[wallLen/2,0,sillVec],[-wallLen/2,0,sillVec]]
+			var winLinesStart = [[wallLen/2,0,silHeightFinal],[-wallLen/2,0,silHeightFinal]]
 			
 			//Scale the curve so that it is not touching the edges of the surface.
 			var distCentLine = 20
@@ -166,10 +168,16 @@ geo.createGlazingForRect = function(rectHeight, glazingRatio, windowWidth, winHe
 			if (numDivisions*windowWidth > wallLen){
 				numDivisions = numDivisions = 1
 			}
-			
+			console.log(numDivisions)
+			if (((numDivisions*windowWidth)+ (numDivisions-1)*(distBreakup-windowWidth)) > wallLen){
+				numDivisions = Math.floor(wallLen/distBreakup);
+			}
+			console.log(numDivisions)
 			var btmDivPts = [[(wallLen/2),0,silHeightFinal]]
-			var divDist = wallLen/numDivisions
-			var totalDist = 0
+			var divDist = distBreakup
+			var remainder = wallLen - (distBreakup*numDivisions)
+			
+			var totalDist = remainder/2
 			
 			while (totalDist < wallLen) {
 				totalDist += divDist
@@ -193,7 +201,11 @@ geo.createGlazingForRect = function(rectHeight, glazingRatio, windowWidth, winHe
 				var line = winLinesStart[i]
 				lineCentPt.push([line[1][0]+((line[0][0]-line[1][0])/2), 0, line[0][2]])
 			}
-			var distCentLine = lineCentPt[0][0] - lineCentPt[1][0]
+			if (numDivisions != 1) {
+				var distCentLine = divDist
+			} else{
+				var distCentLine = 20
+			}
 			
 			var winLineScale = windowWidth / divDist
 			
@@ -221,8 +233,10 @@ geo.createGlazingForRect = function(rectHeight, glazingRatio, windowWidth, winHe
 		}
 		//Find the window geometry in the case that the target width is above the maximum width acceptable area for breaking up the window into smaller windows.
 		if (windowWidth >= maxWidthBreakUp) {
+			if (windowWidth > wallLen){
+				windowWidth = wallLen
+			}
 			var winLinesStart = [[wallLen/2,0,silHeightFinal],[-wallLen/2,0,silHeightFinal]]
-			
 			
 			//Scale the curve so that it is not touching the edges of the surface.
 			var distCentLine = 20
