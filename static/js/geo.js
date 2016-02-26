@@ -67,9 +67,10 @@ geo.createGlazingForRect = function(rectHeight, glazingRatio, windowWidth, winHe
 				var numDivisions = 1;
 			}
 			
-			
+			var windowWidth = (targetArea / winHeightFinal) / numDivisions
 			if (((numDivisions*windowWidth)+ (numDivisions-1)*(distBreakup-windowWidth)) > wallLen){
 				numDivisions = Math.floor(wallLen/distBreakup);
+				windowWidth = (targetArea / winHeightFinal) / numDivisions
 			}
 			
 			var btmDivPts = [[(wallLen/2),0,silHeightFinal]]
@@ -102,14 +103,13 @@ geo.createGlazingForRect = function(rectHeight, glazingRatio, windowWidth, winHe
 			}
 			
 			if (numDivisions != 1) {
-				var distCentLine = lineCentPt[0][0] - lineCentPt[1][0]
+				var distCentLine = divDist
 			} else{
 				var distCentLine = 20
 			}
 			var winLineBaseLength = winLinesStart[0][0][0] - winLinesStart[0][1][0]
 			var winLineReqLength = (targetArea / winHeightFinal) / numDivisions
 			var winLineScale = winLineReqLength / winLineBaseLength
-			var windowWidth = winLineReqLength
 			
 			for (var i = 0; i < winLinesStart.length; i++) {
 				var line = winLinesStart[i]
