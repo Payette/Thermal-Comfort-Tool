@@ -247,11 +247,16 @@ render.makeGraph = function () {
 		else if (triggeredChange == "windowWidthCheck") {
 			if (($("#windowWidthCheck").is(":checked")) == true) {
 				glzOrWidth = false;
-				$(".inactive").removeClass("inactive");
+				$("#windowWidth").removeClass("inactive");
+				$("#windowWidthLabel").removeClass("inactive");
+				$("#glazing").addClass("inactive");
+				$("#glazingLabel").addClass("inactive");
 			} else if (($("#windowWidthCheck").is(":checked")) == false) {
 				glzOrWidth = true;
 				$("#windowWidth").addClass("inactive");
 				$("#windowWidthLabel").addClass("inactive");
+				$("#glazing").removeClass("inactive");
+				$("#glazingLabel").removeClass("inactive");
 			}
 		}
 		else if (triggeredChange == "windowHeight") {
