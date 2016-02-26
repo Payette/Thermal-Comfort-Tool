@@ -67,9 +67,16 @@ geo.createGlazingForRect = function(rectHeight, glazingRatio, windowWidth, winHe
 				var numDivisions = 1;
 			}
 			
+			
+			if (((numDivisions*windowWidth)+ (numDivisions-1)*(distBreakup-windowWidth)) > wallLen){
+				numDivisions = Math.floor(wallLen/distBreakup);
+			}
+			
 			var btmDivPts = [[(wallLen/2),0,silHeightFinal]]
-			var divDist = wallLen/numDivisions
-			var totalDist = 0
+			var divDist = distBreakup
+			var remainder = wallLen - (distBreakup*numDivisions)
+			
+			var totalDist = remainder/2
 			
 			while (totalDist < wallLen) {
 				totalDist += divDist
@@ -168,11 +175,11 @@ geo.createGlazingForRect = function(rectHeight, glazingRatio, windowWidth, winHe
 			if (numDivisions*windowWidth > wallLen){
 				numDivisions = numDivisions = 1
 			}
-			console.log(numDivisions)
+			
 			if (((numDivisions*windowWidth)+ (numDivisions-1)*(distBreakup-windowWidth)) > wallLen){
 				numDivisions = Math.floor(wallLen/distBreakup);
 			}
-			console.log(numDivisions)
+			
 			var btmDivPts = [[(wallLen/2),0,silHeightFinal]]
 			var divDist = distBreakup
 			var remainder = wallLen - (distBreakup*numDivisions)
