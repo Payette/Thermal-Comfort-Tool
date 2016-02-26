@@ -38,22 +38,12 @@
 
 
 	<div id="inputs">
-		<div id="legend">
-			<h1>Governing Factor</h1>
-			<hr>
-			<ul>
-				<li>Mean Radiant Temperature</li>
-				<li>Downdraft</li>
-				<li>Asymmetry</li>
-			</ul>
-		</div>
-
 
 		<form id="form">
 		<fieldset class="inputgroup">
 			<legend class="heading">Climate Inputs</legend>
 			<hr>
-			<label for="outdoortemp">Outdoor Temperature (F):</label>
+			<label for="outdoortemp">Outdoor Temp. (&#176;F):</label>
 			<input type="text" name="outdoortemp" id="outdoortemp" value="25"><br>
 		</fieldset>
 		<fieldset class="inputgroup">
@@ -75,7 +65,7 @@
 			<input type="text" name="height" id="windowHeight" value="8"><br>
 			<label for="sill">Sill Height (ft):</label>
 			<input type="text" name="sill" id="sill" value="3"><br>
-			<label for="sill">Dist Between Window Centerlines (ft):</label>
+			<label for="sill">Window Separation (ft):</label>
 			<input type="text" name="distWindow" id="distWindow" value="6.67"><br>
 		</fieldset>
 		<fieldset class="inputgroup">
@@ -83,13 +73,13 @@
 			<hr>
 			<label for="uvalue">Window U-Value:</label>
 			<input type="text" name="uvalue" id="uvalue" value="0.25"><br>
-			<label for="lowECheck">Interior Low E Coating:</label>
+			<label for="lowECheck">Interior Low-E Coating:</label>
 			<input type="checkbox" name="lowECheck" id="lowECheck"><br>
 			<label for="lowE" class="inactive" id="lowELabel">Emissivity:</label>
 			<input type="text" name="lowE" id="lowE" value="" class="inactive"><br>
 			<label for="rvalue">Wall R-Value:</label>
 			<input type="text" name="rvalue" id="rvalue" value="20"><br>
-			<label for="ppd">PPD (%):</label>
+			<label for="ppd">Threshold PPD (%):</label>
 			<input type="text" name="ppd" id="ppd" value="10"><br>
 			<label for="distFromFacade">Occupant Distance From Facade (ft):</label>
 			<input type="text" name="distFromFacade" id="distFromFacade" value="3"><br>
@@ -99,7 +89,7 @@
 		<fieldset class="inputgroup">
 			<legend class="heading">Advanced Options</legend>
 			<hr>
-			<label for="airtemp">Indoor Ambient Temperature (F):</label>
+			<label for="airtemp">Indoor Ambient Temp. (&#176;F):</label>
 			<input type="text" name="airtemp" id="airtemp" value="72"><br>
 			<label for="radiant">Radiant Floor:</label>
 			<input type="checkbox" name="radiant" id="radiant"><br>
