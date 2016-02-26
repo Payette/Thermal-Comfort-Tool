@@ -10,7 +10,7 @@ var glzRatioValue = $("#glazing").val();
 var glzOrWidth = true;
 var sillHeightValue = $("#sill").val();
 var distanceWindows = $('#distWindow').val();
-
+var occDistToWallCenter = $('#occupantDist').val();
 
 if ($("#windowWidthCheck").is(":checked")) {
 	glzOrWidth = false;
@@ -42,10 +42,10 @@ script.computeData = function() {
 	var geoResult = geo.createGlazingForRect(parseFloat(ceilingHeightValue), wallLen, glzRatioValue/100, parseFloat(windowWidthValue), parseFloat(windowHeightValue), parseFloat(sillHeightValue), parseFloat(distanceWindows), glzOrWidth);
 	
 	// Compute the view factors.
-	var viewResult = geo.computeAllViewFac(geoResult.wallCoords, geoResult.glzCoords)
+	var viewResult = geo.computeAllViewFac(geoResult.wallCoords, geoResult.glzCoords, occDistToWallCenter)
 	
 	// Compute the PPD for each point.
-	var theDataset = comf.getFullPPD(viewResult.wallViews, viewResult.glzViews, geoResult.windowHeight, uvalueValue, intLowEChecked, intLowEEmissivity, rvalueValue, airtempValue, outdoorTempValue, radiantFloorChecked, clothingValue, metabolic, airspeedValue, humidityValue)
+	var theDataset = comf.getFullPPD(viewResult.wallViews, viewResult.glzViews, viewResult.facadeDist, geoResult.windowHeight, uvalueValue, intLowEChecked, intLowEEmissivity, rvalueValue, airtempValue, outdoorTempValue, radiantFloorChecked, clothingValue, metabolic, airspeedValue, humidityValue)
 	
 	// Return all of the information in one dictionary
 	var r = {}

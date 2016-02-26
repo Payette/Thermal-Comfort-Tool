@@ -9,12 +9,7 @@ var geo = geo || {}
 //Define some default global variables that we do not want to change or expose in the interface.
 var seatH = 2 // The average height above the ground that the occupan is located in feet.
 var numPts = 12 // The number of points to generate.  They will be generated at each foot.
-var facadeDist = []// The distance from the facade at which we are evaluating comfort.
-var locationPts = [] // The pointlocations in relation to the facade where we are evaluating comfort.
-for (var i = 0; i < numPts; i++) {
-	facadeDist.push(i+1)
-    locationPts.push([0,i+1,seatH])
-}
+
 
 // Function that generates the geometry of the windows based on the input window parameters.
 // Originally developed by Chris Mackey (Chris@MackeyArchitecture.com) for Ladybug + Honeybee (https://github.com/mostaphaRoudsari/Honeybee)
@@ -65,51 +60,46 @@ geo.createGlazingForRect = function(rectHeight, wallLen, glazingRatio, windowWid
 			} else {
 				var numDivisions = 1;
 			}
-			
-			var windowWidth = (targetArea / winHeightFinal) / numDivisions
-			if (((numDivisions*windowWidth)+ (numDivisions-1)*(distBreakup-windowWidth)) > wallLen){
-				numDivisions = Math.floor(wallLen/distBreakup);
-				windowWidth = (targetArea / winHeightFinal) / numDivisions
-			}
-			
-			var btmDivPts = [[(wallLen/2),0,silHeightFinal]]
-			var divDist = distBreakup
-			var remainder = wallLen - (distBreakup*numDivisions)
-			
-			var totalDist = remainder/2
-			
-			while (totalDist < wallLen) {
-				totalDist += divDist
-				btmDivPts.push([((wallLen/2)-totalDist),0,silHeightFinal])
-			}
-			
-			//Organize the points to form lines to be used to generate the windows
-			var winLinesStart = []
-			var ptIndex = 0
-			for (var i = 0; i < btmDivPts.length; i++) {
-				var point = btmDivPts[i];
-				if (ptIndex < numDivisions) {
-					winLinesStart.push([point, btmDivPts[ptIndex+1]])
-					ptIndex ++
-				}
-			}
-			
-			//Scale the lines to their center points based on the width that they need to be to satisfy the glazing ratio.
-			var lineCentPt = []
-			for (var i = 0; i < winLinesStart.length; i++) {
-				var line = winLinesStart[i]
-				lineCentPt.push([line[1][0]+((line[0][0]-line[1][0])/2), 0, line[0][2]])
-			}
-			
-			if (numDivisions != 1) {
-				var distCentLine = divDist
-			} else{
-				var distCentLine = 20
-			}
-			var winLineBaseLength = winLinesStart[0][0][0] - winLinesStart[0][1][0]
-			var winLineReqLength = (targetArea / winHeightFinal) / numDivisions
-			var winLineScale = winLineReqLength / winLineBaseLength
-			
+
+ 			var windowWidth = (targetArea / winHeightFinal) / numDivisions 
+
+ 			 
+ 			var btmDivPts = [[(wallLen/2),0,silHeightFinal]] 
+ 			var divDist = wallLen/numDivisions 
+ 			var totalDist = 0
+ 			 
+ 			while (totalDist < wallLen) { 
+ 				totalDist += divDist 
+ 				btmDivPts.push([((wallLen/2)-totalDist),0,silHeightFinal]) 
+ 			} 
+ 			 
+ 			//Organize the points to form lines to be used to generate the windows 
+ 			var winLinesStart = [] 
+ 			var ptIndex = 0 
+ 			for (var i = 0; i < btmDivPts.length; i++) { 
+ 				var point = btmDivPts[i]; 
+ 				if (ptIndex < numDivisions) { 
+ 					winLinesStart.push([point, btmDivPts[ptIndex+1]]) 
+ 					ptIndex ++ 
+ 				} 
+ 			} 
+ 			 
+ 			//Scale the lines to their center points based on the width that they need to be to satisfy the glazing ratio. 
+ 			var lineCentPt = [] 
+ 			for (var i = 0; i < winLinesStart.length; i++) { 
+ 				var line = winLinesStart[i] 
+ 				lineCentPt.push([line[1][0]+((line[0][0]-line[1][0])/2), 0, line[0][2]]) 
+ 			} 
+ 			 
+ 			if (numDivisions != 1) { 
+ 				var distCentLine = divDist 
+ 			} else{ 
+ 				var distCentLine = 20 
+ 			} 
+ 			var winLineBaseLength = winLinesStart[0][0][0] - winLinesStart[0][1][0] 
+ 			var winLineReqLength = (targetArea / winHeightFinal) / numDivisions 
+ 			var winLineScale = winLineReqLength / winLineBaseLength 
+
 			for (var i = 0; i < winLinesStart.length; i++) {
 				var line = winLinesStart[i]
 				var lineCenterPt = lineCentPt[i]
@@ -142,7 +132,7 @@ geo.createGlazingForRect = function(rectHeight, wallLen, glazingRatio, windowWid
 			var winLinesStart = [[wallLen/2,0,silHeightFinal],[-wallLen/2,0,silHeightFinal]]
 			
 			//Scale the curve so that it is not touching the edges of the surface.
-			var distCentLine = 20
+			var distCentLine = wallLen
 			var winLineScale = 0.98
 			var lineCentPt = [0,0,0]
 			var newStartPt = [winLinesStart[0][0] - ((winLinesStart[0][0]-lineCentPt[0])*(1-winLineScale)), 0, winLinesStart[0][2]]
@@ -210,7 +200,7 @@ geo.createGlazingForRect = function(rectHeight, wallLen, glazingRatio, windowWid
 			if (numDivisions != 1) {
 				var distCentLine = divDist
 			} else{
-				var distCentLine = 20
+				var distCentLine = wallLen
 			}
 			
 			var winLineScale = windowWidth / divDist
@@ -245,7 +235,7 @@ geo.createGlazingForRect = function(rectHeight, wallLen, glazingRatio, windowWid
 			var winLinesStart = [[wallLen/2,0,silHeightFinal],[-wallLen/2,0,silHeightFinal]]
 			
 			//Scale the curve so that it is not touching the edges of the surface.
-			var distCentLine = 20
+			var distCentLine = wallLen
 			var winLineScale = windowWidth / wallLen
 			var lineCentPt = [0,0,0]
 			var newStartPt = [winLinesStart[0][0] - ((winLinesStart[0][0]-lineCentPt[0])*(1-winLineScale)), 0, winLinesStart[0][2]]
@@ -280,7 +270,7 @@ geo.createGlazingForRect = function(rectHeight, wallLen, glazingRatio, windowWid
 //This formula for calculating solid angles and view factors to orthagonal surfaces comes from:
 //Tredre, Barbara. (1965). Assessment of Mean Radiant Temperature in Indoor Envrionments.
 //Britich Journal of Indutrial Medecine, 22, 58.
-geo.calcViewFacs = function(srfCoords) {
+geo.calcViewFacs = function(srfCoords, locationPts) {
     // Define a list to be filled up with view factors.
 	var viewFact = []
 	
@@ -293,8 +283,8 @@ geo.calcViewFacs = function(srfCoords) {
         var removeRightQuads = false
         
         //Define the dimensions of the windows in relation to the point.
-        var a = -srfCoords[0][0] //a = left
-        var b = srfCoords[1][0] //b = right
+        var a = pt[0]-srfCoords[0][0] //a = left
+        var b = srfCoords[1][0]-pt[0] //b = right
         var c = srfCoords[2][2]-pt[2] //c = upper
         var d = pt[2]-srfCoords[1][2] //d = lower
         var z = pt[1]
@@ -373,12 +363,19 @@ geo.calcViewFacs = function(srfCoords) {
 
 
 //Calculate all viewFactors from surfcace coordinates.
-geo.computeAllViewFac = function(wallCoords, glzCoords){
-	var fullWallViewFac = geo.calcViewFacs(wallCoords)
+geo.computeAllViewFac = function(wallCoords, glzCoords, occDistToWallCenter){
+	var facadeDist = []// The distance from the facade at which we are evaluating comfort.
+	var locationPts = [] // The pointlocations in relation to the facade where we are evaluating comfort.
+	for (var i = 0; i < numPts; i++) {
+		facadeDist.push(i+1)
+		locationPts.push([occDistToWallCenter,i+1,seatH])
+	}
+	
+	var fullWallViewFac = geo.calcViewFacs(wallCoords, locationPts)
 	var glzViewFac = []
 	for (var i = 0; i < glzCoords.length; i++){
 		var glzSrf = glzCoords[i]
-		var viewFa = geo.calcViewFacs(glzSrf)
+		var viewFa = geo.calcViewFacs(glzSrf, locationPts)
 		if (i == 0){
 			var glzViewFac = viewFa.slice()
 		} else {
@@ -398,6 +395,7 @@ geo.computeAllViewFac = function(wallCoords, glzCoords){
 	var r = {}
     r.wallViews = wallViewFac;
     r.glzViews = glzViewFac;
+	r.facadeDist = facadeDist;
 	return r
 }
 	
