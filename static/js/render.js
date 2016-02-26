@@ -247,8 +247,11 @@ render.makeGraph = function () {
 		else if (triggeredChange == "windowWidthCheck") {
 			if (($("#windowWidthCheck").is(":checked")) == true) {
 				glzOrWidth = false;
+				$(".inactive").removeClass("inactive");
 			} else if (($("#windowWidthCheck").is(":checked")) == false) {
 				glzOrWidth = true;
+				$("#windowWidth").addClass("inactive");
+				$("#windowWidthLabel").addClass("inactive");
 			}
 		}
 		else if (triggeredChange == "windowHeight") {

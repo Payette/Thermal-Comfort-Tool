@@ -155,7 +155,16 @@
 	font-size: 12px;
 }
 
+#inputs label.inactive {
+	color: #eaeaea;
+	font-style: italic;
+}
 
+#inputs input.inactive {
+	border-color: #eaeaea;
+	color: #eaeaea;
+	font-style: italic;
+}
 
 
 
