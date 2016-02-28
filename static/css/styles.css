@@ -149,11 +149,18 @@
 	clear: left;
 	width: 150px;
 	text-align: left;
+	display: block;
 
 	color: #b9b9b9;
 	font-weight: 300;
 	font-size: 12px;
 }
+
+#inputs label.indent {
+	padding-left: 48px;
+	width: 102px;
+}
+
 
 #inputs label.inactive {
 	color: #d5d5d5;
@@ -165,6 +172,12 @@
 	border-color: #d5d5d5;
 	color: #d5d5d5;
 	font-style: italic;
+}
+
+#inputs label input.customCheck {
+	margin-left: 20px;
+	width: 28px;
+	vertical-align: middle;
 }
 
 

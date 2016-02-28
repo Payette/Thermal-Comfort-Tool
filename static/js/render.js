@@ -8,7 +8,7 @@ render.makeGraph = function () {
 	var blue = "rgb(0,160,221)";
 	var orange = "rgb(248,151,29)";
 	var green = "rgb(176,199,44)";
-	var grey = "rgb(190,190,190";
+	var grey = "rgb(190,190,190)";
 	var lightblue = "rgb(194,224,255)"
 
 	var allData = script.computeData()
@@ -202,7 +202,7 @@ render.makeGraph = function () {
 		.attr("width", function(d) {return facadeScaleWidth(d.wallWidth)})
 		.attr("height", function(d) {return facadeScaleHeight(d.wallHeight)})
 		.attr("transform", function() {
-				return "translate(" + facMargin.left + "," + facMargin.top + ")";})
+				return "translate(" + facMargin.left + "," + facMargin.top + ")"})
 		.style("fill", grey);
 
 	
@@ -230,7 +230,7 @@ render.makeGraph = function () {
 
 	/* ------ DETECT CHANGES TO INPUT VALUES ------ */
 	// Trigger change events
-	$("#outdoortemp, #ceiling, #wallWidth, #occupantDist, #windowWidthCheck, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowECheck, #lowE, #rvalue, #airtemp, #radiant, #airspeed, #humidity, #clothing, #metabolic").change(function(event) {
+	$("#outdoortemp, #ceiling, #wallWidth, #occupantDist, #windowWidthCheck, #glazingRatioCheck, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowECheck, #lowE, #rvalue, #airtemp, #radiant, #airspeed, #humidity, #clothing, #metabolic").change(function(event) {
 		
 		//figure out what input changed
 		var triggeredChange = event.target.id;
@@ -256,12 +256,37 @@ render.makeGraph = function () {
 				$("#windowWidthLabel").removeClass("inactive");
 				$("#glazing").addClass("inactive");
 				$("#glazingLabel").addClass("inactive");
+
+				$("#glazingRatioCheck").attr("checked", false);
+
 			} else if (($("#windowWidthCheck").is(":checked")) == false) {
 				glzOrWidth = true;
 				$("#windowWidth").addClass("inactive");
 				$("#windowWidthLabel").addClass("inactive");
 				$("#glazing").removeClass("inactive");
 				$("#glazingLabel").removeClass("inactive");
+
+				$("#glazingRatioCheck").attr("checked", true);
+			}
+		}
+		else if (triggeredChange == "glazingRatioCheck") {
+			if (($("#glazingRatioCheck").is(":checked")) == true) {
+				glzOrWidth = true;
+				$("#windowWidth").addClass("inactive");
+				$("#windowWidthLabel").addClass("inactive");
+				$("#glazing").removeClass("inactive");
+				$("#glazingLabel").removeClass("inactive");
+
+				$("#windowWidthCheck").attr("checked", false);
+
+			} else if (($("#glazingRatioCheck").is(":checked")) == false) {
+				glzOrWidth = false;
+				$("#windowWidth").removeClass("inactive");
+				$("#windowWidthLabel").removeClass("inactive");
+				$("#glazing").addClass("inactive");
+				$("#glazingLabel").addClass("inactive");
+
+				$("#windowWidthCheck").attr("checked", true);
 			}
 		}
 		else if (triggeredChange == "windowHeight") {
