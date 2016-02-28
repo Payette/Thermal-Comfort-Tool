@@ -9,7 +9,8 @@ render.makeGraph = function () {
 	var orange = "rgb(248,151,29)";
 	var green = "rgb(176,199,44)";
 	var grey = "rgb(190,190,190)";
-	var lightblue = "rgb(194,224,255)"
+	var lightblue = "rgb(194,224,255)";
+	var lightgrey = "rgb(245,245,245)";
 
 	var allData = script.computeData()
 	var dataset = allData.dataSet
@@ -44,6 +45,16 @@ render.makeGraph = function () {
 				.attr("id", "graph")
 				.attr("width", width + margin.left + margin.right)
 				.attr("height", height + margin.top + margin.bottom);
+
+
+	// Draw PPD threshold so that it's behind the data and axes
+	drawPPDThreshold(ppdValue);
+	$('#ppd').change(function() {
+		var newPPDValue = $(this).val();
+		updatePPDThreshold(newPPDValue);	
+	})
+
+
 	// add axes
 	graphSvg.append("g")
 		.attr("class", "axis")
@@ -87,6 +98,7 @@ render.makeGraph = function () {
 
 
     /* ------ PLOT THE DATA ------ */
+
     // Add line between points
 	var line = d3.svg.line()
 				.x(function(d) {return x(d.dist);})
@@ -103,11 +115,11 @@ render.makeGraph = function () {
 
 
     // Add dots at each point
-	var graphPoints = graphSvg.selectAll(".dot") //select all class "dot" in <svg> (empty)
-		.data(dataset) // join the selection to a data array
-		.enter() // create a selection for the data objects that didn't match elements (all)
-		.append("circle") // add a new circle for each data object
-		.attr("class","dot") // set the class to match selection criteria
+	var graphPoints = graphSvg.selectAll(".dot") 
+		.data(dataset) 
+		.enter() 
+		.append("circle") 
+		.attr("class","dot")
 		.attr("r", 3)
 		.attr("cx", function(d) { return x(d.dist); })
 		.attr("cy", function(d) { return y(d.ppd); })
@@ -122,6 +134,63 @@ render.makeGraph = function () {
 				return green;
 			}
 		})
+
+
+	// Show text on hover over dot
+	graphPoints.on("mouseover", function(d) {
+
+		//Get this bar's x/y values, then augment for the tooltip
+		var xPosition = parseFloat(d3.select(this).attr("cx")) + margin.left +10;
+		var yPosition = parseFloat(d3.select(this).attr("cy")) - 20;
+
+		//Update the tooltip position and value
+		d3.select("#tooltip")
+			.style("left", xPosition + "px")
+			.style("top", yPosition + "px")						
+			.select("#PPDtext")
+			.text(Math.round(d.ppd*10)/10 + "% PPD at " + d.dist + "ft from the facade.");
+
+
+		if (ppdValue >= d.ppd) {
+			d3.select("#discomfort")
+			.text("Tolerable")
+			.classed("tolerable", true)
+			.classed("intolerable", false);
+
+			if (d.govfact == "mrt") {
+				d3.select("#explain")
+				.text("mean radiant temperature.")
+				.style("color", blue);
+			} else if (d.govfact == "dwn") {
+				d3.select("#explain")
+				.text("downdraft.")
+				.style("color", orange);
+			} else if (d.govfact == "asym") {
+				d3.select("#explain")
+				.text("asymmetry.");
+			}
+		} else {
+			d3.select("#discomfort")
+			.text("Intolerable")
+			.classed("tolerable", false)
+			.classed("intolerable", true);
+
+		}
+
+		
+   
+		//Show the tooltip
+		d3.select("#tooltip").classed("hidden", false);
+
+   })
+   .on("mouseout", function() {
+   
+		//Hide the tooltip
+		d3.select("#tooltip").classed("hidden", true);
+		
+   })
+
+
 
 
 
@@ -226,6 +295,9 @@ render.makeGraph = function () {
 
 	//Add facade dimensions
 	drawHorziontalDimensions(wallPoints[0].wallWidth, facHeight);
+
+
+
 
 
 	/* ------ DETECT CHANGES TO INPUT VALUES ------ */
@@ -375,7 +447,7 @@ render.makeGraph = function () {
 		// Update the geometry values in the form.
 		//update window width
 		windowWidthValue = newGlzWidth;
-		$("#windowWidth").val(Math.round(windowWidthValue));
+		$("#windowWidth").val(Math.round(windowWidthValue * 100) / 100);
 
 		//update glazing ratio
 		glzRatioValue = newGlzRatio*100;
@@ -453,19 +525,22 @@ render.makeGraph = function () {
 
 		//update windows		
 		d3.selectAll("rect.window").remove()
-		
-		for (var i = 0; i < glzData.length; i++) {
-			facadeSvg.append("rect")
-				.attr("class", "window")
-				.attr("x", function() {return (facadeScaleWidth(glzData[i][3][0])+facWidth/2)})
-				.attr("y", function() {return (facadeScaleHeight(wallPoints[0].wallHeight - glzData[i][3][2]))})
-				.attr("width", facadeScaleWidth(newGlzWidth))
-				.attr("height", facadeScaleHeight(newGlzHeight))
-				.attr("transform", function() {
-					return "translate(" + facMargin.left + "," + facMargin.top + ")";
-				})
-				.style("fill", lightblue);
-		}
+
+		facadeSvg.selectAll(".window")
+			.data(glzData)
+			.enter()
+			.append("rect")
+			.attr("class", "window")
+			.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facWidth/2)})
+			.attr("y", function(d) {return (facadeScaleHeight(wallPoints[0].wallHeight - d[3][2]))})
+			.attr("width", facadeScaleWidth(newGlzWidth))
+			.attr("height", facadeScaleHeight(newGlzHeight))
+			.attr("transform", function() {
+				return "translate(" + facMargin.left + "," + facMargin.top + ")";
+			})
+			.style("fill", lightblue);
+
+
 
 		//update dimensions
 		d3.select("#facadeWidth")
@@ -525,12 +600,28 @@ render.makeGraph = function () {
 	}
 
 
+		
 
 
 
-	function drawHorizontalReferenceLine(data) {
-		// add line for UValue
-		var lineMarker = graphSvg.append("line")
+
+	function drawPPDThreshold(data) {
+
+		//data = PPD threshold (ie 10%)
+
+		// add shaded rectangle
+		graphSvg.append("rect")
+			.attr("class", "thresholdRect")
+			.attr("x", 0)
+			.attr("y", 0)
+			.attr("width", width) //use width of graph
+			.attr("height", function() { return y(data)})
+			.attr("transform", function() {
+					return "translate(" + margin.left + "," + margin.top + ")";})
+			.style("fill", lightgrey);
+
+		// add line
+		graphSvg.append("line")
 			.attr("class","refLine")
 			.attr("x1", 0)
 			.attr("x2", width)
@@ -541,7 +632,7 @@ render.makeGraph = function () {
 			.style("stroke", "black");
 	}
 
-	function updateReferenceLine(data) {
+	function updatePPDThreshold(data) {
 		d3.selectAll(".refLine")
 			.transition()
 			.duration(400)
@@ -551,13 +642,6 @@ render.makeGraph = function () {
 
 
 
-	// if in VERIFICATION graph mode...
-	drawHorizontalReferenceLine(ppdValue);
-	// detect change to PPD Value, then update horizontal reference line
-	$('#ppd').change(function() {
-		var newPPDValue = $(this).val();
-		updateReferenceLine(newPPDValue);	
-	})
 
 
 } //end makeGraph()
