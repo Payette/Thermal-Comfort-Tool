@@ -301,7 +301,6 @@ render.makeGraph = function () {
 	// Update from form submission.
 	$('#form').on('submit', function(event) {
 		event.preventDefault();
-		console.log("Running U-Value Calculation")
 		
 		// Compute the window and wall geometry.
 		var geoResultUVal = geo.createGlazingForRect(parseFloat(ceilingHeightValue), wallLen, glzRatioValue/100, parseFloat(windowWidthValue), parseFloat(windowHeightValue), parseFloat(sillHeightValue), parseFloat(distanceWindows), glzOrWidth);

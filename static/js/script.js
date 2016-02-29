@@ -40,7 +40,7 @@ script.computeData = function() {
 	// Compute the window and wall geometry.
 	var geoResult = geo.createGlazingForRect(parseFloat(ceilingHeightValue), wallLen, glzRatioValue/100, parseFloat(windowWidthValue), parseFloat(windowHeightValue), parseFloat(sillHeightValue), parseFloat(distanceWindows), glzOrWidth);
 	
-	// Compute the view factors.
+	// Compute the view factors to make the graph.
 	var viewResult = geo.computeAllViewFac(geoResult.wallCoords, geoResult.glzCoords, occDistToWallCenter, true, occDistFromFacade)
 	
 	// Compute the PPD for each point.

@@ -234,7 +234,7 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windowHgt, glzUV
 	// Assign variable for average indoor surface temperature based on specification of radiant floor vs. air system.
 	if (radiantFloor == true) {
 		var indoorSrfTemp = airTemp + 1.5
-		airTemp = airTemp - 1.5
+		//airTemp = airTemp - 1.5
 	} else {
 		var indoorSrfTemp = airTemp
 	}
