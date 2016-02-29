@@ -48,7 +48,7 @@ comf.velMaxFar = function(deltaT, windowHgt){
 // Special thanks goes to the authors of the online wet-bulb temperature calculator 
 // http://www.srh.noaa.gov/epz/?n=wxcalc_rh
 comf.dewptCalc = function(dbTemp, RH){
-    var es = 6.112 * Math.e**((17.67 * dbTemp) / (dbTemp + 243.5))
+    var es = 6.112 * Math.exp((17.67 * dbTemp) / (dbTemp + 243.5))
     
     var e = (es * RH) / 100
     
