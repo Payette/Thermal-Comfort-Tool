@@ -363,17 +363,17 @@ geo.calcViewFacs = function(srfCoords, locPts) {
 
 
 //Calculate all viewFactors from surfcace coordinates.
-geo.computeAllViewFac = function(wallCoords, glzCoords, occDistToWallCenter, graphOrPt, occDistFromFacade){
+geo.computeAllViewFac = function(wallCoords, glzCoords, occDistToWall, graphOrPt, occDist){
 	if (graphOrPt == true) {
 		var facadeDist = []// The distance from the facade at which we are evaluating comfort.
 		var locationPts = [] // The pointlocations in relation to the facade where we are evaluating comfort.
 		for (var i = 0; i < numPts; i++) {
 			facadeDist.push(i+1)
-			locationPts.push([parseFloat(occDistToWallCenter),i+1,seatH])
+			locationPts.push([parseFloat(occDistToWall),i+1,seatH])
 		}
 	} else {
-		var facadeDist = [occDistFromFacade, 1]
-		var locationPts = [[parseFloat(occDistToWallCenter),parseFloat(occDistFromFacade),seatH], [parseFloat(occDistToWallCenter),1,seatH]]
+		var facadeDist = [occDist, 1]
+		var locationPts = [[parseFloat(occDistToWall),parseFloat(occDist),seatH], [parseFloat(occDistToWall),1,seatH]]
 	}
 	
 	var fullWallViewFac = geo.calcViewFacs(wallCoords, locationPts)

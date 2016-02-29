@@ -13,11 +13,11 @@ var uVal = uVal || {}
 uVal.calcPMVtarget = function(targetPPD){
 	var pmvGuess = 0
 	var increment = 0.01
-	var PPD = 100.0 - 95.0 * math.exp(-0.03353 * pow(pmvGuess, 4) - 0.2179 * pow(pmvGuess, 2))
+	var PPD = 100.0 - 95.0 * exp(-0.03353 * pow(pmvGuess, 4) - 0.2179 * pow(pmvGuess, 2))
 	var eps = 0.01
 	while (abs(targetPPD - PPD) > eps) {
 		pmvGuess = pmvGuess + increment
-		PPD = 100.0 - 95.0 * math.exp(-0.03353 * pow(pmvGuess, 4) - 0.2179 * pow(pmvGuess, 2))
+		PPD = 100.0 - 95.0 * exp(-0.03353 * pow(pmvGuess, 4) - 0.2179 * pow(pmvGuess, 2))
 	}
 	return pmvGuess
 }
