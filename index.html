@@ -16,6 +16,8 @@
 	<script type="text/javascript" charset="utf-8" src="static/js/d3/d3.v3.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/geo.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/PPDCalc.js"></script>
+	<script type="text/javascript" charset="utf-8" src="static/js/UValCalc.js"></script>
+	<script type="text/javascript" charset="utf-8" src="static/js/util.js"></script>
 	<!-- Make Chart -->
 	<script type="text/javascript" src="static/js/render.js"></script> 
 
@@ -83,7 +85,8 @@
 			<legend class="heading">Facade Performance</legend>
 			<hr>
 			<label for="uvalue">Window U-Value:</label>
-			<input type="text" name="uvalue" id="uvalue" value="0.25"><br>
+			<input type="text" name="uvalue" id="uvalue" value="0.25">
+			<input id="submit" type="submit" value="AutoCal"/><br>
 
 			<label for="lowECheck">Interior Low-E Coating:</label>
 			<input type="checkbox" name="lowECheck" id="lowECheck"><br>
@@ -94,8 +97,6 @@
 			<label for="rvalue">Wall R-Value:</label>
 			<input type="text" name="rvalue" id="rvalue" value="20"><br>
 
-			
-			<input id="submit" type="submit" value="U-Value"/><br>
 		</fieldset>
 
 		<fieldset class="inputgroup">

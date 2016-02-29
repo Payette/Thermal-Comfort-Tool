@@ -209,7 +209,7 @@ comf.getDowndraftPPD = function(distToFacade, windowHgt, filmCoeff, airTemp, out
 		} else{
 			var windSpd = comf.velMaxFar(glassAirDelta, windowHgt)
 		}
-		PPD.push(comf.calcPPDFromDowndraft(windSpd, downDraftTemp))
+		PPD.push(comf.calcPPDFromDowndraft(windSpd, airTemp))
 	}
 	return PPD
 }
@@ -233,7 +233,8 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windowHgt, glzUV
 	
 	// Assign variable for average indoor surface temperature based on specification of radiant floor vs. air system.
 	if (radiantFloor == true) {
-		var indoorSrfTemp = airTemp + 3
+		var indoorSrfTemp = airTemp + 1.5
+		airTemp = airTemp - 1.5
 	} else {
 		var indoorSrfTemp = airTemp
 	}

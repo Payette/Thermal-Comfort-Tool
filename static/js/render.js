@@ -298,11 +298,42 @@ render.makeGraph = function () {
 
 
 
-
+	// Update from form submission.
+	$('#form').on('submit', function(event) {
+		event.preventDefault();
+		console.log("Running U-Value Calculation")
+		
+		// Compute the window and wall geometry.
+		var geoResultUVal = geo.createGlazingForRect(parseFloat(ceilingHeightValue), wallLen, glzRatioValue/100, parseFloat(windowWidthValue), parseFloat(windowHeightValue), parseFloat(sillHeightValue), parseFloat(distanceWindows), glzOrWidth);
+		// Compute the view factors.
+		var viewResultUVal = geo.computeAllViewFac(geoResultUVal.wallCoords, geoResultUVal.glzCoords, occDistToWallCenter, false, occDistFromFacade)
+		
+		//Compute the U-Value required to make the occupant comfortable.
+		uvalueValue = uVal.uValFinal(viewResultUVal.wallViews, viewResultUVal.glzViews, viewResultUVal.facadeDist, parseFloat(windowHeightValue), airtempValue, outdoorTempValue, rvalueValue, intLowEChecked, intLowEEmissivity, airspeedValue, humidityValue, metabolic, clothingValue, ppdValue)
+		
+		// Update the value in the form.
+		$("#uvalue").val(Math.round(uvalueValue * 1000) / 1000);
+		
+		// Re-run the functions with the new inputs.
+		var fullData = script.computeData()
+		
+		//update datasets with new value
+		var newDataset = fullData.dataSet;
+		var newGlzCoords = fullData.glzCoords;
+		var newGlzWidth = fullData.windowWidth;
+		var newGlzHeight = fullData.windowHeight;
+		
+		// Update the PPD graph and facade SVG.
+		updateGraphData(newDataset);
+		updateFacade(wallPoints, newGlzCoords, newGlzWidth, newGlzHeight); 
+		
+	})
+	
+	
 
 	/* ------ DETECT CHANGES TO INPUT VALUES ------ */
 	// Trigger change events
-	$("#outdoortemp, #ceiling, #wallWidth, #occupantDist, #windowWidthCheck, #glazingRatioCheck, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowECheck, #lowE, #rvalue, #airtemp, #radiant, #airspeed, #humidity, #clothing, #metabolic").change(function(event) {
+	$("#outdoortemp, #ceiling, #wallWidth, #occupantDist, #distFromFacade, #ppd, #windowWidthCheck, #glazingRatioCheck, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowECheck, #lowE, #rvalue, #airtemp, #radiant, #airspeed, #humidity, #clothing, #metabolic").change(function(event) {
 		
 		//figure out what input changed
 		var triggeredChange = event.target.id;
@@ -320,6 +351,12 @@ render.makeGraph = function () {
 		}
 		else if(triggeredChange == "occupantDist") {
 			occDistToWallCenter = $(this).val();
+		}
+		else if(triggeredChange == "distFromFacade") {
+			occDistFromFacade = $(this).val();
+		}
+		else if(triggeredChange == "ppd") {
+			ppdValue = $(this).val();
 		}
 		else if (triggeredChange == "windowWidthCheck") {
 			if (($("#windowWidthCheck").is(":checked")) == true) {
