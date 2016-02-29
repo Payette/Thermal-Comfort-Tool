@@ -258,7 +258,12 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windowHgt, glzUV
 	for (var i = 0; i < MRTvals.length; i++) {
 		var MRT = MRTvals[i]
 		var mrtResult = comf.pmv(airTemp, MRT, vel, rh, met, clo, 0)
-		mrtPPD.push(mrtResult.ppd)
+		if (mrtResult.pmv > 0){
+			var finalMRTPPD = 0
+		} else {
+			var finalMRTPPD = mrtResult.ppd
+		}
+		mrtPPD.push(finalMRTPPD)
 	}
 	
 	// Get the Downdraft PPD results.
