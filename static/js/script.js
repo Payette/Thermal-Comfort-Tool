@@ -43,7 +43,7 @@ script.computeData = function() {
 	var viewResult = geo.computeAllViewFac(geoResult.wallCoords, geoResult.glzCoords, occDistToWallCenter)
 	
 	// Compute the PPD for each point.
-	var theDataset = comf.getFullPPD(viewResult.wallViews, viewResult.glzViews, viewResult.facadeDist, geoResult.windowHeight, uvalueValue, intLowEChecked, intLowEEmissivity, rvalueValue, airtempValue, outdoorTempValue, radiantFloorChecked, clothingValue, metabolic, airspeedValue, humidityValue)
+	var comfortResult = comf.getFullPPD(viewResult.wallViews, viewResult.glzViews, viewResult.facadeDist, geoResult.windowHeight, uvalueValue, intLowEChecked, intLowEEmissivity, rvalueValue, airtempValue, outdoorTempValue, radiantFloorChecked, clothingValue, metabolic, airspeedValue, humidityValue)
 	
 	// Return all of the information in one dictionary
 	var r = {}
@@ -52,9 +52,11 @@ script.computeData = function() {
 	r.glzRatio = geoResult.glzRatio;
 	r.windowWidth = geoResult.windowWidth;
 	r.windowHeight = geoResult.windowHeight;
-	r.sillHeight = geoResult.sillHeight
-	r.centLineDist = geoResult.centLineDist
-	r.dataSet = theDataset;
+	r.sillHeight = geoResult.sillHeight;
+	r.centLineDist = geoResult.centLineDist;
+	
+	r.condensation = comfortResult.condensation; // Text string value that is either: "certain", "risky", "none".
+	r.dataSet = comfortResult.myDataset;
 	
 	return r
 }

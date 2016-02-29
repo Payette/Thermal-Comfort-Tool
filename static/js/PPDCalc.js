@@ -3,6 +3,8 @@ var exp = Math.exp;
 var max = Math.max;
 var abs = Math.abs;
 var sqrt = Math.sqrt;
+var logarithm = Math.log;
+var round = Math.round;
 
 var comf = comf || {}
 
@@ -37,6 +39,23 @@ comf.velMaxMid = function(dist, deltaT, windowHgt){
 }
 comf.velMaxFar = function(deltaT, windowHgt){
     return (0.028*(sqrt(deltaT*windowHgt)))
+}
+
+// Function that calculates dewpoint temperature from dry bulb and relative humidity.
+// This function uses the "Method for obtaining wet-bulb temperatures by modifying the psychrometric formula"
+// created by J. Sullivan and L. D. Sanders (Center for Experiment Design and Data Analysis).
+// NOAA - National Oceanic and Atmospheric Administration
+// Special thanks goes to the authors of the online wet-bulb temperature calculator 
+// http://www.srh.noaa.gov/epz/?n=wxcalc_rh
+comf.dewptCalc = function(dbTemp, RH){
+    var es = 6.112 * Math.e**((17.67 * dbTemp) / (dbTemp + 243.5))
+    
+    var e = (es * RH) / 100
+    
+    var Td = (243.5 * logarithm(e / 6.112)) / (17.67 - logarithm(e / 6.112))
+    
+    var dpTemp = round(Td,2)
+    return dpTemp
 }
 
 
@@ -167,6 +186,8 @@ comf.getMRTandRadAssym = function(winViewFacs, opaqueViewFacs, winFilmCoeff, air
 	var r = {}
     r.mrt = MRT;
     r.ppd = radAssymPPD;
+	r.windowTemp = windowTemp;
+
 	return r 
 }
 
@@ -229,6 +250,7 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windowHgt, glzUV
 	var radAssymResult = comf.getMRTandRadAssym(glzViewFac, wallViewFac, winFilmCoeff, airTemp, outdoorTemp, indoorSrfTemp, opaqueRVal, windowUVal)
 	var radAssymPPD = radAssymResult.ppd
 	var MRTvals = radAssymResult.mrt
+	var windowTemp = radAssymResult.windowTemp
 	
 	// Get the MRT PPD results.
 	var mrtPPD = []
@@ -258,7 +280,22 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windowHgt, glzUV
 		myDataset.push(ptInfo)
 	}
 	
-	return myDataset
+	// Calculate whether there is risk of condensation.
+	var dewPoint = comf.dewptCalc(indoorTemp, rh)
+	if (windowTemp < dewPoint){
+		var condensation = "certain"
+	} else if (windowTemp < dewPoint+3){
+		var condensation = "risky"
+	} else {
+		var condensation = "none"
+	}
+	
+	// Return all results.
+	r = {}
+	r.myDataset = myDataset
+	r.condensation = condensation
+	
+	return r
 }
 
 
