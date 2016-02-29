@@ -199,7 +199,8 @@ render.makeGraph = function () {
 
 
 	/* ------ SET UP FACADE VARIABLES AND DATA FUNCTIONS ------ */
-
+	var facMargin = {top: 50, right: 0, bottom: 50, left: 50};
+	
 	// wall coordinates
 	var wallPoints = [{
 		wallX: 0,
@@ -212,19 +213,16 @@ render.makeGraph = function () {
 	var glzWidth = allData.windowWidth;
 	var glzHeight = allData.windowHeight;
 
-
-
-	var facMargin = {top: 50, right: 0, bottom: 50, left: 50};
-
+	
 	// Set SVG height to be proportionate to wall length and extend of wall height
 
 	var facWidth = maxContainerWidth - facMargin.left - facMargin.right;
 
 	var proportinateMultiplier = facWidth/wallPoints[0].wallWidth;
-    var facHeight = proportinateMultiplier*wallPoints[0].wallHeight;
+	var facHeight = proportinateMultiplier*wallPoints[0].wallHeight;
 
 	// Set up scale functions
-    var facadeScaleWidth = d3.scale.linear()
+	var facadeScaleWidth = d3.scale.linear()
 				.domain([0, wallPoints[0].wallWidth]) //input domain
 				.range([0, facWidth]); //output range
 
@@ -232,10 +230,6 @@ render.makeGraph = function () {
 				.domain([0, wallPoints[0].wallHeight]) //input domain
 				.range([0, facHeight]); //output range
 				
-
-	// Define axes
-	var xFacAxis = d3.svg.axis().scale(facadeScaleWidth).orient("top").ticks(20);
-	var yFacAxis = d3.svg.axis().scale(facadeScaleHeight).orient("left").ticks(15);
 
 
 
@@ -246,18 +240,6 @@ render.makeGraph = function () {
 				.attr("id", "facade")
 				.attr("width", facWidth + facMargin.left + facMargin.right)
 				.attr("height", facHeight + facMargin.top + facMargin.bottom);
-
-/*//------ add axes for reference - TO BE DELETED
-	facadeSvg.append("g")
-		.attr("class", "facadeaxis")
-		.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top) + ")")
-    	.call(xFacAxis);
-
-	facadeSvg.append("g")
-	    .attr("class", "facadeaxis")
-	    .attr("transform", "translate(" + facMargin.left + "," + (facMargin.top) + ")")
-	    .call(yFacAxis);
-*/
 
 
 	//Initialize wall facade
@@ -291,14 +273,11 @@ render.makeGraph = function () {
 		.style("fill", lightblue);
 
 
-
-
 	//Add facade dimensions
 	drawHorziontalDimensions(wallPoints[0].wallWidth, facHeight);
+	
 
-
-
-	// Update from form submission.
+	// Update when autocolculate U Value is pressed.
 	$('#form').on('submit', function(event) {
 		event.preventDefault();
 		
@@ -347,6 +326,20 @@ render.makeGraph = function () {
 		else if(triggeredChange == "wallWidth") {
 			wallLen = $(this).val();
 			wallPoints[0].wallWidth = $(this).val(); //udpate wall geometry array
+			proportinateMultiplier = facWidth/wallPoints[0].wallWidth;
+			facHeight = proportinateMultiplier*wallPoints[0].wallHeight;
+
+			// Set up scale functions
+			facadeScaleWidth = d3.scale.linear()
+						.domain([0, wallPoints[0].wallWidth]) //input domain
+						.range([0, facWidth]); //output range
+
+			facadeScaleHeight = d3.scale.linear()
+						.domain([0, wallPoints[0].wallHeight]) //input domain
+						.range([0, facHeight]); //output range
+			// Update dimensions
+			facadeSvg.selectAll("#facadeWidth").remove()
+			drawHorziontalDimensions(wallPoints[0].wallWidth, facHeight);
 		}
 		else if(triggeredChange == "occupantDist") {
 			occDistToWallCenter = $(this).val();
