@@ -94,7 +94,7 @@ geo.createGlazingForRect = function(rectHeight, wallLen, glazingRatio, windowWid
  			if (numDivisions != 1) { 
  				var distCentLine = divDist 
  			} else{ 
- 				var distCentLine = 20 
+ 				var distCentLine = wallLen
  			} 
  			var winLineBaseLength = winLinesStart[0][0][0] - winLinesStart[0][1][0] 
  			var winLineReqLength = (targetArea / winHeightFinal) / numDivisions 
@@ -270,12 +270,12 @@ geo.createGlazingForRect = function(rectHeight, wallLen, glazingRatio, windowWid
 //This formula for calculating solid angles and view factors to orthagonal surfaces comes from:
 //Tredre, Barbara. (1965). Assessment of Mean Radiant Temperature in Indoor Envrionments.
 //Britich Journal of Indutrial Medecine, 22, 58.
-geo.calcViewFacs = function(srfCoords, locationPts) {
+geo.calcViewFacs = function(srfCoords, locPts) {
     // Define a list to be filled up with view factors.
 	var viewFact = []
 	
-	for (var i = 0; i < locationPts.length; i++) {
-		var pt = locationPts[i]
+	for (var i = 0; i < locPts.length; i++) {
+		var pt = locPts[i]
         //Define variables to catch when we should be subtracting quadrants instead of summing them.
         var removeLowQuads = false
         var removeHiQuads = false
@@ -354,9 +354,9 @@ geo.calcViewFacs = function(srfCoords, locationPts) {
 		}
         
         //Compute the view factors by summin and dividing by 4*Pi
-        var wallView = (solid1+solid2+solid3+solid4)/12.566
+        var srfView = (solid1+solid2+solid3+solid4)/12.566
 		
-        viewFact.push(wallView)
+        viewFact.push(srfView)
     }
     return viewFact
 }
