@@ -77,10 +77,10 @@ uVal.uValMRT = function(opaqueViewFac, winViewFac, airTemp, outdoorTemp, opaqueR
 	
 	//Calculate the temperature of the opaque wall and its contribution to the comfort.
 	var opaqueTemp = comf.calcInteriorTemp(airTemp, outdoorTemp, opaqueRVal, 8.29)
-	var opaqueContrib = uVal.MRTCondtribOfOpaque(opaqueTemp, opaqueViewFac[0], winViewFac[0], airTemp);
+	var opaqueContrib = uVal.MRTCondtribOfOpaque(opaqueTemp, opaqueViewFac, winViewFac, airTemp);
 	
 	// Calculate the minimum acceptable U-Values for the PMV model.
-	var UMax = uVal.maxUOfMRT(minAcceptMRT, airTemp, outdoorTemp, winViewFac[0], opaqueContrib, filmCoeff);
+	var UMax = uVal.maxUOfMRT(minAcceptMRT, airTemp, outdoorTemp, winViewFac, opaqueContrib, filmCoeff);
 	if (filmCoeff > 5) {
 		var UVal = UMax;
 	} else {
@@ -111,7 +111,7 @@ uVal.deltaTAcceptFar =  function(windSpd, windowHgt){
 }
 
 uVal.uValDownD = function(PPDAccept, distToFacade, windowHgt, filmCoeff, airTemp, outdoorTemp){
-	var distSI = distToFacade[0]/3.28084
+	var distSI = distToFacade/3.28084
 	var windAccept = uVal.calcAcceptWindSpd(PPDAccept, airTemp)
 	
 	if (distSI < 0.4){

@@ -13,14 +13,14 @@ var numPts = 12 // The number of points to generate.  They will be generated at 
 
 // Function that generates the geometry of the windows based on the input window parameters.
 // Originally developed by Chris Mackey (Chris@MackeyArchitecture.com) for Ladybug + Honeybee (https://github.com/mostaphaRoudsari/Honeybee)
-geo.createGlazingForRect = function(rectHeight, wallLen, glazingRatio, windowWidth, winHeight, silHeight, distBreakup, ratioOrWidth) {
+geo.createGlazingForRect = function(rectHeight, wallLength, glazingRatio, windowWidth, winHeight, silHeight, distBreakup, ratioOrWidth) {
 	//Check to be sure that the user is not assiging crazy values and, if so, set limits on them.
 	if (glazingRatio > 0.95) {
 		glazingRatio = 0.95;
 	}
 	
     //Define wall coordinates for the given wall length.
-    var wallCoord = [[-wallLen/2,0,0],[wallLen/2,0,0],[wallLen/2,0,rectHeight],[-wallLen/2,0,rectHeight]]
+    var wallCoord = [[-wallLength/2,0,0],[wallLength/2,0,0],[wallLength/2,0,rectHeight],[-wallLength/2,0,rectHeight]]
     
 	//Find the maximum acceptable area for setting the glazing at the sill height.
     var maxWinHeightSill = rectHeight - silHeight
@@ -47,16 +47,16 @@ geo.createGlazingForRect = function(rectHeight, wallLen, glazingRatio, windowWid
 	
 	if (ratioOrWidth == true) {
 		//Calculate the target area to make the glazing.
-		var targetArea = wallLen * rectHeight * glazingRatio
+		var targetArea = wallLength * rectHeight * glazingRatio
 		
 		//Find the maximum acceptable area for breaking up the window into smaller, taller windows.
-		var maxAreaBreakUp = (wallLen * 0.98) * winHeight
+		var maxAreaBreakUp = (wallLength * 0.98) * winHeight
 		
 		//Find the window geometry in the case that the target area is below that of the maximum acceptable area for breaking up the window into smaller, taller windows.
 		if (targetArea < maxAreaBreakUp) {
 			//Divide up the rectangle into points on the bottom.
-			if (wallLen > (distBreakup/2)) {
-				var numDivisions = round(wallLen/distBreakup, 0);
+			if (wallLength > (distBreakup/2)) {
+				var numDivisions = round(wallLength/distBreakup, 0);
 			} else {
 				var numDivisions = 1;
 			}
@@ -64,13 +64,13 @@ geo.createGlazingForRect = function(rectHeight, wallLen, glazingRatio, windowWid
  			var windowWidth = (targetArea / winHeightFinal) / numDivisions 
 
  			 
- 			var btmDivPts = [[(wallLen/2),0,silHeightFinal]] 
- 			var divDist = wallLen/numDivisions 
+ 			var btmDivPts = [[(wallLength/2),0,silHeightFinal]] 
+ 			var divDist = wallLength/numDivisions 
  			var totalDist = 0
  			 
- 			while (totalDist < wallLen) { 
+ 			while (totalDist < wallLength) { 
  				totalDist += divDist 
- 				btmDivPts.push([((wallLen/2)-totalDist),0,silHeightFinal]) 
+ 				btmDivPts.push([((wallLength/2)-totalDist),0,silHeightFinal]) 
  			} 
  			 
  			//Organize the points to form lines to be used to generate the windows 
@@ -94,7 +94,7 @@ geo.createGlazingForRect = function(rectHeight, wallLen, glazingRatio, windowWid
  			if (numDivisions != 1) { 
  				var distCentLine = divDist 
  			} else{ 
- 				var distCentLine = wallLen
+ 				var distCentLine = wallLength
  			} 
  			var winLineBaseLength = winLinesStart[0][0][0] - winLinesStart[0][1][0] 
  			var winLineReqLength = (targetArea / winHeightFinal) / numDivisions 
@@ -125,14 +125,14 @@ geo.createGlazingForRect = function(rectHeight, wallLen, glazingRatio, windowWid
 		//Find the window geometry in the case that the target area is above that of the maximum acceptable area for breaking up the window in which case we have to make one big window.
 		if (targetArea > maxAreaBreakUp) {
 			//Move the bottom curve of the window to the appropriate sill height.
-			var maxSillHeight = (rectHeight*0.99) - (targetArea / (wallLen * 0.98))
+			var maxSillHeight = (rectHeight*0.99) - (targetArea / (wallLength * 0.98))
 			if (silHeightFinal > maxSillHeight){
 				silHeightFinal = maxSillHeight
 			}
-			var winLinesStart = [[wallLen/2,0,silHeightFinal],[-wallLen/2,0,silHeightFinal]]
+			var winLinesStart = [[wallLength/2,0,silHeightFinal],[-wallLength/2,0,silHeightFinal]]
 			
 			//Scale the curve so that it is not touching the edges of the surface.
-			var distCentLine = wallLen
+			var distCentLine = wallLength
 			var winLineScale = 0.98
 			var lineCentPt = [0,0,0]
 			var newStartPt = [winLinesStart[0][0] - ((winLinesStart[0][0]-lineCentPt[0])*(1-winLineScale)), 0, winLinesStart[0][2]]
@@ -142,42 +142,43 @@ geo.createGlazingForRect = function(rectHeight, wallLen, glazingRatio, windowWid
 			
 			//Extrude the lines to create windows.
 			var finalGlzCoords = [[]]
-			winHeightFinal = (targetArea / (wallLen * 0.98))
+			winHeightFinal = (targetArea / (wallLength * 0.98))
 			finalGlzCoords[0].push(winLinesStart[1])
 			finalGlzCoords[0].push(winLinesStart[0])
 			finalGlzCoords[0].push([winLinesStart[0][0], 0, winLinesStart[0][2] + winHeightFinal])
 			finalGlzCoords[0].push([winLinesStart[1][0], 0, winLinesStart[1][2] + winHeightFinal])
+			
 		}
 	} else {
 		//Find the maximum acceptable width for breaking up the window into smaller, taller windows.
-		var maxWidthBreakUp = wallLen/2
+		var maxWidthBreakUp = wallLength/2
 		
 		//Find the window geometry in the case that the target width is below that of the maximum width acceptable area for breaking up the window into smaller windows.
 		if (windowWidth < maxWidthBreakUp) {
 			//Divide up the rectangle into points on the bottom.
-			if (wallLen > (distBreakup/2)) {
-				var numDivisions = round(wallLen/distBreakup, 0);
+			if (wallLength > (distBreakup/2)) {
+				var numDivisions = round(wallLength/distBreakup, 0);
 			} else {
 				var numDivisions = 1;
 			}
 			
-			if (numDivisions*windowWidth > wallLen){
+			if (numDivisions*windowWidth > wallLength){
 				numDivisions = numDivisions = 1
 			}
 			
-			if (((numDivisions*windowWidth)+ (numDivisions-1)*(distBreakup-windowWidth)) > wallLen){
-				numDivisions = Math.floor(wallLen/distBreakup);
+			if (((numDivisions*windowWidth)+ (numDivisions-1)*(distBreakup-windowWidth)) > wallLength){
+				numDivisions = Math.floor(wallLength/distBreakup);
 			}
 			
-			var btmDivPts = [[(wallLen/2),0,silHeightFinal]]
+			var btmDivPts = [[(wallLength/2),0,silHeightFinal]]
 			var divDist = distBreakup
-			var remainder = wallLen - (distBreakup*numDivisions)
+			var remainder = wallLength - (distBreakup*numDivisions)
 			
 			var totalDist = remainder/2
 			
-			while (totalDist < wallLen) {
+			while (totalDist < wallLength) {
 				totalDist += divDist
-				btmDivPts.push([((wallLen/2)-totalDist),0,silHeightFinal])
+				btmDivPts.push([((wallLength/2)-totalDist),0,silHeightFinal])
 			}
 			
 			//Organize the points to form lines to be used to generate the windows
@@ -200,7 +201,7 @@ geo.createGlazingForRect = function(rectHeight, wallLen, glazingRatio, windowWid
 			if (numDivisions != 1) {
 				var distCentLine = divDist
 			} else{
-				var distCentLine = wallLen
+				var distCentLine = wallLength
 			}
 			
 			var winLineScale = windowWidth / divDist
@@ -229,14 +230,14 @@ geo.createGlazingForRect = function(rectHeight, wallLen, glazingRatio, windowWid
 		}
 		//Find the window geometry in the case that the target width is above the maximum width acceptable area for breaking up the window into smaller windows.
 		if (windowWidth >= maxWidthBreakUp) {
-			if (windowWidth > wallLen){
-				windowWidth = wallLen
+			if (windowWidth > wallLength){
+				windowWidth = wallLength
 			}
-			var winLinesStart = [[wallLen/2,0,silHeightFinal],[-wallLen/2,0,silHeightFinal]]
+			var winLinesStart = [[wallLength/2,0,silHeightFinal],[-wallLength/2,0,silHeightFinal]]
 			
 			//Scale the curve so that it is not touching the edges of the surface.
-			var distCentLine = wallLen
-			var winLineScale = windowWidth / wallLen
+			var distCentLine = wallLength
+			var winLineScale = windowWidth / wallLength
 			var lineCentPt = [0,0,0]
 			var newStartPt = [winLinesStart[0][0] - ((winLinesStart[0][0]-lineCentPt[0])*(1-winLineScale)), 0, winLinesStart[0][2]]
 			var newEndPt = [winLinesStart[1][0] + ((lineCentPt[0]-winLinesStart[1][0])*(1-winLineScale)), 0, winLinesStart[0][2]]
@@ -251,7 +252,7 @@ geo.createGlazingForRect = function(rectHeight, wallLen, glazingRatio, windowWid
 			finalGlzCoords[0].push([winLinesStart[1][0], 0, winLinesStart[1][2] + winHeightFinal])
 		}
 		//Calculate the glazing ratio.
-		var glazingRatio = glzArea/(wallLen*rectHeight)
+		var glazingRatio = glzArea/(wallLength*rectHeight)
 	}
 	
 	//Return the coordinates of the wall.
@@ -362,32 +363,31 @@ geo.calcViewFacs = function(srfCoords, locPts) {
 }
 
 
-//Calculate all viewFactors from surfcace coordinates.
-geo.computeAllViewFac = function(wallCoords, glzCoords, occDistToWall, graphOrPt, occDist){
-	if (graphOrPt == true) {
-		var facadeDist = []// The distance from the facade at which we are evaluating comfort.
-		var locationPts = [] // The pointlocations in relation to the facade where we are evaluating comfort.
-		for (var i = 0; i < numPts; i++) {
-			facadeDist.push(i+1)
-			locationPts.push([parseFloat(occDistToWall),i+1,seatH])
-		}
-	} else {
-		var facadeDist = [occDist, 1]
-		var locationPts = [[parseFloat(occDistToWall),parseFloat(occDist),seatH], [parseFloat(occDistToWall),1,seatH]]
+
+//Calculate all viewFactors for the graph.
+geo.computeAllViewFac = function(wallCoords, glazingCoords, occDistToWall){
+	var facadeDist = []// The distance from the facade at which we are evaluating comfort.
+	var locationPts = [] // The pointlocations in relation to the facade where we are evaluating comfort.
+	for (var i = 0; i < numPts; i++) {
+		facadeDist.push(i+1)
+		locationPts.push([parseFloat(occDistToWall),i+1,seatH])
 	}
+	facadeDist.push(occDistFromFacade)
+	locationPts.push([parseFloat(occDistToWall),occDistFromFacade,seatH])
 	
 	var fullWallViewFac = geo.calcViewFacs(wallCoords, locationPts)
 	
 	var glzViewFac = []
-	for (var i = 0; i < glzCoords.length; i++){
-		var glzSrf = glzCoords[i]
+	for (var i = 0; i < glazingCoords.length; i++){
+		var glzSrf = glazingCoords[i]
 		var viewFa = geo.calcViewFacs(glzSrf, locationPts)
+		
 		if (i == 0){
-			var glzViewFac = viewFa.slice()
+			var glzViewFac = viewFa
 		} else {
 			for (var i = 0; i < viewFa.length; i++){
-				var pt = viewFa[i]
-				glzViewFac[i] = glzViewFac[i] + pt
+				var ptvie = viewFa[i]
+				glzViewFac[i] = glzViewFac[i] + ptvie
 			}
 		}
 	}

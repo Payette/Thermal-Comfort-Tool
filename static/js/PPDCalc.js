@@ -269,9 +269,9 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windowHgt, glzUV
 	// Get the Downdraft PPD results.
 	var downDPPD = comf.getDowndraftPPD(facadeDist, windowHgtSI, winFilmCoeff, airTemp, outdoorTemp, windowUVal)
 	
-	// Construct the dictionary of the PPD values with the governing factors.
+	// Construct the dictionary of the PPD values with the governing factors for the graph.
 	var myDataset = []
-	for (var i = 0; i < mrtPPD.length; i++) {
+	for (var i = 0; i < mrtPPD.length-1; i++) {
 		var ptInfo = {}
 		
 		if (mrtPPD[i] > downDPPD[i]) {
@@ -285,6 +285,18 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windowHgt, glzUV
 		}
 		myDataset.push(ptInfo)
 	}
+	
+	// Construct a dictionary of PPD for the occupant location.
+	var occPtInfo = {}
+	occPtInfo.dist = facadeDist[-1]
+	if (mrtPPD[-1] > downDPPD[-1]) {
+			occPtInfo.ppd = mrtPPD[i];
+			occPtInfo.govfact = "mrt";
+		} else {
+			occPtInfo.ppd = downDPPD[i];
+			occPtInfo.govfact = "dwn";
+		}
+	
 	
 	// Calculate whether there is risk of condensation.
 	var dewPoint = comf.dewptCalc(indoorTemp, rh)
@@ -300,6 +312,7 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windowHgt, glzUV
 	r = {}
 	r.myDataset = myDataset
 	r.condensation = condensation
+	r.occPtInfo = occPtInfo
 	
 	return r
 }

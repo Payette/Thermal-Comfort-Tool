@@ -308,37 +308,6 @@ render.makeGraph = function () {
 	//Add facade dimensions
 	drawHorziontalDimensions(wallPoints[0].wallWidth, facHeight);
 	
-
-	// Update when autocolculate U Value is pressed.
-	$('#form').on('submit', function(event) {
-		event.preventDefault();
-		
-		// Compute the window and wall geometry.
-		var geoResultUVal = geo.createGlazingForRect(parseFloat(ceilingHeightValue), wallLen, glzRatioValue/100, parseFloat(windowWidthValue), parseFloat(windowHeightValue), parseFloat(sillHeightValue), parseFloat(distanceWindows), glzOrWidth);
-		// Compute the view factors.
-		var viewResultUVal = geo.computeAllViewFac(geoResultUVal.wallCoords, geoResultUVal.glzCoords, occDistToWallCenter, false, occDistFromFacade)
-		
-		//Compute the U-Value required to make the occupant comfortable.
-		uvalueValue = uVal.uValFinal(viewResultUVal.wallViews, viewResultUVal.glzViews, viewResultUVal.facadeDist, parseFloat(windowHeightValue), airtempValue, outdoorTempValue, rvalueValue, intLowEChecked, intLowEEmissivity, airspeedValue, humidityValue, metabolic, clothingValue, ppdValue)
-		
-		// Update the value in the form.
-		$("#uvalue").val(Math.round(uvalueValue * 1000) / 1000);
-		
-		// Re-run the functions with the new inputs.
-		var fullData = script.computeData()
-		
-		//update datasets with new value
-		var newDataset = fullData.dataSet;
-		var newGlzCoords = fullData.glzCoords;
-		var newGlzWidth = fullData.windowWidth;
-		var newGlzHeight = fullData.windowHeight;
-		
-		// Update the PPD graph and facade SVG.
-		updateGraphData(newDataset);
-		updateFacade(wallPoints, newGlzCoords, newGlzWidth, newGlzHeight); 
-		
-	})
-	
 	
 
 	/* ------ DETECT CHANGES TO INPUT VALUES ------ */
@@ -503,6 +472,7 @@ render.makeGraph = function () {
 		var newGlzRatio = fullData.glzRatio;
 		var newSillHeight = fullData.sillHeight
 		var newCentLineDist = fullData.centLineDist
+		var newOccLocData = fullData.occupantLocData
 		
 		
 		// Update the geometry values in the form.
@@ -531,7 +501,36 @@ render.makeGraph = function () {
 	})
 
 
+	
+	// Update when autocolculate U Value is pressed.
+	$('#form').on('submit', function(event) {
+		event.preventDefault();
+		
+		// Re-run the functions with the new inputs.
+		var fullData = script.computeData()
+		
+		//Compute the U-Value required to make the occupant comfortable.
+		uvalueValue = uVal.uValFinal(fullData.wallViews[12], fullData.glzViews[12], fullData.facadeDist[12], parseFloat(windowHeightValue), airtempValue, outdoorTempValue, rvalueValue, intLowEChecked, intLowEEmissivity, airspeedValue, humidityValue, metabolic, clothingValue, ppdValue)
+		
+		// Update the value in the form.
+		$("#uvalue").val(Math.round(uvalueValue * 1000) / 1000);
+		
+		// Re-run the functions with the new inputs.
+		var fullData = script.computeData()
+		
+		//update datasets with new value
+		var newDataset = fullData.dataSet;
+		var newGlzCoords = fullData.glzCoords;
+		var newGlzWidth = fullData.windowWidth;
+		var newGlzHeight = fullData.windowHeight;
+		
+		// Update the PPD graph and facade SVG.
+		updateGraphData(newDataset);
+		updateFacade(wallPoints, newGlzCoords, newGlzWidth, newGlzHeight); 
+		
+	})
 
+	
 
 	/* ------ FUNCTIONS TO UPDATE VISUALS ------ */
 
