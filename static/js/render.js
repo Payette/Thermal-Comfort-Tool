@@ -135,11 +135,40 @@ render.makeGraph = function () {
 			}
 		})
 
+	thresholdData(dataset, occDistFromFacade);
+
+
+	// Display text for occupancy dist from facade
+	function thresholdData(data, occDist) {
+		//distData = occupant's distance from the facade
+		var thisDist;
+		var thisPPD;
+
+		for (i=0; i < data.length; i++) {
+			if (data[i].dist == occDist) {
+				thisDist = data[i].dist;
+				thisPPD = data[i].ppd;
+
+				d3.select("#thresholdTooltip")
+				.style("left", function() {return (x(thisDist) + margin.left + 10) + "px"})
+				.style("top", function() {return (y(thisPPD) -20) + "px"})
+				.select("#thisPPDtext")
+				.text(Math.round(thisPPD*10)/10 + "% PPD at " + thisDist + "ft from the facade.");
+
+				break;
+			}
+		}
+
+	}
+	
+
+
+
 
 	// Show text on hover over dot
 	graphPoints.on("mouseover", function(d) {
 
-		//Get this bar's x/y values, then augment for the tooltip
+		//Get this dots x/y values, then augment for the tooltip
 		var xPosition = parseFloat(d3.select(this).attr("cx")) + margin.left +10;
 		var yPosition = parseFloat(d3.select(this).attr("cy")) - 20;
 
@@ -180,12 +209,16 @@ render.makeGraph = function () {
    
 		//Show the tooltip
 		d3.select("#tooltip").classed("hidden", false);
+		//Hide default text
+		d3.select("#thresholdTooltip").classed("hidden", true);
 
    })
    .on("mouseout", function() {
    
 		//Hide the tooltip
 		d3.select("#tooltip").classed("hidden", true);
+		//Show default text
+		d3.select("#thresholdTooltip").classed("hidden", false);
 		
    })
 
@@ -580,6 +613,7 @@ render.makeGraph = function () {
 
 
 
+	/* ------ FUNCTIONS FOR GENERAL REFERENCE VISUALS ------ */
 
 	//create arrowhead marker
 	facadeSvg.append("defs").append("marker")
@@ -626,11 +660,6 @@ render.makeGraph = function () {
 			.attr("y2", -4)
 			.attr("marker-end", "url(#arrowhead)");
 	}
-
-
-		
-
-
 
 
 	function drawPPDThreshold(data) {

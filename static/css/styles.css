@@ -46,7 +46,12 @@
 	stroke-width: 0;
 }
 
-#tooltip {
+
+
+
+
+
+#tooltip, #thresholdTooltip {
 	position: absolute;
 	width: 170px;
 	height: auto;
@@ -55,11 +60,13 @@
 	background-color: rgba(255,255,255,.8);
 }
 
-#tooltip.hidden {
+
+
+#tooltip.hidden, #thresholdTooltip.hidden {
 	display: none;
 }
 
-#tooltip h1 {
+#tooltip h1, #thresholdTooltip h1 {
 	font-family: "museo-sans", sans-serif;
 	font-weight: 500;
 	font-size: 10px;
@@ -68,7 +75,7 @@
 	margin: 0;
 }
 
-#tooltip p { 
+#tooltip p, #thresholdTooltip p { 
 	margin: 0;
 	font-family: "museo-sans", sans-serif;
 	font-weight: 300;
@@ -77,12 +84,12 @@
 	color: black;
 }
 
-#tooltip .intolerable {
+.intolerable {
 	color: rgb(227, 66, 52);
 	font-weight: 500;
 }
 
-#tooltip .tolerable {
+.tolerable {
 	color: rgb(176, 199, 44);
 	font-weight: 500;
 }
