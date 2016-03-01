@@ -150,7 +150,6 @@ render.makeGraph = function () {
 			.select("#PPDtext")
 			.text(Math.round(d.ppd*10)/10 + "% PPD at " + d.dist + "ft from the facade.");
 
-
 		if (ppdValue >= d.ppd) {
 			d3.select("#discomfort")
 			.text("Tolerable")
@@ -667,6 +666,11 @@ render.makeGraph = function () {
 			.duration(400)
 			.attr("y1", y(data))
 			.attr("y2", y(data));
+
+		d3.selectAll(".thresholdRect")
+			.transition()
+			.duration(400)
+			.attr("height", function() {return y(data)});
 	}
 
 
