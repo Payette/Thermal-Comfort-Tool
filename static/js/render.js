@@ -135,19 +135,20 @@ render.makeGraph = function () {
 			}
 		})
 
-	thresholdData(dataset, occDistFromFacade);
+	// add text at occupancy threshold
+	thresholdDataText(dataset, occDistFromFacade);
 
 
 	// Display text for occupancy dist from facade
-	function thresholdData(data, occDist) {
+	function thresholdDataText(data, occDist) {
 		//distData = occupant's distance from the facade
-		var thisDist;
-		var thisPPD;
+		var thisDist, thisPPD, thisGovFact;
 
 		for (i=0; i < data.length; i++) {
 			if (data[i].dist == occDist) {
 				thisDist = data[i].dist;
 				thisPPD = data[i].ppd;
+				thisGovFact = data[i].govfact;
 
 				d3.select("#thresholdTooltip")
 				.style("left", function() {return (x(thisDist) + margin.left + 10) + "px"})
@@ -155,12 +156,50 @@ render.makeGraph = function () {
 				.select("#thisPPDtext")
 				.text(Math.round(thisPPD*10)/10 + "% PPD at " + thisDist + "ft from the facade.");
 
-				break;
+				// tolerable discomfort
+				if (ppdValue >= thisPPD) {
+					d3.select("#thisDiscomfort")
+					.text("Tolerable")
+					.classed("tolerable", true)
+					.classed("intolerable", false);
+
+					d3.select("#thisSolution")
+					.text(".");
+				// intolerable discomfort
+				} else {
+					d3.select("#thisDiscomfort")
+					.text("Intolerable")
+					.classed("tolerable", false)
+					.classed("intolerable", true);
+
+					
+					d3.select("#thisSolution")
+					.text(". Try adjusting the window geometry or U-Value.");
+				}
+				//governing factor
+				if (thisGovFact == "mrt") {
+					d3.select("#thisExplain")
+					.text("mean radiant temperature.")
+					.style("color", blue);
+				} else if (thisGovFact == "dwn") {
+					d3.select("#thisExplain")
+					.text("downdraft.")
+					.style("color", orange);
+				} else if (thisGovFact == "asym") {
+					d3.select("#thisExplain")
+					.text("asymmetry.");
+				}
+
+
+				break; //end forloop
 			}
+
 		}
 
 	}
 	
+
+
 
 
 
@@ -179,30 +218,37 @@ render.makeGraph = function () {
 			.select("#PPDtext")
 			.text(Math.round(d.ppd*10)/10 + "% PPD at " + d.dist + "ft from the facade.");
 
+		//tolerable discomfort
 		if (ppdValue >= d.ppd) {
 			d3.select("#discomfort")
 			.text("Tolerable")
 			.classed("tolerable", true)
 			.classed("intolerable", false);
-
-			if (d.govfact == "mrt") {
-				d3.select("#explain")
-				.text("mean radiant temperature.")
-				.style("color", blue);
-			} else if (d.govfact == "dwn") {
-				d3.select("#explain")
-				.text("downdraft.")
-				.style("color", orange);
-			} else if (d.govfact == "asym") {
-				d3.select("#explain")
-				.text("asymmetry.");
-			}
+		
+			d3.select("#solution")
+			.text(".");
+		//intolerable discomfort
 		} else {
 			d3.select("#discomfort")
 			.text("Intolerable")
 			.classed("tolerable", false)
 			.classed("intolerable", true);
 
+			d3.select("#solution")
+			.text(". Try adjusting the window geometry or U-Value.");
+		}
+		//gov factors
+		if (d.govfact == "mrt") {
+			d3.select("#explain")
+			.text("mean radiant temperature.")
+			.style("color", blue);
+		} else if (d.govfact == "dwn") {
+			d3.select("#explain")
+			.text("downdraft.")
+			.style("color", orange);
+		} else if (d.govfact == "asym") {
+			d3.select("#explain")
+			.text("asymmetry.");
 		}
 
 		
@@ -498,6 +544,9 @@ render.makeGraph = function () {
 		// Update the PPD graph and facade SVG.
 		updateGraphData(newDataset);
 		updateFacade(wallPoints, newGlzCoords, newGlzWidth, newGlzHeight); 
+
+		// Update static tooltip text
+		thresholdDataText(newDataset, occDistFromFacade);
 	})
 
 
