@@ -1,4 +1,20 @@
+#header {
+	width: 960px;
+	margin: 0 auto;
+}
+
+#wrapper {
+	width: 960px;
+	margin: 0 auto;
+}
+
+
+#header img {
+	width: 100%;
+}
+
 #visual {
+	position: relative;
 	float: left;
 	width: 550px;
 	padding: 0;
@@ -25,6 +41,13 @@
     fill: none;
 }
 
+
+.occupantLine {
+	stroke: #000;
+	stroke-width: 2;
+	stroke-linecap: round;
+	stroke-dasharray: 0 4;
+}
 
 #graph .grid line { /* horizontal reference lines */
 	stroke-width: 1;
@@ -71,15 +94,14 @@
 	font-weight: 500;
 	font-size: 10px;
 	color: black;
-	padding: 0;
+	padding: 0 0 3px 0;
 	margin: 0;
 }
 
 #tooltip p, #thresholdTooltip p { 
 	margin: 0;
 	font-family: "museo-sans", sans-serif;
-	font-weight: 300;
-	font-style: italic;
+	font-weight: 100;
 	font-size: 10px;
 	color: black;
 }
@@ -119,6 +141,14 @@
 }
 
 
+.blueGradientStop1 {
+	stop-color: #E1F0FF;
+}
+
+.blueGradientStop2 {
+	stop-color: #C2E0FF;
+}
+
 #sliderWrapper {
 	width: 500px;
 	float: right;
@@ -134,7 +164,7 @@
 	margin-right: 10px;
 }
 
-#slider {
+#occupantDist {
 	width: 250px;
 	margin: 0;
 	padding: 0;
@@ -143,12 +173,12 @@
 }
 
 
-#slider::-moz-range-track {
+#occupantDist::-moz-range-track {
 	height: 2px;
 	background-color: #d5d5d5;
 }
 
-#slider::-moz-range-thumb {
+#occupantDist::-moz-range-thumb {
     background-color: #FFF;
     border: 3px solid rgb(150,150,150);
     border-radius: 6.5px;
@@ -216,6 +246,13 @@ input[type='range']::-moz-range-thumb {
 	font-family: "museo-sans", sans-serif;
 }
 
+#inputs h1 {
+	font-weight: 700px;
+	font-size: 23px;
+	line-height: 23px;
+}
+
+
 #inputs .inputgroup {
 	border: none;
 	padding: 0 0 10px 0;
@@ -228,7 +265,7 @@ input[type='range']::-moz-range-thumb {
 	margin-bottom: 20px;
 }
 
-#inputs legend, #inputs h1 {
+#inputs legend {
 	font-weight: 700;
 	font-size: 12px;
 	text-transform: uppercase;
@@ -290,8 +327,8 @@ input[type='range']::-moz-range-thumb {
 }
 
 #inputs label.indent {
-	padding-left: 48px;
-	width: 102px;
+	padding-left: 25px;
+	width: 125px;
 }
 
 

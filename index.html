@@ -28,6 +28,9 @@
 
 <body>
 
+	<div id="header"><img src="static/images/header.png"></div>
+	<div id="wrapper">
+
 	<div id="visual">
 
 		<div id="graphWrapper">
@@ -46,8 +49,8 @@
 		</div>
 
 		<div id="sliderWrapper">
-			<input type="range" name="slider" id="slider" min="0" max="50" value="5"/>
-			<label for="slider">Occupant Position:</label>
+			<input type="range" name="occupantDist" id="occupantDist" min="0" max="20" value="0"/>
+			<label for="occupantDist">Occupant Position</label>
 	 	</div>
 
 	</div>
@@ -56,56 +59,62 @@
 
 	<div id="inputs">
 
+		<h1>Glazing and Comfort Analysis Tool</h1>
+
+
 		<form id="form">		
 		<fieldset class="inputgroup">
 			<legend class="heading">Facade Geometry</legend>
 			<hr>
-			<label for="ceiling">Ceiling Height:</label>
+
+<!-- 			<label for="occupantDist">Occupant Distance to Wall Center (ft):</label>
+			<input type="text" name="occupantDist" id="occupantDist" value="0"><br>
+		
+ -->
+
+			<label for="ceiling">Ceiling Height (ft)</label>
 			<input type="text" name="ceiling" id="ceiling" value="12"><br>
 
-			<label for="wallWidth">Wall Length:</label>
+			<label for="wallWidth">Wall Length (ft)</label>
 			<input type="text" name="wallWidth" id="wallWidth" value="20"><br>
 			
-			<label for="height">Window Height:</label>
+			<label for="height">Window Height (ft)</label>
 			<input type="text" name="height" id="windowHeight" value="8"><br>
 
 
-			<label for="">Set Glazing Amount By:</label><br>
+			<label for="">Set Glazing Amount By</label><br>
 
-			
-			<label for="width" id="windowWidthLabel"><input type="checkbox" name="windowWidthCheck" id="windowWidthCheck" class="customCheck" checked>Window Width:</label>
+			<label for="width" id="windowWidthLabel"><input type="checkbox" name="windowWidthCheck" id="windowWidthCheck" class="customCheck" checked>Window Width (ft)</label>
 			<input type="text" name="width" id="windowWidth" value="4"><br>
-
-
 			
-			<label for="glazing" class="inactive" id="glazingLabel"><input type="checkbox" name="glazingRatioCheck" class="customCheck" id="glazingRatioCheck">Glazing Ratio:</label>
+			<label for="glazing" class="inactive" id="glazingLabel"><input type="checkbox" name="glazingRatioCheck" class="customCheck" id="glazingRatioCheck">Glazing Ratio (%)</label>
 			<input type="text" name="glazing" class="inactive" id="glazing" value="40"><br>
 
-			<label for="sill">Sill Height:</label>
+
+			<label for="sill">Sill Height (ft)</label>
 			<input type="text" name="sill" id="sill" value="3"><br>
 
-			<label for="sill">Window Separation:</label>
+			<label for="sill">Window Separation (ft)</label>
 			<input type="text" name="distWindow" id="distWindow" value="6.67"><br>
-
-			<label for="occupantDist">Occupant Distance to Wall Center (ft):</label>
-			<input type="text" name="occupantDist" id="occupantDist" value="0"><br>
 		</fieldset>
 
 
 		<fieldset class="inputgroup">
 			<legend class="heading">Facade Performance</legend>
 			<hr>
-			<label for="uvalue">Window U-Value:</label>
-			<input type="text" name="uvalue" id="uvalue" value="0.25">
-			<input id="submit" type="submit" value="AutoCal"/><br>
+			<label for="uvalue">Window U-Value (Btu/hr*ft&sup2;*&deg;)</label>
+			<input type="text" name="uvalue" id="uvalue" value="0.25"><br>
 
-			<label for="lowECheck">Interior Low-E Coating:</label>
+			<label for="submit" class="inactive indent">Auto-calculate U-Value</label>
+			<input id="submit" name"submit" type="submit" value="AutoCal"/><br>
+
+			<label for="lowECheck">Room-side Low-E Coating</label>
 			<input type="checkbox" name="lowECheck" id="lowECheck"><br>
 
-			<label for="lowE" class="inactive indent" id="lowELabel">Emissivity:</label>
+			<label for="lowE" class="inactive indent" id="lowELabel">Emissivity</label>
 			<input type="text" name="lowE" id="lowE" value="" class="inactive"><br>
 
-			<label for="rvalue">Wall R-Value:</label>
+			<label for="rvalue">Wall R-Value (Btu/hr*ft&sup2;*&deg;F)</label>
 			<input type="text" name="rvalue" id="rvalue" value="20"><br>
 
 		</fieldset>
@@ -114,10 +123,10 @@
 			<legend>Occupancy Thresholds</legend>
 			<hr>
 
-			<label for="ppd">Percentage of People Disatisfied Due to Cold:</label>
+			<label for="ppd">People Dissatisfied Due to Cold (%)</label>
 			<input type="text" name="ppd" id="ppd" value="10"><br>
 
-			<label for="distFromFacade">Distance From Facade:</label>
+			<label for="distFromFacade">Distance From Fa&ccedil;ade (ft)</label>
 			<input type="text" name="distFromFacade" id="distFromFacade" value="3"><br>
 			<br>
 		</fieldset>
@@ -128,13 +137,13 @@
 			<legend class="heading">Other</legend>
 			<hr>
 
-			<label for="outdoortemp">Outdoor Temperature:</label>
+			<label for="outdoortemp">Outdoor Temperature (&deg;F)</label>
 			<input type="text" name="outdoortemp" id="outdoortemp" value="25"><br>
 
-			<label for="airtemp">Indoor Ambient Temperature:</label>
+			<label for="airtemp">Indoor Ambient Temperature (&deg;F)</label>
 			<input type="text" name="airtemp" id="airtemp" value="72"><br>
 
-			<label for="humidity">Relative Humidity (%):</label>
+			<label for="humidity">Relative Humidity (%)</label>
 			<input type="text" name="humidity" id="humidity" value="20"><br>
 		</fieldset>
 
@@ -158,10 +167,12 @@
 		</form>
 	</div>
 
-	
- 
+	</div>
+
+
  	<!-- Compute Data -->
 	<script type="text/javascript" src="static/js/script.js"></script> 
+
 
 
 

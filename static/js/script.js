@@ -10,7 +10,7 @@ var glzRatioValue = $("#glazing").val();
 var glzOrWidth = false;
 var sillHeightValue = $("#sill").val();
 var distanceWindows = $('#distWindow').val();
-var occDistToWallCenter = $('#occupantDist').val();
+var occDistToWallCenter = $("#occupantDist").val();
 var occDistFromFacade = $('#distFromFacade').val();
 
 if ($("#windowWidthCheck").is(":checked")) {
@@ -32,6 +32,10 @@ var airspeedValue = $("#airspeed").val();
 var humidityValue = $("#humidity").val();
 var clothingValue = $("#clothing").val();
 var metabolic = $("#metabolic").val();
+
+
+//ensure slider has correct max value
+$("#occupantDist").attr("max", wallLen/2);
 
 
 
@@ -63,7 +67,7 @@ script.computeData = function() {
 	
 	r.condensation = comfortResult.condensation; // Text string value that is either: "certain", "risky", "none".
 	r.dataSet = comfortResult.myDataset; // Data to construct the graph.
-	r.occPtInfo = comfortResult.occPtInfo  // The status of the occupant at the input location.
+	r.occPtInfo = comfortResult.occPtInfo;  // The status of the occupant at the input location.
 	
 	return r
 }

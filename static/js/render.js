@@ -12,13 +12,16 @@ render.makeGraph = function () {
 	var lightblue = "rgb(194,224,255)";
 	var lightgrey = "rgb(245,245,245)";
 
-	var allData = script.computeData()
-	var dataset = allData.dataSet
+	var allData = script.computeData();
+	var dataset = allData.dataSet;
+	var occPointData = allData.occPtInfo; 
+
+
 
 	/* ------ SET UP GRAPH VARIABLES AND DATA FUNCTIONS ------ */
-	var margin = {top: 50, right: 0, bottom: 50, left: 50},
+	var margin = {top: 57, right: 0, bottom: 50, left: 50},
     	width = maxContainerWidth - margin.left - margin.right,
-    	height = 365 - margin.top - margin.bottom;
+    	height = 375 - margin.top - margin.bottom;
 
 
 	// Set up scale functions
@@ -92,7 +95,9 @@ render.makeGraph = function () {
     .attr("class", "axislabel")
     .attr("text-anchor", "middle")
     .attr("transform", "rotate(-90)")
-    .text("PPD (Percentage of People Dissatisfied)");
+    .text("People Dissatisfied Due to Cold (%)");
+
+
 
 
 
@@ -135,84 +140,46 @@ render.makeGraph = function () {
 			}
 		})
 
-	// add text at occupancy threshold
-	thresholdDataText(dataset, occDistFromFacade);
-
-
-	// Display text for occupancy dist from facade
-	function thresholdDataText(data, occDist) {
-		//distData = occupant's distance from the facade
-		var thisDist, thisPPD, thisGovFact;
-
-		for (i=0; i < data.length; i++) {
-			if (data[i].dist == occDist) {
-				thisDist = data[i].dist;
-				thisPPD = data[i].ppd;
-				thisGovFact = data[i].govfact;
-
-				d3.select("#thresholdTooltip")
-				.style("left", function() {return (x(thisDist) + margin.left + 10) + "px"})
-				.style("top", function() {return (y(thisPPD) -20) + "px"})
-				.select("#thisPPDtext")
-				.text(Math.round(thisPPD*10)/10 + "% PPD at " + thisDist + "ft from the facade.");
-
-				// tolerable discomfort
-				if (ppdValue >= thisPPD) {
-					d3.select("#thisDiscomfort")
-					.text("Tolerable")
-					.classed("tolerable", true)
-					.classed("intolerable", false);
-
-					d3.select("#thisSolution")
-					.text(".");
-				// intolerable discomfort
-				} else {
-					d3.select("#thisDiscomfort")
-					.text("Intolerable")
-					.classed("tolerable", false)
-					.classed("intolerable", true);
-
-					
-					d3.select("#thisSolution")
-					.text(". Try adjusting the window geometry or U-Value.");
-				}
-				//governing factor
-				if (thisGovFact == "mrt") {
-					d3.select("#thisExplain")
-					.text("mean radiant temperature.")
-					.style("color", blue);
-				} else if (thisGovFact == "dwn") {
-					d3.select("#thisExplain")
-					.text("downdraft.")
-					.style("color", orange);
-				} else if (thisGovFact == "asym") {
-					d3.select("#thisExplain")
-					.text("asymmetry.");
-				}
-
-
-				break; //end forloop
+	// Add point at occupant location
+	var occupantPoint = graphSvg.append("circle") 
+		.attr("class","occdot")
+		.attr("r", 4)
+		.attr("cx", function(d) { return x(occDistFromFacade); }) //replace with occPointData.dist
+		.attr("cy", function(d) { return y(occPointData.ppd); })
+		.attr("transform", function() {
+				return "translate(" + margin.left + "," + margin.top + ")";})
+		.style("fill", "#FFF")
+		.style("stroke-width", 3)
+		.style("stroke", function(d) { 
+			if (occPointData.govfact == "mrt") {
+				return blue;
+			} else if (occPointData.govfact == "dwn") {
+				return orange;
+			} else if (occPointData.govfact == "asym") {
+				return green;
 			}
+		})
 
-		}
+	// Add line at occupant location
+	occupantDistanceRefLine(); 
 
-	}
+	// add text at occupanct location
+	thresholdDataText(occPointData);
 	
-
 
 	// Show text on hover over dot
 	graphPoints.on("mouseover", function(d) {
 
 		//Get this dots x/y values, then augment for the tooltip
-		var xPosition = parseFloat(d3.select(this).attr("cx")) + margin.left +10;
-		var yPosition = parseFloat(d3.select(this).attr("cy")) - 20;
+		var xPosition = parseFloat(d3.select(this).attr("cx")) + margin.left;
+		var yPosition = parseFloat(d3.select(this).attr("cy")) - margin.top*1.2;
 
 		//Update the tooltip position and value
 		d3.select("#tooltip")
 			.style("left", xPosition + "px")
 			.style("top", yPosition + "px")						
 			.select("#PPDtext")
-			.text(Math.round(d.ppd*10)/10 + "% PPD at " + d.dist + "ft from the facade.");
+			.text(Math.round(d.ppd*10)/10 + "% PPD at " + d.dist + "ft from the façade");
 
 		//tolerable discomfort
 		if (ppdValue >= d.ppd) {
@@ -236,15 +203,15 @@ render.makeGraph = function () {
 		//gov factors
 		if (d.govfact == "mrt") {
 			d3.select("#explain")
-			.text("mean radiant temperature.")
+			.text("mean radiant temperature")
 			.style("color", blue);
 		} else if (d.govfact == "dwn") {
 			d3.select("#explain")
-			.text("downdraft.")
+			.text("downdraft")
 			.style("color", orange);
 		} else if (d.govfact == "asym") {
 			d3.select("#explain")
-			.text("asymmetry.");
+			.text("asymmetry");
 		}
 
 		
@@ -330,7 +297,7 @@ render.makeGraph = function () {
 				return "translate(" + facMargin.left + "," + facMargin.top + ")"})
 		.style("fill", grey);
 
-	
+
 	//Initialize the windows.
 	facadeSvg.selectAll(".window")
 		.data(glzCoords)
@@ -344,7 +311,44 @@ render.makeGraph = function () {
 		.attr("transform", function() {
 			return "translate(" + facMargin.left + "," + facMargin.top + ")";
 		})
-		.style("fill", lightblue);
+		.style("fill", "url(#blueGradient)");
+
+
+		/* ---- SVG DEFINITIONS ---- */
+
+	var defs = facadeSvg.append("defs");
+
+	//arrowhead marker
+	defs.append("marker")
+	    .attr("id", "arrowhead")
+	    .attr("refX", 6)
+	    .attr("refY", 2)
+	    .attr("viewBox", "0 0 6 6")
+	    .attr("markerWidth", 8)
+	    .attr("markerHeight", 8)
+	    .attr("orient", "auto")
+	    .append("path")
+        .attr("d", "M 0,0 V 4 L6,2 Z"); //this is actual shape for arrowhead
+
+    //gradient fill
+    var blueGradient = defs.append("linearGradient")
+    	.attr("id", "blueGradient")
+    	.attr( 'x1', '0' )
+        .attr( 'x2', '0' )
+        .attr( 'y1', '0' )
+        .attr( 'y2', '1' ); // makes vertical gradient
+
+    blueGradient.append("stop")
+    	.attr("class", "blueGradientStop1")
+    	.attr("offset", "60%");
+
+    blueGradient.append("stop")
+    	.attr("class", "blueGradientStop2")
+    	.attr("offset", "100%")
+
+
+
+
 
 
 
@@ -355,6 +359,7 @@ render.makeGraph = function () {
 
 
 	/* ------ DETECT CHANGES TO INPUT VALUES ------ */
+
 	// Trigger change events
 	$("#outdoortemp, #ceiling, #wallWidth, #occupantDist, #distFromFacade, #ppd, #windowWidthCheck, #glazingRatioCheck, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowECheck, #lowE, #rvalue, #airtemp, #radiant, #airspeed, #humidity, #clothing, #metabolic").change(function(event) {
 		
@@ -385,9 +390,12 @@ render.makeGraph = function () {
 			// Update dimensions
 			facadeSvg.selectAll("#facadeWidth").remove()
 			drawHorziontalDimensions(wallPoints[0].wallWidth, facHeight);
+
+			$("#occupantDist").attr("max", wallLen/2);
 		}
 		else if(triggeredChange == "occupantDist") {
 			occDistToWallCenter = $(this).val();
+			$("#occupantDist").attr("value", occDistToWallCenter);
 		}
 		else if(triggeredChange == "distFromFacade") {
 			occDistFromFacade = $(this).val();
@@ -403,7 +411,7 @@ render.makeGraph = function () {
 				$("#glazing").addClass("inactive");
 				$("#glazingLabel").addClass("inactive");
 
-				$("#glazingRatioCheck").attr("checked", false);
+				$("#glazingRatioCheck").removeAttr("checked");
 
 			} else if (($("#windowWidthCheck").is(":checked")) == false) {
 				glzOrWidth = true;
@@ -412,7 +420,7 @@ render.makeGraph = function () {
 				$("#glazing").removeClass("inactive");
 				$("#glazingLabel").removeClass("inactive");
 
-				$("#glazingRatioCheck").attr("checked", true);
+				$("#glazingRatioCheck").attr("checked", "checked");
 			}
 		}
 		else if (triggeredChange == "glazingRatioCheck") {
@@ -423,7 +431,7 @@ render.makeGraph = function () {
 				$("#glazing").removeClass("inactive");
 				$("#glazingLabel").removeClass("inactive");
 
-				$("#windowWidthCheck").attr("checked", false);
+				$("#windowWidthCheck").removeAttr("checked");
 
 			} else if (($("#glazingRatioCheck").is(":checked")) == false) {
 				glzOrWidth = false;
@@ -432,7 +440,7 @@ render.makeGraph = function () {
 				$("#glazing").addClass("inactive");
 				$("#glazingLabel").addClass("inactive");
 
-				$("#windowWidthCheck").attr("checked", true);
+				$("#windowWidthCheck").attr("checked", "checked");
 			}
 		}
 		else if (triggeredChange == "windowHeight") {
@@ -514,9 +522,10 @@ render.makeGraph = function () {
 		var newGlzWidth = fullData.windowWidth;
 		var newGlzHeight = fullData.windowHeight;
 		var newGlzRatio = fullData.glzRatio;
-		var newSillHeight = fullData.sillHeight
-		var newCentLineDist = fullData.centLineDist
-		var newOccLocData = fullData.occupantLocData
+		var newSillHeight = fullData.sillHeight;
+		var newCentLineDist = fullData.centLineDist;
+		var newOccLocData = fullData.occPtInfo;
+
 		
 		
 		// Update the geometry values in the form.
@@ -538,13 +547,13 @@ render.makeGraph = function () {
 		distanceWindows = newCentLineDist;
 		$("#distWindow").val(Math.round(distanceWindows * 100) / 100);
 		
-		
+
 		// Update the PPD graph and facade SVG.
-		updateGraphData(newDataset);
+		updateGraphData(newDataset, newOccLocData);
 		updateFacade(wallPoints, newGlzCoords, newGlzWidth, newGlzHeight); 
 
 		// Update static tooltip text
-		thresholdDataText(newDataset, occDistFromFacade);
+		thresholdDataText(newOccLocData);
 	})
 
 
@@ -570,10 +579,13 @@ render.makeGraph = function () {
 		var newGlzCoords = fullData.glzCoords;
 		var newGlzWidth = fullData.windowWidth;
 		var newGlzHeight = fullData.windowHeight;
+		var newOccLocData = fullData.occPtInfo;
 		
 		// Update the PPD graph and facade SVG.
-		updateGraphData(newDataset);
+		updateGraphData(newDataset, newOccLocData);
 		updateFacade(wallPoints, newGlzCoords, newGlzWidth, newGlzHeight); 
+
+		thresholdDataText(newOccLocData);
 		
 	})
 
@@ -581,7 +593,8 @@ render.makeGraph = function () {
 
 	/* ------ FUNCTIONS TO UPDATE VISUALS ------ */
 
-	function updateGraphData(upDataset) {
+	function updateGraphData(upDataset, upOccupantPoint) {
+
 		//update graph with revised data
 		graphPoints.data(upDataset)
 			.attr("cx", function(d) { return x(d.dist); })
@@ -598,11 +611,33 @@ render.makeGraph = function () {
 			.transition()
 			.duration(500);
 
+
 		//update connection line
 		graphSvg.selectAll(".connectLine")
 			.attr("d", line(upDataset))
 			.transition()
 			.duration(500);
+
+		console.log(upOccupantPoint);
+
+		//update occupant point if different		
+		d3.selectAll("circle.occdot")
+			.attr("cx", function(d) { return x(occDistFromFacade); }) //replace with upOccupantPoint.dist
+			.attr("cy", function(d) { return y(upOccupantPoint.ppd); })
+			.style("stroke", function(d) { 
+				if (upOccupantPoint.govfact == "mrt") {
+					return blue;
+				} else if (upOccupantPoint.govfact == "dwn") {
+					return orange;
+				} else if (upOccupantPoint.govfact == "asym") {
+					return green;
+				}
+			})
+			.transition()
+			.duration(1000);
+
+		d3.selectAll(".occupantLine").remove();
+		occupantDistanceRefLine();
 	}
 
 
@@ -641,7 +676,7 @@ render.makeGraph = function () {
 			.attr("transform", function() {
 				return "translate(" + facMargin.left + "," + facMargin.top + ")";
 			})
-			.style("fill", lightblue);
+			.style("fill", "url(#blueGradient)");
 
 		//update dimensions
 		d3.select("#facadeWidth")
@@ -655,17 +690,53 @@ render.makeGraph = function () {
 
 	/* ------ FUNCTIONS FOR GENERAL REFERENCE VISUALS ------ */
 
-	//create arrowhead marker
-	facadeSvg.append("defs").append("marker")
-	    .attr("id", "arrowhead")
-	    .attr("refX", 6)
-	    .attr("refY", 2)
-	    .attr("viewBox", "0 0 6 6")
-	    .attr("markerWidth", 8)
-	    .attr("markerHeight", 8)
-	    .attr("orient", "auto")
-	    .append("path")
-        .attr("d", "M 0,0 V 4 L6,2 Z"); //this is actual shape for arrowhead
+	// Display text for occupancy dist from facade
+	function thresholdDataText(occdata) {
+
+		console.log(occdata);
+
+		var xPosition = parseFloat(d3.select("circle.occdot").attr("cx")) + margin.left;
+		var yPosition = parseFloat(d3.select("circle.occdot").attr("cy")) - margin.top*1.2;
+
+		d3.select("#thresholdTooltip")
+		.style("left", xPosition + "px")
+		.style("top", yPosition + "px")
+		.select("#thisPPDtext")
+		.text(Math.round(occdata.ppd*10)/10 + "% PPD at " + occdata.dist + "ft from the façade");
+
+		// tolerable discomfort
+		if (ppdValue >= Math.round(occdata.ppd)) {
+			d3.select("#thisDiscomfort")
+			.text("Tolerable")
+			.classed("tolerable", true)
+			.classed("intolerable", false);
+
+			d3.select("#thisSolution")
+			.text(".");
+		// intolerable discomfort
+		} else {
+			d3.select("#thisDiscomfort")
+			.text("Intolerable")
+			.classed("tolerable", false)
+			.classed("intolerable", true);
+
+			d3.select("#thisSolution")
+			.text(". Try adjusting the window geometry or the auto-calculating U-Value.");
+		}
+		//governing factor
+		if (occdata.govfact == "mrt") {
+			d3.select("#thisExplain")
+			.text("mean radiant temperature")
+			.style("color", blue);
+		} else if (occdata.govfact == "dwn") {
+			d3.select("#thisExplain")
+			.text("downdraft")
+			.style("color", orange);
+		} else if (occdata.govfact == "asym") {
+			d3.select("#thisExplain")
+			.text("asymmetry");
+		}
+	} // end thresholdDataText
 
 
 	function drawHorziontalDimensions(length, svgHeight) {
@@ -741,6 +812,26 @@ render.makeGraph = function () {
 			.duration(400)
 			.attr("height", function() {return y(data)});
 	}
+
+	function occupantDistanceRefLine() {
+
+		var xPosition = parseFloat(d3.select("circle.occdot").attr("cx"));
+		var yPosition = parseFloat(d3.select("circle.occdot").attr("cy"));
+		var padding = (d3.select("circle.occdot").attr("r"))*1.8;
+
+		// add line
+		graphSvg.append("line")
+			.attr("class","occupantLine")
+			.attr("x1", xPosition)
+			.attr("x2", xPosition)
+			.attr("y1", height - padding/2)
+			.attr("y2", yPosition + padding)
+			.attr("transform", function() {
+				return "translate(" + margin.left + "," + margin.top + ")";
+			});
+	}
+
+
 
 
 
