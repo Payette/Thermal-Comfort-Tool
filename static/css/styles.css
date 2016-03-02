@@ -12,7 +12,7 @@
 #graph .axislabel {
 	font-family: "museo-sans", sans-serif;
 	font-size: 10px;
-	font-weight: 700;
+	font-weight: 300;
 }
 
 #graph .axis text {
@@ -103,6 +103,7 @@
 
 }
 
+
 #facade .axislabel {
 	font-family: "museo-sans", sans-serif;
 	font-size: 10px;
@@ -116,6 +117,90 @@
 	stroke: #000;
 	stroke-linecap: butt;
 }
+
+
+#sliderWrapper {
+	width: 500px;
+	float: right;
+}
+
+#sliderWrapper label {
+	font-family: "museo-sans", sans-serif;
+	font-size: 10px;
+	font-weight: 300;
+	background-color: #fff;
+	display: inline;
+	float: right;
+	margin-right: 10px;
+}
+
+#slider {
+	width: 250px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	float: right;
+}
+
+
+#slider::-moz-range-track {
+	height: 2px;
+	background-color: #d5d5d5;
+}
+
+#slider::-moz-range-thumb {
+    background-color: #FFF;
+    border: 3px solid rgb(150,150,150);
+    border-radius: 6.5px;
+    height: 7px;
+    width: 7px;
+}
+
+
+/*input[type='range'] {
+    -webkit-appearance: none;
+    appearance: none;
+    -moz-appearance: none;
+    background-color: grey;
+    height: 4px;
+    vertical-align: middle;
+    width: 100%;
+}
+input[type=range]::-webkit-slider-runnable-track {
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 5px;
+    background-color: #FFF;
+    height: 10px;
+    vertical-align:middle;
+    border:solid 1px rgba(0,0,0,0.25);
+}
+input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border-radius: 10px;
+    background-color: #FFF;
+    border: 1px solid #999;
+    height: 20px;
+    width: 7px;
+    vertical-align:middle;
+    margin-top: -6px;
+}
+input[type='range']::-moz-range-track {
+    -moz-appearance: none;
+    background-color: grey;
+    height: 4px;
+    vertical-align:middle;
+    margin:0;
+    padding:0;
+}
+input[type='range']::-moz-range-thumb {
+    -moz-appearance: none;
+    background-color: #FFF;
+    border: 1px solid #999;
+    height: 20px;
+    width: 5px;
+}
+*/
 
 
 
@@ -182,7 +267,7 @@
 
 	border-style: solid;
 	border-width: 1px;
-	border-color: #b9b9b9;
+	border-color: #777;
 
 	font-weight: 300;
 	font-size: 10px;
@@ -199,7 +284,7 @@
 	text-align: left;
 	display: block;
 
-	color: #b9b9b9;
+	color: #777;
 	font-weight: 300;
 	font-size: 12px;
 }
@@ -211,13 +296,13 @@
 
 
 #inputs label.inactive {
-	color: #d5d5d5;
+	color: #b9b9b9;
 	font-style: italic;
 	font-weight: 100;
 }
 
 #inputs input.inactive {
-	border-color: #d5d5d5;
+	border-color: #b9b9b9;
 	color: #d5d5d5;
 	font-style: italic;
 }
@@ -260,6 +345,25 @@
 
 @font-face {
 	font-family: "museo-sans";
-	src: url('../fonts/museosans.otf');
+	font-weight: 100;
+	src: url('../fonts/MuseoSans-100.otf');
+}
+
+@font-face {
+	font-family: "museo-sans";
+	font-weight: 300;
+	src: url('../fonts/MuseoSans-300.otf');
+}
+
+@font-face {
+	font-family: "museo-sans";
+	font-weight: 700;
+	src: url('../fonts/MuseoSans_0.otf');
+}
+
+@font-face {
+	font-family: "museo-sans";
+	font-weight: 900;
+	src: url('../fonts/MuseoSans_1.otf');
 }
 

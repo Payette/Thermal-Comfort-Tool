@@ -18,7 +18,7 @@ render.makeGraph = function () {
 	/* ------ SET UP GRAPH VARIABLES AND DATA FUNCTIONS ------ */
 	var margin = {top: 50, right: 0, bottom: 50, left: 50},
     	width = maxContainerWidth - margin.left - margin.right,
-    	height = 470 - margin.top - margin.bottom;
+    	height = 365 - margin.top - margin.bottom;
 
 
 	// Set up scale functions
@@ -200,10 +200,6 @@ render.makeGraph = function () {
 	
 
 
-
-
-
-
 	// Show text on hover over dot
 	graphPoints.on("mouseover", function(d) {
 
@@ -277,7 +273,7 @@ render.makeGraph = function () {
 
 
 	/* ------ SET UP FACADE VARIABLES AND DATA FUNCTIONS ------ */
-	var facMargin = {top: 50, right: 0, bottom: 50, left: 50};
+	var facMargin = {top: 50, right: 0, bottom: 5, left: 50};
 	
 	// wall coordinates
 	var wallPoints = [{
@@ -351,10 +347,12 @@ render.makeGraph = function () {
 		.style("fill", lightblue);
 
 
+
 	//Add facade dimensions
 	drawHorziontalDimensions(wallPoints[0].wallWidth, facHeight);
 	
-	
+
+
 
 	/* ------ DETECT CHANGES TO INPUT VALUES ------ */
 	// Trigger change events
@@ -621,16 +619,12 @@ render.makeGraph = function () {
 			.transition()
 			.duration(500);
 
-
-
 		//update wall with revised data
 		wall.data(wallData)
 			.attr("width", function(d) {return facadeScaleWidth(d.wallWidth)})
 			.attr("height", function(d) {return facadeScaleHeight(d.wallHeight)})
 			.transition()
 			.duration(500);
-
-
 
 		//update windows		
 		d3.selectAll("rect.window").remove()
@@ -649,13 +643,11 @@ render.makeGraph = function () {
 			})
 			.style("fill", lightblue);
 
-
-
 		//update dimensions
 		d3.select("#facadeWidth")
 			.transition()
 			.duration(500)
-			.attr("transform", "translate(" + facMargin.left + "," + (facHeight + facMargin.bottom*1.4) + ")");
+			.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top*0.75) + ")");
 
 	}
 
@@ -681,7 +673,7 @@ render.makeGraph = function () {
 		facadeSvg.append("g")
 			.attr("class", "dimensions")
 			.attr("id", "facadeWidth")
-			.attr("transform", "translate(" + facMargin.left + "," + (svgHeight + facMargin.bottom*1.4) + ")");
+			.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top*0.75) + ")");
 
 		var facWidthDimensions = facadeSvg.selectAll("#facadeWidth");
 
@@ -690,19 +682,19 @@ render.makeGraph = function () {
 			.attr("text-anchor", "middle")
 		    .attr("x", function() {return facadeScaleWidth(length/2)})
 		    .attr("y", 0)
-		    .text(length + " ft");
+		    .text("Wall Length: " + length + " ft");
 
 		facWidthDimensions.append("line") // add line on left side of text
 		    .attr("class", "dimline")
 		    .attr("x2", 0)
-			.attr("x1", function() {return facadeScaleWidth(length/2) - 20})
+			.attr("x1", function() {return facadeScaleWidth(length/2) - 50})
 			.attr("y1", -4)
 			.attr("y2", -4)
 			.attr("marker-end", "url(#arrowhead)");
 
 		facWidthDimensions.append("line") // add line on right side of text
 		    .attr("class", "dimline")
-		    .attr("x1", function() {return facadeScaleWidth(length/2) + 20})
+		    .attr("x1", function() {return facadeScaleWidth(length/2) + 50})
 			.attr("x2", function() {return facadeScaleWidth(length)})
 			.attr("y1", -4)
 			.attr("y2", -4)
