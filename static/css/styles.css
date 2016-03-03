@@ -1,3 +1,7 @@
+body {
+	margin: 20px;
+}
+
 #header {
 	width: 960px;
 	margin: 0 auto;
@@ -164,6 +168,18 @@
 	margin-right: 10px;
 }
 
+#sliderWrapper output {
+	position: relative;
+	width: 360px; 
+  	height: 500px;
+	background-image: url(../../static/images/slider.png);
+	display: inline-block;
+	bottom: 510px; /* imageHeight + facMargin.bottom*2*/
+	left: 320px; /* = 500px - imageWidth/2 */
+}
+
+
+
 #occupantDist {
 	width: 250px;
 	margin: 0;
@@ -185,6 +201,8 @@
     height: 7px;
     width: 7px;
 }
+
+
 
 
 /*input[type='range'] {
@@ -317,7 +335,7 @@ input[type='range']::-moz-range-thumb {
 	padding: 3px 10px 3px 0;
 	float: left;
 	clear: left;
-	width: 150px;
+	width: 160px;
 	text-align: left;
 	display: block;
 
@@ -327,8 +345,8 @@ input[type='range']::-moz-range-thumb {
 }
 
 #inputs label.indent {
-	padding-left: 25px;
-	width: 125px;
+	padding-left: 20px;
+	width: 140px;
 }
 
 

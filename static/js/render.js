@@ -1,3 +1,5 @@
+
+
 var render = render || {}
 
 //function to make graph
@@ -95,7 +97,7 @@ render.makeGraph = function () {
     .attr("class", "axislabel")
     .attr("text-anchor", "middle")
     .attr("transform", "rotate(-90)")
-    .text("People Dissatisfied Due to Cold (%)");
+    .text("Dissatisfaction from Cold (%)");
 
 
 
@@ -172,12 +174,11 @@ render.makeGraph = function () {
 
 		//Get this dots x/y values, then augment for the tooltip
 		var xPosition = parseFloat(d3.select(this).attr("cx")) + margin.left;
-		var yPosition = parseFloat(d3.select(this).attr("cy")) - margin.top*1.2;
+		var yPosition = parseFloat(d3.select(this).attr("cy"));
 
 		//Update the tooltip position and value
 		d3.select("#tooltip")
 			.style("left", xPosition + "px")
-			.style("top", yPosition + "px")						
 			.select("#PPDtext")
 			.text(Math.round(d.ppd*10)/10 + "% PPD at " + d.dist + "ft from the façade");
 
@@ -190,6 +191,9 @@ render.makeGraph = function () {
 		
 			d3.select("#solution")
 			.text(".");
+
+			d3.select("#tooltip")
+			.style("top", (yPosition - margin.bottom/1.5) + "px")
 		//intolerable discomfort
 		} else {
 			d3.select("#discomfort")
@@ -199,6 +203,9 @@ render.makeGraph = function () {
 
 			d3.select("#solution")
 			.text(". Try adjusting the window geometry or U-Value.");
+
+			d3.select("#tooltip")
+			.style("top", (yPosition - margin.bottom*0.85) + "px")
 		}
 		//gov factors
 		if (d.govfact == "mrt") {
@@ -282,7 +289,6 @@ render.makeGraph = function () {
 				.attr("width", facWidth + facMargin.left + facMargin.right)
 				.attr("height", facHeight + facMargin.top + facMargin.bottom);
 
-
 	//Initialize wall facade
 	var wall = facadeSvg.selectAll(".wall") 
 		.data(wallPoints) 
@@ -297,8 +303,7 @@ render.makeGraph = function () {
 				return "translate(" + facMargin.left + "," + facMargin.top + ")"})
 		.style("fill", grey);
 
-
-	//Initialize the windows.
+	//Initialize the windows
 	facadeSvg.selectAll(".window")
 		.data(glzCoords)
 		.enter()
@@ -313,8 +318,23 @@ render.makeGraph = function () {
 		})
 		.style("fill", "url(#blueGradient)");
 
+	
+	//Add facade dimensions
+	drawHorziontalDimensions(wallPoints[0].wallWidth, facHeight);
+	
+	//Ensure size of occupant image is correct
+	checkOccupantImageSize();
 
-		/* ---- SVG DEFINITIONS ---- */
+
+	
+
+
+
+
+
+
+
+	/* ---- SVG DEFINITIONS ---- */
 
 	var defs = facadeSvg.append("defs");
 
@@ -347,14 +367,6 @@ render.makeGraph = function () {
     	.attr("offset", "100%")
 
 
-
-
-
-
-
-	//Add facade dimensions
-	drawHorziontalDimensions(wallPoints[0].wallWidth, facHeight);
-	
 
 
 
@@ -392,10 +404,27 @@ render.makeGraph = function () {
 			drawHorziontalDimensions(wallPoints[0].wallWidth, facHeight);
 
 			$("#occupantDist").attr("max", wallLen/2);
+			checkOccupantImageSize();
 		}
 		else if(triggeredChange == "occupantDist") {
+			//assign new value
 			occDistToWallCenter = $(this).val();
 			$("#occupantDist").attr("value", occDistToWallCenter);
+
+ 			var slider = $("#occupantDist");
+ 			var width = slider.width();
+ 			var imageWidth = parseFloat($("#occupantImage").css("width"));
+
+		 	var sliderScale = d3.scale.linear()
+				.domain([slider.attr("min"), slider.attr("max")])
+				.range([0, width]);
+
+			var newPosition = sliderScale(occDistToWallCenter);
+
+		   	// Move occupant image
+		   	$("#occupantImage").css({
+		       left: facWidth/2 + newPosition - imageWidth/2,
+			})
 		}
 		else if(triggeredChange == "distFromFacade") {
 			occDistFromFacade = $(this).val();
@@ -554,6 +583,8 @@ render.makeGraph = function () {
 
 		// Update static tooltip text
 		thresholdDataText(newOccLocData);
+
+
 	})
 
 
@@ -686,6 +717,29 @@ render.makeGraph = function () {
 
 	}
 
+	function checkOccupantImageSize() {
+		// original image dimensions
+		var originalHeight = 500;
+		var originalWidth = 360;
+
+		var resizeHeight = Math.round(facadeScaleHeight(4.25)); //assume 4.25ft sitting height
+		var resizeWidth = Math.round((resizeHeight/originalHeight)*originalWidth);
+
+		var newLeft = Math.round(facWidth/2 - resizeWidth/2);
+		var newBottom = Math.round(resizeHeight + facMargin.bottom*2);
+
+		var newbackgroundsize = resizeWidth.toString() + "px " + resizeHeight.toString() + "px";
+
+		$("#occupantImage").css({
+			width: resizeWidth,
+			height: resizeHeight,
+			left: newLeft,
+			bottom: newBottom,
+			backgroundSize: newbackgroundsize,
+		})
+	}
+	
+
 
 
 	/* ------ FUNCTIONS FOR GENERAL REFERENCE VISUALS ------ */
@@ -696,16 +750,16 @@ render.makeGraph = function () {
 		console.log(occdata);
 
 		var xPosition = parseFloat(d3.select("circle.occdot").attr("cx")) + margin.left;
-		var yPosition = parseFloat(d3.select("circle.occdot").attr("cy")) - margin.top*1.2;
+		var yPosition = parseFloat(d3.select("circle.occdot").attr("cy"));
 
 		d3.select("#thresholdTooltip")
 		.style("left", xPosition + "px")
-		.style("top", yPosition + "px")
 		.select("#thisPPDtext")
 		.text(Math.round(occdata.ppd*10)/10 + "% PPD at " + occdata.dist + "ft from the façade");
 
 		// tolerable discomfort
 		if (ppdValue >= Math.round(occdata.ppd)) {
+
 			d3.select("#thisDiscomfort")
 			.text("Tolerable")
 			.classed("tolerable", true)
@@ -713,6 +767,11 @@ render.makeGraph = function () {
 
 			d3.select("#thisSolution")
 			.text(".");
+
+			d3.select("#thresholdTooltip")
+			.style("top", (yPosition - margin.bottom/1.5) + "px")
+
+			$("#submitLabel").addClass("inactive");
 		// intolerable discomfort
 		} else {
 			d3.select("#thisDiscomfort")
@@ -722,7 +781,13 @@ render.makeGraph = function () {
 
 			d3.select("#thisSolution")
 			.text(". Try adjusting the window geometry or the auto-calculating U-Value.");
+
+			$("#submitLabel").removeClass("inactive");
+
+			d3.select("#thresholdTooltip")
+			.style("top", (yPosition - margin.bottom*1.2) + "px")
 		}
+
 		//governing factor
 		if (occdata.govfact == "mrt") {
 			d3.select("#thisExplain")
@@ -737,40 +802,6 @@ render.makeGraph = function () {
 			.text("asymmetry");
 		}
 	} // end thresholdDataText
-
-
-	function drawHorziontalDimensions(length, svgHeight) {
-
-		facadeSvg.append("g")
-			.attr("class", "dimensions")
-			.attr("id", "facadeWidth")
-			.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top*0.75) + ")");
-
-		var facWidthDimensions = facadeSvg.selectAll("#facadeWidth");
-
-		facWidthDimensions.append("text") // add width label
-			.attr("class", "axislabel")
-			.attr("text-anchor", "middle")
-		    .attr("x", function() {return facadeScaleWidth(length/2)})
-		    .attr("y", 0)
-		    .text("Wall Length: " + length + " ft");
-
-		facWidthDimensions.append("line") // add line on left side of text
-		    .attr("class", "dimline")
-		    .attr("x2", 0)
-			.attr("x1", function() {return facadeScaleWidth(length/2) - 50})
-			.attr("y1", -4)
-			.attr("y2", -4)
-			.attr("marker-end", "url(#arrowhead)");
-
-		facWidthDimensions.append("line") // add line on right side of text
-		    .attr("class", "dimline")
-		    .attr("x1", function() {return facadeScaleWidth(length/2) + 50})
-			.attr("x2", function() {return facadeScaleWidth(length)})
-			.attr("y1", -4)
-			.attr("y2", -4)
-			.attr("marker-end", "url(#arrowhead)");
-	}
 
 
 	function drawPPDThreshold(data) {
@@ -832,8 +863,38 @@ render.makeGraph = function () {
 	}
 
 
+	function drawHorziontalDimensions(length, svgHeight) {
 
+		facadeSvg.append("g")
+			.attr("class", "dimensions")
+			.attr("id", "facadeWidth")
+			.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top*0.75) + ")");
 
+		var facWidthDimensions = facadeSvg.selectAll("#facadeWidth");
+
+		facWidthDimensions.append("text") // add width label
+			.attr("class", "axislabel")
+			.attr("text-anchor", "middle")
+		    .attr("x", function() {return facadeScaleWidth(length/2)})
+		    .attr("y", 0)
+		    .text("Wall Length: " + length + " ft");
+
+		facWidthDimensions.append("line") // add line on left side of text
+		    .attr("class", "dimline")
+		    .attr("x2", 0)
+			.attr("x1", function() {return facadeScaleWidth(length/2) - 50})
+			.attr("y1", -4)
+			.attr("y2", -4)
+			.attr("marker-end", "url(#arrowhead)");
+
+		facWidthDimensions.append("line") // add line on right side of text
+		    .attr("class", "dimline")
+		    .attr("x1", function() {return facadeScaleWidth(length/2) + 50})
+			.attr("x2", function() {return facadeScaleWidth(length)})
+			.attr("y1", -4)
+			.attr("y2", -4)
+			.attr("marker-end", "url(#arrowhead)");
+	}
 
 
 

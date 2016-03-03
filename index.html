@@ -50,6 +50,7 @@
 
 		<div id="sliderWrapper">
 			<input type="range" name="occupantDist" id="occupantDist" min="0" max="20" value="0"/>
+			<output for="occupantDist" id="occupantImage"></output>
 			<label for="occupantDist">Occupant Position</label>
 	 	</div>
 
@@ -105,7 +106,7 @@
 			<label for="uvalue">Window U-Value (Btu/hr*ft&sup2;*&deg;)</label>
 			<input type="text" name="uvalue" id="uvalue" value="0.25"><br>
 
-			<label for="submit" class="inactive indent">Auto-calculate U-Value</label>
+			<label for="submit" id="submitLabel" class="inactive indent">Auto-calculate U-Value</label>
 			<input id="submit" name"submit" type="submit" value="AutoCal"/><br>
 
 			<label for="lowECheck">Room-side Low-E Coating</label>
@@ -123,12 +124,12 @@
 			<legend>Occupancy Thresholds</legend>
 			<hr>
 
-			<label for="ppd">People Dissatisfied Due to Cold (%)</label>
+			<label for="ppd">Dissatisfaction from Cold (%)</label>
 			<input type="text" name="ppd" id="ppd" value="10"><br>
 
 			<label for="distFromFacade">Distance From Fa&ccedil;ade (ft)</label>
 			<input type="text" name="distFromFacade" id="distFromFacade" value="3"><br>
-			<br>
+
 		</fieldset>
 
 
