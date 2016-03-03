@@ -90,7 +90,7 @@
 			<label for="wallWidth">Wall Length (ft)</label>
 			<input type="text" name="wallWidth" id="wallWidth" value="20"><br>
 			
-			<label for="height">Window Height (ft)</label>
+			<label for="height">Window Height (ft)<sup class="dimHover" id="windHeightButt">?</sup></label>
 			<input type="text" name="height" id="windowHeight" value="8"><br>
 
 
@@ -114,19 +114,19 @@
 		<fieldset class="inputgroup">
 			<legend class="heading">Facade Performance</legend>
 			<hr>
-			<label for="uvalue">Window U-Value (Btu/hr*ft&sup2;*&deg;)<sup id="fnref:1"><a href="#fn:1" rel="footnote">?</a></sup></label>
+			<label for="uvalue">Window U-Value (Btu/hr*ft&sup2;*&deg;F)<sup id="fnref:1"><a href="#fn:1" rel="footnote">?</a></sup></label>
 			<input type="text" name="uvalue" id="uvalue" value="0.25"><br>
 
-			<label for="submit" id="submitLabel" class="inactive indent">Auto-calculate U-Value</label>
+			<label for="submit" id="submitLabel" class="inactive indent">Auto-calculate U-Value<sup id="fnref:2"><a href="#fn:2" rel="footnote">?</a></sup></label>
 			<input id="submit" name"submit" type="submit" value="AutoCal"/><br>
 
-			<label for="lowECheck">Room-side Low-E Coating</label>
+			<label for="lowECheck">Room-side Low-E Coating<sup id="fnref:3"><a href="#fn:3" rel="footnote">?</a></sup></label>
 			<input type="checkbox" name="lowECheck" id="lowECheck"><br>
 
-			<label for="lowE" class="inactive indent" id="lowELabel">Emissivity</label>
+			<label for="lowE" class="inactive indent" id="lowELabel">Emissivity<sup id="fnref:4"><a href="#fn:4" rel="footnote">?</a></sup></label>
 			<input type="text" name="lowE" id="lowE" value="" class="inactive"><br>
 
-			<label for="rvalue">Wall R-Value (Btu/hr*ft&sup2;*&deg;F)</label>
+			<label for="rvalue">Wall R-Value (Btu/hr*ft&sup2;*&deg;F)<sup id="fnref:5"><a href="#fn:5" rel="footnote">?</a></sup></label>
 			<input type="text" name="rvalue" id="rvalue" value="20"><br>
 
 		</fieldset>
@@ -135,7 +135,7 @@
 			<legend>Occupancy Thresholds</legend>
 			<hr>
 
-			<label for="ppd">Dissatisfaction from Cold (%)</label>
+			<label for="ppd">Dissatisfaction from Cold (%)<sup id="fnref:6"><a href="#fn:6" rel="footnote">?</a></sup></label>
 			<input type="text" name="ppd" id="ppd" value="10"><br>
 
 			<label for="distFromFacade">Distance From Fa&ccedil;ade (ft)</label>
@@ -152,10 +152,10 @@
 			<label for="outdoortemp">Outdoor Temperature (&deg;F)</label>
 			<input type="text" name="outdoortemp" id="outdoortemp" value="25"><br>
 
-			<label for="airtemp">Indoor Ambient Temperature (&deg;F)</label>
+			<label for="airtemp">Indoor Ambient Temperature (&deg;F)<sup id="fnref:7"><a href="#fn:7" rel="footnote">?</a></sup></label>
 			<input type="text" name="airtemp" id="airtemp" value="72"><br>
 
-			<label for="humidity">Relative Humidity (%)</label>
+			<label for="humidity">Relative Humidity (%)<sup id="fnref:8"><a href="#fn:8" rel="footnote">?</a></sup></label>
 			<input type="text" name="humidity" id="humidity" value="20"><br>
 		</fieldset>
 
@@ -164,16 +164,16 @@
 			<legend class="heading">Advanced Options</legend>
 			<hr>
 			
-			<label for="radiant">Radiant Floor:</label>
+			<label for="radiant">Radiant Floor<sup id="fnref:9"><a href="#fn:9" rel="footnote">?</a></sup></label>
 			<input type="checkbox" name="radiant" id="radiant"><br>
 
-			<label for="airspeed">Air Speed (fpm):</label>
+			<label for="airspeed">Air Speed (fpm)<sup id="fnref:10"><a href="#fn:10" rel="footnote">?</a></sup></label>
 			<input type="text" name="airspeed" id="airspeed" value="10"><br>
 			
-			<label for="clothing">Clothing (clo):</label>
+			<label for="clothing">Clothing (clo)<sup id="fnref:11"><a href="#fn:11" rel="footnote">?</a></sup></label>
 			<input type="text" name="clothing" id="clothing" value="0.8"><br>
 
-			<label for="metabolid">Metabolic Rate (met):</label>
+			<label for="metabolid">Metabolic Rate (met)<sup id="fnref:12"><a href="#fn:12" rel="footnote">?</a></sup></label>
 			<input type="text" name="metabolic" id="metabolic" value="1.2"><br>
 		</fieldset>
 		</form>
@@ -185,6 +185,38 @@
 	<ol>
 	    <li class="footnote" id="fn:1">
 	        <p>Some text about this thing<a href="#fnref:1" title="return to article"> ↩</a><p>
+	    </li>
+	    <li class="footnote" id="fn:2">
+	        <p>Some text about this thing<a href="#fnref:2" title="return to article"> ↩</a><p>
+	    </li>
+	    <li class="footnote" id="fn:3">
+	        <p>Some text about this thing<a href="#fnref:3" title="return to article"> ↩</a><p>
+	        <li class="footnote" id="fn:4">
+	        <p>Some text about this thing<a href="#fnref:4" title="return to article"> ↩</a><p>
+	    </li>
+	    <li class="footnote" id="fn:5">
+	        <p>Some text about this thing<a href="#fnref:5" title="return to article"> ↩</a><p>
+	    </li>
+	    <li class="footnote" id="fn:6">
+	        <p>Some text about this thing<a href="#fnref:6" title="return to article"> ↩</a><p>
+	    </li>
+	    <li class="footnote" id="fn:7">
+	        <p>Some text about this thing<a href="#fnref:7" title="return to article"> ↩</a><p>
+	    </li>
+	    <li class="footnote" id="fn:8">
+	        <p>Some text about this thing<a href="#fnref:8" title="return to article"> ↩</a><p>
+	    </li>
+	    <li class="footnote" id="fn:9">
+	        <p>Some text about this thing<a href="#fnref:9" title="return to article"> ↩</a><p>
+	    </li>
+	    <li class="footnote" id="fn:10">
+	        <p>Some text about this thing<a href="#fnref:10" title="return to article"> ↩</a><p>
+	    </li>
+	    <li class="footnote" id="fn:11">
+	        <p>Some text about this thing<a href="#fnref:11" title="return to article"> ↩</a><p>
+	    </li>
+	    <li class="footnote" id="fn:12">
+	        <p>Some text about this thing<a href="#fnref:12" title="return to article"> ↩</a><p>
 	    </li>
 	</ol>
 	</div>

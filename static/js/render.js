@@ -168,7 +168,6 @@ render.makeGraph = function () {
 	// add text at occupanct location
 	thresholdDataText(occPointData);
 	
-
 	// Show text on hover over dot
 	graphPoints.on("mouseover", function(d) {
 
@@ -229,16 +228,13 @@ render.makeGraph = function () {
 		//Hide default text
 		$("#thresholdTooltip").fadeOut(300);
 		
-
-   })
-   .on("mouseout", function() {
-   
-		//Hide the tooltip
+  	})
+   	.on("mouseout", function() {
+   		//Hide the tooltip
 		$("#tooltip").fadeOut(300);
 		//Show default text
 		$("#thresholdTooltip").fadeIn(300);
-		
-   })
+   	})
 
 
 
@@ -322,7 +318,8 @@ render.makeGraph = function () {
 
 	
 	//Add facade dimensions
-	drawHorziontalDimensions(wallPoints[0].wallWidth, facHeight);
+	drawHorziontalDimensions(wallPoints[0].wallWidth);
+	drawVerticalDimensions(wallPoints[0].wallHeight);
 	
 	//Ensure size of occupant image is correct
 	checkOccupantImageSize();
@@ -387,6 +384,9 @@ render.makeGraph = function () {
 		else if(triggeredChange == "ceiling") {
 			ceilingHeightValue = $(this).val();
 			wallPoints[0].wallHeight = $(this).val(); //udpate wall geometry array
+			// Update dimensions
+			facadeSvg.selectAll("#facadeHeightDim").remove()
+			drawVerticalDimensions(wallPoints[0].wallHeight);
 		}
 		else if(triggeredChange == "wallWidth") {
 			wallLen = $(this).val();
@@ -404,7 +404,7 @@ render.makeGraph = function () {
 						.range([0, facHeight]); //output range
 			// Update dimensions
 			facadeSvg.selectAll("#facadeWidth").remove()
-			drawHorziontalDimensions(wallPoints[0].wallWidth, facHeight);
+			drawHorziontalDimensions(wallPoints[0].wallWidth);
 
 			$("#occupantDist").attr("max", wallLen/2);
 			checkOccupantImageSize();
@@ -652,8 +652,6 @@ render.makeGraph = function () {
 			.transition()
 			.duration(500);
 
-		console.log(upOccupantPoint);
-
 		//update occupant point if different		
 		d3.selectAll("circle.occdot")
 			.attr("cx", function(d) { return x(occDistFromFacade); }) //replace with upOccupantPoint.dist
@@ -864,7 +862,7 @@ render.makeGraph = function () {
 	}
 
 
-	function drawHorziontalDimensions(length, svgHeight) {
+	function drawHorziontalDimensions(length) {
 
 		facadeSvg.append("g")
 			.attr("class", "dimensions")
@@ -894,6 +892,47 @@ render.makeGraph = function () {
 			.attr("x2", function() {return facadeScaleWidth(length)})
 			.attr("y1", -4)
 			.attr("y2", -4)
+			.attr("marker-end", "url(#arrowhead)");
+	}
+
+
+
+	function drawVerticalDimensions(height) {
+
+		facadeSvg.append("g")
+			.attr("class", "dimensions")
+			.attr("id", "facadeHeightDim")
+			.attr("transform", "translate(" + facMargin.left*0.75 + "," + ( facMargin.top) + ")");
+
+		var facHeightDimensions = facadeSvg.selectAll("#facadeHeightDim");
+
+
+		facHeightDimensions.append("g")
+			.attr("transform", "translate(" + (-148) + "," + (facHeight/2) + ")")
+			.append("text") // add width label
+			.attr("class", "axislabel")
+			.attr("text-anchor", "middle")
+		    .attr("x", 0)
+		    .attr("y", function() {return facadeScaleHeight(height/2)})
+		    .text("Ceiling Height: " + height + " ft")
+		    .attr("text-anchor", "middle")
+    		.attr("transform", "rotate(-90)");;
+		
+
+		facHeightDimensions.append("line") // add line on left side of text
+		    .attr("class", "dimline")
+		    .attr("x2", 0)
+			.attr("x1", 0)
+			.attr("y2", 0)
+			.attr("y1", function() {return facadeScaleHeight(height/2) - 55})
+			.attr("marker-end", "url(#arrowhead)");
+
+		facHeightDimensions.append("line") // add line on right side of text
+		    .attr("class", "dimline")
+		    .attr("x1", 0)
+			.attr("x2", 0)
+		    .attr("y1", function() {return facadeScaleHeight(height/2) + 55})
+			.attr("y2", function() {return facadeScaleHeight(height)})
 			.attr("marker-end", "url(#arrowhead)");
 	}
 

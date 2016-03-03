@@ -1,5 +1,5 @@
 body {
-	margin: 20px;
+	margin: 0 20px;
 }
 
 #header {
@@ -186,6 +186,7 @@ body {
 	display: inline-block;
 	bottom: 510px; /* imageHeight + facMargin.bottom*2*/
 	left: 320px; /* = 500px - imageWidth/2 */
+	opacity: .8;
 }
 
 
@@ -345,7 +346,7 @@ input[type='range']::-moz-range-thumb {
 	padding: 3px 10px 3px 0;
 	float: left;
 	clear: left;
-	width: 160px;
+	width: 210px;
 	text-align: left;
 	display: block;
 
@@ -356,7 +357,7 @@ input[type='range']::-moz-range-thumb {
 
 #inputs label.indent {
 	padding-left: 20px;
-	width: 140px;
+	width: 190px;
 }
 
 
@@ -381,7 +382,12 @@ input[type='range']::-moz-range-thumb {
 
 
 
-
+.dimHover {
+	width: 12px;
+	height: 12px;
+	text-align: center;
+	line-height: 12px !important;
+}
 
 
 

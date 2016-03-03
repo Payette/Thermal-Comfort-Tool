@@ -1,12 +1,13 @@
-.bigfoot-footnote__button {
+.bigfoot-footnote__button, .dimHover {
   position: relative;
+  height: 12px;
   z-index: 5;
   top: -0.1em;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   display: inline-block;
   padding: 1px;
-  margin: 0.1em 0.1em 0 0.5em;
+  margin: 0.1em 0.1em 0 0.7em;
   border: none;
   border-radius: 5.5px;
   cursor: pointer;
@@ -14,7 +15,7 @@
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
   font-size: 8px;
-  line-height: 8px;
+  line-height: 9px;
   vertical-align: top;
   text-decoration: none;
   -webkit-font-smoothing: antialiased;
@@ -27,10 +28,11 @@
   outline: none;
   background-color: rgba(110, 110, 110, 0.5);
 }
-.bigfoot-footnote__button:active {
+.bigfoot-footnote__button:active, {
   background-color: rgba(110, 110, 110, 0.5);
 }
-.bigfoot-footnote__button.is-active {
+.bigfoot-footnote__button.is-active, .dimHover:hover {
+  color: black;
   background-color: #6e6e6e;
   -webkit-transition-delay: 0.1s;
           transition-delay: 0.1s;
