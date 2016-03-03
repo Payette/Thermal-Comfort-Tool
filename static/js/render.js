@@ -194,6 +194,7 @@ render.makeGraph = function () {
 
 			d3.select("#tooltip")
 			.style("top", (yPosition - margin.bottom/1.5) + "px")
+
 		//intolerable discomfort
 		} else {
 			d3.select("#discomfort")
@@ -224,17 +225,18 @@ render.makeGraph = function () {
 		
    
 		//Show the tooltip
-		d3.select("#tooltip").classed("hidden", false);
+		$("#tooltip").fadeIn(300);
 		//Hide default text
-		d3.select("#thresholdTooltip").classed("hidden", true);
+		$("#thresholdTooltip").fadeOut(300);
+		
 
    })
    .on("mouseout", function() {
    
 		//Hide the tooltip
-		d3.select("#tooltip").classed("hidden", true);
+		$("#tooltip").fadeOut(300);
 		//Show default text
-		d3.select("#thresholdTooltip").classed("hidden", false);
+		$("#thresholdTooltip").fadeIn(300);
 		
    })
 
@@ -247,7 +249,7 @@ render.makeGraph = function () {
 
 
 	/* ------ SET UP FACADE VARIABLES AND DATA FUNCTIONS ------ */
-	var facMargin = {top: 50, right: 0, bottom: 5, left: 50};
+	var facMargin = {top: 25, right: 0, bottom: 5, left: 50};
 	
 	// wall coordinates
 	var wallPoints = [{
@@ -348,6 +350,7 @@ render.makeGraph = function () {
 	    .attr("markerHeight", 8)
 	    .attr("orient", "auto")
 	    .append("path")
+	    .attr("fill", "rgb(150,150,150)")
         .attr("d", "M 0,0 V 4 L6,2 Z"); //this is actual shape for arrowhead
 
     //gradient fill
@@ -747,8 +750,6 @@ render.makeGraph = function () {
 	// Display text for occupancy dist from facade
 	function thresholdDataText(occdata) {
 
-		console.log(occdata);
-
 		var xPosition = parseFloat(d3.select("circle.occdot").attr("cx")) + margin.left;
 		var yPosition = parseFloat(d3.select("circle.occdot").attr("cy"));
 
@@ -868,7 +869,7 @@ render.makeGraph = function () {
 		facadeSvg.append("g")
 			.attr("class", "dimensions")
 			.attr("id", "facadeWidth")
-			.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top*0.75) + ")");
+			.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top*0.7) + ")");
 
 		var facWidthDimensions = facadeSvg.selectAll("#facadeWidth");
 

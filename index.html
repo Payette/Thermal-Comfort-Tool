@@ -3,6 +3,7 @@
 
 <head>
 	<link rel="stylesheet" type="text/css" href="static/css/styles.css" media="screen"/>
+	<link rel="stylesheet" type="text/css" href="static/css/bigfoot-default.css" media="screen"/>
 
 	<meta charset = "UTF-8" />
 
@@ -14,11 +15,25 @@
 	<!-- CDN Jquery UI -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 
+	<script type="text/javascript" charset="utf-8" src="static/js/bigfoot.min.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/d3/d3.v3.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/geo.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/PPDCalc.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/UValCalc.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/util.js"></script>
+
+	<!-- Footnote Options -->
+	<script type="text/javascript">
+		$.bigfoot(
+        {
+        	activateOnHover: true,
+            deleteOnUnhover: true,
+			buttonMarkup: "<div class=\"bigfoot-footnote__container\"> <button class=\"bigfoot-footnote__button\" rel=\"footnote\" id=\"{{SUP:data-footnote-backlink-ref}}\" data-footnote-number=\"{{FOOTNOTENUM}}\" data-footnote-identifier=\"{{FOOTNOTEID}}\" alt=\"See Footnote {{FOOTNOTENUM}}\" data-bigfoot-footnote=\"{{FOOTNOTECONTENT}}\">?</button></div>"
+
+        }
+    );
+	</script>
+
 	<!-- Make Chart -->
 	<script type="text/javascript" src="static/js/render.js"></script> 
 
@@ -46,6 +61,7 @@
 		</div>
 
 		<div id="facadeWrapper">
+			<h1>Fa&ccedil;ade Representation</h1>
 		</div>
 
 		<div id="sliderWrapper">
@@ -65,13 +81,8 @@
 
 		<form id="form">		
 		<fieldset class="inputgroup">
-			<legend class="heading">Facade Geometry</legend>
+			<legend class="heading">Fa&ccedil;ade Geometry</legend>
 			<hr>
-
-<!-- 			<label for="occupantDist">Occupant Distance to Wall Center (ft):</label>
-			<input type="text" name="occupantDist" id="occupantDist" value="0"><br>
-		
- -->
 
 			<label for="ceiling">Ceiling Height (ft)</label>
 			<input type="text" name="ceiling" id="ceiling" value="12"><br>
@@ -103,7 +114,7 @@
 		<fieldset class="inputgroup">
 			<legend class="heading">Facade Performance</legend>
 			<hr>
-			<label for="uvalue">Window U-Value (Btu/hr*ft&sup2;*&deg;)</label>
+			<label for="uvalue">Window U-Value (Btu/hr*ft&sup2;*&deg;)<sup id="fnref:1"><a href="#fn:1" rel="footnote">?</a></sup></label>
 			<input type="text" name="uvalue" id="uvalue" value="0.25"><br>
 
 			<label for="submit" id="submitLabel" class="inactive indent">Auto-calculate U-Value</label>
@@ -168,6 +179,14 @@
 		</form>
 	</div>
 
+	</div>
+
+	<div class="footnotes">
+	<ol>
+	    <li class="footnote" id="fn:1">
+	        <p>Some text about this thing<a href="#fnref:1" title="return to article"> ↩</a><p>
+	    </li>
+	</ol>
 	</div>
 
 

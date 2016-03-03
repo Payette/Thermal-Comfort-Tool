@@ -130,6 +130,15 @@ body {
 }
 
 
+#facadeWrapper h1{
+	font-family: "museo-sans", sans-serif;
+	font-weight: 700;
+	font-size: 12px;
+	text-transform: uppercase;
+	padding: 15px 0 0 50px;
+	margin: 0;
+}
+
 #facade .axislabel {
 	font-family: "museo-sans", sans-serif;
 	font-size: 10px;
@@ -140,7 +149,7 @@ body {
 
 #facade .dimline {
 	stroke-width: .8;
-	stroke: #000;
+	stroke: rgb(150,150,150);
 	stroke-linecap: butt;
 }
 
@@ -173,6 +182,7 @@ body {
 	width: 360px; 
   	height: 500px;
 	background-image: url(../../static/images/slider.png);
+	background-size: 360px 500px;
 	display: inline-block;
 	bottom: 510px; /* imageHeight + facMargin.bottom*2*/
 	left: 320px; /* = 500px - imageWidth/2 */
