@@ -92,7 +92,7 @@ render.makeGraph = function () {
 	    .text("Distance from Façade (ft)");
 
 	graphSvg.append("g")
-	.attr("transform", "translate(" + margin.left*.2 + "," + (height/2 + margin.top) + ")")
+	.attr("transform", "translate(" + margin.left*0.2 + "," + (height/2 + margin.top) + ")")
 	.append("text")
     .attr("class", "axislabel")
     .attr("text-anchor", "middle")
@@ -384,9 +384,7 @@ render.makeGraph = function () {
 		else if(triggeredChange == "ceiling") {
 			ceilingHeightValue = $(this).val();
 			wallPoints[0].wallHeight = $(this).val(); //udpate wall geometry array
-			// Update dimensions
-			facadeSvg.selectAll("#facadeHeightDim").remove()
-			drawVerticalDimensions(wallPoints[0].wallHeight);
+			
 		}
 		else if(triggeredChange == "wallWidth") {
 			wallLen = $(this).val();
@@ -402,9 +400,7 @@ render.makeGraph = function () {
 			facadeScaleHeight = d3.scale.linear()
 						.domain([0, wallPoints[0].wallHeight]) //input domain
 						.range([0, facHeight]); //output range
-			// Update dimensions
-			facadeSvg.selectAll("#facadeWidth").remove()
-			drawHorziontalDimensions(wallPoints[0].wallWidth);
+			
 
 			$("#occupantDist").attr("max", wallLen/2);
 			checkOccupantImageSize();
@@ -695,7 +691,6 @@ render.makeGraph = function () {
 
 		//update windows		
 		d3.selectAll("rect.window").remove()
-
 		facadeSvg.selectAll(".window")
 			.data(glzData)
 			.enter()
@@ -710,11 +705,11 @@ render.makeGraph = function () {
 			})
 			.style("fill", "url(#blueGradient)");
 
-		//update dimensions
-		d3.select("#facadeWidth")
-			.transition()
-			.duration(500)
-			.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top*0.75) + ")");
+
+		// Update dimensions
+		facadeSvg.selectAll("#facadeWidth, #facadeHeightDim, #facadeHeightDimLabel").remove();
+		drawHorziontalDimensions(wallPoints[0].wallWidth);
+		drawVerticalDimensions(wallPoints[0].wallHeight);
 
 	}
 
@@ -899,6 +894,17 @@ render.makeGraph = function () {
 
 	function drawVerticalDimensions(height) {
 
+
+		facadeSvg.append("g")
+			.attr("id", "facadeHeightDimLabel")
+			.attr("transform", "translate(" + facMargin.left*0.75 + "," + (facHeight/2 + facMargin.top) + ")")
+			.append("text")
+		    .attr("class", "axislabel")
+		    .attr("text-anchor", "middle")
+		    .attr("transform", "rotate(-90)")
+		    .text("Ceiling Height: " + height + " ft");
+
+
 		facadeSvg.append("g")
 			.attr("class", "dimensions")
 			.attr("id", "facadeHeightDim")
@@ -906,18 +912,6 @@ render.makeGraph = function () {
 
 		var facHeightDimensions = facadeSvg.selectAll("#facadeHeightDim");
 
-
-		facHeightDimensions.append("g")
-			.attr("transform", "translate(" + (-148) + "," + (facHeight/2) + ")")
-			.append("text") // add width label
-			.attr("class", "axislabel")
-			.attr("text-anchor", "middle")
-		    .attr("x", 0)
-		    .attr("y", function() {return facadeScaleHeight(height/2)})
-		    .text("Ceiling Height: " + height + " ft")
-		    .attr("text-anchor", "middle")
-    		.attr("transform", "rotate(-90)");;
-		
 
 		facHeightDimensions.append("line") // add line on left side of text
 		    .attr("class", "dimline")
