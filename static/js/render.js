@@ -327,6 +327,42 @@ render.makeGraph = function () {
 
 	
 
+	$("#windHeightButt").on("mouseover", function() {
+		var numofWindows = glzCoords.length;
+		var firstWindow = d3.selectAll(".window:nth-child(" + (1 + numofWindows) + ")");
+
+		var middleWidth = parseFloat(firstWindow.attr("x")) + facadeScaleWidth(glzWidth/2);
+		var middleHeight = parseFloat(firstWindow.attr("y")) + facadeScaleHeight(glzHeight/2);
+
+		facadeSvg.append("g")
+			.attr("id", "windowHeightDimLabel")
+			.attr("transform", "translate(" + (facadeScaleWidth(wallPoints[0].wallWidth)/2 + facMargin.left) + "," + (facadeScaleWidth(wallPoints[0].wallHeight - glzHeight/2  - sillHeightValue) + facMargin.top) + ")")
+			.append("text")
+		    .attr("class", "axislabel")
+		    .attr("text-anchor", "middle")
+		    .attr("transform", "rotate(-90)")
+		    .text("Window Height");
+
+		facadeSvg.append("g")
+			.attr("class", "dimensions")
+			.attr("id", "windowHeightDim")
+			.attr("transform", "translate(" + facMargin.left + "," + ( facMargin.top) + ")");
+
+		var windowHeightDimensions = facadeSvg.selectAll("#windowHeightDim");
+
+		windowHeightDimensions.append("line") // add line on left side of text
+		    .attr("class", "dimline")
+		    .attr("x2", facadeScaleWidth(wallPoints[0].wallWidth)/2)
+			.attr("x1", facadeScaleWidth(wallPoints[0].wallWidth)/2)
+			.attr("y1", facadeScaleHeight(wallPoints[0].wallHeight - sillHeightValue))
+			.attr("y2", facadeScaleHeight(wallPoints[0].wallHeight - glzHeight - sillHeightValue));
+	})
+	$("#windHeightButt").on("mouseout", function() {
+		$("#windowHeightDimLabel, #windowHeightDim").remove();
+	})
+
+
+
 
 
 
@@ -894,7 +930,6 @@ render.makeGraph = function () {
 
 	function drawVerticalDimensions(height) {
 
-
 		facadeSvg.append("g")
 			.attr("id", "facadeHeightDimLabel")
 			.attr("transform", "translate(" + facMargin.left*0.75 + "," + (facHeight/2 + facMargin.top) + ")")
@@ -904,14 +939,12 @@ render.makeGraph = function () {
 		    .attr("transform", "rotate(-90)")
 		    .text("Ceiling Height: " + height + " ft");
 
-
 		facadeSvg.append("g")
 			.attr("class", "dimensions")
 			.attr("id", "facadeHeightDim")
 			.attr("transform", "translate(" + facMargin.left*0.75 + "," + ( facMargin.top) + ")");
 
 		var facHeightDimensions = facadeSvg.selectAll("#facadeHeightDim");
-
 
 		facHeightDimensions.append("line") // add line on left side of text
 		    .attr("class", "dimline")
