@@ -153,26 +153,26 @@ geo.createGlazingForRect = function(rectHeight, wallLength, glazingRatio, window
 		//Find the maximum acceptable width for breaking up the window into smaller, taller windows.
 		var maxWidthBreakUp = wallLength/2
 		
+		//Divide up the rectangle into points on the bottom.
+		if (wallLength > (distBreakup/2)) {
+			var numDivisions = round(wallLength/distBreakup, 0);
+		} else {
+			var numDivisions = 1;
+		}
+		
 		//Find the window geometry in the case that the target width is below that of the maximum width acceptable area for breaking up the window into smaller windows.
-		if (windowWidth < maxWidthBreakUp) {
-			//Divide up the rectangle into points on the bottom.
-			if (wallLength > (distBreakup/2)) {
-				var numDivisions = round(wallLength/distBreakup, 0);
-			} else {
-				var numDivisions = 1;
-			}
-			
-			if (numDivisions*windowWidth > wallLength){
-				numDivisions = numDivisions = 1
-			}
+		if (windowWidth < maxWidthBreakUp && numDivisions*windowWidth <= wallLength) {
 			
 			if (((numDivisions*windowWidth)+ (numDivisions-1)*(distBreakup-windowWidth)) > wallLength){
-				numDivisions = Math.floor(wallLength/distBreakup);
+				numDivisions = Math.floor(wallLength/distBreakup)
+				var divDist = distBreakup
+			} else{
+				var divDist = distBreakup
 			}
 			
 			var btmDivPts = [[(wallLength/2),0,silHeightFinal]]
-			var divDist = distBreakup
-			var remainder = wallLength - (distBreakup*numDivisions)
+			
+			var remainder = wallLength - (divDist*numDivisions)
 			
 			var totalDist = remainder/2
 			
@@ -227,9 +227,9 @@ geo.createGlazingForRect = function(rectHeight, wallLength, glazingRatio, window
 				finalGlzCoords.push(windowCoord)
 				glzArea += (winHeightFinal*windowWidth)
 			}
-		}
-		//Find the window geometry in the case that the target width is above the maximum width acceptable area for breaking up the window into smaller windows.
-		if (windowWidth >= maxWidthBreakUp) {
+		} else {
+			//Find the window geometry in the case that the target width is above the maximum width acceptable area for breaking up the window into smaller windows.
+			
 			if (windowWidth > wallLength){
 				windowWidth = wallLength
 			}
@@ -359,6 +359,7 @@ geo.calcViewFacs = function(srfCoords, locPts) {
 		
         viewFact.push(srfView)
     }
+	
     return viewFact
 }
 
@@ -376,22 +377,17 @@ geo.computeAllViewFac = function(wallCoords, glazingCoords, occDistToWall){
 	facadeDist.push(parseFloat(occDistFromFacade))
 	locationPts.push([parseFloat(occDistToWall),parseFloat(occDistFromFacade),seatH])
 	
-	var fullWallViewFac = geo.calcViewFacs(wallCoords, locationPts)
-	
-	var glzViewFac = []
-	for (var i = 0; i < glazingCoords.length; i++){
-		var glzSrf = glazingCoords[i]
-		var viewFa = geo.calcViewFacs(glzSrf, locationPts)
-		
-		if (i == 0){
-			var glzViewFac = viewFa
-		} else {
-			for (var i = 0; i < viewFa.length; i++){
-				var ptvie = viewFa[i]
-				glzViewFac[i] = glzViewFac[i] + ptvie
-			}
+	// Calculate the view factor to the glazing
+	var glzViewFac = geo.calcViewFacs(glazingCoords[0], locationPts)
+	for (var i = 1; i < glazingCoords.length; i++){
+		var viewFa = geo.calcViewFacs(glazingCoords[i], locationPts)
+		for (var j = 0; j < viewFa.length; j++){
+			glzViewFac[j] +=  viewFa[j]
 		}
 	}
+	
+	// Calculate the view factor to the wall.
+	var fullWallViewFac = geo.calcViewFacs(wallCoords, locationPts)
 	var wallViewFac = []
 	for (var i = 0; i < fullWallViewFac.length; i++){
 		var wallView = fullWallViewFac[i]
