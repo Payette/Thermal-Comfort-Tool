@@ -154,6 +154,11 @@ body {
 }
 
 
+#windowHeightDimLabel, #windowHeightDim {
+	display: none;
+}
+
+
 .blueGradientStop1 {
 	stop-color: #E1F0FF;
 }

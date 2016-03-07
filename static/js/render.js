@@ -325,9 +325,12 @@ render.makeGraph = function () {
 	checkOccupantImageSize();
 
 
-	
+	//Add window dimensions
+	windowDimensions();
 
-	$("#windHeightButt").on("mouseover", function() {
+
+
+	function windowDimensions() {
 		var numofWindows = glzCoords.length;
 		var firstWindow = d3.selectAll(".window:nth-child(" + (1 + numofWindows) + ")");
 
@@ -356,9 +359,15 @@ render.makeGraph = function () {
 			.attr("x1", facadeScaleWidth(wallPoints[0].wallWidth)/2)
 			.attr("y1", facadeScaleHeight(wallPoints[0].wallHeight - sillHeightValue))
 			.attr("y2", facadeScaleHeight(wallPoints[0].wallHeight - glzHeight - sillHeightValue));
+	}
+
+	
+
+	$("#windHeightButt").on("mouseover", function() {
+		$("#windowHeightDimLabel, #windowHeightDim").fadeIn("fast");
 	})
 	$("#windHeightButt").on("mouseout", function() {
-		$("#windowHeightDimLabel, #windowHeightDim").remove();
+		$("#windowHeightDimLabel, #windowHeightDim").fadeOut("fast");
 	})
 
 
