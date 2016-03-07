@@ -289,7 +289,9 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windowHgt, glzUV
 	// Construct a dictionary of PPD for the occupant location.
 	var occPtInfo = {}
 	occPtInfo.dist = facadeDist[facadeDist.length-1]
-	if (mrtPPD[-1] > downDPPD[-1]) {
+	
+	
+	if (mrtPPD[facadeDist.length-1] > downDPPD[facadeDist.length-1]) {
 			occPtInfo.ppd = mrtPPD[i];
 			occPtInfo.govfact = "mrt";
 		} else {
