@@ -372,8 +372,9 @@ geo.computeAllViewFac = function(wallCoords, glazingCoords, occDistToWall){
 		facadeDist.push(i+1)
 		locationPts.push([parseFloat(occDistToWall),i+1,seatH])
 	}
-	facadeDist.push(occDistFromFacade)
-	locationPts.push([parseFloat(occDistToWall),occDistFromFacade,seatH])
+	// Add a point for the occupant distance from facade.
+	facadeDist.push(parseFloat(occDistFromFacade))
+	locationPts.push([parseFloat(occDistToWall),parseFloat(occDistFromFacade),seatH])
 	
 	var fullWallViewFac = geo.calcViewFacs(wallCoords, locationPts)
 	
