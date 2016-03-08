@@ -31,13 +31,13 @@ body {
 
 #graph .axislabel {
 	font-family: "museo-sans", sans-serif;
-	font-size: 10px;
+	font-size: 12px;
 	font-weight: 300;
 }
 
 #graph .axis text {
     font-family: "museo-sans", sans-serif;
-    font-size: 10px;
+    font-size: 12px;
 }
 
 #graph .axis path,
@@ -80,7 +80,7 @@ body {
 
 #tooltip, #thresholdTooltip {
 	position: absolute;
-	width: 170px;
+	width: 200px;
 	height: auto;
 	padding: 10px;
 	pointer-events: none;
@@ -96,7 +96,7 @@ body {
 #tooltip h1, #thresholdTooltip h1 {
 	font-family: "museo-sans", sans-serif;
 	font-weight: 500;
-	font-size: 10px;
+	font-size: 12px;
 	color: black;
 	padding: 0 0 3px 0;
 	margin: 0;
@@ -106,7 +106,7 @@ body {
 	margin: 0;
 	font-family: "museo-sans", sans-serif;
 	font-weight: 100;
-	font-size: 10px;
+	font-size: 12px;
 	color: black;
 }
 
@@ -141,7 +141,7 @@ body {
 
 #facade .axislabel {
 	font-family: "museo-sans", sans-serif;
-	font-size: 10px;
+	font-size: 12px;
 	font-weight: 300;
 	background-color: #fff;
 }
@@ -154,7 +154,7 @@ body {
 }
 
 
-#windowHeightDimLabel, #windowHeightDim {
+#windowHeightDimLabel, #windowHeightDim, #windowWidthDim {
 	display: none;
 }
 
@@ -174,7 +174,7 @@ body {
 
 #sliderWrapper label {
 	font-family: "museo-sans", sans-serif;
-	font-size: 10px;
+	font-size: 12px;
 	font-weight: 300;
 	background-color: #fff;
 	display: inline;
@@ -340,6 +340,7 @@ input[type='range']::-moz-range-thumb {
 	border-width: 1px;
 	border-color: #777;
 
+	font-family: "museo-sans", sans-serif;
 	font-weight: 300;
 	font-size: 10px;
 	text-align: right;

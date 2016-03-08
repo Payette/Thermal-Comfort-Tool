@@ -21,9 +21,9 @@ render.makeGraph = function () {
 
 
 	/* ------ SET UP GRAPH VARIABLES AND DATA FUNCTIONS ------ */
-	var margin = {top: 57, right: 0, bottom: 50, left: 50},
+	var margin = {top: 57, right: 0, bottom: 75, left: 50},
     	width = maxContainerWidth - margin.left - margin.right,
-    	height = 375 - margin.top - margin.bottom;
+    	height = 400 - margin.top - margin.bottom;
 
 
 	// Set up scale functions
@@ -88,7 +88,7 @@ render.makeGraph = function () {
 	    .attr("class", "axislabel")
 	    .attr("text-anchor", "middle")
 	    .attr("x", width/2 + margin.left)
-	    .attr("y", height + margin.bottom*1.8)
+	    .attr("y", height + margin.bottom*1.3)
 	    .text("Distance from Façade (ft)");
 
 	graphSvg.append("g")
@@ -192,7 +192,7 @@ render.makeGraph = function () {
 			.text(".");
 
 			d3.select("#tooltip")
-			.style("top", (yPosition - margin.bottom/1.5) + "px")
+			.style("top", (yPosition - margin.bottom/2) + "px")
 
 		//intolerable discomfort
 		} else {
@@ -224,16 +224,16 @@ render.makeGraph = function () {
 		
    
 		//Show the tooltip
-		$("#tooltip").fadeIn(300);
+		$("#tooltip").delay(200).fadeIn(300);
 		//Hide default text
-		$("#thresholdTooltip").fadeOut(300);
+		$("#thresholdTooltip").delay(100).fadeOut(300);
 		
   	})
    	.on("mouseout", function() {
    		//Hide the tooltip
 		$("#tooltip").fadeOut(300);
 		//Show default text
-		$("#thresholdTooltip").fadeIn(300);
+		$("#thresholdTooltip").delay(400).fadeIn(300);
    	})
 
 
@@ -326,40 +326,11 @@ render.makeGraph = function () {
 
 
 	//Add window dimensions
-	windowDimensions();
+	windowDimensions(glzCoords, glzWidth, glzHeight);
 
 
 
-	function windowDimensions() {
-		var numofWindows = glzCoords.length;
-		var firstWindow = d3.selectAll(".window:nth-child(" + (1 + numofWindows) + ")");
 
-		var middleWidth = parseFloat(firstWindow.attr("x")) + facadeScaleWidth(glzWidth/2);
-		var middleHeight = parseFloat(firstWindow.attr("y")) + facadeScaleHeight(glzHeight/2);
-
-		facadeSvg.append("g")
-			.attr("id", "windowHeightDimLabel")
-			.attr("transform", "translate(" + (facadeScaleWidth(wallPoints[0].wallWidth)/2 + facMargin.left) + "," + (facadeScaleWidth(wallPoints[0].wallHeight - glzHeight/2  - sillHeightValue) + facMargin.top) + ")")
-			.append("text")
-		    .attr("class", "axislabel")
-		    .attr("text-anchor", "middle")
-		    .attr("transform", "rotate(-90)")
-		    .text("Window Height");
-
-		facadeSvg.append("g")
-			.attr("class", "dimensions")
-			.attr("id", "windowHeightDim")
-			.attr("transform", "translate(" + facMargin.left + "," + ( facMargin.top) + ")");
-
-		var windowHeightDimensions = facadeSvg.selectAll("#windowHeightDim");
-
-		windowHeightDimensions.append("line") // add line on left side of text
-		    .attr("class", "dimline")
-		    .attr("x2", facadeScaleWidth(wallPoints[0].wallWidth)/2)
-			.attr("x1", facadeScaleWidth(wallPoints[0].wallWidth)/2)
-			.attr("y1", facadeScaleHeight(wallPoints[0].wallHeight - sillHeightValue))
-			.attr("y2", facadeScaleHeight(wallPoints[0].wallHeight - glzHeight - sillHeightValue));
-	}
 
 	
 
@@ -368,6 +339,13 @@ render.makeGraph = function () {
 	})
 	$("#windHeightButt").on("mouseout", function() {
 		$("#windowHeightDimLabel, #windowHeightDim").fadeOut("fast");
+	})
+
+	$("#windWidthButt").on("mouseover", function() {
+		$("#windowWidthDim").fadeIn("fast");
+	})
+	$("#windWidthButt").on("mouseout", function() {
+		$("#windowWidthDim").fadeOut("fast");
 	})
 
 
@@ -752,9 +730,10 @@ render.makeGraph = function () {
 
 
 		// Update dimensions
-		facadeSvg.selectAll("#facadeWidth, #facadeHeightDim, #facadeHeightDimLabel").remove();
+		facadeSvg.selectAll("#facadeWidth, #facadeHeightDim, #facadeHeightDimLabel, #windowHeightDimLabel, #windowHeightDim").remove();
 		drawHorziontalDimensions(wallPoints[0].wallWidth);
 		drawVerticalDimensions(wallPoints[0].wallHeight);
+		windowDimensions(glzData, newGlzWidth, newGlzHeight);
 
 	}
 
@@ -808,7 +787,7 @@ render.makeGraph = function () {
 			.text(".");
 
 			d3.select("#thresholdTooltip")
-			.style("top", (yPosition - margin.bottom/1.5) + "px")
+			.style("top", (yPosition - margin.bottom/2) + "px")
 
 			$("#submitLabel").addClass("inactive");
 		// intolerable discomfort
@@ -870,6 +849,7 @@ render.makeGraph = function () {
 			.style("stroke", "black");
 	}
 
+
 	function updatePPDThreshold(data) {
 		d3.selectAll(".refLine")
 			.transition()
@@ -882,6 +862,7 @@ render.makeGraph = function () {
 			.duration(400)
 			.attr("height", function() {return y(data)});
 	}
+
 
 	function occupantDistanceRefLine() {
 
@@ -921,20 +902,19 @@ render.makeGraph = function () {
 		facWidthDimensions.append("line") // add line on left side of text
 		    .attr("class", "dimline")
 		    .attr("x2", 0)
-			.attr("x1", function() {return facadeScaleWidth(length/2) - 50})
+			.attr("x1", function() {return facadeScaleWidth(length/2) - 60})
 			.attr("y1", -4)
 			.attr("y2", -4)
 			.attr("marker-end", "url(#arrowhead)");
 
 		facWidthDimensions.append("line") // add line on right side of text
 		    .attr("class", "dimline")
-		    .attr("x1", function() {return facadeScaleWidth(length/2) + 50})
+		    .attr("x1", function() {return facadeScaleWidth(length/2) + 60})
 			.attr("x2", function() {return facadeScaleWidth(length)})
 			.attr("y1", -4)
 			.attr("y2", -4)
 			.attr("marker-end", "url(#arrowhead)");
 	}
-
 
 
 	function drawVerticalDimensions(height) {
@@ -960,16 +940,100 @@ render.makeGraph = function () {
 		    .attr("x2", 0)
 			.attr("x1", 0)
 			.attr("y2", 0)
-			.attr("y1", function() {return facadeScaleHeight(height/2) - 55})
+			.attr("y1", function() {return facadeScaleHeight(height/2) - 65})
 			.attr("marker-end", "url(#arrowhead)");
 
 		facHeightDimensions.append("line") // add line on right side of text
 		    .attr("class", "dimline")
 		    .attr("x1", 0)
 			.attr("x2", 0)
-		    .attr("y1", function() {return facadeScaleHeight(height/2) + 55})
+		    .attr("y1", function() {return facadeScaleHeight(height/2) + 65})
 			.attr("y2", function() {return facadeScaleHeight(height)})
 			.attr("marker-end", "url(#arrowhead)");
+	}
+
+
+	function windowDimensions(glazingData, glazingWidth, glazingHeight) {
+
+		//get position of left-most window
+		var firstWindow = $(".window:last");
+
+
+		var leftEdgeWindow = parseFloat(firstWindow.attr("x"));
+		var middleWidth = parseFloat(firstWindow.attr("x")) + facadeScaleWidth(glazingWidth/2);
+		var verticalWindowMidpoint = parseFloat(firstWindow.attr("y")) + facadeScaleHeight(glazingHeight/2);
+		var topOfWindow = parseFloat(firstWindow.attr("y"));
+		var bottomOfWindow = parseFloat(firstWindow.attr("y")) + facadeScaleHeight(glazingHeight);
+
+
+		// window height
+		facadeSvg.append("g")
+			.attr("id", "windowHeightDimLabel")
+			.attr("transform", "translate(" + (middleWidth + facMargin.left + 3) + "," + (verticalWindowMidpoint + facMargin.top) + ")")
+			.append("text")
+		    .attr("class", "axislabel")
+		    .attr("text-anchor", "middle")
+		    .attr("transform", "rotate(-90)")
+		    .text("Window Height");
+
+		facadeSvg.append("g")
+			.attr("class", "dimensions")
+			.attr("id", "windowHeightDim")
+			.attr("transform", "translate(" + facMargin.left + "," + ( facMargin.top) + ")");
+
+		var windowHeightDimensions = facadeSvg.selectAll("#windowHeightDim");
+
+		windowHeightDimensions.append("line") // add line to left of text
+		    .attr("class", "dimline")
+		    .attr("x2", middleWidth)
+			.attr("x1", middleWidth)
+			.attr("y1", verticalWindowMidpoint + 50)
+			.attr("y2", bottomOfWindow);
+
+		windowHeightDimensions.append("line") // add line to right of text
+		    .attr("class", "dimline")
+		    .attr("x2", middleWidth)
+			.attr("x1", middleWidth)
+			.attr("y1", topOfWindow)
+			.attr("y2", verticalWindowMidpoint - 50);
+
+
+
+		//window width
+		facadeSvg.append("g")
+			.attr("class", "dimensions")
+			.attr("id", "windowWidthDim")
+			.attr("transform", "translate(" + facMargin.left + "," + ( facMargin.top) + ")");
+
+		var windowWidthDimensions = facadeSvg.selectAll("#windowWidthDim");
+
+		windowWidthDimensions.append("line") // add line to left of text
+		    .attr("class", "dimline")
+		    .attr("x1", leftEdgeWindow)
+			.attr("x2", middleWidth - 25)
+			.attr("y1", verticalWindowMidpoint)
+			.attr("y2", verticalWindowMidpoint);
+
+		windowWidthDimensions.append("line") // add line to right of text
+		    .attr("class", "dimline")
+		    .attr("x1", middleWidth + 25)
+			.attr("x2", leftEdgeWindow + facadeScaleWidth(glazingWidth))
+			.attr("y1", verticalWindowMidpoint)
+			.attr("y2", verticalWindowMidpoint);
+
+		windowWidthDimensions.append("text")
+		    .attr("class", "axislabel")
+		    .attr("text-anchor", "middle")
+		    .attr("x", middleWidth)
+		    .attr("y", verticalWindowMidpoint - 3)
+		    .text("Window");
+
+		windowWidthDimensions.append("text")
+		    .attr("class", "axislabel")
+		    .attr("text-anchor", "middle")
+		    .attr("x", middleWidth)
+		    .attr("y", verticalWindowMidpoint + 12)
+		    .text("Width");
 	}
 
 
