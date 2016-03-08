@@ -1,4 +1,24 @@
+body {
+	margin: 0 20px;
+}
+
+#header {
+	width: 960px;
+	margin: 0 auto;
+}
+
+#wrapper {
+	width: 960px;
+	margin: 0 auto;
+}
+
+
+#header img {
+	width: 100%;
+}
+
 #visual {
+	position: relative;
 	float: left;
 	width: 550px;
 	padding: 0;
@@ -11,13 +31,13 @@
 
 #graph .axislabel {
 	font-family: "museo-sans", sans-serif;
-	font-size: 10px;
-	font-weight: 700;
+	font-size: 12px;
+	font-weight: 300;
 }
 
 #graph .axis text {
     font-family: "museo-sans", sans-serif;
-    font-size: 10px;
+    font-size: 12px;
 }
 
 #graph .axis path,
@@ -25,6 +45,13 @@
     fill: none;
 }
 
+
+.occupantLine {
+	stroke: #000;
+	stroke-width: 2;
+	stroke-linecap: round;
+	stroke-dasharray: 0 4;
+}
 
 #graph .grid line { /* horizontal reference lines */
 	stroke-width: 1;
@@ -53,7 +80,7 @@
 
 #tooltip, #thresholdTooltip {
 	position: absolute;
-	width: 170px;
+	width: 200px;
 	height: auto;
 	padding: 10px;
 	pointer-events: none;
@@ -69,18 +96,17 @@
 #tooltip h1, #thresholdTooltip h1 {
 	font-family: "museo-sans", sans-serif;
 	font-weight: 500;
-	font-size: 10px;
+	font-size: 12px;
 	color: black;
-	padding: 0;
+	padding: 0 0 3px 0;
 	margin: 0;
 }
 
 #tooltip p, #thresholdTooltip p { 
 	margin: 0;
 	font-family: "museo-sans", sans-serif;
-	font-weight: 300;
-	font-style: italic;
-	font-size: 10px;
+	font-weight: 100;
+	font-size: 12px;
 	color: black;
 }
 
@@ -103,21 +129,120 @@
 
 }
 
-#facade .axislabel {
+
+#facadeWrapper h1 {
 	font-family: "museo-sans", sans-serif;
-	font-size: 10px;
+	font-weight: 700;
+	font-size: 12px;
+	text-transform: uppercase;
+	padding: 15px 0 0 50px;
+	margin: 0;
+}
+
+.facadelabel {
+	font-family: "museo-sans", sans-serif;
+	font-size: 12px;
 	font-weight: 300;
-	background-color: #fff;
+	fill: #000;
 }
 
 
 #facade .dimline {
-	stroke-width: .8;
-	stroke: #000;
+	stroke-width: 1;
+	stroke: #777;
 	stroke-linecap: butt;
+	shape-rendering: crispEdges;
 }
 
 
+
+
+
+#windowHeightDimLabel, #windowHeightDim, #windowWidthDim, #sillHeightDim, #sillHeightDimLabelTop, #sillHeightDimLabelBottom, #windowSepDim {
+	display: none;
+}
+
+
+.blueGradientStop1 {
+	stop-color: #E1F0FF;
+}
+
+.blueGradientStop2 {
+	stop-color: #C2E0FF;
+}
+
+#sliderWrapper {
+	width: 500px;
+	float: right;
+}
+
+#sliderWrapper label {
+	font-family: "museo-sans", sans-serif;
+	font-size: 12px;
+	font-weight: 300;
+	background-color: #fff;
+	display: inline;
+	float: right;
+	margin-right: 10px;
+}
+
+#sliderWrapper output {
+	position: relative;
+	width: 360px; 
+  	height: 500px;
+	background-image: url(../../static/images/slider.png);
+	background-size: 360px 500px;
+	display: inline-block;
+	bottom: 510px; /* imageHeight + facMargin.bottom*2*/
+	left: 320px; /* = 500px - imageWidth/2 */
+	opacity: .8;
+}
+
+
+
+#occupantDist {
+	width: 250px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	float: right;
+}
+
+
+#occupantDist::-moz-range-track {
+	-moz-appearance: none;
+	height: 2px;
+	background-color: #d5d5d5;
+	margin-right: 3px;
+	vertical-align:middle;
+}
+#occupantDist::-webkit-slider-runnable-track {
+	-webkit-appearance: none;
+	height: 2px;
+	background-color: #d5d5d5;
+	margin-right: 3px;
+	vertical-align:middle;
+}
+
+#occupantDist::-moz-range-thumb {
+	-moz-appearance: none;
+    background-color: #FFF;
+    border: 3px solid rgb(150,150,150);
+    border-radius: 6.5px;
+    height: 7px;
+    width: 7px;
+    vertical-align:middle;
+}
+
+#occupantDist::-webkit-slider-thumb {
+	-webkit-appearance: none;
+    background-color: #FFF;
+    border: 3px solid rgb(150,150,150);
+    border-radius: 6.5px;
+    height: 7px;
+    width: 7px;
+    vertical-align:middle;
+}
 
 
 
@@ -131,6 +256,13 @@
 	font-family: "museo-sans", sans-serif;
 }
 
+#inputs h1 {
+	font-weight: 700px;
+	font-size: 23px;
+	line-height: 23px;
+}
+
+
 #inputs .inputgroup {
 	border: none;
 	padding: 0 0 10px 0;
@@ -143,7 +275,7 @@
 	margin-bottom: 20px;
 }
 
-#inputs legend, #inputs h1 {
+#inputs legend {
 	font-weight: 700;
 	font-size: 12px;
 	text-transform: uppercase;
@@ -182,8 +314,9 @@
 
 	border-style: solid;
 	border-width: 1px;
-	border-color: #b9b9b9;
+	border-color: #777;
 
+	font-family: "museo-sans", sans-serif;
 	font-weight: 300;
 	font-size: 10px;
 	text-align: right;
@@ -195,31 +328,32 @@
 	padding: 3px 10px 3px 0;
 	float: left;
 	clear: left;
-	width: 150px;
+	width: 210px;
 	text-align: left;
 	display: block;
 
-	color: #b9b9b9;
+	color: #777;
 	font-weight: 300;
 	font-size: 12px;
 }
 
 #inputs label.indent {
-	padding-left: 48px;
-	width: 102px;
+	padding-left: 20px;
+	width: 190px;
 }
 
 
 #inputs label.inactive {
-	color: #d5d5d5;
+	color: #b9b9b9;
 	font-style: italic;
 	font-weight: 100;
 }
 
 #inputs input.inactive {
-	border-color: #d5d5d5;
+	border-color: #b9b9b9;
 	color: #d5d5d5;
 	font-style: italic;
+	cursor: default;
 }
 
 #inputs label input.customCheck {
@@ -232,6 +366,12 @@
 
 
 
+.dimHover {
+	width: 12px;
+	height: 12px;
+	text-align: center;
+	line-height: 12px !important;
+}
 
 
 
@@ -260,6 +400,25 @@
 
 @font-face {
 	font-family: "museo-sans";
-	src: url('../fonts/museosans.otf');
+	font-weight: 100;
+	src: url('../fonts/MuseoSans-100.otf');
+}
+
+@font-face {
+	font-family: "museo-sans";
+	font-weight: 300;
+	src: url('../fonts/MuseoSans-300.otf');
+}
+
+@font-face {
+	font-family: "museo-sans";
+	font-weight: 700;
+	src: url('../fonts/MuseoSans_0.otf');
+}
+
+@font-face {
+	font-family: "museo-sans";
+	font-weight: 900;
+	src: url('../fonts/MuseoSans_1.otf');
 }
 

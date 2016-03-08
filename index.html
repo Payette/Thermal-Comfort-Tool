@@ -2,7 +2,9 @@
 <html lang = "en">
 
 <head>
-	<link rel="stylesheet" href="static/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="static/css/styles.css" media="screen"/>
+	<link rel="stylesheet" type="text/css" href="static/css/bigfoot-default.css" media="screen"/>
+
 	<meta charset = "UTF-8" />
 
 	<title>Evaluating Thermal Discomfort</title>
@@ -13,11 +15,27 @@
 	<!-- CDN Jquery UI -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 
+	<script type="text/javascript" charset="utf-8" src="static/js/bigfoot.min.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/d3/d3.v3.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/geo.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/PPDCalc.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/UValCalc.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/util.js"></script>
+	<script type="text/javascript" charset="utf-8" src="static/js/urlobject.js"></script>
+	
+
+	<!-- Footnote Options -->
+	<script type="text/javascript">
+		$.bigfoot({
+        	activateOnHover: true,
+            deleteOnUnhover: true,
+			buttonMarkup: "<div class=\"bigfoot-footnote__container\"> <button class=\"bigfoot-footnote__button\" rel=\"footnote\" id=\"{{SUP:data-footnote-backlink-ref}}\" data-footnote-number=\"{{FOOTNOTENUM}}\" data-footnote-identifier=\"{{FOOTNOTEID}}\" alt=\"See Footnote {{FOOTNOTENUM}}\" data-bigfoot-footnote=\"{{FOOTNOTECONTENT}}\">?</button></div>"
+
+        });
+
+
+	</script>
+
 	<!-- Make Chart -->
 	<script type="text/javascript" src="static/js/render.js"></script> 
 
@@ -26,6 +44,9 @@
 
 
 <body>
+
+	<div id="header"><img src="static/images/header.png"></div>
+	<div id="wrapper">
 
 	<div id="visual">
 
@@ -42,7 +63,14 @@
 		</div>
 
 		<div id="facadeWrapper">
+			<h1>Fa&ccedil;ade Representation</h1>
 		</div>
+
+		<div id="sliderWrapper">
+			<input type="range" name="occupantDist" id="occupantDist" min="0" max="20" value="0"/>
+			<output for="occupantDist" id="occupantImage"></output>
+			<label for="occupantDist">Occupant Position</label>
+	 	</div>
 
 	</div>
 
@@ -50,56 +78,57 @@
 
 	<div id="inputs">
 
+		<h1>Glazing and Comfort Analysis Tool</h1>
+
+
 		<form id="form">		
 		<fieldset class="inputgroup">
-			<legend class="heading">Facade Geometry</legend>
+			<legend class="heading">Fa&ccedil;ade Geometry</legend>
 			<hr>
-			<label for="ceiling">Ceiling Height:</label>
+
+			<label for="ceiling">Ceiling Height (ft)</label>
 			<input type="text" name="ceiling" id="ceiling" value="12"><br>
 
-			<label for="wallWidth">Wall Length:</label>
+			<label for="wallWidth">Wall Length (ft)</label>
 			<input type="text" name="wallWidth" id="wallWidth" value="20"><br>
 			
-			<label for="height">Window Height:</label>
+			<label for="height">Window Height (ft)<sup class="dimHover" id="windHeightButt">?</sup></label>
 			<input type="text" name="height" id="windowHeight" value="8"><br>
 
 
-			<label for="">Set Glazing Amount By:</label><br>
+			<label for="">Set Glazing Amount By</label><br>
 
-			
-			<label for="width" id="windowWidthLabel"><input type="checkbox" name="windowWidthCheck" id="windowWidthCheck" class="customCheck" checked>Window Width:</label>
+			<label for="width" id="windowWidthLabel"><input type="checkbox" name="windowWidthCheck" id="windowWidthCheck" class="customCheck" checked>Window Width (ft)<sup class="dimHover" id="windWidthButt">?</sup></label>
 			<input type="text" name="width" id="windowWidth" value="4"><br>
-
-
 			
-			<label for="glazing" class="inactive" id="glazingLabel"><input type="checkbox" name="glazingRatioCheck" class="customCheck" id="glazingRatioCheck">Glazing Ratio:</label>
+			<label for="glazing" class="inactive" id="glazingLabel"><input type="checkbox" name="glazingRatioCheck" class="customCheck" id="glazingRatioCheck">Glazing Ratio (%)</label>
 			<input type="text" name="glazing" class="inactive" id="glazing" value="40"><br>
 
-			<label for="sill">Sill Height:</label>
+
+			<label for="sill">Sill Height (ft)<sup class="dimHover" id="sillHeightButt">?</sup></label>
 			<input type="text" name="sill" id="sill" value="3"><br>
 
-			<label for="sill">Window Separation:</label>
+			<label for="distWindow">Window Separation (ft)<sup class="dimHover" id="windSepButt">?</sup></label>
 			<input type="text" name="distWindow" id="distWindow" value="6.67"><br>
-
-			<label for="occupantDist">Occupant Distance to Wall Center (ft):</label>
-			<input type="text" name="occupantDist" id="occupantDist" value="0"><br>
 		</fieldset>
 
 
 		<fieldset class="inputgroup">
 			<legend class="heading">Facade Performance</legend>
 			<hr>
-			<label for="uvalue">Window U-Value:</label>
-			<input type="text" name="uvalue" id="uvalue" value="0.25">
-			<input id="submit" type="submit" value="AutoCal"/><br>
+			<label for="uvalue">Window U-Value (Btu/hr*ft&sup2;*&deg;F)<sup id="fnref:1"><a href="#fn:1" rel="footnote">?</a></sup></label>
+			<input type="text" name="uvalue" id="uvalue" value="0.25"><br>
 
-			<label for="lowECheck">Interior Low-E Coating:</label>
+			<label for="submit" id="submitLabel" class="inactive indent">Auto-calculate U-Value<sup id="fnref:2"><a href="#fn:2" rel="footnote">?</a></sup></label>
+			<input id="submit" class="inactive" name"submit" type="submit" value="try it!"/><br>
+
+			<label for="lowECheck">Room-side Low-E Coating<sup id="fnref:3"><a href="#fn:3" rel="footnote">?</a></sup></label>
 			<input type="checkbox" name="lowECheck" id="lowECheck"><br>
 
-			<label for="lowE" class="inactive indent" id="lowELabel">Emissivity:</label>
+			<label for="lowE" class="inactive indent" id="lowELabel">Emissivity<sup id="fnref:4"><a href="#fn:4" rel="footnote">?</a></sup></label>
 			<input type="text" name="lowE" id="lowE" value="" class="inactive"><br>
 
-			<label for="rvalue">Wall R-Value:</label>
+			<label for="rvalue">Wall R-Value (Btu/hr*ft&sup2;*&deg;F)<sup id="fnref:5"><a href="#fn:5" rel="footnote">?</a></sup></label>
 			<input type="text" name="rvalue" id="rvalue" value="20"><br>
 
 		</fieldset>
@@ -108,12 +137,12 @@
 			<legend>Occupancy Thresholds</legend>
 			<hr>
 
-			<label for="ppd">Percentage of People Disatisfied Due to Cold:</label>
+			<label for="ppd">Dissatisfaction from Cold (%)<sup id="fnref:6"><a href="#fn:6" rel="footnote">?</a></sup></label>
 			<input type="text" name="ppd" id="ppd" value="10"><br>
 
-			<label for="distFromFacade">Distance From Facade:</label>
+			<label for="distFromFacade">Distance From Fa&ccedil;ade (ft)</label>
 			<input type="text" name="distFromFacade" id="distFromFacade" value="3"><br>
-			<br>
+
 		</fieldset>
 
 
@@ -122,13 +151,13 @@
 			<legend class="heading">Other</legend>
 			<hr>
 
-			<label for="outdoortemp">Outdoor Temperature:</label>
+			<label for="outdoortemp">Outdoor Temperature (&deg;F)</label>
 			<input type="text" name="outdoortemp" id="outdoortemp" value="25"><br>
 
-			<label for="airtemp">Indoor Ambient Temperature:</label>
+			<label for="airtemp">Indoor Ambient Temperature (&deg;F)<sup id="fnref:7"><a href="#fn:7" rel="footnote">?</a></sup></label>
 			<input type="text" name="airtemp" id="airtemp" value="72"><br>
 
-			<label for="humidity">Relative Humidity (%):</label>
+			<label for="humidity">Relative Humidity (%)<sup id="fnref:8"><a href="#fn:8" rel="footnote">?</a></sup></label>
 			<input type="text" name="humidity" id="humidity" value="20"><br>
 		</fieldset>
 
@@ -137,25 +166,149 @@
 			<legend class="heading">Advanced Options</legend>
 			<hr>
 			
-			<label for="radiant">Radiant Floor:</label>
+			<label for="radiant">Radiant Floor<sup id="fnref:9"><a href="#fn:9" rel="footnote">?</a></sup></label>
 			<input type="checkbox" name="radiant" id="radiant"><br>
 
-			<label for="airspeed">Air Speed (fpm):</label>
+			<label for="airspeed">Air Speed (fpm)<sup id="fnref:10"><a href="#fn:10" rel="footnote">?</a></sup></label>
 			<input type="text" name="airspeed" id="airspeed" value="10"><br>
 			
-			<label for="clothing">Clothing (clo):</label>
+			<label for="clothing">Clothing (clo)<sup id="fnref:11"><a href="#fn:11" rel="footnote">?</a></sup></label>
 			<input type="text" name="clothing" id="clothing" value="0.8"><br>
 
-			<label for="metabolid">Metabolic Rate (met):</label>
+			<label for="metabolic">Metabolic Rate (met)<sup id="fnref:12"><a href="#fn:12" rel="footnote">?</a></sup></label>
 			<input type="text" name="metabolic" id="metabolic" value="1.2"><br>
 		</fieldset>
 		</form>
 	</div>
 
-	
- 
+	</div>
+
+	<div class="footnotes">
+	<ol>
+	    <li class="footnote" id="fn:1"> <!-- u value -->
+	        <p>Some text about this thing<a href="#fnref:1" title="return to article"> ↩</a></p>
+	    </li>
+	    <li class="footnote" id="fn:2"> <!-- auto calculate u value -->
+	        <p>Some text about this thing<a href="#fnref:2" title="return to article"> ↩</a></p>
+	    </li>
+	    <li class="footnote" id="fn:3"> <!-- room side low e -->
+	        <p>Some text about this thing<a href="#fnref:3" title="return to article"> ↩</a></p>
+	     </li>
+	     <li class="footnote" id="fn:4"><!-- emissivity -->
+	        <p>Some text about this thing<a href="#fnref:4" title="return to article"> ↩</a></p>
+	    </li>
+	    <li class="footnote" id="fn:5"><!-- r value -->
+	        <p>Some text about this thing<a href="#fnref:5" title="return to article"> ↩</a></p>
+	    </li>
+	    <li class="footnote" id="fn:6"> <!-- PPD -->
+	        <p>Some text about this thing<a href="#fnref:6" title="return to article"> ↩</a></p>
+	    </li>
+	    <li class="footnote" id="fn:7"> <!-- indoor ambient temp -->
+	        <p>Some text about this thing<a href="#fnref:7" title="return to article"> ↩</a></p>
+	    </li>
+	    <li class="footnote" id="fn:8"> <!-- relative humidity -->
+	        <p>Some text about this thing<a href="#fnref:8" title="return to article"> ↩</a></p>
+	    </li>
+	    <li class="footnote" id="fn:9"> <!-- radiant floor -->
+	        <p>Some text about this thing<a href="#fnref:9" title="return to article"> ↩</a></p>
+	    </li>
+	    <li class="footnote" id="fn:10"> <!-- air speed -->
+	        <p>Some text about this thing<a href="#fnref:10" title="return to article"> ↩</a></p>
+	    </li>
+	    <li class="footnote" id="fn:11"> <!-- clothing -->
+	        <p>Some text about this thing<a href="#fnref:11" title="return to article"> ↩</a></p>
+	    </li>
+	    <li class="footnote" id="fn:12"> <!-- metabolic rate -->
+	        <p>Some text about this thing<a href="#fnref:12" title="return to article"> ↩</a></p>
+	    </li>
+	</ol>
+	</div>
+
+
+	<!-- Assign any parameters from the URL -->
+	<script type="text/javascript"> 
+
+		var thisURL = location.href;
+		//call URL parser function
+		var urlParameters = urlObject({'url':thisURL}).parameters;
+		console.log(urlParameters);
+
+		//fill form with parameters, but only if values are provided in URL
+		if (typeof urlParameters.ceiling != 'undefined') {
+			$("#ceiling").val(urlParameters.ceiling);
+		}
+		if (typeof urlParameters.wallWidth != 'undefined') {
+			$("#wallWidth").val(urlParameters.wallWidth);
+		}
+		if (typeof urlParameters.windowHeight != 'undefined') {
+			$("#windowHeight").val(urlParameters.windowHeight);
+		}
+		if (typeof urlParameters.windowWidth != 'undefined') {
+			$("#windowWidth").val(urlParameters.windowWidth);
+			$("#windowWidth").removeClass("inactive");
+			$("#windowWidthLabel").removeClass("inactive");
+			$("#glazing").addClass("inactive");
+			$("#glazingLabel").addClass("inactive");
+			$("#glazingRatioCheck").removeAttr("checked");
+		}
+		if (typeof urlParameters.glazingRatio != 'undefined') {
+			$("#glazing").val(urlParameters.glazingRatio);
+			$("#windowWidth").addClass("inactive");
+			$("#windowWidthLabel").addClass("inactive");
+			$("#glazing").removeClass("inactive");
+			$("#glazingLabel").removeClass("inactive");
+
+			$("#glazingRatioCheck").attr("checked", "checked");
+		}
+		if (typeof urlParameters.sillHeight != 'undefined') {
+			$("#sill").val(urlParameters.sillHeight);
+		}
+		if (typeof urlParameters.windowSeparation != 'undefined') {
+			$("#distWindow").val(urlParameters.windowSeparation);
+		}
+		if (typeof urlParameters.uValue != 'undefined') {
+			$("#uvalue").val(urlParameters.uValue);
+		}
+		if (typeof urlParameters.lowE != 'undefined') {
+			$("#lowE").val(urlParameters.lowE);
+			$("#lowE").removeClass("inactive");
+			$("#lowELabel").removeClass("inactive");
+		}
+		if (typeof urlParameters.rValue != 'undefined') {
+			$("#rvalue").val(urlParameters.rValue);
+		}
+		if (typeof urlParameters.ppd != 'undefined') {
+			$("#ppd").val(urlParameters.ppd);
+		}
+		if (typeof urlParameters.distFromFacade != 'undefined') {
+			$("#distFromFacade").val(urlParameters.distFromFacade);
+		}
+		if (typeof urlParameters.outdoorTemp != 'undefined') {
+			$("#outdoortemp").val(urlParameters.outdoorTemp);
+		}
+		if (typeof urlParameters.indoortemp != 'undefined') {
+			$("#airtemp").val(urlParameters.indoortemp);
+		}
+		if (typeof urlParameters.humidity != 'undefined') {
+			$("#humidity").val(urlParameters.humidity);
+		}
+		if (typeof urlParameters.radiant == 'yes') {
+			$("#radiant").attr("checked", "checked");;
+		}
+		if (typeof urlParameters.clothing != 'undefined') {
+			$("#clothing").val(urlParameters.clothing);
+		}
+		if (typeof urlParameters.metabolic != 'undefined') {
+			$("#metabolic").val(urlParameters.metabolic);
+		}
+
+
+
+	</script>
+
  	<!-- Compute Data -->
 	<script type="text/javascript" src="static/js/script.js"></script> 
+
 
 
 
