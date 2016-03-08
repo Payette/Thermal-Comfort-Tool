@@ -245,7 +245,7 @@ render.makeGraph = function () {
 
 
 	/* ------ SET UP FACADE VARIABLES AND DATA FUNCTIONS ------ */
-	var facMargin = {top: 25, right: 0, bottom: 5, left: 50};
+	var facMargin = {top: 25, right: 3, bottom: 5, left: 50};
 	
 	// wall coordinates
 	var wallPoints = [{
@@ -348,6 +348,22 @@ render.makeGraph = function () {
 		$("#windowWidthDim").fadeOut("fast");
 	})
 
+	$("#sillHeightButt").on("mouseover", function() {
+		$("#sillHeightDim, #sillHeightDimLabelTop, #sillHeightDimLabelBottom").fadeIn("fast");
+	})
+	$("#sillHeightButt").on("mouseout", function() {
+		$("#sillHeightDim, #sillHeightDimLabelTop, #sillHeightDimLabelBottom").fadeOut("fast");
+	})
+
+	$("#windSepButt").on("mouseover", function() {
+		$("#windowSepDim").fadeIn("fast");
+	})
+	$("#windSepButt").on("mouseout", function() {
+		$("#windowSepDim").fadeOut("fast");
+	})
+
+
+	
 
 
 
@@ -361,17 +377,20 @@ render.makeGraph = function () {
 	var defs = facadeSvg.append("defs");
 
 	//arrowhead marker
-	defs.append("marker")
+    var arrow = defs.append("marker")
 	    .attr("id", "arrowhead")
-	    .attr("refX", 6)
-	    .attr("refY", 2)
-	    .attr("viewBox", "0 0 6 6")
-	    .attr("markerWidth", 8)
-	    .attr("markerHeight", 8)
-	    .attr("orient", "auto")
-	    .append("path")
-	    .attr("fill", "rgb(150,150,150)")
-        .attr("d", "M 0,0 V 4 L6,2 Z"); //this is actual shape for arrowhead
+	    .attr("refX", 3.5)
+	    .attr("refY", 3.5)
+	    .attr("markerWidth", 6)
+	    .attr("markerHeight", 6)
+	    .attr("orient", "auto");
+	arrow.append("line")
+	    .attr("stroke", "#777")
+        .attr("x1", "0")
+        .attr("x2", "6")
+        .attr("y1", "0")
+        .attr("y2", "6");
+
 
     //gradient fill
     var blueGradient = defs.append("linearGradient")
@@ -380,11 +399,9 @@ render.makeGraph = function () {
         .attr( 'x2', '0' )
         .attr( 'y1', '0' )
         .attr( 'y2', '1' ); // makes vertical gradient
-
     blueGradient.append("stop")
     	.attr("class", "blueGradientStop1")
     	.attr("offset", "60%");
-
     blueGradient.append("stop")
     	.attr("class", "blueGradientStop2")
     	.attr("offset", "100%")
@@ -730,7 +747,7 @@ render.makeGraph = function () {
 
 
 		// Update dimensions
-		facadeSvg.selectAll("#facadeWidth, #facadeHeightDim, #facadeHeightDimLabel, #windowHeightDimLabel, #windowHeightDim").remove();
+		facadeSvg.selectAll("#facadeWidth, #facadeHeightDim, #facadeHeightDimLabel, #windowHeightDimLabel, #windowHeightDim, #sillHeightDim, #sillHeightDimLabelTop, #sillHeightDimLabelBottom, #windowSepDim").remove();
 		drawHorziontalDimensions(wallPoints[0].wallWidth);
 		drawVerticalDimensions(wallPoints[0].wallHeight);
 		windowDimensions(glzData, newGlzWidth, newGlzHeight);
@@ -893,7 +910,7 @@ render.makeGraph = function () {
 		var facWidthDimensions = facadeSvg.selectAll("#facadeWidth");
 
 		facWidthDimensions.append("text") // add width label
-			.attr("class", "axislabel")
+			.attr("class", "facadelabel")
 			.attr("text-anchor", "middle")
 		    .attr("x", function() {return facadeScaleWidth(length/2)})
 		    .attr("y", 0)
@@ -923,7 +940,7 @@ render.makeGraph = function () {
 			.attr("id", "facadeHeightDimLabel")
 			.attr("transform", "translate(" + facMargin.left*0.75 + "," + (facHeight/2 + facMargin.top) + ")")
 			.append("text")
-		    .attr("class", "axislabel")
+		    .attr("class", "facadelabel")
 		    .attr("text-anchor", "middle")
 		    .attr("transform", "rotate(-90)")
 		    .text("Ceiling Height: " + height + " ft");
@@ -964,14 +981,18 @@ render.makeGraph = function () {
 		var verticalWindowMidpoint = parseFloat(firstWindow.attr("y")) + facadeScaleHeight(glazingHeight/2);
 		var topOfWindow = parseFloat(firstWindow.attr("y"));
 		var bottomOfWindow = parseFloat(firstWindow.attr("y")) + facadeScaleHeight(glazingHeight);
+		var sillHeightPixels = facadeScaleHeight(glazingData[0][0][2]);
 
+		var windowSeparationPixels = facadeScaleWidth(glazingData[0][0][0]) - facadeScaleWidth(glazingData[1][0][0]);
+
+		console.log(windowSeparationPixels);
 
 		// window height
 		facadeSvg.append("g")
 			.attr("id", "windowHeightDimLabel")
 			.attr("transform", "translate(" + (middleWidth + facMargin.left + 3) + "," + (verticalWindowMidpoint + facMargin.top) + ")")
 			.append("text")
-		    .attr("class", "axislabel")
+		    .attr("class", "facadelabel")
 		    .attr("text-anchor", "middle")
 		    .attr("transform", "rotate(-90)")
 		    .text("Window Height");
@@ -988,14 +1009,16 @@ render.makeGraph = function () {
 		    .attr("x2", middleWidth)
 			.attr("x1", middleWidth)
 			.attr("y1", verticalWindowMidpoint + 50)
-			.attr("y2", bottomOfWindow);
+			.attr("y2", bottomOfWindow)
+			.attr("marker-end", "url(#arrowhead)");
 
 		windowHeightDimensions.append("line") // add line to right of text
 		    .attr("class", "dimline")
 		    .attr("x2", middleWidth)
 			.attr("x1", middleWidth)
 			.attr("y1", topOfWindow)
-			.attr("y2", verticalWindowMidpoint - 50);
+			.attr("y2", verticalWindowMidpoint - 50)
+			.attr("marker-start", "url(#arrowhead)");
 
 
 
@@ -1012,29 +1035,112 @@ render.makeGraph = function () {
 		    .attr("x1", leftEdgeWindow)
 			.attr("x2", middleWidth - 25)
 			.attr("y1", verticalWindowMidpoint)
-			.attr("y2", verticalWindowMidpoint);
+			.attr("y2", verticalWindowMidpoint)
+			.attr("marker-start", "url(#arrowhead)");
 
 		windowWidthDimensions.append("line") // add line to right of text
 		    .attr("class", "dimline")
 		    .attr("x1", middleWidth + 25)
 			.attr("x2", leftEdgeWindow + facadeScaleWidth(glazingWidth))
 			.attr("y1", verticalWindowMidpoint)
-			.attr("y2", verticalWindowMidpoint);
+			.attr("y2", verticalWindowMidpoint)
+			.attr("marker-end", "url(#arrowhead)");
 
 		windowWidthDimensions.append("text")
-		    .attr("class", "axislabel")
+		    .attr("class", "facadelabel")
 		    .attr("text-anchor", "middle")
 		    .attr("x", middleWidth)
 		    .attr("y", verticalWindowMidpoint - 3)
 		    .text("Window");
 
 		windowWidthDimensions.append("text")
-		    .attr("class", "axislabel")
+		    .attr("class", "facadelabel")
 		    .attr("text-anchor", "middle")
 		    .attr("x", middleWidth)
 		    .attr("y", verticalWindowMidpoint + 12)
 		    .text("Width");
+
+
+		//sill height
+		facadeSvg.append("g")
+			.attr("id", "sillHeightDimLabelTop")
+			.attr("transform", "translate(" + (middleWidth + facMargin.left - 4) + "," + (bottomOfWindow + sillHeightPixels/2 + facMargin.top) + ")")
+			.append("text")
+		    .attr("class", "facadelabel")
+		    .attr("text-anchor", "middle")
+		    .attr("transform", "rotate(-90)")
+		    .text("Sill");
+
+		facadeSvg.append("g")
+			.attr("id", "sillHeightDimLabelBottom")
+			.attr("transform", "translate(" + (middleWidth + facMargin.left + 12) + "," + (bottomOfWindow + sillHeightPixels/2 + facMargin.top) + ")")
+			.append("text")
+		    .attr("class", "facadelabel")
+		    .attr("text-anchor", "middle")
+		    .attr("transform", "rotate(-90)")
+		    .text("Height");
+
+		facadeSvg.append("g")
+			.attr("class", "dimensions")
+			.attr("id", "sillHeightDim")
+			.attr("transform", "translate(" + facMargin.left + "," + ( facMargin.top) + ")");
+
+		var sillHeightDimensions = facadeSvg.selectAll("#sillHeightDim");
+
+		sillHeightDimensions.append("line") // add line to left of text
+		    .attr("class", "dimline")
+		    .attr("x2", middleWidth)
+			.attr("x1", middleWidth)
+			.attr("y1", bottomOfWindow + sillHeightPixels/2 + 10)
+			.attr("y2", bottomOfWindow + sillHeightPixels)
+			.attr("marker-end", "url(#arrowhead)");
+
+		sillHeightDimensions.append("line") // add line to right of text
+		    .attr("class", "dimline")
+		    .attr("x2", middleWidth)
+			.attr("x1", middleWidth)
+			.attr("y1", bottomOfWindow)
+			.attr("y2", bottomOfWindow + sillHeightPixels/2 - 10)
+			.attr("marker-start", "url(#arrowhead)");
+
+
+
+		//window separation
+		facadeSvg.append("g")
+			.attr("class", "dimensions")
+			.attr("id", "windowSepDim")
+			.attr("transform", "translate(" + facMargin.left + "," + ( facMargin.top) + ")");
+
+		var windowSepDimensions = facadeSvg.selectAll("#windowSepDim");
+
+
+		windowSepDimensions.append("line") // add line to left of text
+		    .attr("class", "dimline")
+		    .attr("x1", middleWidth)
+			.attr("x2", middleWidth + windowSeparationPixels/2 - 60)
+			.attr("y1", verticalWindowMidpoint)
+			.attr("y2", verticalWindowMidpoint)
+			.attr("marker-start", "url(#arrowhead)");
+
+		windowSepDimensions.append("line") // add line to right of text
+		    .attr("class", "dimline")
+		    .attr("x1", middleWidth + windowSeparationPixels/2 + 60)
+			.attr("x2", middleWidth + windowSeparationPixels)
+			.attr("y1", verticalWindowMidpoint)
+			.attr("y2", verticalWindowMidpoint)
+			.attr("marker-end", "url(#arrowhead)");
+
+		
+
+		windowSepDimensions.append("text")
+		    .attr("class", "facadelabel")
+		    .attr("text-anchor", "middle")
+		    .attr("x", middleWidth + windowSeparationPixels/2)
+		    .attr("y", verticalWindowMidpoint + 4)
+		    .text("Window Separation");
+
 	}
+
 
 
 
