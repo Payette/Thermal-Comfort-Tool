@@ -21,17 +21,19 @@
 	<script type="text/javascript" charset="utf-8" src="static/js/PPDCalc.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/UValCalc.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/util.js"></script>
+	<script type="text/javascript" charset="utf-8" src="static/js/urlobject.js"></script>
+	
 
 	<!-- Footnote Options -->
 	<script type="text/javascript">
-		$.bigfoot(
-        {
+		$.bigfoot({
         	activateOnHover: true,
             deleteOnUnhover: true,
 			buttonMarkup: "<div class=\"bigfoot-footnote__container\"> <button class=\"bigfoot-footnote__button\" rel=\"footnote\" id=\"{{SUP:data-footnote-backlink-ref}}\" data-footnote-number=\"{{FOOTNOTENUM}}\" data-footnote-identifier=\"{{FOOTNOTEID}}\" alt=\"See Footnote {{FOOTNOTENUM}}\" data-bigfoot-footnote=\"{{FOOTNOTECONTENT}}\">?</button></div>"
 
-        }
-    );
+        });
+
+
 	</script>
 
 	<!-- Make Chart -->
@@ -106,7 +108,7 @@
 			<label for="sill">Sill Height (ft)<sup class="dimHover" id="sillHeightButt">?</sup></label>
 			<input type="text" name="sill" id="sill" value="3"><br>
 
-			<label for="sill">Window Separation (ft)<sup class="dimHover" id="windSepButt">?</sup></label>
+			<label for="distWindow">Window Separation (ft)<sup class="dimHover" id="windSepButt">?</sup></label>
 			<input type="text" name="distWindow" id="distWindow" value="6.67"><br>
 		</fieldset>
 
@@ -118,7 +120,7 @@
 			<input type="text" name="uvalue" id="uvalue" value="0.25"><br>
 
 			<label for="submit" id="submitLabel" class="inactive indent">Auto-calculate U-Value<sup id="fnref:2"><a href="#fn:2" rel="footnote">?</a></sup></label>
-			<input id="submit" name"submit" type="submit" value="try it!"/><br>
+			<input id="submit" class="inactive" name"submit" type="submit" value="try it!"/><br>
 
 			<label for="lowECheck">Room-side Low-E Coating<sup id="fnref:3"><a href="#fn:3" rel="footnote">?</a></sup></label>
 			<input type="checkbox" name="lowECheck" id="lowECheck"><br>
@@ -173,7 +175,7 @@
 			<label for="clothing">Clothing (clo)<sup id="fnref:11"><a href="#fn:11" rel="footnote">?</a></sup></label>
 			<input type="text" name="clothing" id="clothing" value="0.8"><br>
 
-			<label for="metabolid">Metabolic Rate (met)<sup id="fnref:12"><a href="#fn:12" rel="footnote">?</a></sup></label>
+			<label for="metabolic">Metabolic Rate (met)<sup id="fnref:12"><a href="#fn:12" rel="footnote">?</a></sup></label>
 			<input type="text" name="metabolic" id="metabolic" value="1.2"><br>
 		</fieldset>
 		</form>
@@ -222,6 +224,87 @@
 	</ol>
 	</div>
 
+
+	<!-- Assign any parameters from the URL -->
+	<script type="text/javascript"> 
+
+		var thisURL = location.href;
+		//call URL parser function
+		var urlParameters = urlObject({'url':thisURL}).parameters;
+		console.log(urlParameters);
+
+		//fill form with parameters, but only if values are provided in URL
+		if (typeof urlParameters.ceiling != 'undefined') {
+			$("#ceiling").val(urlParameters.ceiling);
+		}
+		if (typeof urlParameters.wallWidth != 'undefined') {
+			$("#wallWidth").val(urlParameters.wallWidth);
+		}
+		if (typeof urlParameters.windowHeight != 'undefined') {
+			$("#windowHeight").val(urlParameters.windowHeight);
+		}
+		if (typeof urlParameters.windowWidth != 'undefined') {
+			$("#windowWidth").val(urlParameters.windowWidth);
+			$("#windowWidth").removeClass("inactive");
+			$("#windowWidthLabel").removeClass("inactive");
+			$("#glazing").addClass("inactive");
+			$("#glazingLabel").addClass("inactive");
+			$("#glazingRatioCheck").removeAttr("checked");
+		}
+		if (typeof urlParameters.glazingRatio != 'undefined') {
+			$("#glazing").val(urlParameters.glazingRatio);
+			$("#windowWidth").addClass("inactive");
+			$("#windowWidthLabel").addClass("inactive");
+			$("#glazing").removeClass("inactive");
+			$("#glazingLabel").removeClass("inactive");
+
+			$("#glazingRatioCheck").attr("checked", "checked");
+		}
+		if (typeof urlParameters.sillHeight != 'undefined') {
+			$("#sill").val(urlParameters.sillHeight);
+		}
+		if (typeof urlParameters.windowSeparation != 'undefined') {
+			$("#distWindow").val(urlParameters.windowSeparation);
+		}
+		if (typeof urlParameters.uValue != 'undefined') {
+			$("#uvalue").val(urlParameters.uValue);
+		}
+		if (typeof urlParameters.lowE != 'undefined') {
+			$("#lowE").val(urlParameters.lowE);
+			$("#lowE").removeClass("inactive");
+			$("#lowELabel").removeClass("inactive");
+		}
+		if (typeof urlParameters.rValue != 'undefined') {
+			$("#rvalue").val(urlParameters.rValue);
+		}
+		if (typeof urlParameters.ppd != 'undefined') {
+			$("#ppd").val(urlParameters.ppd);
+		}
+		if (typeof urlParameters.distFromFacade != 'undefined') {
+			$("#distFromFacade").val(urlParameters.distFromFacade);
+		}
+		if (typeof urlParameters.outdoorTemp != 'undefined') {
+			$("#outdoortemp").val(urlParameters.outdoorTemp);
+		}
+		if (typeof urlParameters.indoortemp != 'undefined') {
+			$("#airtemp").val(urlParameters.indoortemp);
+		}
+		if (typeof urlParameters.humidity != 'undefined') {
+			$("#humidity").val(urlParameters.humidity);
+		}
+		if (typeof urlParameters.radiant == 'yes') {
+			$("#radiant").attr("checked", "checked");;
+		}
+		if (typeof urlParameters.clothing != 'undefined') {
+			$("#clothing").val(urlParameters.clothing);
+		}
+		if (typeof urlParameters.metabolic != 'undefined') {
+			$("#metabolic").val(urlParameters.metabolic);
+		}
+
+
+
+	</script>
 
  	<!-- Compute Data -->
 	<script type="text/javascript" src="static/js/script.js"></script> 

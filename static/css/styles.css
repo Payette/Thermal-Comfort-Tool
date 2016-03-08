@@ -353,6 +353,7 @@ body {
 	border-color: #b9b9b9;
 	color: #d5d5d5;
 	font-style: italic;
+	cursor: default;
 }
 
 #inputs label input.customCheck {
@@ -360,6 +361,7 @@ body {
 	width: 28px;
 	vertical-align: middle;
 }
+
 
 
 

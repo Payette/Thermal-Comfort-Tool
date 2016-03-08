@@ -179,7 +179,7 @@ render.makeGraph = function () {
 		d3.select("#tooltip")
 			.style("left", xPosition + "px")
 			.select("#PPDtext")
-			.text(Math.round(d.ppd*10)/10 + "% PPD at " + d.dist + "ft from the façade");
+			.text(Math.round(d.ppd*10)/10 + "% PPD at " + d.dist + " ft from the façade");
 
 		//tolerable discomfort
 		if (ppdValue >= d.ppd) {
@@ -363,7 +363,12 @@ render.makeGraph = function () {
 	})
 
 
-	
+	$("#submit").on("mouseover", function() {
+		$("#submit").removeClass("inactive");
+	})
+	$("#submit").on("mouseout", function() {
+		$("#submit").addClass("inactive");
+	})
 
 
 
@@ -659,6 +664,7 @@ render.makeGraph = function () {
 		
 	})
 
+
 	
 
 	/* ------ FUNCTIONS TO UPDATE VISUALS ------ */
@@ -790,7 +796,7 @@ render.makeGraph = function () {
 		d3.select("#thresholdTooltip")
 		.style("left", xPosition + "px")
 		.select("#thisPPDtext")
-		.text(Math.round(occdata.ppd*10)/10 + "% PPD at " + occdata.dist + "ft from the façade");
+		.text(Math.round(occdata.ppd*10)/10 + "% PPD at " + occdata.dist + " ft from the façade");
 
 		// tolerable discomfort
 		if (ppdValue >= Math.round(occdata.ppd)) {
@@ -807,6 +813,7 @@ render.makeGraph = function () {
 			.style("top", (yPosition - margin.bottom/2) + "px")
 
 			$("#submitLabel").addClass("inactive");
+			$("#submit").addClass("inactive");
 		// intolerable discomfort
 		} else {
 			d3.select("#thisDiscomfort")
@@ -818,6 +825,7 @@ render.makeGraph = function () {
 			.text(". Try adjusting the window geometry or the auto-calculating U-Value.");
 
 			$("#submitLabel").removeClass("inactive");
+			$("#submit").removeClass("inactive");
 
 			d3.select("#thresholdTooltip")
 			.style("top", (yPosition - margin.bottom*1.2) + "px")
@@ -985,7 +993,6 @@ render.makeGraph = function () {
 
 		var windowSeparationPixels = facadeScaleWidth(glazingData[0][0][0]) - facadeScaleWidth(glazingData[1][0][0]);
 
-		console.log(windowSeparationPixels);
 
 		// window height
 		facadeSvg.append("g")
