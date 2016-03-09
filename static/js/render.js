@@ -127,7 +127,7 @@ render.makeGraph = function () {
 		.enter() 
 		.append("circle") 
 		.attr("class","dot")
-		.attr("r", 3)
+		.attr("r", 3.5)
 		.attr("cx", function(d) { return x(d.dist); })
 		.attr("cy", function(d) { return y(d.ppd); })
 		.attr("transform", function() {
@@ -224,17 +224,24 @@ render.makeGraph = function () {
 		
    
 		//Show the tooltip
-		$("#tooltip").delay(200).fadeIn(300);
+		$("#tooltip").fadeIn(300);
 		//Hide default text
-		$("#thresholdTooltip").delay(100).fadeOut(300);
+		$("#thresholdTooltip").fadeOut(300);
 		
   	})
    	.on("mouseout", function() {
    		//Hide the tooltip
-		$("#tooltip").fadeOut(300);
-		//Show default text
-		$("#thresholdTooltip").delay(400).fadeIn(300);
+   		$("#tooltip").fadeOut(300);
+   		setTimeout(checkTooltip, 700);
    	})
+
+   	
+	function checkTooltip() {
+		if ($("#tooltip").css("display") == "none") {
+			//Show default text
+			$("#thresholdTooltip").fadeIn(300);
+		}
+	}
 
 
 
