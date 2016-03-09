@@ -4,6 +4,7 @@
 <head>
 	<link rel="stylesheet" type="text/css" href="static/css/styles.css" media="screen"/>
 	<link rel="stylesheet" type="text/css" href="static/css/bigfoot-default.css" media="screen"/>
+	<link rel="stylesheet" type="text/css" href="static/css/jquery-ui-1.10.4.custom.css" media="screen"/>
 
 	<meta charset = "UTF-8" />
 
@@ -24,8 +25,9 @@
 	<script type="text/javascript" charset="utf-8" src="static/js/urlobject.js"></script>
 	
 
-	<!-- Footnote Options -->
+	
 	<script type="text/javascript">
+		// Footnote Options 
 		$.bigfoot({
         	activateOnHover: true,
             deleteOnUnhover: true,
@@ -33,6 +35,12 @@
 
         });
 
+		// Increment Buttons
+		$(function(){
+			$("#ceiling, #wallWidth, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowE, #rvalue, #ppd, #distFromFacade, #outdoortemp, #airtemp, #humidity, #airspeed, #clothing, #metabolic").spinner();
+		})
+		
+		
 
 	</script>
 
@@ -80,20 +88,19 @@
 
 		<h1>Glazing and Comfort Analysis Tool</h1>
 
-
 		<form id="form">		
 		<fieldset class="inputgroup">
 			<legend class="heading">Fa&ccedil;ade Geometry</legend>
 			<hr>
 
 			<label for="ceiling">Ceiling Height (ft)</label>
-			<input type="text" name="ceiling" id="ceiling" value="12"><br>
+			<input type="text" name="ceiling" id="ceiling" min="1" max="100"  value="12"><br>
 
 			<label for="wallWidth">Wall Length (ft)</label>
 			<input type="text" name="wallWidth" id="wallWidth" value="20"><br>
 			
-			<label for="height">Window Height (ft)<sup class="dimHover" id="windHeightButt">?</sup></label>
-			<input type="text" name="height" id="windowHeight" value="8"><br>
+			<label for="windowHeight">Window Height (ft)<sup class="dimHover" id="windHeightButt">?</sup></label>
+			<input type="text" name="windowHeight" id="windowHeight" value="8"><br>
 
 
 			<label for="">Set Glazing Amount By</label><br>
@@ -231,7 +238,6 @@
 		var thisURL = location.href;
 		//call URL parser function
 		var urlParameters = urlObject({'url':thisURL}).parameters;
-		console.log(urlParameters);
 
 		//fill form with parameters, but only if values are provided in URL
 		if (typeof urlParameters.ceiling != 'undefined') {

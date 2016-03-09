@@ -417,7 +417,7 @@ render.makeGraph = function () {
 
 	/* ------ DETECT CHANGES TO INPUT VALUES ------ */
 
-	// Trigger change events
+	// Changes based on typed inputs
 	$("#outdoortemp, #ceiling, #wallWidth, #occupantDist, #distFromFacade, #ppd, #windowWidthCheck, #glazingRatioCheck, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowECheck, #lowE, #rvalue, #airtemp, #radiant, #airspeed, #humidity, #clothing, #metabolic").change(function(event) {
 		
 		//figure out what input changed
@@ -585,7 +585,50 @@ render.makeGraph = function () {
 		}
 		
 		
+		updateData();
+
+	})
+
+	// Changes based on increment buttons
+	$("#ceiling").on("spinstop", function(event) {
+		ceilingHeightValue = $(this).val();
+		wallPoints[0].wallHeight = $(this).val();
+
+		updateData();
+	})
+
+	$("#outdoortemp").on("spinstop", function(event) {
+		outdoorTempValue = $(this).val();
+
+		updateData();
+	})
+
+	$("#wallWidth").on("spinstop", function(event) {
+		wallLen = $(this).val();
+		wallPoints[0].wallWidth = $(this).val(); //udpate wall geometry array
+		proportinateMultiplier = facWidth/wallPoints[0].wallWidth;
+		facHeight = proportinateMultiplier*wallPoints[0].wallHeight;
+
+		// Set up scale functions
+		facadeScaleWidth = d3.scale.linear()
+					.domain([0, wallPoints[0].wallWidth]) //input domain
+					.range([0, facWidth]); //output range
+
+		facadeScaleHeight = d3.scale.linear()
+					.domain([0, wallPoints[0].wallHeight]) //input domain
+					.range([0, facHeight]); //output range
 		
+
+		$("#occupantDist").attr("max", wallLen/2);
+		checkOccupantImageSize();
+
+		updateData();
+	})
+
+
+
+	// Called after adjusting values based on change events
+	function updateData() {
 		// Re-run the functions with the new inputs.
 		var fullData = script.computeData()
 		
@@ -627,13 +670,14 @@ render.makeGraph = function () {
 
 		// Update static tooltip text
 		thresholdDataText(newOccLocData);
-
-
-	})
+	}
 
 
 	
-	// Update when autocolculate U Value is pressed.
+
+
+	
+	// Update when autocalculate U Value is pressed.
 	$('#form').on('submit', function(event) {
 		event.preventDefault();
 		
