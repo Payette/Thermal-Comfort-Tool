@@ -94,29 +94,29 @@
 			<hr>
 
 			<label for="ceiling">Ceiling Height (ft)</label>
-			<input type="text" name="ceiling" id="ceiling" min="1" max="100"  value="12"><br>
+			<input type="text" name="ceiling" id="ceiling" min="1" max="100"  value="12" ><br>
 
 			<label for="wallWidth">Wall Length (ft)</label>
-			<input type="text" name="wallWidth" id="wallWidth" value="20"><br>
+			<input type="text" name="wallWidth" id="wallWidth" value="20" step="1"><br>
 			
 			<label for="windowHeight">Window Height (ft)<sup class="dimHover" id="windHeightButt">?</sup></label>
-			<input type="text" name="windowHeight" id="windowHeight" value="8"><br>
+			<input type="text" name="windowHeight" id="windowHeight" value="8" step="0.5"><br>
 
 
 			<label for="">Set Glazing Amount By</label><br>
 
 			<label for="width" id="windowWidthLabel"><input type="checkbox" name="windowWidthCheck" id="windowWidthCheck" class="customCheck" checked>Window Width (ft)<sup class="dimHover" id="windWidthButt">?</sup></label>
-			<input type="text" name="width" id="windowWidth" value="4"><br>
+			<input type="text" name="width" id="windowWidth" value="4" step="0.5"><br>
 			
 			<label for="glazing" class="inactive" id="glazingLabel"><input type="checkbox" name="glazingRatioCheck" class="customCheck" id="glazingRatioCheck">Glazing Ratio (%)</label>
-			<input type="text" name="glazing" class="inactive" id="glazing" value="40"><br>
+			<input type="text" name="glazing" class="inactive" id="glazing" value="40" step="1"><br>
 
 
 			<label for="sill">Sill Height (ft)<sup class="dimHover" id="sillHeightButt">?</sup></label>
-			<input type="text" name="sill" id="sill" value="3"><br>
+			<input type="text" name="sill" id="sill" value="3" step="0.5"><br>
 
 			<label for="distWindow">Window Separation (ft)<sup class="dimHover" id="windSepButt">?</sup></label>
-			<input type="text" name="distWindow" id="distWindow" value="6.67"><br>
+			<input type="text" name="distWindow" id="distWindow" value="6.67" step="0.01"><br>
 		</fieldset>
 
 
@@ -124,7 +124,7 @@
 			<legend class="heading">Facade Performance</legend>
 			<hr>
 			<label for="uvalue">Window U-Value (Btu/hr*ft&sup2;*&deg;F)<sup id="fnref:1"><a href="#fn:1" rel="footnote">?</a></sup></label>
-			<input type="text" name="uvalue" id="uvalue" value="0.25"><br>
+			<input type="text" name="uvalue" id="uvalue" value="0.25" step="0.01"><br>
 
 			<label for="submit" id="submitLabel" class="inactive indent">Auto-calculate U-Value<sup id="fnref:2"><a href="#fn:2" rel="footnote">?</a></sup></label>
 			<input id="submit" class="inactive" name"submit" type="submit" value="try it!"/><br>
@@ -133,7 +133,7 @@
 			<input type="checkbox" name="lowECheck" id="lowECheck"><br>
 
 			<label for="lowE" class="inactive indent" id="lowELabel">Emissivity<sup id="fnref:4"><a href="#fn:4" rel="footnote">?</a></sup></label>
-			<input type="text" name="lowE" id="lowE" value="" class="inactive"><br>
+			<input type="text" name="lowE" id="lowE" value="" class="inactive" step="0.1"><br>
 
 			<label for="rvalue">Wall R-Value (Btu/hr*ft&sup2;*&deg;F)<sup id="fnref:5"><a href="#fn:5" rel="footnote">?</a></sup></label>
 			<input type="text" name="rvalue" id="rvalue" value="20"><br>

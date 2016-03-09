@@ -625,6 +625,118 @@ render.makeGraph = function () {
 		updateData();
 	})
 
+	$("#occupantDist").on("spinstop", function(event) {
+		occDistToWallCenter = $(this).val();
+		$("#occupantDist").attr("value", occDistToWallCenter);
+
+		var slider = $("#occupantDist");
+		var width = slider.width();
+		var imageWidth = parseFloat($("#occupantImage").css("width"));
+
+	 	var sliderScale = d3.scale.linear()
+			.domain([slider.attr("min"), slider.attr("max")])
+			.range([0, width]);
+
+		var newPosition = sliderScale(occDistToWallCenter);
+
+	   	// Move occupant image
+	   	$("#occupantImage").css({
+	       left: facWidth/2 + newPosition - imageWidth/2,
+		})
+
+		updateData();
+	})
+
+	$("#distFromFacade").on("spinstop", function(event) {
+		occDistFromFacade = $(this).val();
+
+		updateData();
+	})
+
+	$("#ppd").on("spinstop", function(event) {
+		ppdValue = $(this).val();
+		updatePPDThreshold(ppdValue);
+		updateData();
+	})
+
+	$("#windowHeight").on("spinstop", function(event) {
+		windowHeightValue = $(this).val();
+
+		updateData();
+	})
+
+	$("#windowWidth").on("spinstop", function(event) {
+		windowWidthValue = $(this).val();
+
+		updateData();
+	})
+
+	$("#glazing").on("spinstop", function(event) {
+		glzRatioValue = $(this).val();
+
+		updateData();
+	})
+
+	$("#sill").on("spinstop", function(event) {
+		sillHeightValue = $(this).val();
+
+		updateData();
+	})
+
+	$("#distWindow").on("spinstop", function(event) {
+		distanceWindows = $(this).val();
+
+		updateData();
+	})
+
+	$("#uvalue").on("spinstop", function(event) {
+		uvalueValue = $(this).val();
+
+		updateData();
+	})
+
+	$("#lowE").on("spinstop", function(event) {
+		intLowEEmissivity = $(this).val();
+
+		updateData();
+	})
+
+	$("#rvalue").on("spinstop", function(event) {
+		rvalueValue = $(this).val();
+
+		updateData();
+	})
+
+	$("#airtemp").on("spinstop", function(event) {
+		airtempValue = $(this).val();
+
+		updateData();
+	})
+
+	$("#airspeed").on("spinstop", function(event) {
+		airspeedValue = $(this).val();
+
+		updateData();
+	})
+
+	$("#humidity").on("spinstop", function(event) {
+		humidityValue = $(this).val();
+
+		updateData();
+	})
+
+	$("#clothing").on("spinstop", function(event) {
+		clothingValue = $(this).val();
+
+		updateData();
+	})
+
+	$("#metabolic").on("spinstop", function(event) {
+		metabolic = $(this).val();
+
+		updateData();
+	})
+
 
 
 	// Called after adjusting values based on change events
