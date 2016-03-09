@@ -210,7 +210,7 @@ render.makeGraph = function () {
 		//gov factors
 		if (d.govfact == "mrt") {
 			d3.select("#explain")
-			.text("mean radiant temperature")
+			.text("a low mean radiant temperature")
 			.style("color", blue);
 		} else if (d.govfact == "dwn") {
 			d3.select("#explain")
@@ -997,7 +997,7 @@ render.makeGraph = function () {
 		//governing factor
 		if (occdata.govfact == "mrt") {
 			d3.select("#thisExplain")
-			.text("mean radiant temperature")
+			.text("a low mean radiant temperature")
 			.style("color", blue);
 		} else if (occdata.govfact == "dwn") {
 			d3.select("#thisExplain")
