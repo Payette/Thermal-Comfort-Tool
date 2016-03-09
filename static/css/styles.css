@@ -323,6 +323,11 @@ body {
 	color: black;
 }
 
+#inputs input#submit {
+	width: 30px;
+	padding: 0 1px 0 1px;
+}
+
 #inputs label {
 	margin: 0;
 	padding: 3px 10px 3px 0;
@@ -362,7 +367,6 @@ body {
 	vertical-align: middle;
 }
 
-/* styles for incremement buttons */
 
 
 
