@@ -74,7 +74,7 @@ uVal.uValMRT = function(opaqueViewFac, winViewFac, airTemp, outdoorTemp, opaqueR
 	if (winViewFac > 0.01) {
 		// Calculate the minimum acceptable MRT to satisfy the input PPD.
 		var minAcceptMRT = uVal.calcMinAcceptMRT(airTemp, vel, relHumid, metRate, cloLevel, targetPPD)
-		console.log(comf.pmv(airTemp, minAcceptMRT, vel, relHumid, metRate, cloLevel, 0).ppd)
+		console.log()
 		console.log(winViewFac)
 		//Calculate the temperature of the opaque wall and its contribution to the comfort.
 		var opaqueTemp = comf.calcInteriorTemp(airTemp, outdoorTemp, opaqueRVal, 8.29)
@@ -92,8 +92,14 @@ uVal.uValMRT = function(opaqueViewFac, winViewFac, airTemp, outdoorTemp, opaqueR
 			UVal = 0
 		}
 	} else {
-		//UValue function breaks at very small glazing view factors and so we will just return a very high U-Value.
-		var UVal = 10
+		// UValue function breaks at very small glazing view factors.
+		// In this case, let's just check if PMV is comfortable and, if so, we will just return a very high U-Value.
+		// Otherwise, we return a U-Value of zero.
+		if (comf.pmv(airTemp, airTemp, vel, relHumid, metRate, cloLevel, 0).ppd > 10){
+			var UVal = 0
+		}else{
+			var UVal = 10
+		}
 	}
 	
 	return UVal
