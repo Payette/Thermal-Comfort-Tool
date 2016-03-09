@@ -120,10 +120,8 @@ geo.createGlazingForRect = function(rectHeight, wallLength, glazingRatio, window
 				finalGlzCoords.push(windowCoord)
 			}
 			
-		}
-		
-		//Find the window geometry in the case that the target area is above that of the maximum acceptable area for breaking up the window in which case we have to make one big window.
-		if (targetArea > maxAreaBreakUp) {
+		} else {
+			//Find the window geometry in the case that the target area is above that of the maximum acceptable area for breaking up the window in which case we have to make one big window.
 			//Move the bottom curve of the window to the appropriate sill height.
 			var maxSillHeight = (rectHeight*0.99) - (targetArea / (wallLength * 0.98))
 			if (silHeightFinal > maxSillHeight){

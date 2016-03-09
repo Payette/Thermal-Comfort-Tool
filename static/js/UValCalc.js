@@ -47,18 +47,18 @@ uVal.calcMinAcceptMRT =  function (airTemp, windSpeed, relHumid, metRate, cloLev
 	
 	function solve(target) {
 		
-		var epsilon = 0.001 // ta precision
+		var epsilon = 0.001 // tr precision
 		var a = -50
 		var b = 50
 		var fn = mrtclos(target)
-		t = util.secant(a, b, fn, epsilon)
+		var t = util.secant(a, b, fn, epsilon)
 		if (isNaN(t)) {
 			t = util.bisect(a, b, fn, epsilon, 0)
 		}
 		return t
 	}
 	
-	return solve(-pmvlimit)
+	return solve(-pmvlimit + 0.01) // This is correct for error in the relation of PMV and PPD
 }
 
 // Functions that that help compute U-Values with an acceptable MRT threshold.
@@ -71,24 +71,29 @@ uVal.maxUOfMRT = function(minAcceptMRT, airTemp, outTemp, winViewFac, opaqueCont
 
 // Function that computes U-Values acceptable with MRT threshold.
 uVal.uValMRT = function(opaqueViewFac, winViewFac, airTemp, outdoorTemp, opaqueRVal, filmCoeff, lowEmissivity, vel, relHumid, metRate, cloLevel, targetPPD){
-	
-	// Calculate the minimum acceptable MRT to satisfy the input PPD.
-	var minAcceptMRT = uVal.calcMinAcceptMRT(airTemp, vel, relHumid, metRate, cloLevel, targetPPD)
-	
-	//Calculate the temperature of the opaque wall and its contribution to the comfort.
-	var opaqueTemp = comf.calcInteriorTemp(airTemp, outdoorTemp, opaqueRVal, 8.29)
-	var opaqueContrib = uVal.MRTCondtribOfOpaque(opaqueTemp, opaqueViewFac, winViewFac, airTemp);
-	
-	// Calculate the minimum acceptable U-Values for the PMV model.
-	var UMax = uVal.maxUOfMRT(minAcceptMRT, airTemp, outdoorTemp, winViewFac, opaqueContrib, filmCoeff);
-	if (filmCoeff > 5) {
-		var UVal = UMax;
+	if (winViewFac > 0.01) {
+		// Calculate the minimum acceptable MRT to satisfy the input PPD.
+		var minAcceptMRT = uVal.calcMinAcceptMRT(airTemp, vel, relHumid, metRate, cloLevel, targetPPD)
+		console.log(comf.pmv(airTemp, minAcceptMRT, vel, relHumid, metRate, cloLevel, 0).ppd)
+		console.log(winViewFac)
+		//Calculate the temperature of the opaque wall and its contribution to the comfort.
+		var opaqueTemp = comf.calcInteriorTemp(airTemp, outdoorTemp, opaqueRVal, 8.29)
+		var opaqueContrib = uVal.MRTCondtribOfOpaque(opaqueTemp, opaqueViewFac, winViewFac, airTemp);
+		
+		// Calculate the minimum acceptable U-Values for the PMV model.
+		var UMax = uVal.maxUOfMRT(minAcceptMRT, airTemp, outdoorTemp, winViewFac, opaqueContrib, filmCoeff);
+		if (filmCoeff > 5) {
+			var UVal = UMax;
+		} else {
+			var UVal = UMax/lowEmissivity;
+		}
+		
+		if (UVal < 0) {
+			UVal = 0
+		}
 	} else {
-		var UVal = UMax/lowEmissivity;
-	}
-	
-	if (UVal < 0) {
-		UVal = 0
+		//UValue function breaks at very small glazing view factors and so we will just return a very high U-Value.
+		var UVal = 10
 	}
 	
 	return UVal

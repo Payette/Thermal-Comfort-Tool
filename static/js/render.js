@@ -1153,8 +1153,12 @@ render.makeGraph = function () {
 		var topOfWindow = parseFloat(firstWindow.attr("y"));
 		var bottomOfWindow = parseFloat(firstWindow.attr("y")) + facadeScaleHeight(glazingHeight);
 		var sillHeightPixels = facadeScaleHeight(glazingData[0][0][2]);
-
-		var windowSeparationPixels = facadeScaleWidth(glazingData[0][0][0]) - facadeScaleWidth(glazingData[1][0][0]);
+		
+		try {
+			var windowSeparationPixels = facadeScaleWidth(glazingData[0][0][0]) - facadeScaleWidth(glazingData[1][0][0]);
+		} catch (err) {
+			var windowSeparationPixels = wallLen/2
+		}
 
 
 		// window height
