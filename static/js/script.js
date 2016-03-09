@@ -48,7 +48,7 @@ script.computeData = function() {
 	var viewResult = geo.computeAllViewFac(geoResult.wallCoords, geoResult.glzCoords, occDistToWallCenter)
 	
 	// Compute the PPD to make the graph.
-	var comfortResult = comf.getFullPPD(viewResult.wallViews, viewResult.glzViews, viewResult.facadeDist, geoResult.windowHeight, uvalueValue, intLowEChecked, intLowEEmissivity, rvalueValue, airtempValue, outdoorTempValue, radiantFloorChecked, clothingValue, metabolic, airspeedValue, humidityValue)
+	var comfortResult = comf.getFullPPD(viewResult.wallViews, viewResult.glzViews, viewResult.facadeDist, viewResult.windIntervals, occDistToWallCenter, geoResult.windowHeight, uvalueValue, intLowEChecked, intLowEEmissivity, rvalueValue, airtempValue, outdoorTempValue, radiantFloorChecked, clothingValue, metabolic, airspeedValue, humidityValue)
 	
 	// Return all of the information in one dictionary
 	var r = {}
@@ -68,6 +68,7 @@ script.computeData = function() {
 	r.condensation = comfortResult.condensation; // Text string value that is either: "certain", "risky", "none".
 	r.dataSet = comfortResult.myDataset; // Data to construct the graph.
 	r.occPtInfo = comfortResult.occPtInfo;  // The status of the occupant at the input location.
+	r.runDownCalc = comfortResult.runDownCalc;  // Boolean value for whether the occupant is in front of the window or not.
 	
 	return r
 }

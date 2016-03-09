@@ -16,7 +16,7 @@ render.makeGraph = function () {
 
 	var allData = script.computeData();
 	var dataset = allData.dataSet;
-	var occPointData = allData.occPtInfo; 
+	var occPointData = allData.occPtInfo;
 
 
 
@@ -804,7 +804,7 @@ render.makeGraph = function () {
 		var fullData = script.computeData()
 		
 		//Compute the U-Value required to make the occupant comfortable.
-		uvalueValue = uVal.uValFinal(fullData.wallViews[12], fullData.glzViews[12], fullData.facadeDist[12], parseFloat(windowHeightValue), airtempValue, outdoorTempValue, rvalueValue, intLowEChecked, intLowEEmissivity, airspeedValue, humidityValue, metabolic, clothingValue, ppdValue)
+		uvalueValue = uVal.uValFinal(fullData.wallViews[12], fullData.glzViews[12], fullData.facadeDist[12], fullData.runDownCalc, parseFloat(windowHeightValue), airtempValue, outdoorTempValue, rvalueValue, intLowEChecked, intLowEEmissivity, airspeedValue, humidityValue, metabolic, clothingValue, ppdValue)
 		
 		// Update the value in the form.
 		$("#uvalue").val(Math.round(uvalueValue * 1000) / 1000);

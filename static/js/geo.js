@@ -2,6 +2,7 @@ var round = Math.round;
 var sin = Math.sin;
 var atan = Math.atan;
 var sqrt = Math.sqrt;
+var abs = Math.abs
 
 var geo = geo || {}
 
@@ -392,11 +393,31 @@ geo.computeAllViewFac = function(wallCoords, glazingCoords, occDistToWall){
 		wallViewFac.push(wallView - glzViewFac[i])
 	}
 	
+	// Calculate the intervals along the facade where the occupant is directly in front of the window.
+	var windIntervals = [[],[]]
+	if (parseInt(glazingCoords.length/2) != glazingCoords.length/2) {
+		for (var i = 0; i < parseInt(glazingCoords.length/2)+1; i++) {
+			if (i == 0){
+				windIntervals[0].push(0)
+				windIntervals[1].push(glazingCoords[parseInt(glazingCoords.length/2)][1][0])
+			} else {
+				windIntervals[1].push(abs(glazingCoords[parseInt(glazingCoords.length/2) + i][0][0]))
+				windIntervals[0].push(abs(glazingCoords[parseInt(glazingCoords.length/2) + i][1][0]))
+			}
+		}
+	} else {
+		for (var i = 0; i < glazingCoords.length/2; i++) {
+			windIntervals[1].push(abs(glazingCoords[parseInt(glazingCoords.length/2) + i][0][0]))
+			windIntervals[0].push(abs(glazingCoords[parseInt(glazingCoords.length/2) + i][1][0]))
+		}
+	}
+	
 	//Return the coordinates of the wall.
 	var r = {}
     r.wallViews = wallViewFac;
     r.glzViews = glzViewFac;
 	r.facadeDist = facadeDist;
+	r.windIntervals = windIntervals;
 	return r
 }
 	

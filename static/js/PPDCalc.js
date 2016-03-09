@@ -163,7 +163,7 @@ comf.pmv = function(ta, tr, vel, rh, met, clo, wme) {
 
 //Calculates the MRT and radiant assymetry PPD given a set of interior conditions and points 
 comf.getMRTandRadAssym = function(winViewFacs, opaqueViewFacs, winFilmCoeff, airTemp, outdoorTemp, indoorSrfTemp, wallRVal, windowUVal){
-	var opaqueTemp = comf.calcInteriorTemp(airTemp, outdoorTemp, wallRVal, 8.29)
+	var opaqueTemp = comf.calcInteriorTemp(airTemp, outdoorTemp, wallRVal+(1/8.29), 8.29)
 	var windowTemp = comf.calcInteriorTemp(airTemp, outdoorTemp, 1/windowUVal, winFilmCoeff)
 	var MRT = []
 	var radAssymPPD = []
@@ -216,7 +216,7 @@ comf.getDowndraftPPD = function(distToFacade, windowHgt, filmCoeff, airTemp, out
 
 
 // Constructs a dictionary of PPD and the limiting factors from a given set of interior conditions.
-comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windowHgt, glzUVal, intLowE, lowEmissivity, wallRVal, indoorTemp, outTemp, radiantFloor, clo, met, airSpeed, rh){	
+comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, occDistToWallCenter, windowHgt, glzUVal, intLowE, lowEmissivity, wallRVal, indoorTemp, outTemp, radiantFloor, clo, met, airSpeed, rh){	
 	// Convert window height to meters (yay for SI!!)
 	var windowHgtSI = windowHgt/3.28084
 	
@@ -266,8 +266,23 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windowHgt, glzUV
 		mrtPPD.push(finalMRTPPD)
 	}
 	
+	// Determine whether the occupant is in front of a window such that they can expereince downdraft.
+	var runDownCalc = false
+	for (var i = 0; i < windIntervals[0].length; i++) {
+		if (occDistToWallCenter >= windIntervals[0][i] && occDistToWallCenter <= windIntervals[1][i]){
+			runDownCalc = true
+		}
+	}
+	
 	// Get the Downdraft PPD results.
-	var downDPPD = comf.getDowndraftPPD(facadeDist, windowHgtSI, winFilmCoeff, airTemp, outdoorTemp, windowUVal)
+	var downDPPD = []
+	if (runDownCalc == true){
+		downDPPD = comf.getDowndraftPPD(facadeDist, windowHgtSI, winFilmCoeff, airTemp, outdoorTemp, windowUVal)
+	} else {
+		for (var i = 0; i < mrtPPD.length; i++) {
+			downDPPD.push(0)
+		}
+	}
 	
 	// Construct the dictionary of the PPD values with the governing factors for the graph.
 	var myDataset = []
@@ -315,6 +330,7 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windowHgt, glzUV
 	r.myDataset = myDataset
 	r.condensation = condensation
 	r.occPtInfo = occPtInfo
+	r.runDownCalc = runDownCalc
 	
 	return r
 }

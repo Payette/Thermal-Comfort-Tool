@@ -58,7 +58,7 @@ uVal.calcMinAcceptMRT =  function (airTemp, windSpeed, relHumid, metRate, cloLev
 		return t
 	}
 	
-	return solve(-pmvlimit + 0.01) // This is correct for error in the relation of PMV and PPD
+	return solve(-pmvlimit +0.01) // This is correct for error in the relation of PMV and PPD
 }
 
 // Functions that that help compute U-Values with an acceptable MRT threshold.
@@ -74,8 +74,7 @@ uVal.uValMRT = function(opaqueViewFac, winViewFac, airTemp, outdoorTemp, opaqueR
 	if (winViewFac > 0.01) {
 		// Calculate the minimum acceptable MRT to satisfy the input PPD.
 		var minAcceptMRT = uVal.calcMinAcceptMRT(airTemp, vel, relHumid, metRate, cloLevel, targetPPD)
-		console.log()
-		console.log(winViewFac)
+		console.log(comf.pmv(airTemp, minAcceptMRT, vel, relHumid, metRate, cloLevel, 0).ppd)
 		//Calculate the temperature of the opaque wall and its contribution to the comfort.
 		var opaqueTemp = comf.calcInteriorTemp(airTemp, outdoorTemp, opaqueRVal, 8.29)
 		var opaqueContrib = uVal.MRTCondtribOfOpaque(opaqueTemp, opaqueViewFac, winViewFac, airTemp);
@@ -138,7 +137,7 @@ uVal.uValDownD = function(PPDAccept, distToFacade, windowHgt, filmCoeff, airTemp
 
 
 // FUNCTION THAT RETURNS THE LOWEST U-VALUE GIVEN COMFORT CRITERIA
-uVal.uValFinal = function(opaqueViewFac, winViewFac, distToFacade, windowHgt, indoorTemp, outTemp, wallRVal, intLowE, lowEmissivity, airSpeed, relHumid, metRate, cloLevel, targetPPD){
+uVal.uValFinal = function(opaqueViewFac, winViewFac, distToFacade, runDownCalc, windowHgt, indoorTemp, outTemp, wallRVal, intLowE, lowEmissivity, airSpeed, relHumid, metRate, cloLevel, targetPPD){
 	// Convert window height to meters (yay for SI!!)
 	var windowHgtSI = windowHgt/3.28084
 	
@@ -164,7 +163,11 @@ uVal.uValFinal = function(opaqueViewFac, winViewFac, distToFacade, windowHgt, in
 	var uValMRT = uVal.uValMRT(opaqueViewFac, winViewFac, airTemp, outdoorTemp, opaqueRVal, filmCoeff, lowEmissivity, vel, relHumid, metRate, cloLevel, targetPPD)
 	
 	//Compute the required U-Value for the Downdraft model.
-	var uValDownD = uVal.uValDownD(targetPPD, distToFacade, windowHgtSI, filmCoeff, airTemp, outdoorTemp)
+	if (runDownCalc== true) {
+		var uValDownD = uVal.uValDownD(targetPPD, distToFacade, windowHgtSI, filmCoeff, airTemp, outdoorTemp)
+	} else {
+		var uValDownD = 10
+	}
 	
 	if (uValDownD < uValMRT){
 		var uValFinal = uValDownD/5.678263337
