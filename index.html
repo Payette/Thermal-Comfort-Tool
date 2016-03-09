@@ -116,7 +116,7 @@
 			<input type="text" name="sill" id="sill" value="3" step="0.5"><br>
 
 			<label for="distWindow">Window Separation (ft)<sup class="dimHover" id="windSepButt">?</sup></label>
-			<input type="text" name="distWindow" id="distWindow" value="6.67" step="0.01"><br>
+			<input type="text" name="distWindow" id="distWindow" value="6.67" step="1"><br>
 		</fieldset>
 
 
@@ -144,10 +144,10 @@
 			<legend>Occupancy Thresholds</legend>
 			<hr>
 
-			<label for="ppd">Dissatisfaction from Cold (%)<sup id="fnref:6"><a href="#fn:6" rel="footnote">?</a></sup></label>
+			<label for="ppd">Target PPD (%)<sup id="fnref:6"><a href="#fn:6" rel="footnote">?</a></sup></label>
 			<input type="text" name="ppd" id="ppd" value="10"><br>
 
-			<label for="distFromFacade">Distance From Fa&ccedil;ade (ft)</label>
+			<label for="distFromFacade">Distance From Fa&ccedil;ade (ft)<sup id="fnref:13"><a href="#fn:13" rel="footnote">?</a></sup></label>
 			<input type="text" name="distFromFacade" id="distFromFacade" value="3"><br>
 
 		</fieldset>
@@ -193,40 +193,43 @@
 	<div class="footnotes">
 	<ol>
 	    <li class="footnote" id="fn:1"> <!-- u value -->
-	        <p>Some text about this thing<a href="#fnref:1" title="return to article"> ↩</a></p>
+	        <p>U-Value of the window assembly - including frame and edge<a href="#fnref:1" title="return to article"> ↩</a></p>
 	    </li>
 	    <li class="footnote" id="fn:2"> <!-- auto calculate u value -->
-	        <p>Some text about this thing<a href="#fnref:2" title="return to article"> ↩</a></p>
+	        <p>Press to calculate minimum U-Value needed to make the occupant comfortable<a href="#fnref:2" title="return to article"> ↩</a></p>
 	    </li>
 	    <li class="footnote" id="fn:3"> <!-- room side low e -->
-	        <p>Some text about this thing<a href="#fnref:3" title="return to article"> ↩</a></p>
+	        <p>Check to accont for a room-side Low-E coating<a href="#fnref:3" title="return to article"> ↩</a></p>
 	     </li>
 	     <li class="footnote" id="fn:4"><!-- emissivity -->
-	        <p>Some text about this thing<a href="#fnref:4" title="return to article"> ↩</a></p>
+	        <p>Emissivity of the room-side Low-E coating<a href="#fnref:4" title="return to article"> ↩</a></p>
 	    </li>
 	    <li class="footnote" id="fn:5"><!-- r value -->
-	        <p>Some text about this thing<a href="#fnref:5" title="return to article"> ↩</a></p>
+	        <p>R-Value of the wall assembly, including thermal bridges<a href="#fnref:5" title="return to article"> ↩</a></p>
 	    </li>
 	    <li class="footnote" id="fn:6"> <!-- PPD -->
-	        <p>Some text about this thing<a href="#fnref:6" title="return to article"> ↩</a></p>
+	        <p>The target Percentage of People Dissatisfied (PPD) from cold that you would like to remain below. This is indicative of how comfortable you would like your soace to be.  Common values are 10% and 20%.<a href="#fnref:6" title="return to article"> ↩</a></p>
 	    </li>
 	    <li class="footnote" id="fn:7"> <!-- indoor ambient temp -->
-	        <p>Some text about this thing<a href="#fnref:7" title="return to article"> ↩</a></p>
+	        <p>Temperature of the indoor air and interior surfaces<a href="#fnref:7" title="return to article"> ↩</a></p>
 	    </li>
 	    <li class="footnote" id="fn:8"> <!-- relative humidity -->
-	        <p>Some text about this thing<a href="#fnref:8" title="return to article"> ↩</a></p>
+	        <p>Relative humidity indoors<a href="#fnref:8" title="return to article"> ↩</a></p>
 	    </li>
 	    <li class="footnote" id="fn:9"> <!-- radiant floor -->
-	        <p>Some text about this thing<a href="#fnref:9" title="return to article"> ↩</a></p>
+	        <p>Check to account for the presence of a radiant floor<a href="#fnref:9" title="return to article"> ↩</a></p>
 	    </li>
 	    <li class="footnote" id="fn:10"> <!-- air speed -->
-	        <p>Some text about this thing<a href="#fnref:10" title="return to article"> ↩</a></p>
+	        <p>Average indoor air speed induced by the mechanical system<a href="#fnref:10" title="return to article"> ↩</a></p>
 	    </li>
 	    <li class="footnote" id="fn:11"> <!-- clothing -->
-	        <p>Some text about this thing<a href="#fnref:11" title="return to article"> ↩</a></p>
+	        <p>Clothing of the occupants in clo.  1 clo = a three-piece suit.<a href="#fnref:11" title="return to article"> ↩</a></p>
 	    </li>
 	    <li class="footnote" id="fn:12"> <!-- metabolic rate -->
-	        <p>Some text about this thing<a href="#fnref:12" title="return to article"> ↩</a></p>
+	        <p>Metabolic rate of the occupants in met.  1 met = seated resting.  1.2 met = typing.<a href="#fnref:12" title="return to article"> ↩</a></p>
+	    </li>
+		<li class="footnote" id="fn:13"> <!-- distance from facade -->
+	        <p>Distance from the facade at which you would like occupants to be comfortable.<a href="#fnref:13" title="return to article"> ↩</a></p>
 	    </li>
 	</ol>
 	</div>

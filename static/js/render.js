@@ -202,7 +202,7 @@ render.makeGraph = function () {
 			.classed("intolerable", true);
 
 			d3.select("#solution")
-			.text(". Try adjusting the window geometry or U-Value.");
+			.text(". Try adjusting the window height or U-Value.");
 
 			d3.select("#tooltip")
 			.style("top", (yPosition - margin.bottom*0.85) + "px")
@@ -985,7 +985,7 @@ render.makeGraph = function () {
 			.classed("intolerable", true);
 
 			d3.select("#thisSolution")
-			.text(". Try adjusting the window geometry or the auto-calculating U-Value.");
+			.text(". Try adjusting the window height or U-Value.");
 
 			$("#submitLabel").removeClass("inactive");
 			$("#submit").removeClass("inactive");
