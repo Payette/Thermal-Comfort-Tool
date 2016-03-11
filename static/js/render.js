@@ -54,10 +54,6 @@ render.makeGraph = function () {
 
 	// Draw PPD threshold so that it's behind the data and axes
 	drawPPDThreshold(ppdValue);
-	$('#ppd').change(function() {
-		var newPPDValue = $(this).val();
-		updatePPDThreshold(newPPDValue);	
-	})
 
 
 	// add axes
@@ -194,6 +190,15 @@ render.makeGraph = function () {
 			d3.select("#tooltip")
 			.style("top", (yPosition - margin.bottom/2) + "px")
 
+			if (d.govfact == "mrt") {
+				d3.select("#explain")
+				.text("a low mean radiant temperature")
+				.style("color", blue);
+			} else if (d.govfact == "dwn") {
+				d3.select("#explain")
+				.text("downdraft")
+				.style("color", orange);
+			} 
 		//intolerable discomfort
 		} else {
 			d3.select("#discomfort")
@@ -201,27 +206,36 @@ render.makeGraph = function () {
 			.classed("tolerable", false)
 			.classed("intolerable", true);
 
-			d3.select("#solution")
-			.text(". Try adjusting the window height or U-Value.");
+			
+			//gov factors
+			if (d.govfact == "mrt") {
+				d3.select("#explain")
+				.text("a low mean radiant temperature")
+				.style("color", blue);
 
-			d3.select("#tooltip")
-			.style("top", (yPosition - margin.bottom*0.85) + "px")
+				d3.select("#solution")
+				.text(". Try adjusting the window geometry or reducing the U-value.");
+
+				d3.select("#tooltip")
+				.style("top", (yPosition - margin.bottom/1.2) + "px");
+
+			} else if (d.govfact == "dwn") {
+				d3.select("#explain")
+				.text("downdraft")
+				.style("color", orange);
+
+				d3.select("#solution")
+				.text(". Try reducing the window height or U-value.");
+
+				d3.select("#tooltip")
+				.style("top", (yPosition - margin.bottom/1.6) + "px");
+
+			} 
 		}
-		//gov factors
-		if (d.govfact == "mrt") {
-			d3.select("#explain")
-			.text("a low mean radiant temperature")
-			.style("color", blue);
-		} else if (d.govfact == "dwn") {
-			d3.select("#explain")
-			.text("downdraft")
-			.style("color", orange);
-		} else if (d.govfact == "asym") {
-			d3.select("#explain")
-			.text("asymmetry");
-		}
+		
 
 		
+
    
 		//Show the tooltip
 		$("#tooltip").fadeIn(300);
@@ -232,11 +246,13 @@ render.makeGraph = function () {
    	.on("mouseout", function() {
    		//Hide the tooltip
    		$("#tooltip").fadeOut(300);
-   		setTimeout(checkTooltip, 700);
+   		//wait 1sec, then check if 'new' tooltip is present
+   		setTimeout(checkTooltip, 1000);
    	})
 
    	
 	function checkTooltip() {
+		// if hover tooltip is no longer visible
 		if ($("#tooltip").css("display") == "none") {
 			//Show default text
 			$("#thresholdTooltip").fadeIn(300);
@@ -481,7 +497,20 @@ render.makeGraph = function () {
 			occDistFromFacade = $(this).val();
 		}
 		else if(triggeredChange == "ppd") {
-			ppdValue = $(this).val();
+			if ($(this).val() <= 4) {
+				ppdValue = 5;
+				$("#ppd").val(5);
+			}
+			else if ($(this).val() >30) {
+				ppdValue = 30;
+				$("#ppd").val(30);
+			}
+			else {
+				ppdValue = $(this).val();
+			}
+
+			// Update target PPD threshold line
+			updatePPDThreshold(ppdValue);	
 		}
 		else if (triggeredChange == "windowWidthCheck") {
 			if (($("#windowWidthCheck").is(":checked")) == true) {
@@ -662,8 +691,9 @@ render.makeGraph = function () {
 
 	$("#ppd").on("spinstop", function(event) {
 		ppdValue = $(this).val();
-		updatePPDThreshold(ppdValue);
+
 		updateData();
+		updatePPDThreshold(ppdValue);	
 	})
 
 	$("#windowHeight").on("spinstop", function(event) {
@@ -789,6 +819,8 @@ render.makeGraph = function () {
 
 		// Update static tooltip text
 		thresholdDataText(newOccLocData);
+
+		
 	}
 
 
@@ -972,6 +1004,18 @@ render.makeGraph = function () {
 			d3.select("#thisSolution")
 			.text(".");
 
+			//governing factor
+			if (occdata.govfact == "mrt") {
+				d3.select("#thisExplain")
+				.text("a low mean radiant temperature")
+				.style("color", blue);
+
+			} else if (occdata.govfact == "dwn") {
+				d3.select("#thisExplain")
+				.text("downdraft")
+				.style("color", orange);
+			}
+
 			d3.select("#thresholdTooltip")
 			.style("top", (yPosition - margin.bottom/2) + "px")
 
@@ -984,29 +1028,36 @@ render.makeGraph = function () {
 			.classed("tolerable", false)
 			.classed("intolerable", true);
 
-			d3.select("#thisSolution")
-			.text(". Try adjusting the window height or U-Value.");
+			//governing factor
+			if (occdata.govfact == "mrt") {
+				d3.select("#thisExplain")
+				.text("a low mean radiant temperature")
+				.style("color", blue);
+
+				d3.select("#thisSolution")
+				.text(". Try adjusting the window geometry or reducing the U-value.");
+
+				d3.select("#thresholdTooltip")
+				.style("top", (yPosition - margin.bottom/1.2) + "px");
+
+			} else if (occdata.govfact == "dwn") {
+				d3.select("#thisExplain")
+				.text("downdraft")
+				.style("color", orange);
+
+				d3.select("#thisSolution")
+				.text(". Try reducing the window height or U-value.");
+
+				d3.select("#thresholdTooltip")
+				.style("top", (yPosition - margin.bottom/1.6) + "px");
+			}
 
 			$("#submitLabel").removeClass("inactive");
 			$("#submit").removeClass("inactive");
 
-			d3.select("#thresholdTooltip")
-			.style("top", (yPosition - margin.bottom*1.2) + "px")
 		}
 
-		//governing factor
-		if (occdata.govfact == "mrt") {
-			d3.select("#thisExplain")
-			.text("a low mean radiant temperature")
-			.style("color", blue);
-		} else if (occdata.govfact == "dwn") {
-			d3.select("#thisExplain")
-			.text("downdraft")
-			.style("color", orange);
-		} else if (occdata.govfact == "asym") {
-			d3.select("#thisExplain")
-			.text("asymmetry");
-		}
+		 
 	} // end thresholdDataText
 
 
