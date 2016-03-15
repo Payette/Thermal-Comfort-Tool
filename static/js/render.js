@@ -14,11 +14,11 @@ render.makeGraph = function () {
 	var lightblue = "rgb(194,224,255)";
 	var lightgrey = "rgb(245,245,245)";
 
-	var allData = script.computeData();
+	var allData = script.computeData(case2Data);
 	var dataset = allData.dataSet;
 	var occPointData = allData.occPtInfo;
 
-
+	console.log(dataset);
 
 	/* ------ SET UP GRAPH VARIABLES AND DATA FUNCTIONS ------ */
 	var margin = {top: 57, right: 0, bottom: 75, left: 50},
@@ -386,12 +386,12 @@ render.makeGraph = function () {
 	})
 
 
-	$("#submit").on("mouseover", function() {
+	/*$("#submit").on("mouseover", function() {
 		$("#submit").removeClass("inactive");
 	})
 	$("#submit").on("mouseout", function() {
 		$("#submit").addClass("inactive");
-	})
+	})*/
 
 
 
@@ -1019,8 +1019,7 @@ render.makeGraph = function () {
 			d3.select("#thresholdTooltip")
 			.style("top", (yPosition - margin.bottom/2) + "px")
 
-			$("#submitLabel").addClass("inactive");
-			$("#submit").addClass("inactive");
+
 		// intolerable discomfort
 		} else {
 			d3.select("#thisDiscomfort")
@@ -1052,8 +1051,7 @@ render.makeGraph = function () {
 				.style("top", (yPosition - margin.bottom/1.6) + "px");
 			}
 
-			$("#submitLabel").removeClass("inactive");
-			$("#submit").removeClass("inactive");
+
 
 		}
 

@@ -24,6 +24,7 @@
 	<script type="text/javascript" charset="utf-8" src="static/js/util.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/urlobject.js"></script>
 	
+	
 
 	
 	<script type="text/javascript">
@@ -93,9 +94,9 @@
 		nibh, scelerisque sit amet hendrerit in, ultrices ut mauris.</p>
 
 		<div id="caseSelection">
-			<h2><span></span>CASE 1</h2>
-			<h2><span></span>CASE 2</h2>
-			<h2><span></span>CASE 3</h2>
+			<h2 id="case1Label"><span id="case1Button"></span>CASE 1</h2>
+			<h2 id="case2Label" class="unselected"><span id="case2Button" class="unselected"></span>CASE 2</h2>
+			<h2 id="case3Label" class="unselected"><span id="case3Button" class="unselected"></span>CASE 3</h2>
 		</div>	
 
 		<form id="form">	
@@ -108,17 +109,17 @@
 			<label for="ceiling">Ceiling Height (ft)</label>
 			<div class="inputWrapperLeft"><input type="text" name="ceiling" id="ceiling" min="1" max="100"  value="12"></div>
 			<div class="inputWrapperCenter"><input type="text" name="ceiling2" id="ceiling2" min="1" max="100"  value="12" class="case2"></div>
-			<div class="inputWrapperRight"><input type="text" name="ceiling3" id="ceiling3" min="1" max="100"  value="12" class="case3"></div><br>
+			<div class="inputWrapperRight"><input type="text" name="ceiling3" id="ceiling3" min="1" max="100"  value="" class="case3"></div><br>
 
 			<label for="wallWidth">Wall Length (ft)</label>
 			<div class="inputWrapperLeft"><input type="text" name="wallWidth" id="wallWidth" value="20" step="1"></div>
 			<div class="inputWrapperCenter"><input type="text" name="wallWidth2" id="wallWidth2" value="20" step="1" class="case2"></div>
-			<div class="inputWrapperRight"><input type="text" name="wallWidth3" id="wallWidth3" value="20" step="1" class="case3"></div><br>
+			<div class="inputWrapperRight"><input type="text" name="wallWidth3" id="wallWidth3" value="" step="1" class="case3"></div><br>
 			
 			<label for="windowHeight">Window Height (ft)<sup class="dimHover" id="windHeightButt">?</sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="windowHeight" id="windowHeight" value="8" step="0.5"></div>
 			<div class="inputWrapperCenter"><input type="text" name="windowHeight2" id="windowHeight2" value="8" step="0.5" class="case2"></div>
-			<div class="inputWrapperRight"><input type="text" name="windowHeight3" id="windowHeight3" value="8" step="0.5" class="case3"></div><br>
+			<div class="inputWrapperRight"><input type="text" name="windowHeight3" id="windowHeight3" value="" step="0.5" class="case3"></div><br>
 
 
 			<label for="">Set Glazing Amount By</label><br>
@@ -126,23 +127,23 @@
 			<label for="width" id="windowWidthLabel"><input type="checkbox" name="windowWidthCheck" id="windowWidthCheck" class="customCheck" checked>Window Width (ft)<sup class="dimHover" id="windWidthButt">?</sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="width" id="windowWidth" value="4" step="0.5"></div>
 			<div class="inputWrapperCenter"><input type="text" name="width2" id="windowWidth2" value="4" step="0.5" class="case2"></div>
-			<div class="inputWrapperRight"><input type="text" name="width3" id="windowWidth3" value="4" step="0.5" class="case3"></div><br>
+			<div class="inputWrapperRight"><input type="text" name="width3" id="windowWidth3" value="" step="0.5" class="case3"></div><br>
 			
 			<label for="glazing" class="inactive" id="glazingLabel"><input type="checkbox" name="glazingRatioCheck" class="customCheck" id="glazingRatioCheck">Glazing Ratio (%)</label>
 			<div class="inputWrapperLeft"><input type="text" name="glazing" class="inactive" id="glazing" value="40" step="1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="glazing2" class="inactive" id="glazing2" value="40" step="1" class="case2"></div>
-			<div class="inputWrapperRight"><input type="text" name="glazing3" class="inactive" id="glazing3" value="40" step="1" class="case3"></div><br>
+			<div class="inputWrapperCenter"><input type="text" name="glazing2" class="inactive case2" id="glazing2" value="40" step="1"></div>
+			<div class="inputWrapperRight"><input type="text" name="glazing3" class="inactive case3" id="glazing3" value="" step="1"></div><br>
 
 
 			<label for="sill">Sill Height (ft)<sup class="dimHover" id="sillHeightButt">?</sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="sill" id="sill" value="3" step="0.5"></div>
 			<div class="inputWrapperCenter"><input type="text" name="sill2" id="sill2" value="3" step="0.5" class="case2"></div>
-			<div class="inputWrapperRight"><input type="text" name="sill3" id="sill3" value="3" step="0.5" class="case3"></div><br>
+			<div class="inputWrapperRight"><input type="text" name="sill3" id="sill3" value="" step="0.5" class="case3"></div><br>
 
 			<label for="distWindow">Window Separation (ft)<sup class="dimHover" id="windSepButt">?</sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="distWindow" id="distWindow" value="6.67" step="1"></div>
 			<div class="inputWrapperCenter"><input type="text" name="distWindow2" id="distWindow2" value="6.67" step="1" class="case2"></div>
-			<div class="inputWrapperRight"><input type="text" name="distWindow3" id="distWindow3" value="6.67" step="1" class="case3"></div><br>
+			<div class="inputWrapperRight"><input type="text" name="distWindow3" id="distWindow3" value="" step="1" class="case3"></div><br>
 		</fieldset>
 
 
@@ -156,28 +157,28 @@
 
 			<div class="inputWrapperLeft"><input type="text" name="uvalue" id="uvalue" value="0.25" step="0.01"></div>
 			<div class="inputWrapperCenter"><input type="text" name="uvalue2" id="uvalue2" value="0.25" step="0.01" class="case2"></div>
-			<div class="inputWrapperRight"><input type="text" name="uvalue3" id="uvalue3" value="0.25" step="0.01" class="case3"></div><br>
+			<div class="inputWrapperRight"><input type="text" name="uvalue3" id="uvalue3" value="" step="0.01" class="case3"></div><br>
 
 			<label for="calcUValueCheck" id="calcUValueLabel" class="inactive"><input type="checkbox" name="calcUValueCheck" id="calcUValueCheck" class="customCheck">Calculate U-Value<sup id="fnref:2"><a href="#fn:2" rel="footnote">?</a></sup></label>
 
-			<div class="inputWrapperLeft"><input type="text" name="calcuvalue" id="calcuvalue" value="" step="0.01" class="inactive"></div>
+			<div class="inputWrapperLeft"><input type="text" name="calcuvalue" id="calcuvalue" value="0.25" step="0.01" class="inactive"></div>
 			<div class="inputWrapperCenter"><input type="text" name="calcuvalue2" id="calcuvalue2" value="" step="0.01" class="case2 inactive"></div>
-			<div class="inputWrapperRight"><input type="text" name="calcuvalue3" id="calcuvalue3" value="" step="0.01" class="case3 inactive"></div><br>
+			<div class="inputWrapperRight"><input type="text" name="calcuvalue3" id="calcuvalue3" value="0.25" step="0.01" class="case3 inactive"></div><br>
 
 			<label for="lowECheck">Room-side Low-E Coating<sup id="fnref:3"><a href="#fn:3" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="checkbox" name="lowECheck" id="lowECheck" class="checkbox"></div>
-			<div class="inputWrapperCenter"><input type="checkbox" name="lowECheck2" id="lowECheck2" class="checkbox" class="case2"></div>
-			<div class="inputWrapperRight"><input type="checkbox" name="lowECheck3" id="lowECheck3" class="checkbox" class="case3"></div><br>
+			<div class="inputWrapperCenter"><input type="checkbox" name="lowECheck2" id="lowECheck2" class="checkbox case2"></div>
+			<div class="inputWrapperRight"><input type="checkbox" name="lowECheck3" id="lowECheck3" class="checkbox case3"></div><br>
 
 			<label for="lowE" class="inactive indent" id="lowELabel">Emissivity<sup id="fnref:4"><a href="#fn:4" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="lowE" id="lowE" value="" class="inactive" step="0.1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="lowE2" id="lowE2" value="" class="inactive" step="0.1" class="case2"></div>
-			<div class="inputWrapperRight"><input type="text" name="lowE3" id="lowE3" value="" class="inactive" step="0.1" class="case3"></div><br>
+			<div class="inputWrapperCenter"><input type="text" name="lowE2" id="lowE2" value="" class="inactive case2" step="0.1"></div>
+			<div class="inputWrapperRight"><input type="text" name="lowE3" id="lowE3" value="" class="inactive case3" step="0.1"></div><br>
 
 			<label for="rvalue">Wall R-Value (Btu/hr*ft&sup2;*&deg;F)<sup id="fnref:5"><a href="#fn:5" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="rvalue" id="rvalue" value="20"></div>
 			<div class="inputWrapperCenter"><input type="text" name="rvalue2" id="rvalue2" value="20" class="case2"></div>
-			<div class="inputWrapperRight"><input type="text" name="rvalue2" id="rvalue2" value="20" class="case3"></div><br>
+			<div class="inputWrapperRight"><input type="text" name="rvalue2" id="rvalue2" value="" class="case3"></div><br>
 
 		</fieldset>
 
@@ -192,8 +193,8 @@
 
 			<label for="distFromFacade">Distance From Fa&ccedil;ade (ft)<sup id="fnref:13"><a href="#fn:13" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="distFromFacade" id="distFromFacade" value="3"></div>
-			<div class="inputWrapperCenter"><input type="text" name="distFromFacade2" id="distFromFacade2" value="3"></div>
-			<div class="inputWrapperRight"><input type="text" name="distFromFacade3" id="distFromFacade3" value="3"></div><br>
+			<div class="inputWrapperCenter"><input type="text" name="distFromFacade2" id="distFromFacade2" value="3" class="case2"></div>
+			<div class="inputWrapperRight"><input type="text" name="distFromFacade3" id="distFromFacade3" value="3" class="case3"></div><br>
 
 		</fieldset>
 
@@ -205,18 +206,18 @@
 
 			<label for="outdoortemp">Outdoor Temperature (&deg;F)</label>
 			<div class="inputWrapperLeft"><input type="text" name="outdoortemp" id="outdoortemp" value="25"></div>
-			<div class="inputWrapperCenter"><input type="text" name="outdoortemp2" id="outdoortemp2" value="25"></div>
-			<div class="inputWrapperRight"><input type="text" name="outdoortemp3" id="outdoortemp3" value="25"></div><br>
+			<div class="inputWrapperCenter"><input type="text" name="outdoortemp2" id="outdoortemp2" value="25" class="case2"></div>
+			<div class="inputWrapperRight"><input type="text" name="outdoortemp3" id="outdoortemp3" value="25" class="case3"></div><br>
 
 			<label for="airtemp">Indoor Ambient Temperature (&deg;F)<sup id="fnref:7"><a href="#fn:7" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="airtemp" id="airtemp" value="72"></div>
-			<div class="inputWrapperCenter"><input type="text" name="airtemp2" id="airtemp2" value="72"></div>
-			<div class="inputWrapperRight"><input type="text" name="airtemp3" id="airtemp3" value="72"></div><br>
+			<div class="inputWrapperCenter"><input type="text" name="airtemp2" id="airtemp2" value="72" class="case2"></div>
+			<div class="inputWrapperRight"><input type="text" name="airtemp3" id="airtemp3" value="72" class="case3"></div><br>
 
 			<label for="humidity">Relative Humidity (%)<sup id="fnref:8"><a href="#fn:8" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="humidity" id="humidity" value="20"></div>
-			<div class="inputWrapperCenter"><input type="text" name="humidity2" id="humidity2" value="20"></div>
-			<div class="inputWrapperRight"><input type="text" name="humidity3" id="humidity3" value="20"></div><br>
+			<div class="inputWrapperCenter"><input type="text" name="humidity2" id="humidity2" value="20" class="case2"></div>
+			<div class="inputWrapperRight"><input type="text" name="humidity3" id="humidity3" value="20" class="case3"></div><br>
 		</fieldset>
 
 
@@ -226,23 +227,23 @@
 			
 			<label for="radiant">Radiant Floor<sup id="fnref:9"><a href="#fn:9" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="checkbox" name="radiant" id="radiant"></div>
-			<div class="inputWrapperCenter"><input type="checkbox" name="radiant2" id="radiant2"></div>
-			<div class="inputWrapperRight"><input type="checkbox" name="radiant3" id="radiant3"></div><br>
+			<div class="inputWrapperCenter"><input type="checkbox" name="radiant2" id="radiant2" class="case2"></div>
+			<div class="inputWrapperRight"><input type="checkbox" name="radiant3" id="radiant3" class="case3"></div><br>
 
 			<label for="airspeed">Air Speed (fpm)<sup id="fnref:10"><a href="#fn:10" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="airspeed" id="airspeed" value="10"></div>
-			<div class="inputWrapperCenter"><input type="text" name="airspeed2" id="airspeed2" value="10"></div>
-			<div class="inputWrapperRight"><input type="text" name="airspeed3" id="airspeed3" value="10"></div><br>
+			<div class="inputWrapperCenter"><input type="text" name="airspeed2" id="airspeed2" value="10" class="case2"></div>
+			<div class="inputWrapperRight"><input type="text" name="airspeed3" id="airspeed3" value="10" class="case3"></div><br>
 			
 			<label for="clothing">Clothing (clo)<sup id="fnref:11"><a href="#fn:11" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="clothing" id="clothing" value="0.8" step="0.1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="clothing2" id="clothing2" value="0.8" step="0.1"></div>
-			<div class="inputWrapperRight"><input type="text" name="clothing3" id="clothing3" value="0.8" step="0.1"></div><br>
+			<div class="inputWrapperCenter"><input type="text" name="clothing2" id="clothing2" value="0.8" step="0.1" class="case2"></div>
+			<div class="inputWrapperRight"><input type="text" name="clothing3" id="clothing3" value="0.8" step="0.1" class="case3"></div><br>
 
 			<label for="metabolic">Metabolic Rate (met)<sup id="fnref:12"><a href="#fn:12" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="metabolic" id="metabolic" value="1.2" step="0.1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="metabolic2" id="metabolic2" value="1.2" step="0.1"></div>
-			<div class="inputWrapperRight"><input type="text" name="metabolic3" id="metabolic3" value="1.2" step="0.1"></div><br>
+			<div class="inputWrapperCenter"><input type="text" name="metabolic2" id="metabolic2" value="1.2" step="0.1" class="case2"></div>
+			<div class="inputWrapperRight"><input type="text" name="metabolic3" id="metabolic3" value="1.2" step="0.1" class="case3"></div><br>
 
 			<input id="submit" name="submit" type="submit" value="try it!"/>
 		</fieldset>
@@ -375,7 +376,7 @@
 
  	<!-- Compute Data -->
 	<script type="text/javascript" src="static/js/script.js"></script> 
-
+	<script type="text/javascript" charset="utf-8" src="static/js/interaction.js"></script>
 
 
 

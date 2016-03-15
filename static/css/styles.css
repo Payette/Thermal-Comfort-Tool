@@ -266,7 +266,12 @@ body {
 	margin: 0;
 	vertical-align: middle;
 
+	color: #000;
+
+	cursor: pointer;
 }
+
+
 
 #caseSelection h2 span {
 	display: block;
@@ -274,9 +279,37 @@ body {
 	width: 12px;
 	height: 12px;
 	margin: 0px 1px 0 5px;
-	background: url(../../static/images/expand-orange.png) 0 0 no-repeat;
 	background-size: 11px 11px;
 }
+
+span#case1Button {
+	background: url(../../static/images/expand-orange.png) 0 0 no-repeat;
+}
+
+span#case2Button {
+	background: url(../../static/images/expand-blue.png) 0 0 no-repeat;
+}
+
+
+span#case3Button {
+	background: url(../../static/images/expand-green.png) 0 0 no-repeat;
+}
+
+/* -- show cases only when selected -- */
+#inputs input.case2, #inputs input.case3 {
+	display: none;
+}
+
+#caseSelection h2.unselected {
+	color: #b9b9b9;
+}
+
+span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unselected {
+	background: url(../../static/images/expand-unselected.png) 0 0 no-repeat;
+	background-size: 11px 11px;
+}
+
+
 
 
 
