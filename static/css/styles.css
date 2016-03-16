@@ -296,9 +296,9 @@ span#case3Button {
 }
 
 /* -- show cases only when selected -- */
-#inputs input.case2, #inputs input.case3 {
+/*#inputs input.case2, #inputs input.case3 {
 	display: none;
-}
+}*/
 
 #caseSelection h2.unselected {
 	color: #b9b9b9;
