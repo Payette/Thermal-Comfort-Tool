@@ -179,13 +179,13 @@ body {
 
 #occupantImage, #occupantImage2, #occupantImage3 {
 	position: relative;
-	width: 360px; 
-  	height: 500px;
+	width: 180px; 
+  	height: 250px;
 	background-image: url(../../static/images/slider.png);
-	background-size: 360px 500px;
+	background-size: 180px 250px;
 	display: inline-block;
 	bottom: 510px; /* imageHeight + facMargin.bottom*2*/
-	left: 300px; /* = slidderWidth - imageWidth/2 */
+	left: 0; /* = slidderWidth - imageWidth/2 */
 	opacity: .8;
 }
 

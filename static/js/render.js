@@ -895,6 +895,29 @@ render.makeGraph = function () {
 
 
 
+	function updateOccupantImageLocation(imageID, sliderID, caseName) {
+
+
+		var slider = $(sliderID);
+ 		var width = slider.width();
+ 		var imageWidth = parseFloat($(imageID).css("width"));
+
+		var sliderScale = d3.scale.linear()
+			.domain([slider.attr("min"), slider.attr("max")])
+			.range([0, width]);
+
+		var newPosition = sliderScale(caseName.occDistToWallCenter);
+
+		var newLeft = margin.left - imageWidth/2 + facadeScaleWidth(caseName.wallLen/2) + newPosition;
+
+	   	// Move occupant image
+	   	$(imageID).css({
+	       left: newLeft,
+		})
+	}
+
+
+
 
 	// Case 1 - Changes based on typed inputs
 	$("#ceiling, #wallWidth, #occupantDist, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowECheck, #lowE, #rvalue").change(function(event) {
@@ -906,33 +929,25 @@ render.makeGraph = function () {
 		if(triggeredChange == "ceiling") {
 			case1Data.ceilingHeightValue = $(this).val();
 
+
 		}
 		else if(triggeredChange == "wallWidth") {
 			case1Data.wallLen = $(this).val();
 			
-
 			$("#occupantDist").attr("max", case1Data.wallLen/2);
-			//checkOccupantImageSize();
+
+			checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
+			checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
+			checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");
+
 		}
 		else if(triggeredChange == "occupantDist") {
 			//assign new value
 			case1Data.occDistToWallCenter = $(this).val();
 			$("#occupantDist").attr("value", case1Data.occDistToWallCenter);
 
- 			var slider = $("#occupantDist");
- 			var width = slider.width();
- 			var imageWidth = parseFloat($("#occupantImage").css("width"));
-
-		 	var sliderScale = d3.scale.linear()
-				.domain([slider.attr("min"), slider.attr("max")])
-				.range([0, width]);
-
-			var newPosition = sliderScale(case1Data.occDistToWallCenter);
-
-		   	// Move occupant image
-		   	$("#occupantImage").css({
-		       left: facWidth/2 + newPosition - imageWidth/2,
-			})
+			updateOccupantImageLocation("#occupantImage", "#occupantDist", case1Data);
+ 			
 		}
 		
 		else if (triggeredChange == "windowHeight") {
@@ -989,7 +1004,6 @@ render.makeGraph = function () {
 	// Case 1 - Changes based on increment buttons
 		$("#ceiling").on("spinstop", function(event) {
 			case1Data.ceilingHeightValue = $(this).val();
-			wallPointsCase1[0].wallHeight = $(this).val();
 
 			updateData(case1Data);
 		})
@@ -999,7 +1013,11 @@ render.makeGraph = function () {
 
 
 			$("#occupantDist").attr("max", case1Data.wallLen/2);
-			//checkOccupantImageSize();
+			
+			checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
+			checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
+			checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");
+
 
 			updateData(case1Data);
 		})
@@ -1065,29 +1083,15 @@ render.makeGraph = function () {
 		else if(triggeredChange == "wallWidth2") {
 			case2Data.wallLen = $(this).val();
 			
-
 			$("#occupantDist2").attr("max", case2Data.wallLen/2);
-			//checkOccupantImageSize();
+			checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
+			checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
+			checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");
 		}
 		else if(triggeredChange == "occupantDist2") {
 			//assign new value
 			case2Data.occDistToWallCenter = $(this).val();
-			$("#occupantDist2").attr("value", case2Data.occDistToWallCenter);
-
- 			var slider = $("#occupantDist2");
- 			var width = slider.width();
- 			var imageWidth = parseFloat($("#occupantImage2").css("width"));
-
-		 	var sliderScale = d3.scale.linear()
-				.domain([slider.attr("min"), slider.attr("max")])
-				.range([0, width]);
-
-			var newPosition = sliderScale(case1Data.occDistToWallCenter);
-
-		   	// Move occupant image
-		   	$("#occupantImage2").css({
-		       left: facWidth/2 + newPosition - imageWidth/2,
-			})
+			updateOccupantImageLocation("#occupantImage2", "#occupantDist2", case2Data);
 		}
 		
 		else if (triggeredChange == "windowHeight2") {
@@ -1151,9 +1155,10 @@ render.makeGraph = function () {
 		$("#wallWidth2").on("spinstop", function(event) {
 			case2Data.wallLen = $(this).val();
 			
-
 			$("#occupantDist2").attr("max", case2Data.wallLen/2);
-			//checkOccupantImageSize();
+			checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
+			checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
+			checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");
 
 			updateData(case2Data);
 		})
@@ -1161,6 +1166,7 @@ render.makeGraph = function () {
 
 		$("#windowHeight2").on("spinstop", function(event) {
 			case2Data.windowHeightValue = $(this).val();
+
 			updateData(case2Data);
 		})
 
@@ -1221,27 +1227,14 @@ render.makeGraph = function () {
 			
 
 			$("#occupantDist3").attr("max", case3Data.wallLen/2);
-			//checkOccupantImageSize();
+			checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
+			checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
+			checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");
 		}
 		else if(triggeredChange == "occupantDist3") {
 			//assign new value
 			case3Data.occDistToWallCenter = $(this).val();
-			$("#occupantDist3").attr("value", case3Data.occDistToWallCenter);
-
- 			var slider = $("#occupantDist3");
- 			var width = slider.width();
- 			var imageWidth = parseFloat($("#occupantImage3").css("width"));
-
-		 	var sliderScale = d3.scale.linear()
-				.domain([slider.attr("min"), slider.attr("max")])
-				.range([0, width]);
-
-			var newPosition = sliderScale(case3Data.occDistToWallCenter);
-
-		   	// Move occupant image
-		   	$("#occupantImage3").css({
-		       left: facWidth/2 + newPosition - imageWidth/2,
-			})
+			updateOccupantImageLocation("#occupantImage3", "#occupantDist3", case3Data);
 		}
 		
 		else if (triggeredChange == "windowHeight3") {
@@ -1298,7 +1291,6 @@ render.makeGraph = function () {
 	// Case 3 - Changes based on increment buttons
 		$("#ceiling3").on("spinstop", function(event) {
 			case3Data.ceilingHeightValue = $(this).val();
-			wallPointsCase3[0].wallHeight = $(this).val();
 
 			updateData(case3Data);
 		})
@@ -1308,7 +1300,9 @@ render.makeGraph = function () {
 			
 
 			$("#occupantDist3").attr("max", case3Data.wallLen/2);
-			//checkOccupantImageSize();
+			checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
+			checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
+			checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");
 
 			updateData(case3Data);
 		})
@@ -1816,9 +1810,7 @@ render.makeGraph = function () {
 		}
 
 
-		checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
-		checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
-		checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");
+		
 
 		/*// Update dimensions
 		facadeSvg.selectAll("#facadeWidth, #facadeHeightDim, #facadeHeightDimLabel, #windowHeightDimLabel, #windowHeightDim, #sillHeightDim, #sillHeightDimLabelTop, #sillHeightDimLabelBottom, #windowSepDim").remove();
@@ -1850,7 +1842,8 @@ render.makeGraph = function () {
 
 		var diffBtwSVGandFacade = facWidth - facadeScaleWidth(caseName.wallLen);
 
-		var newLeft = facadeScaleWidth(caseName.wallLen/2) + (resizeWidth/2) - (diffBtwSVGandFacade/2);
+
+		var newLeft = margin.left - resizeWidth/2 + facadeScaleWidth(caseName.wallLen/2);
 		var newBottom = Math.round(resizeHeight + facMargin.bottom*2);
 
 		var newbackgroundsize = resizeWidth.toString() + "px " + resizeHeight.toString() + "px";
