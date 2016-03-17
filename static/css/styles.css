@@ -171,22 +171,13 @@ body {
 	stop-color: #C2E0FF;
 }
 
-#sliderWrapper {
-	width: 500px;
-	float: right;
+#sliderWrapper, #sliderWrapper2, #sliderWrapper3 {
+	width: 550px;
+	height: 50px
 }
 
-#sliderWrapper label {
-	font-family: "museo-sans", sans-serif;
-	font-size: 12px;
-	font-weight: 300;
-	background-color: #fff;
-	display: inline;
-	float: right;
-	margin-right: 10px;
-}
 
-#sliderWrapper output {
+#occupantImage, #occupantImage2, #occupantImage3 {
 	position: relative;
 	width: 360px; 
   	height: 500px;
@@ -194,29 +185,41 @@ body {
 	background-size: 360px 500px;
 	display: inline-block;
 	bottom: 510px; /* imageHeight + facMargin.bottom*2*/
-	left: 320px; /* = 500px - imageWidth/2 */
+	left: 300px; /* = slidderWidth - imageWidth/2 */
 	opacity: .8;
 }
 
 
+#occDistLabel, #occDistLabel2, #occDistLabel3 {
+	font-family: "museo-sans", sans-serif;
+	font-size: 12px;
+	font-weight: 300;
+	background-color: #fff;
+	display: inline;
+	float: right;
+	margin-right: 10px;
+	position: relative;
+}
 
-#occupantDist {
+
+#occupantDist, #occupantDist2, #occupantDist3 {
 	width: 250px;
 	margin: 0;
 	padding: 0;
 	border: 0;
 	float: right;
+	position: relative;
 }
 
 
-#occupantDist::-moz-range-track {
+#occupantDist::-moz-range-track, #occupantDist2::-moz-range-track, #occupantDist3::-moz-range-track {
 	-moz-appearance: none;
 	height: 2px;
 	background-color: #d5d5d5;
 	margin-right: 3px;
 	vertical-align:middle;
 }
-#occupantDist::-webkit-slider-runnable-track {
+#occupantDist::-webkit-slider-runnable-track, #occupantDist2::-webkit-slider-runnable-track, #occupantDist3::-webkit-slider-runnable-track {
 	-webkit-appearance: none;
 	height: 2px;
 	background-color: #d5d5d5;
@@ -224,7 +227,7 @@ body {
 	vertical-align:middle;
 }
 
-#occupantDist::-moz-range-thumb {
+#occupantDist::-moz-range-thumb, #occupantDist2::-moz-range-thumb, #occupantDist3::-moz-range-thumb {
 	-moz-appearance: none;
     background-color: #FFF;
     border: 3px solid rgb(150,150,150);
@@ -234,7 +237,7 @@ body {
     vertical-align:middle;
 }
 
-#occupantDist::-webkit-slider-thumb {
+#occupantDist::-webkit-slider-thumb, #occupantDist2::-webkit-slider-thumb, #occupantDist3::-webkit-slider-thumb {
 	-webkit-appearance: none;
     background-color: #FFF;
     border: 3px solid rgb(150,150,150);

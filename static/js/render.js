@@ -340,23 +340,6 @@ render.makeGraph = function () {
 /* ------ SET UP FACADE VARIABLES AND DATA FUNCTIONS ------ */
 	var facMargin = {top: 10, right: 3, bottom: 5, left: 50};
 	
-	// wall coordinates
-	var wallPointsCase1 = [{
-		wallX: 0,
-		wallWidth: case1Data.wallLen, 
-		wallHeight: case1Data.ceilingHeightValue
-	}];
-	var wallPointsCase2 = [{
-		wallX: 0,
-		wallWidth: case2Data.wallLen, 
-		wallHeight: case2Data.ceilingHeightValue
-	}];
-	var wallPointsCase3 = [{
-		wallX: 0,
-		wallWidth: case3Data.wallLen, 
-		wallHeight: case3Data.ceilingHeightValue
-	}];
-
 
 
 	// window coordinates
@@ -377,64 +360,11 @@ render.makeGraph = function () {
 
 	var facWidth = maxContainerWidth - facMargin.left - facMargin.right;
 
-	// longest wall length
-	var governingWallLength;
+	
+	var govWallLength = determineGoverningWallLength();
 
-	//if only case 1 is shown, use its wall length
-	if ($("#case1Label").hasClass("unselected") == false && $("#case2Label").hasClass("unselected") == true && $("#case3Label").hasClass("unselected") == true) {
-		governingWallLength = case1Data.wallLen;
-	}
-
-	// if both case 1 and case 2 are selected
-	if ($("#case1Label").hasClass("unselected") == false && $("#case2Label").hasClass("unselected") == false && $("#case3Label").hasClass("unselected") == true) {
-
-		//check which wall is longer
-		if ( case1Data.wallLen >= case2Data.wallLen) {
-			governingWallLength = case1Data.wallLen;
-		} else {
-			governingWallLength = case2Data.wallLen;
-		}
-	}
-
-	// if both case 1 and case 3 are selected
-	if ($("#case1Label").hasClass("unselected") == false && $("#case2Label").hasClass("unselected") == true && $("#case3Label").hasClass("unselected") == false) {
-
-		//check which wall is longer
-		if ( case1Data.wallLen >= case3Data.wallLen) {
-			governingWallLength = case1Data.wallLen;
-		} else {
-			governingWallLength = case3Data.wallLen;
-		}
-	}
-
-	// if both case 2 and case 3 are selected
-	if ($("#case1Label").hasClass("unselected") == true && $("#case2Label").hasClass("unselected") == false && $("#case3Label").hasClass("unselected") == false) {
-
-		//check which wall is longer
-		if ( case2Data.wallLen >= case3Data.wallLen) {
-			governingWallLength = case2Data.wallLen;
-		} else {
-			governingWallLength = case3Data.wallLen;
-		}
-	}
-
-	// if all case are selected
-	if ($("#case1Label").hasClass("unselected") == false && $("#case2Label").hasClass("unselected") == false && $("#case3Label").hasClass("unselected") == false) {
-
-		//check which wall is longer
-		if (case1Data.wallLen >= case2Data.wallLen && case1Data.wallLen >= case3Data.wallLen) {
-			governingWallLength = case1Data.wallLen;
-		} else if (case2Data.wallLen >= case1Data.wallLen && case2Data.wallLen >= case3Data.wallLen){
-			governingWallLength = case2Data.wallLen;
-		} else if (case3Data.wallLen >= case1Data.wallLen && case3Data.wallLen >= case2Data.wallLen){
-			governingWallLength = case3Data.wallLen;
-		}
-	}
-
-
-
-
-	var proportinateMultiplier = facWidth/governingWallLength;
+	
+	var proportinateMultiplier = facWidth/govWallLength;
 
 	var facHeightCase1 = proportinateMultiplier*case1Data.ceilingHeightValue;
 	var facHeightCase2 = proportinateMultiplier*case2Data.ceilingHeightValue;
@@ -443,7 +373,7 @@ render.makeGraph = function () {
 
 	// Set up scale functions - do I need scale functions for each wall????
 	var facadeScaleWidth = d3.scale.linear()
-				.domain([0, governingWallLength]) //input domain
+				.domain([0, govWallLength]) //input domain
 				.range([0, facWidth]); //output range
 
 	var facadeScaleHeightCase1 = d3.scale.linear()
@@ -457,7 +387,65 @@ render.makeGraph = function () {
 	var facadeScaleHeightCase3 = d3.scale.linear()
 				.domain([0, case3Data.ceilingHeightValue]) //input domain
 				.range([0, facHeightCase3]); //output range
-				
+
+
+	function determineGoverningWallLength() {
+		// longest wall length
+		var governingWallLength;
+
+		//if only case 1 is shown, use its wall length
+		if ($("#case1Label").hasClass("unselected") == false && $("#case2Label").hasClass("unselected") == true && $("#case3Label").hasClass("unselected") == true) {
+			governingWallLength = case1Data.wallLen;
+		}
+
+		// if both case 1 and case 2 are selected
+		if ($("#case1Label").hasClass("unselected") == false && $("#case2Label").hasClass("unselected") == false && $("#case3Label").hasClass("unselected") == true) {
+
+			//check which wall is longer
+			if ( case1Data.wallLen >= case2Data.wallLen) {
+				governingWallLength = case1Data.wallLen;
+			} else {
+				governingWallLength = case2Data.wallLen;
+			}
+		}
+
+		// if both case 1 and case 3 are selected
+		if ($("#case1Label").hasClass("unselected") == false && $("#case2Label").hasClass("unselected") == true && $("#case3Label").hasClass("unselected") == false) {
+
+			//check which wall is longer
+			if ( case1Data.wallLen >= case3Data.wallLen) {
+				governingWallLength = case1Data.wallLen;
+			} else {
+				governingWallLength = case3Data.wallLen;
+			}
+		}
+
+		// if both case 2 and case 3 are selected
+		if ($("#case1Label").hasClass("unselected") == true && $("#case2Label").hasClass("unselected") == false && $("#case3Label").hasClass("unselected") == false) {
+
+			//check which wall is longer
+			if ( case2Data.wallLen >= case3Data.wallLen) {
+				governingWallLength = case2Data.wallLen;
+			} else {
+				governingWallLength = case3Data.wallLen;
+			}
+		}
+
+		// if all case are selected
+		if ($("#case1Label").hasClass("unselected") == false && $("#case2Label").hasClass("unselected") == false && $("#case3Label").hasClass("unselected") == false) {
+
+			//check which wall is longer
+			if (case1Data.wallLen >= case2Data.wallLen && case1Data.wallLen >= case3Data.wallLen) {
+				governingWallLength = case1Data.wallLen;
+			} else if (case2Data.wallLen >= case1Data.wallLen && case2Data.wallLen >= case3Data.wallLen){
+				governingWallLength = case2Data.wallLen;
+			} else if (case3Data.wallLen >= case1Data.wallLen && case3Data.wallLen >= case2Data.wallLen){
+				governingWallLength = case3Data.wallLen;
+			}
+		}
+
+		return governingWallLength;
+	}				
 
 
 
@@ -479,11 +467,11 @@ render.makeGraph = function () {
 				return "translate(" + facMargin.left + "," + facMargin.top + ")"})
 		.style("fill", grey);
 
-	facadeSvgCase1.selectAll(".window")
+	facadeSvgCase1.selectAll(".window1")
 		.data(glzCoords)
 		.enter()
 		.append("rect")
-		.attr("class", "window")
+		.attr("class", "window1")
 		.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facadeScaleWidth(case1Data.wallLen)/2)})
 		.attr("y", function(d) {return (facadeScaleHeightCase1(case1Data.ceilingHeightValue - d[3][2]))})
 		.attr("width", facadeScaleWidth(glzWidth))
@@ -511,11 +499,11 @@ render.makeGraph = function () {
 				return "translate(" + facMargin.left + "," + facMargin.top + ")"})
 		.style("fill", grey);
 
-	facadeSvgCase2.selectAll(".window")
+	facadeSvgCase2.selectAll(".window2")
 		.data(glzCoordsCase2)
 		.enter()
 		.append("rect")
-		.attr("class", "window")
+		.attr("class", "window2")
 		.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facadeScaleWidth(case2Data.wallLen)/2)})
 		.attr("y", function(d) {return (facadeScaleHeightCase2(case2Data.ceilingHeightValue - d[3][2]))})
 		.attr("width", facadeScaleWidth(glzWidthCase2))
@@ -543,11 +531,11 @@ render.makeGraph = function () {
 				return "translate(" + facMargin.left + "," + facMargin.top + ")"})
 		.style("fill", grey);
 
-	facadeSvgCase3.selectAll(".window")
+	facadeSvgCase3.selectAll(".window3")
 		.data(glzCoordsCase3)
 		.enter()
 		.append("rect")
-		.attr("class", "window")
+		.attr("class", "window3")
 		.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facadeScaleWidth(case3Data.wallLen)/2)})
 		.attr("y", function(d) {return (facadeScaleHeightCase3(case3Data.ceilingHeightValue - d[3][2]))})
 		.attr("width", facadeScaleWidth(glzWidthCase3))
@@ -560,35 +548,24 @@ render.makeGraph = function () {
 
 
 
-
-
+	//Ensure size of occupant image is correct
+	checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
+	checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
+	checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");
 
 
 
 
 
 	//Initialize the windows
-/*	facadeSvg.selectAll(".window")
-		.data(glzCoords)
-		.enter()
-		.append("rect")
-		.attr("class", "window")
-		.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facWidth/2)})
-		.attr("y", function(d) {return (facadeScaleHeight(wallPoints[0].wallHeight - d[3][2]))})
-		.attr("width", facadeScaleWidth(glzWidth))
-		.attr("height", facadeScaleHeight(glzHeight))
-		.attr("transform", function() {
-			return "translate(" + facMargin.left + "," + facMargin.top + ")";
-		})
-		.style("fill", "url(#blueGradient)");
+/*	
 
 	
 	//Add facade dimensions
 	drawHorziontalDimensions(wallPoints[0].wallWidth);
 	drawVerticalDimensions(wallPoints[0].wallHeight);
 	
-	//Ensure size of occupant image is correct
-	checkOccupantImageSize();
+	
 
 
 	//Add window dimensions
@@ -710,6 +687,7 @@ render.makeGraph = function () {
 
 
 	/* ------ DETECT CHANGES TO INPUT VALUES ------ */
+	// universal changes
 	$("#distFromFacade, #distFromFacade2, #distFromFacade3").change(function(event) {
 		occDistFromFacade = $(this).val();
 
@@ -927,26 +905,14 @@ render.makeGraph = function () {
 		
 		if(triggeredChange == "ceiling") {
 			case1Data.ceilingHeightValue = $(this).val();
-			wallPointsCase1[0].wallHeight = $(this).val(); //udpate wall geometry array
+
 		}
 		else if(triggeredChange == "wallWidth") {
 			case1Data.wallLen = $(this).val();
-			wallPointsCase1[0].wallWidth = $(this).val(); //udpate wall geometry array
-			proportinateMultiplier = facWidth/wallPointsCase1[0].wallWidth;
-			facHeight = proportinateMultiplier*wallPointsCase1[0].wallHeight;
-
-			// Set up scale functions
-			facadeScaleWidth = d3.scale.linear()
-						.domain([0, wallPointsCase1[0].wallWidth]) //input domain
-						.range([0, facWidth]); //output range
-
-			facadeScaleHeight = d3.scale.linear()
-						.domain([0, wallPointsCase1[0].wallHeight]) //input domain
-						.range([0, facHeight]); //output range
 			
 
 			$("#occupantDist").attr("max", case1Data.wallLen/2);
-			checkOccupantImageSize();
+			//checkOccupantImageSize();
 		}
 		else if(triggeredChange == "occupantDist") {
 			//assign new value
@@ -1030,22 +996,10 @@ render.makeGraph = function () {
 		
 		$("#wallWidth").on("spinstop", function(event) {
 			case1Data.wallLen = $(this).val();
-			wallPointsCase1[0].wallWidth = $(this).val(); //udpate wall geometry array
-			proportinateMultiplier = facWidth/wallPointsCase1[0].wallWidth;
-			facHeight = proportinateMultiplier*wallPointsCase1[0].wallHeight;
 
-			// Set up scale functions
-			facadeScaleWidth = d3.scale.linear()
-						.domain([0, wallPointsCase1[0].wallWidth]) //input domain
-						.range([0, facWidth]); //output range
-
-			facadeScaleHeight = d3.scale.linear()
-						.domain([0, wallPointsCase1[0].wallHeight]) //input domain
-						.range([0, facHeight]); //output range
-			
 
 			$("#occupantDist").attr("max", case1Data.wallLen/2);
-			checkOccupantImageSize();
+			//checkOccupantImageSize();
 
 			updateData(case1Data);
 		})
@@ -1106,26 +1060,14 @@ render.makeGraph = function () {
 		
 		if(triggeredChange == "ceiling2") {
 			case2Data.ceilingHeightValue = $(this).val();
-			wallPointsCase2[0].wallHeight = $(this).val(); //udpate wall geometry array
+
 		}
 		else if(triggeredChange == "wallWidth2") {
 			case2Data.wallLen = $(this).val();
-			wallPointsCase2[0].wallWidth = $(this).val(); //udpate wall geometry array
-			proportinateMultiplier = facWidth/wallPointsCase2[0].wallWidth;
-			facHeight = proportinateMultiplier*wallPointsCase2[0].wallHeight;
-
-			// Set up scale functions
-			facadeScaleWidth = d3.scale.linear()
-						.domain([0, wallPointsCase2[0].wallWidth]) //input domain
-						.range([0, facWidth]); //output range
-
-			facadeScaleHeight = d3.scale.linear()
-						.domain([0, wallPointsCase2[0].wallHeight]) //input domain
-						.range([0, facHeight]); //output range
 			
 
 			$("#occupantDist2").attr("max", case2Data.wallLen/2);
-			checkOccupantImageSize();
+			//checkOccupantImageSize();
 		}
 		else if(triggeredChange == "occupantDist2") {
 			//assign new value
@@ -1202,29 +1144,16 @@ render.makeGraph = function () {
 	// Case 2 - Changes based on increment buttons
 		$("#ceiling2").on("spinstop", function(event) {
 			case2Data.ceilingHeightValue = $(this).val();
-			wallPointsCase2[0].wallHeight = $(this).val();
 
 			updateData(case2Data);
 		})
 		
 		$("#wallWidth2").on("spinstop", function(event) {
 			case2Data.wallLen = $(this).val();
-			wallPointsCase2[0].wallWidth = $(this).val(); //udpate wall geometry array
-			proportinateMultiplier = facWidth/wallPointsCase2[0].wallWidth;
-			facHeight = proportinateMultiplier*wallPointsCase2[0].wallHeight;
-
-			// Set up scale functions
-			facadeScaleWidth = d3.scale.linear()
-						.domain([0, wallPointsCase2[0].wallWidth]) //input domain
-						.range([0, facWidth]); //output range
-
-			facadeScaleHeight = d3.scale.linear()
-						.domain([0, wallPointsCase2[0].wallHeight]) //input domain
-						.range([0, facHeight]); //output range
 			
 
 			$("#occupantDist2").attr("max", case2Data.wallLen/2);
-			checkOccupantImageSize();
+			//checkOccupantImageSize();
 
 			updateData(case2Data);
 		})
@@ -1285,26 +1214,14 @@ render.makeGraph = function () {
 		
 		if(triggeredChange == "ceiling3") {
 			case3Data.ceilingHeightValue = $(this).val();
-			wallPointsCase3[0].wallHeight = $(this).val(); //udpate wall geometry array
+
 		}
 		else if(triggeredChange == "wallWidth3") {
 			case3Data.wallLen = $(this).val();
-			wallPointsCase3[0].wallWidth = $(this).val(); //udpate wall geometry array
-			proportinateMultiplier = facWidth/wallPointsCase3[0].wallWidth;
-			facHeight = proportinateMultiplier*wallPointsCase3[0].wallHeight;
-
-			// Set up scale functions
-			facadeScaleWidth = d3.scale.linear()
-						.domain([0, wallPointsCase3[0].wallWidth]) //input domain
-						.range([0, facWidth]); //output range
-
-			facadeScaleHeight = d3.scale.linear()
-						.domain([0, wallPointsCase3[0].wallHeight]) //input domain
-						.range([0, facHeight]); //output range
 			
 
 			$("#occupantDist3").attr("max", case3Data.wallLen/2);
-			checkOccupantImageSize();
+			//checkOccupantImageSize();
 		}
 		else if(triggeredChange == "occupantDist3") {
 			//assign new value
@@ -1388,22 +1305,10 @@ render.makeGraph = function () {
 		
 		$("#wallWidth2").on("spinstop", function(event) {
 			case3Data.wallLen = $(this).val();
-			wallPointsCase3[0].wallWidth = $(this).val(); //udpate wall geometry array
-			proportinateMultiplier = facWidth/wallPointsCase3[0].wallWidth;
-			facHeight = proportinateMultiplier*wallPointsCase3[0].wallHeight;
-
-			// Set up scale functions
-			facadeScaleWidth = d3.scale.linear()
-						.domain([0, wallPointsCase3[0].wallWidth]) //input domain
-						.range([0, facWidth]); //output range
-
-			facadeScaleHeight = d3.scale.linear()
-						.domain([0, wallPointsCase3[0].wallHeight]) //input domain
-						.range([0, facHeight]); //output range
 			
 
 			$("#occupantDist3").attr("max", case3Data.wallLen/2);
-			checkOccupantImageSize();
+			//checkOccupantImageSize();
 
 			updateData(case3Data);
 		})
@@ -1475,40 +1380,57 @@ render.makeGraph = function () {
 
 		
 		
-		// Update the geometry values in the form.
+		// Update values in object
 		//update window width
-/*		windowWidthValue = newGlzWidth;
-		$("#windowWidth").val(Math.round(windowWidthValue * 100) / 100);
-
+		object.windowWidthValue = newGlzWidth;
 		//update glazing ratio
-		glzRatioValue = newGlzRatio*100;
-		$("#glazing").val((Math.round(glzRatioValue)));
-
-		//update window height.
-		windowHeightValue = newGlzHeight;
-		$("#windowHeight").val(Math.round(windowHeightValue * 100) / 100);
-		//update sill
-		sillHeightValue = newSillHeight;
-		$("#sill").val(Math.round(sillHeightValue * 100) / 100);
+		object.glzRatioValue = newGlzRatio*100;
+		//update window height
+		object.windowHeightValue = newGlzHeight;
+		//update sill height
+		object.sillHeightValue = newSillHeight;
 		//update dist btwn windows.
-		distanceWindows = newCentLineDist;
-		$("#distWindow").val(Math.round(distanceWindows * 100) / 100);
-		*/
+		object.distanceWindows = newCentLineDist;
+		
+		
 
 		// Update the PPD graph and facade SVG.
+		// Update the geometry values in the form.
 		if (object == case1Data) {
+			$("#windowWidth").val(Math.round(object.windowWidthValue * 100) / 100);
+			$("#glazing").val((Math.round(object.glzRatioValue)));
+			$("#windowHeight").val(Math.round(object.windowHeightValue * 100) / 100);
+			$("#sill").val(Math.round(object.sillHeightValue * 100) / 100);
+			$("#distWindow").val(Math.round(object.distanceWindows * 100) / 100);
+
 			updateGraphData(newDataset, newOccLocData, graphPoints, ".connectLine", "circle.occdot1", orange);
+
+			updateFacade(case1Data, newGlzCoords, newGlzWidth, newGlzHeight);
 		}
 		
 		else if (object == case2Data) {
+			$("#windowWidth2").val(Math.round(object.windowWidthValue * 100) / 100);
+			$("#glazing2").val((Math.round(object.glzRatioValue)));
+			$("#windowHeight2").val(Math.round(object.windowHeightValue * 100) / 100);
+			$("#sill2").val(Math.round(object.sillHeightValue * 100) / 100);
+			$("#distWindow2").val(Math.round(object.distanceWindows * 100) / 100);
+
 			updateGraphData(newDataset, newOccLocData, graphCase2Points, ".connectLine2", "circle.occdot2", blue);
+
+			updateFacade(case2Data, newGlzCoords, newGlzWidth, newGlzHeight);
 		}
 
 		else if (object == case3Data) {
-			updateGraphData(newDataset, newOccLocData, graphCase3Points, ".connectLine3", "circle.occdot3", green);
-		}
+			$("#windowWidth3").val(Math.round(object.windowWidthValue * 100) / 100);
+			$("#glazing3").val((Math.round(object.glzRatioValue)));
+			$("#windowHeight3").val(Math.round(object.windowHeightValue * 100) / 100);
+			$("#sill3").val(Math.round(object.sillHeightValue * 100) / 100);
+			$("#distWindow3").val(Math.round(object.distanceWindows * 100) / 100);
 
-		//updateFacade(wallPoints, newGlzCoords, newGlzWidth, newGlzHeight); 
+			updateGraphData(newDataset, newOccLocData, graphCase3Points, ".connectLine3", "circle.occdot3", green);
+
+			updateFacade(case3Data, newGlzCoords, newGlzWidth, newGlzHeight);
+		}
 
 		// Update static tooltip text
 		//thresholdDataText(newOccLocData);
@@ -1587,71 +1509,369 @@ render.makeGraph = function () {
 	}
 
 
-	function updateFacade(wallData, glzData, newGlzWidth, newGlzHeight) {
+	function updateFacade(object, glzData, newGlzWidth, newGlzHeight) {
+
+		//re-evaluate governing wall length
+		govWallLength = determineGoverningWallLength();
+
 		///Update svg size to match new ceiling height
-		var newProportinateMultiplier = facWidth/wallData[0].wallWidth;
-
-		//redefine facade height
-		facHeight = newProportinateMultiplier*wallData[0].wallHeight;
-
-		//update SVG with new height
-		d3.select("#facade")
-			.attr("height", facHeight + facMargin.top + facMargin.bottom)
-			.transition()
-			.duration(500);
-
-		//update wall with revised data
-		wall.data(wallData)
-			.attr("width", function(d) {return facadeScaleWidth(d.wallWidth)})
-			.attr("height", function(d) {return facadeScaleHeight(d.wallHeight)})
-			.transition()
-			.duration(500);
-
-		//update windows		
-		d3.selectAll("rect.window").remove()
-		facadeSvg.selectAll(".window")
-			.data(glzData)
-			.enter()
-			.append("rect")
-			.attr("class", "window")
-			.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facWidth/2)})
-			.attr("y", function(d) {return (facadeScaleHeight(wallPoints[0].wallHeight - d[3][2]))})
-			.attr("width", facadeScaleWidth(newGlzWidth))
-			.attr("height", facadeScaleHeight(newGlzHeight))
-			.attr("transform", function() {
-				return "translate(" + facMargin.left + "," + facMargin.top + ")";
-			})
-			.style("fill", "url(#blueGradient)");
+		var newProportinateMultiplier = facWidth/govWallLength;
 
 
-		// Update dimensions
+		// Re-evaluate width scale function
+		facadeScaleWidth = d3.scale.linear()
+				.domain([0, govWallLength]) //input domain
+				.range([0, facWidth]); //output range
+
+		
+		if (object == case1Data) {
+			//redefine facade heights and height scale functions
+			facHeightCase1 = newProportinateMultiplier*object.ceilingHeightValue;
+			facHeightCase2 = newProportinateMultiplier*case2Data.ceilingHeightValue;
+			facHeightCase3 = newProportinateMultiplier*case3Data.ceilingHeightValue;
+
+			facadeScaleHeightCase1 = d3.scale.linear()
+				.domain([0, case1Data.ceilingHeightValue]) 
+				.range([0, facHeightCase1]); 
+
+			facadeScaleHeightCase2 = d3.scale.linear()
+				.domain([0, case2Data.ceilingHeightValue]) 
+				.range([0, facHeightCase2]); 
+
+			facadeScaleHeightCase3 = d3.scale.linear()
+				.domain([0, case3Data.ceilingHeightValue]) 
+				.range([0, facHeightCase3]); 
+
+
+			/* -- UPDATE CASE 1 FACADE REPRESENTATION -- */
+			//update wall
+			d3.select("#facadeCase1")
+				.attr("height", facHeightCase1 + facMargin.top + facMargin.bottom)
+				.transition()
+				.duration(500);
+			wallCase1.attr("width", function(d) {return facadeScaleWidth(case1Data.wallLen)})
+				.attr("height", function(d) {return facadeScaleHeightCase1(case1Data.ceilingHeightValue)})
+				.transition()
+				.duration(500);
+			//update windows
+			d3.selectAll("rect.window1").remove()
+			facadeSvgCase1.selectAll(".window1")
+				.data(glzData)
+				.enter()
+				.append("rect")
+				.attr("class", "window1")
+				.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facadeScaleWidth(case1Data.wallLen)/2)})
+				.attr("y", function(d) {return (facadeScaleHeightCase1(case1Data.ceilingHeightValue - d[3][2]))})
+				.attr("width", facadeScaleWidth(newGlzWidth))
+				.attr("height", facadeScaleHeightCase1(newGlzHeight))
+				.attr("transform", function() {
+					return "translate(" + facMargin.left + "," + facMargin.top + ")";
+				})
+				.style("fill", "url(#blueGradient)");
+		
+
+			/* -- UPDATE CASE 2 FACADE REPRESENTATION -- */
+			d3.select("#facadeCase2")
+				.attr("height", facHeightCase2 + facMargin.top + facMargin.bottom)
+				.transition()
+				.duration(500);
+			wallCase2.attr("width", function(d) {return facadeScaleWidth(case2Data.wallLen)})
+				.attr("height", function(d) {return facadeScaleHeightCase2(case2Data.ceilingHeightValue)})
+				.transition()
+				.duration(500);
+			//update windows
+			d3.selectAll("rect.window2").remove()
+			facadeSvgCase2.selectAll(".window2")
+				.data(glzCoordsCase2)
+				.enter()
+				.append("rect")
+				.attr("class", "window2")
+				.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facadeScaleWidth(case2Data.wallLen)/2)})
+				.attr("y", function(d) {return (facadeScaleHeightCase2(case2Data.ceilingHeightValue - d[3][2]))})
+				.attr("width", facadeScaleWidth(glzWidthCase2))
+				.attr("height", facadeScaleHeightCase1(glzHeightCase2))
+				.attr("transform", function() {
+					return "translate(" + facMargin.left + "," + facMargin.top + ")";
+				})
+				.style("fill", "url(#blueGradient)");
+
+
+			/* -- UPDATE CASE 3 FACADE REPRESENTATION -- */
+			d3.select("#facadeCase3")
+				.attr("height", facHeightCase3 + facMargin.top + facMargin.bottom)
+				.transition()
+				.duration(500);
+			wallCase3.attr("width", function(d) {return facadeScaleWidth(case3Data.wallLen)})
+				.attr("height", function(d) {return facadeScaleHeightCase3(case3Data.ceilingHeightValue)})
+				.transition()
+				.duration(500);
+			//update windows
+			d3.selectAll("rect.window3").remove()
+			facadeSvgCase3.selectAll(".window3")
+				.data(glzCoordsCase3)
+				.enter()
+				.append("rect")
+				.attr("class", "window3")
+				.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facadeScaleWidth(case3Data.wallLen)/2)})
+				.attr("y", function(d) {return (facadeScaleHeightCase3(case3Data.ceilingHeightValue - d[3][2]))})
+				.attr("width", facadeScaleWidth(glzWidthCase3))
+				.attr("height", facadeScaleHeightCase1(glzHeightCase3))
+				.attr("transform", function() {
+					return "translate(" + facMargin.left + "," + facMargin.top + ")";
+				})
+				.style("fill", "url(#blueGradient)");
+
+		} else if (object == case2Data) {
+			//redefine facade heights and height scale functions
+			facHeightCase1 = newProportinateMultiplier*case1Data.ceilingHeightValue;
+			facHeightCase2 = newProportinateMultiplier*object.ceilingHeightValue;
+			facHeightCase3 = newProportinateMultiplier*case3Data.ceilingHeightValue;
+
+			facadeScaleHeightCase1 = d3.scale.linear()
+				.domain([0, case1Data.ceilingHeightValue]) 
+				.range([0, facHeightCase1]); 
+
+			facadeScaleHeightCase2 = d3.scale.linear()
+				.domain([0, case2Data.ceilingHeightValue]) 
+				.range([0, facHeightCase2]); 
+
+			facadeScaleHeightCase3 = d3.scale.linear()
+				.domain([0, case3Data.ceilingHeightValue]) 
+				.range([0, facHeightCase3]); 
+
+
+			/* -- UPDATE CASE 1 FACADE REPRESENTATION -- */
+			//update wall
+			d3.select("#facadeCase1")
+				.attr("height", facHeightCase1 + facMargin.top + facMargin.bottom)
+				.transition()
+				.duration(500);
+			wallCase1.attr("width", function(d) {return facadeScaleWidth(case1Data.wallLen)})
+				.attr("height", function(d) {return facadeScaleHeightCase1(case1Data.ceilingHeightValue)})
+				.transition()
+				.duration(500);
+			//update windows
+			d3.selectAll("rect.window1").remove()
+			facadeSvgCase1.selectAll(".window1")
+				.data(glzCoords)
+				.enter()
+				.append("rect")
+				.attr("class", "window1")
+				.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facadeScaleWidth(case1Data.wallLen)/2)})
+				.attr("y", function(d) {return (facadeScaleHeightCase1(case1Data.ceilingHeightValue - d[3][2]))})
+				.attr("width", facadeScaleWidth(glzWidth))
+				.attr("height", facadeScaleHeightCase1(glzHeight))
+				.attr("transform", function() {
+					return "translate(" + facMargin.left + "," + facMargin.top + ")";
+				})
+				.style("fill", "url(#blueGradient)");
+		
+
+			/* -- UPDATE CASE 2 FACADE REPRESENTATION -- */
+			d3.select("#facadeCase2")
+				.attr("height", facHeightCase2 + facMargin.top + facMargin.bottom)
+				.transition()
+				.duration(500);
+			wallCase2.attr("width", function(d) {return facadeScaleWidth(case2Data.wallLen)})
+				.attr("height", function(d) {return facadeScaleHeightCase2(case2Data.ceilingHeightValue)})
+				.transition()
+				.duration(500);
+			//update windows
+			d3.selectAll("rect.window2").remove()
+			facadeSvgCase2.selectAll(".window2")
+				.data(glzData)
+				.enter()
+				.append("rect")
+				.attr("class", "window2")
+				.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facadeScaleWidth(case2Data.wallLen)/2)})
+				.attr("y", function(d) {return (facadeScaleHeightCase2(case2Data.ceilingHeightValue - d[3][2]))})
+				.attr("width", facadeScaleWidth(newGlzWidth))
+				.attr("height", facadeScaleHeightCase1(newGlzHeight))
+				.attr("transform", function() {
+					return "translate(" + facMargin.left + "," + facMargin.top + ")";
+				})
+				.style("fill", "url(#blueGradient)");
+
+
+			/* -- UPDATE CASE 3 FACADE REPRESENTATION -- */
+			d3.select("#facadeCase3")
+				.attr("height", facHeightCase3 + facMargin.top + facMargin.bottom)
+				.transition()
+				.duration(500);
+			wallCase3.attr("width", function(d) {return facadeScaleWidth(case3Data.wallLen)})
+				.attr("height", function(d) {return facadeScaleHeightCase3(case3Data.ceilingHeightValue)})
+				.transition()
+				.duration(500);
+			//update windows
+			d3.selectAll("rect.window3").remove()
+			facadeSvgCase3.selectAll(".window3")
+				.data(glzCoordsCase3)
+				.enter()
+				.append("rect")
+				.attr("class", "window3")
+				.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facadeScaleWidth(case3Data.wallLen)/2)})
+				.attr("y", function(d) {return (facadeScaleHeightCase3(case3Data.ceilingHeightValue - d[3][2]))})
+				.attr("width", facadeScaleWidth(glzWidthCase3))
+				.attr("height", facadeScaleHeightCase1(glzHeightCase3))
+				.attr("transform", function() {
+					return "translate(" + facMargin.left + "," + facMargin.top + ")";
+				})
+				.style("fill", "url(#blueGradient)");
+
+		} else if (object == case3Data) {
+			//redefine facade heights and height scale functions
+			facHeightCase1 = newProportinateMultiplier*case1Data.ceilingHeightValue;
+			facHeightCase2 = newProportinateMultiplier*case2Data.ceilingHeightValue;
+			facHeightCase3 = newProportinateMultiplier*object.ceilingHeightValue;
+
+			facadeScaleHeightCase1 = d3.scale.linear()
+				.domain([0, case1Data.ceilingHeightValue]) 
+				.range([0, facHeightCase1]); 
+
+			facadeScaleHeightCase2 = d3.scale.linear()
+				.domain([0, case2Data.ceilingHeightValue]) 
+				.range([0, facHeightCase2]); 
+
+			facadeScaleHeightCase3 = d3.scale.linear()
+				.domain([0, case3Data.ceilingHeightValue]) 
+				.range([0, facHeightCase3]); 
+
+
+			/* -- UPDATE CASE 1 FACADE REPRESENTATION -- */
+			//update wall
+			d3.select("#facadeCase1")
+				.attr("height", facHeightCase1 + facMargin.top + facMargin.bottom)
+				.transition()
+				.duration(500);
+			wallCase1.attr("width", function(d) {return facadeScaleWidth(case1Data.wallLen)})
+				.attr("height", function(d) {return facadeScaleHeightCase1(case1Data.ceilingHeightValue)})
+				.transition()
+				.duration(500);
+			//update windows
+			d3.selectAll("rect.window1").remove()
+			facadeSvgCase1.selectAll(".window1")
+				.data(glzCoords)
+				.enter()
+				.append("rect")
+				.attr("class", "window1")
+				.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facadeScaleWidth(case1Data.wallLen)/2)})
+				.attr("y", function(d) {return (facadeScaleHeightCase1(case1Data.ceilingHeightValue - d[3][2]))})
+				.attr("width", facadeScaleWidth(glzWidth))
+				.attr("height", facadeScaleHeightCase1(glzHeight))
+				.attr("transform", function() {
+					return "translate(" + facMargin.left + "," + facMargin.top + ")";
+				})
+				.style("fill", "url(#blueGradient)");
+
+			/* -- UPDATE CASE 2 FACADE REPRESENTATION -- */
+			d3.select("#facadeCase2")
+				.attr("height", facHeightCase2 + facMargin.top + facMargin.bottom)
+				.transition()
+				.duration(500);
+			wallCase2.attr("width", function(d) {return facadeScaleWidth(case2Data.wallLen)})
+				.attr("height", function(d) {return facadeScaleHeightCase2(case2Data.ceilingHeightValue)})
+				.transition()
+				.duration(500);
+			//update windows
+			d3.selectAll("rect.window2").remove()
+			facadeSvgCase2.selectAll(".window2")
+				.data(glzCoordsCase2)
+				.enter()
+				.append("rect")
+				.attr("class", "window2")
+				.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facadeScaleWidth(case2Data.wallLen)/2)})
+				.attr("y", function(d) {return (facadeScaleHeightCase2(case2Data.ceilingHeightValue - d[3][2]))})
+				.attr("width", facadeScaleWidth(glzWidthCase2))
+				.attr("height", facadeScaleHeightCase1(glzHeightCase2))
+				.attr("transform", function() {
+					return "translate(" + facMargin.left + "," + facMargin.top + ")";
+				})
+				.style("fill", "url(#blueGradient)");
+
+
+			/* -- UPDATE CASE 3 FACADE REPRESENTATION -- */
+			d3.select("#facadeCase3")
+				.attr("height", facHeightCase3 + facMargin.top + facMargin.bottom)
+				.transition()
+				.duration(500);
+			wallCase3.attr("width", function(d) {return facadeScaleWidth(case3Data.wallLen)})
+				.attr("height", function(d) {return facadeScaleHeightCase3(case3Data.ceilingHeightValue)})
+				.transition()
+				.duration(500);
+			//update windows
+			d3.selectAll("rect.window3").remove()
+			facadeSvgCase3.selectAll(".window3")
+				.data(glzData)
+				.enter()
+				.append("rect")
+				.attr("class", "window3")
+				.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facadeScaleWidth(case3Data.wallLen)/2)})
+				.attr("y", function(d) {return (facadeScaleHeightCase3(case3Data.ceilingHeightValue - d[3][2]))})
+				.attr("width", facadeScaleWidth(newGlzWidth))
+				.attr("height", facadeScaleHeightCase1(newGlzHeight))
+				.attr("transform", function() {
+					return "translate(" + facMargin.left + "," + facMargin.top + ")";
+				})
+				.style("fill", "url(#blueGradient)");
+		}
+
+
+		checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
+		checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
+		checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");
+
+		/*// Update dimensions
 		facadeSvg.selectAll("#facadeWidth, #facadeHeightDim, #facadeHeightDimLabel, #windowHeightDimLabel, #windowHeightDim, #sillHeightDim, #sillHeightDimLabelTop, #sillHeightDimLabelBottom, #windowSepDim").remove();
 		drawHorziontalDimensions(wallPoints[0].wallWidth);
 		drawVerticalDimensions(wallPoints[0].wallHeight);
-		windowDimensions(glzData, newGlzWidth, newGlzHeight);
+		windowDimensions(glzData, newGlzWidth, newGlzHeight);*/
 
 	}
 
-	function checkOccupantImageSize() {
+	
+	function checkOccupantImageSize(caseName, imageID, sliderID, labelID) {
 		// original image dimensions
 		var originalHeight = 500;
 		var originalWidth = 360;
 
-		var resizeHeight = Math.round(facadeScaleHeight(4.25)); //assume 4.25ft sitting height
+		//assume 4.25ft sitting height
+		var resizeHeight; 
+
+		if (caseName == case1Data) {
+			resizeHeight = Math.round(facadeScaleHeightCase1(4.25)); 
+		} else if (caseName == case2Data) {
+			resizeHeight = Math.round(facadeScaleHeightCase2(4.25));
+		} else if (caseName == case3Data) {
+			resizeHeight = Math.round(facadeScaleHeightCase3(4.25));
+		}
+
+
 		var resizeWidth = Math.round((resizeHeight/originalHeight)*originalWidth);
 
-		var newLeft = Math.round(facWidth/2 - resizeWidth/2);
+		var diffBtwSVGandFacade = facWidth - facadeScaleWidth(caseName.wallLen);
+
+		var newLeft = facadeScaleWidth(caseName.wallLen/2) + (resizeWidth/2) - (diffBtwSVGandFacade/2);
 		var newBottom = Math.round(resizeHeight + facMargin.bottom*2);
 
 		var newbackgroundsize = resizeWidth.toString() + "px " + resizeHeight.toString() + "px";
 
-		$("#occupantImage").css({
+		$(imageID).css({
 			width: resizeWidth,
 			height: resizeHeight,
 			left: newLeft,
 			bottom: newBottom,
 			backgroundSize: newbackgroundsize,
+		}) 
+
+		$(sliderID).css({
+			width: facadeScaleWidth(caseName.wallLen)/2,
+			right: diffBtwSVGandFacade + facMargin.right,
 		})
+
+		$(labelID).css({
+			right: diffBtwSVGandFacade + facMargin.right,
+		})
+		
 	}
 	
 
