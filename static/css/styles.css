@@ -290,7 +290,6 @@ span#case2Button {
 	background: url(../../static/images/expand-blue.png) 0 0 no-repeat;
 }
 
-
 span#case3Button {
 	background: url(../../static/images/expand-green.png) 0 0 no-repeat;
 }
@@ -300,9 +299,10 @@ span#case3Button {
 	display: none;
 }*/
 
-#caseSelection h2.unselected {
+#caseSelection h2.unselected, #caseSelection h3.unselected {
 	color: #b9b9b9;
 }
+
 
 span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unselected {
 	background: url(../../static/images/expand-unselected.png) 0 0 no-repeat;

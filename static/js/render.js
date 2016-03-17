@@ -337,8 +337,8 @@ render.makeGraph = function () {
 
 
 
-	/* ------ SET UP FACADE VARIABLES AND DATA FUNCTIONS ------ */
-	var facMargin = {top: 25, right: 3, bottom: 5, left: 50};
+/* ------ SET UP FACADE VARIABLES AND DATA FUNCTIONS ------ */
+	var facMargin = {top: 10, right: 3, bottom: 5, left: 50};
 	
 	// wall coordinates
 	var wallPointsCase1 = [{
@@ -346,13 +346,11 @@ render.makeGraph = function () {
 		wallWidth: case1Data.wallLen, 
 		wallHeight: case1Data.ceilingHeightValue
 	}];
-
 	var wallPointsCase2 = [{
 		wallX: 0,
 		wallWidth: case2Data.wallLen, 
 		wallHeight: case2Data.ceilingHeightValue
 	}];
-
 	var wallPointsCase3 = [{
 		wallX: 0,
 		wallWidth: case3Data.wallLen, 
@@ -375,49 +373,202 @@ render.makeGraph = function () {
 	var glzHeightCase3 = allData3.windowHeight;
 
 	
-/*	// Set SVG height to be proportionate to wall length and extend of wall height
+	// Set SVG height to be proportionate to wall length and extend of wall height
 
 	var facWidth = maxContainerWidth - facMargin.left - facMargin.right;
 
-	var proportinateMultiplier = facWidth/wallPoints[0].wallWidth;
-	var facHeight = proportinateMultiplier*wallPoints[0].wallHeight;
+	// longest wall length
+	var governingWallLength;
 
-	// Set up scale functions
+	//if only case 1 is shown, use its wall length
+	if ($("#case1Label").hasClass("unselected") == false && $("#case2Label").hasClass("unselected") == true && $("#case3Label").hasClass("unselected") == true) {
+		governingWallLength = case1Data.wallLen;
+	}
+
+	// if both case 1 and case 2 are selected
+	if ($("#case1Label").hasClass("unselected") == false && $("#case2Label").hasClass("unselected") == false && $("#case3Label").hasClass("unselected") == true) {
+
+		//check which wall is longer
+		if ( case1Data.wallLen >= case2Data.wallLen) {
+			governingWallLength = case1Data.wallLen;
+		} else {
+			governingWallLength = case2Data.wallLen;
+		}
+	}
+
+	// if both case 1 and case 3 are selected
+	if ($("#case1Label").hasClass("unselected") == false && $("#case2Label").hasClass("unselected") == true && $("#case3Label").hasClass("unselected") == false) {
+
+		//check which wall is longer
+		if ( case1Data.wallLen >= case3Data.wallLen) {
+			governingWallLength = case1Data.wallLen;
+		} else {
+			governingWallLength = case3Data.wallLen;
+		}
+	}
+
+	// if both case 2 and case 3 are selected
+	if ($("#case1Label").hasClass("unselected") == true && $("#case2Label").hasClass("unselected") == false && $("#case3Label").hasClass("unselected") == false) {
+
+		//check which wall is longer
+		if ( case2Data.wallLen >= case3Data.wallLen) {
+			governingWallLength = case2Data.wallLen;
+		} else {
+			governingWallLength = case3Data.wallLen;
+		}
+	}
+
+	// if all case are selected
+	if ($("#case1Label").hasClass("unselected") == false && $("#case2Label").hasClass("unselected") == false && $("#case3Label").hasClass("unselected") == false) {
+
+		//check which wall is longer
+		if (case1Data.wallLen >= case2Data.wallLen && case1Data.wallLen >= case3Data.wallLen) {
+			governingWallLength = case1Data.wallLen;
+		} else if (case2Data.wallLen >= case1Data.wallLen && case2Data.wallLen >= case3Data.wallLen){
+			governingWallLength = case2Data.wallLen;
+		} else if (case3Data.wallLen >= case1Data.wallLen && case3Data.wallLen >= case2Data.wallLen){
+			governingWallLength = case3Data.wallLen;
+		}
+	}
+
+
+
+
+	var proportinateMultiplier = facWidth/governingWallLength;
+
+	var facHeightCase1 = proportinateMultiplier*case1Data.ceilingHeightValue;
+	var facHeightCase2 = proportinateMultiplier*case2Data.ceilingHeightValue;
+	var facHeightCase3 = proportinateMultiplier*case3Data.ceilingHeightValue;
+
+
+	// Set up scale functions - do I need scale functions for each wall????
 	var facadeScaleWidth = d3.scale.linear()
-				.domain([0, wallPoints[0].wallWidth]) //input domain
+				.domain([0, governingWallLength]) //input domain
 				.range([0, facWidth]); //output range
 
-	var facadeScaleHeight = d3.scale.linear()
-				.domain([0, wallPoints[0].wallHeight]) //input domain
-				.range([0, facHeight]); //output range
+	var facadeScaleHeightCase1 = d3.scale.linear()
+				.domain([0, case1Data.ceilingHeightValue]) //input domain
+				.range([0, facHeightCase1]); //output range
+
+	var facadeScaleHeightCase2 = d3.scale.linear()
+				.domain([0, case2Data.ceilingHeightValue]) //input domain
+				.range([0, facHeightCase2]); //output range
+
+	var facadeScaleHeightCase3 = d3.scale.linear()
+				.domain([0, case3Data.ceilingHeightValue]) //input domain
+				.range([0, facHeightCase3]); //output range
 				
 
-*/
 
-	/* ------ MAKE THE FACADE ------ */
-	//Initialize SVG
-/*	var facadeSvg = d3.select("#facadeWrapper")
+
+/* ------ MAKE THE FACADE ------ */
+// Case 1 Facade
+	var facadeSvgCase1 = d3.select("#case1FacadeWrapper")
 				.append("svg")
-				.attr("id", "facade")
+				.attr("id", "facadeCase1")
 				.attr("width", facWidth + facMargin.left + facMargin.right)
-				.attr("height", facHeight + facMargin.top + facMargin.bottom);
+				.attr("height", facHeightCase1 + facMargin.top + facMargin.bottom);
 
-	//Initialize wall facade
-	var wall = facadeSvg.selectAll(".wall") 
-		.data(wallPoints) 
-		.enter() 
-		.append("rect") 
-		.attr("class","wall") 
+	var wallCase1 = facadeSvgCase1.append("rect") 
+		.attr("class","wall1") 
 		.attr("x", 0)
 		.attr("y", 0)
-		.attr("width", function(d) {return facadeScaleWidth(d.wallWidth)})
-		.attr("height", function(d) {return facadeScaleHeight(d.wallHeight)})
+		.attr("width", function(d) {return facadeScaleWidth(case1Data.wallLen)})
+		.attr("height", function(d) {return facadeScaleHeightCase1(case1Data.ceilingHeightValue)})
 		.attr("transform", function() {
 				return "translate(" + facMargin.left + "," + facMargin.top + ")"})
 		.style("fill", grey);
 
+	facadeSvgCase1.selectAll(".window")
+		.data(glzCoords)
+		.enter()
+		.append("rect")
+		.attr("class", "window")
+		.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facadeScaleWidth(case1Data.wallLen)/2)})
+		.attr("y", function(d) {return (facadeScaleHeightCase1(case1Data.ceilingHeightValue - d[3][2]))})
+		.attr("width", facadeScaleWidth(glzWidth))
+		.attr("height", facadeScaleHeightCase1(glzHeight))
+		.attr("transform", function() {
+			return "translate(" + facMargin.left + "," + facMargin.top + ")";
+		})
+		.style("fill", "url(#blueGradient)");
+
+
+// Case 2 Facade
+	var facadeSvgCase2 = d3.select("#case2FacadeWrapper")
+				.append("svg")
+				.attr("id", "facadeCase2")
+				.attr("width", facWidth + facMargin.left + facMargin.right)
+				.attr("height", facHeightCase2 + facMargin.top + facMargin.bottom);
+
+	var wallCase2 = facadeSvgCase2.append("rect") 
+		.attr("class","wall2") 
+		.attr("x", 0)
+		.attr("y", 0)
+		.attr("width", function(d) {return facadeScaleWidth(case2Data.wallLen)})
+		.attr("height", function(d) {return facadeScaleHeightCase2(case2Data.ceilingHeightValue)})
+		.attr("transform", function() {
+				return "translate(" + facMargin.left + "," + facMargin.top + ")"})
+		.style("fill", grey);
+
+	facadeSvgCase2.selectAll(".window")
+		.data(glzCoordsCase2)
+		.enter()
+		.append("rect")
+		.attr("class", "window")
+		.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facadeScaleWidth(case2Data.wallLen)/2)})
+		.attr("y", function(d) {return (facadeScaleHeightCase2(case2Data.ceilingHeightValue - d[3][2]))})
+		.attr("width", facadeScaleWidth(glzWidthCase2))
+		.attr("height", facadeScaleHeightCase2(glzHeightCase2))
+		.attr("transform", function() {
+			return "translate(" + facMargin.left + "," + facMargin.top + ")";
+		})
+		.style("fill", "url(#blueGradient)");
+
+
+// Case 3 Facade
+	var facadeSvgCase3 = d3.select("#case3FacadeWrapper")
+				.append("svg")
+				.attr("id", "facadeCase3")
+				.attr("width", facWidth + facMargin.left + facMargin.right)
+				.attr("height", facHeightCase3 + facMargin.top + facMargin.bottom);
+
+	var wallCase3 = facadeSvgCase3.append("rect") 
+		.attr("class","wall3") 
+		.attr("x", 0)
+		.attr("y", 0)
+		.attr("width", function(d) {return facadeScaleWidth(case3Data.wallLen)})
+		.attr("height", function(d) {return facadeScaleHeightCase2(case3Data.ceilingHeightValue)})
+		.attr("transform", function() {
+				return "translate(" + facMargin.left + "," + facMargin.top + ")"})
+		.style("fill", grey);
+
+	facadeSvgCase3.selectAll(".window")
+		.data(glzCoordsCase3)
+		.enter()
+		.append("rect")
+		.attr("class", "window")
+		.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facadeScaleWidth(case3Data.wallLen)/2)})
+		.attr("y", function(d) {return (facadeScaleHeightCase3(case3Data.ceilingHeightValue - d[3][2]))})
+		.attr("width", facadeScaleWidth(glzWidthCase3))
+		.attr("height", facadeScaleHeightCase2(glzHeightCase3))
+		.attr("transform", function() {
+			return "translate(" + facMargin.left + "," + facMargin.top + ")";
+		})
+		.style("fill", "url(#blueGradient)");
+
+
+
+
+
+
+
+
+
+
+
 	//Initialize the windows
-	facadeSvg.selectAll(".window")
+/*	facadeSvg.selectAll(".window")
 		.data(glzCoords)
 		.enter()
 		.append("rect")
@@ -494,7 +645,9 @@ render.makeGraph = function () {
 
 	/* ---- SVG DEFINITIONS ---- */
 
-/*	var defs = facadeSvg.append("defs");
+	var defs = facadeSvgCase1.append("defs");
+	var defsCase2 = facadeSvgCase2.append("defs");
+	var defsCase3 = facadeSvgCase3.append("defs");
 
 	//arrowhead marker
     var arrow = defs.append("marker")
@@ -525,7 +678,33 @@ render.makeGraph = function () {
     blueGradient.append("stop")
     	.attr("class", "blueGradientStop2")
     	.attr("offset", "100%")
-*/
+
+    var blueGradient2 = defsCase2.append("linearGradient")
+    	.attr("id", "blueGradient")
+    	.attr( 'x1', '0' )
+        .attr( 'x2', '0' )
+        .attr( 'y1', '0' )
+        .attr( 'y2', '1' ); // makes vertical gradient
+    blueGradient2.append("stop")
+    	.attr("class", "blueGradientStop1")
+    	.attr("offset", "60%");
+    blueGradient2.append("stop")
+    	.attr("class", "blueGradientStop2")
+    	.attr("offset", "100%")
+
+    var blueGradient3 = defsCase3.append("linearGradient")
+    	.attr("id", "blueGradient")
+    	.attr( 'x1', '0' )
+        .attr( 'x2', '0' )
+        .attr( 'y1', '0' )
+        .attr( 'y2', '1' ); // makes vertical gradient
+    blueGradient3.append("stop")
+    	.attr("class", "blueGradientStop1")
+    	.attr("offset", "60%");
+    blueGradient3.append("stop")
+    	.attr("class", "blueGradientStop2")
+    	.attr("offset", "100%")
+
 
 
 
