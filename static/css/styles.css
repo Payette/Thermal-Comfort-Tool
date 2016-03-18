@@ -483,20 +483,65 @@ div.inputWrapperRight span {
 }
 
 #inputs label input.customCheck {
-	margin-left: 20px;
-	width: 28px;
+	width: 15px;
 	vertical-align: middle;
 }
 
 
 
 
+/* custom checkbox styling */
+input[type=checkbox] {
+	visibility: hidden;
+}
 
+#inputs div.customCheckStyle {
+	width: 12px;
+	margin: 0px 5px 0px 20px;
+	position: relative;
 
+	vertical-align: middle;
+}
+/* box for the checkbox */
+#inputs div.customCheckStyle label {
+	cursor: pointer;
+	position: absolute;
+	width: 12px;
+	height: 12px;
+	padding: 1px;
+	top: 0;
+	left: 0;
+	background: rgb(245, 245, 245);
+}
+/* tick for inside checkbox */
+#inputs div.customCheckStyle label:after {
+	opacity: 0.2;
+	content: '';
+	position: absolute;
+	width: 7px;
+	height: 4px;
+	background: transparent;
+	top: 3px;
+	left: 2px;
+	border: 2px solid #333;
+	border-top: none;
+	border-right: none;
 
+	-webkit-transform: rotate(-45deg);
+	-moz-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	transform: rotate(-45deg);
 
+}
 
+#inputs div.customCheckStyle label:hover::after {
+	opacity: 0.5;
+}
 
+#inputs div.customCheckStyle input[type=checkbox]:checked label:after {
+	opacity: 1;
+}
 
 
 
