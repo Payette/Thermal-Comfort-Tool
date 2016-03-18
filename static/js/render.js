@@ -218,7 +218,7 @@ render.makeGraph = function () {
 		.style("stroke", green);
 
 	// Add line at occupant location
-	//occupantDistanceRefLine(); 
+	occupantDistanceRefLine(); 
 
 	// add text and reference line at occupanct location
 	if (occPointData.ppd >= occPointData2.ppd && occPointData.ppd >= occPointData3.ppd) {
@@ -507,20 +507,20 @@ render.makeGraph = function () {
 	
 	//Add facade dimensions
 	drawHorziontalDimensions(wallPoints[0].wallWidth);
-	drawVerticalDimensions(wallPoints[0].wallHeight);
+	drawVerticalDimensions(wallPoints[0].wallHeight);*/
 	
 	
 
 
-	//Add window dimensions
-	windowDimensions(glzCoords, glzWidth, glzHeight);*/
+	//Add window dimensions to Case 1 facade
+	windowDimensions(glzCoords, glzWidth, glzHeight);
 
 
 
 
 
 	
-/*
+
 	$("#windHeightButt").on("mouseover", function() {
 		$("#windowHeightDimLabel, #windowHeightDim").fadeIn("fast");
 	})
@@ -548,14 +548,8 @@ render.makeGraph = function () {
 	$("#windSepButt").on("mouseout", function() {
 		$("#windowSepDim").fadeOut("fast");
 	})
-*/
 
-	/*$("#submit").on("mouseover", function() {
-		$("#submit").removeClass("inactive");
-	})
-	$("#submit").on("mouseout", function() {
-		$("#submit").addClass("inactive");
-	})*/
+
 
 
 
@@ -628,34 +622,121 @@ render.makeGraph = function () {
 
 
 
+
+
+
+
     /* ------ HIDE AND RESIZE FACADE ------ */
+    $("#caseSelection #case1Label").on("click", function() {
+
+    	var array = [];
+    	
+    	if ($(this).hasClass("unselected") == true) {
+    		//becomes selected
+			$(this).removeClass("unselected");
+			$("#case1Button").removeClass("unselected");
+
+			$("#inputs input.case1, #case1FacadeWrapper, #sliderWrapper, .connectLine, .dotCase1, .occdot1").css("display", "initial");
+
+			// add case 2 wall length to array
+			array.push(case1Data.wallLen);
+
+		}
+
+		else if ($(this).hasClass("unselected") == false) {
+			// becomes unselected
+			$(this).addClass("unselected");
+			$("#case1Button").addClass("unselected");
+
+			$("#inputs input.case1, #case1FacadeWrapper, #sliderWrapper, .connectLine, .dotCase1, .occdot1").css("display", "none");
+		}
+
+		//check case 2
+		if ($("#caseSelection #case2Label").hasClass("unselected") == false ) {
+			array.push(case2Data.wallLen);
+		}
+
+		//check case 3
+		if ($("#caseSelection #case3Label").hasClass("unselected") == false ) {
+			array.push(case3Data.wallLen);
+		}
+
+		resizeFacades(array);
+	
+    });
+
     $("#caseSelection #case2Label").on("click", function() {
 
+    	var array = [];
     	
-
     	if ($(this).hasClass("unselected") == true) {
+    		//becomes selected
 			$(this).removeClass("unselected");
 			$("#case2Button").removeClass("unselected");
 
 			$("#inputs input.case2, #case2FacadeWrapper, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").css("display", "initial");
 
-			var array = [case1Data.wallLen, case2Data.wallLen, case3Data.wallLen]
-    		resizeFacades(array);
-
+			// add case 2 wall length to array
+			array.push(case2Data.wallLen);
 		}
 
 		else if ($(this).hasClass("unselected") == false) {
+			// becomes unselected
 			$(this).addClass("unselected");
 			$("#case2Button").addClass("unselected");
 
 			$("#inputs input.case2, #case2FacadeWrapper, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").css("display", "none");
-
-			var array = [case1Data.wallLen, case3Data.wallLen]
-    		resizeFacades(array);
-
 		}
 
+		//check case 1
+		if ($("#caseSelection #case1Label").hasClass("unselected") == false ) {
+			array.push(case1Data.wallLen);
+		}
+
+		//check case 3
+		if ($("#caseSelection #case3Label").hasClass("unselected") == false ) {
+			array.push(case3Data.wallLen);
+		}
+
+		resizeFacades(array);
+	
+    });
+
+    $("#caseSelection #case3Label").on("click", function() {
+
+    	var array = [];
     	
+    	if ($(this).hasClass("unselected") == true) {
+    		//becomes selected
+			$(this).removeClass("unselected");
+			$("#case3Button").removeClass("unselected");
+
+			$("#inputs input.case3, #case3FacadeWrapper, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3").css("display", "initial");
+
+			// add case 2 wall length to array
+			array.push(case2Data.wallLen);
+		}
+
+		else if ($(this).hasClass("unselected") == false) {
+			// becomes unselected
+			$(this).addClass("unselected");
+			$("#case3Button").addClass("unselected");
+
+			$("#inputs input.case3, #case3FacadeWrapper, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3").css("display", "none");
+		}
+
+		//check case 1
+		if ($("#caseSelection #case1Label").hasClass("unselected") == false ) {
+			array.push(case1Data.wallLen);
+		}
+
+		//check case 2
+		if ($("#caseSelection #case2Label").hasClass("unselected") == false ) {
+			array.push(case2Data.wallLen);
+		}
+
+		resizeFacades(array);
+	
     });
 
 
@@ -707,19 +788,15 @@ render.makeGraph = function () {
 	$("#windowWidthCheck").change(function(event) {
 		if (($("#windowWidthCheck").is(":checked")) == true) {
 			glzOrWidth = false;
-			$("#windowWidth").removeClass("inactive");
-			$("#windowWidthLabel").removeClass("inactive");
-			$("#glazing").addClass("inactive");
-			$("#glazingLabel").addClass("inactive");
+			$("#windowWidth, #windowWidth2, #windowWidth3, #windowWidthLabel").removeClass("inactive");
+			$("#glazing, #glazing2, #glazing3, #glazingLabel").addClass("inactive");
 
 			$("#glazingRatioCheck").removeAttr("checked");
 
 		} else if (($("#windowWidthCheck").is(":checked")) == false) {
 			glzOrWidth = true;
-			$("#windowWidth").addClass("inactive");
-			$("#windowWidthLabel").addClass("inactive");
-			$("#glazing").removeClass("inactive");
-			$("#glazingLabel").removeClass("inactive");
+			$("#windowWidth, #windowWidth2, #windowWidth3, #windowWidthLabel").addClass("inactive");
+			$("#glazing, #glazing2, #glazing3, #glazingLabel").removeClass("inactive");
 
 			$("#glazingRatioCheck").attr("checked", "checked");
 		}
@@ -727,23 +804,64 @@ render.makeGraph = function () {
 	$("#glazingRatioCheck").change(function(event) {
 		if (($("#glazingRatioCheck").is(":checked")) == true) {
 			glzOrWidth = true;
-			$("#windowWidth").addClass("inactive");
-			$("#windowWidthLabel").addClass("inactive");
-			$("#glazing").removeClass("inactive");
-			$("#glazingLabel").removeClass("inactive");
+			$("#windowWidth, #windowWidth2, #windowWidth3, #windowWidthLabel").addClass("inactive");
+			$("#glazing, #glazing2, #glazing3, #glazingLabel").removeClass("inactive");
 
 			$("#windowWidthCheck").removeAttr("checked");
 
 		} else if (($("#glazingRatioCheck").is(":checked")) == false) {
 			glzOrWidth = false;
-			$("#windowWidth").removeClass("inactive");
-			$("#windowWidthLabel").removeClass("inactive");
-			$("#glazing").addClass("inactive");
-			$("#glazingLabel").addClass("inactive");
+			$("#windowWidth, #windowWidth2, #windowWidth3, #windowWidthLabel").removeClass("inactive");
+			$("#glazing, #glazing2, #glazing3, #glazingLabel").addClass("inactive");
 
 			$("#windowWidthCheck").attr("checked", "checked");
 		}
 	})
+
+	$("#provideUValueCheck").change(function(event) {
+		if (($("#provideUValueCheck").is(":checked")) == true) {
+
+			$("#uvalue, #uvalue2, #uvalue3, #uvalueLab").removeClass("inactive");
+
+			$("#calcuvalue, #calcuvalue2, #calcuvalue3, #calcUValueLabel").addClass("inactive");
+			
+			$("#calcUValueCheck").removeAttr("checked");
+
+		} else if (($("#provideUValueCheck").is(":checked")) == false) {
+
+			$("#uvalue, #uvalue2, #uvalue3, #uvalueLab").addClass("inactive");
+
+			$("#calcuvalue, #calcuvalue2, #calcuvalue3, #calcUValueLabel").removeClass("inactive");
+
+			$("#calcUValueCheck").attr("checked", "checked");
+
+			autocalcUValues();
+		}
+	});
+
+	$("#calcUValueCheck").change(function(event) {
+		if (($("#calcUValueCheck").is(":checked")) == true) {
+
+			$("#uvalue, #uvalue2, #uvalue3, #uvalueLab").addClass("inactive");
+
+			$("#calcuvalue, #calcuvalue2, #calcuvalue3, #calcUValueLabel").removeClass("inactive");
+
+			$("#provideUValueCheck").removeAttr("checked");
+
+			autocalcUValues();
+
+		} else if (($("#calcUValueCheck").is(":checked")) == false) {
+
+			$("#uvalue, #uvalue2, #uvalue3, #uvalueLab").removeClass("inactive");
+			$("#calcuvalue, #calcuvalue2, #calcuvalue3, #calcUValueLabel").addClass("inactive");
+			
+			$("#provideUValueCheck").attr("checked", "checked");
+
+		}
+	})
+
+
+
 	
 	$("#outdoortemp").change(function(event) {
 		outdoorTempValue = $(this).val();
@@ -866,10 +984,6 @@ render.makeGraph = function () {
 		updateData(case2Data);
 		updateData(case3Data);
 	})
-
-
-
-	
 
 
 
@@ -1310,27 +1424,10 @@ render.makeGraph = function () {
 
 
 
-	function determineGoverningWallLength() {
-		// longest wall length
-		var governingWallLength;
+	
 
-		var arrayToCompare = [];
 
-		//if inputs are show, add wall length to array for comparison
-		if ($("#case1Label").hasClass("unselected") == false) {
-			arrayToCompare.push(case1Data.wallLen);
-		}
-		if ($("#case2Label").hasClass("unselected") == false) {
-			arrayToCompare.push(case2Data.wallLen);
-		}
-		if ($("#case3Label").hasClass("unselected") == false) {
-			arrayToCompare.push(case3Data.wallLen);
-		}
 
-		governingWallLength = d3.max(arrayToCompare);
-
-		return governingWallLength;
-	}
 
 	// Called after adjusting values based on change events
 	function updateData(object) {
@@ -1410,39 +1507,51 @@ render.makeGraph = function () {
 
 
 	
+	function autocalcUValues() {
 
-
-	
-	// Update when autocalculate U Value is pressed.
-	$('#form').on('submit', function(event) {
-		event.preventDefault();
-		
 		// Re-run the functions with the new inputs.
-		var fullData = script.computeData()
-		
+		var fullDataCase1 = script.computeData(case1Data);
+		var fullDataCase2 = script.computeData(case2Data);
+		var fullDataCase3 = script.computeData(case3Data);
+
 		//Compute the U-Value required to make the occupant comfortable.
-		uvalueValue = uVal.uValFinal(fullData.wallViews[12], fullData.glzViews[12], fullData.facadeDist[12], fullData.runDownCalc, parseFloat(windowHeightValue), airtempValue, outdoorTempValue, rvalueValue, intLowEChecked, intLowEEmissivity, airspeedValue, humidityValue, metabolic, clothingValue, ppdValue)
-		
-		// Update the value in the form.
-		$("#uvalue").val(Math.round(uvalueValue * 1000) / 1000);
-		
-		// Re-run the functions with the new inputs.
-		var fullData = script.computeData()
-		
-		//update datasets with new value
-		var newDataset = fullData.dataSet;
-		var newGlzCoords = fullData.glzCoords;
-		var newGlzWidth = fullData.windowWidth;
-		var newGlzHeight = fullData.windowHeight;
-		var newOccLocData = fullData.occPtInfo;
-		
-		// Update the PPD graph and facade SVG.
-		updateGraphData(newDataset, newOccLocData);
-		updateFacade(wallPoints, newGlzCoords, newGlzWidth, newGlzHeight); 
+		case1Data.uvalueValue = uVal.uValFinal(fullDataCase1.wallViews[12], fullDataCase1.glzViews[12], fullDataCase1.facadeDist[12], fullDataCase1.runDownCalc, parseFloat(case1Data.windowHeightValue), airtempValue, outdoorTempValue, case1Data.rvalueValue, case1Data.intLowEChecked, case1Data.intLowEEmissivity, airspeedValue, humidityValue, metabolic, clothingValue, ppdValue);
 
-		thresholdDataText(newOccLocData);
+		case2Data.uvalueValue = uVal.uValFinal(fullDataCase2.wallViews[12], fullDataCase2.glzViews[12], fullDataCase2.facadeDist[12], fullDataCase2.runDownCalc, parseFloat(case2Data.windowHeightValue), airtempValue, outdoorTempValue, case2Data.rvalueValue, case2Data.intLowEChecked, case2Data.intLowEEmissivity, airspeedValue, humidityValue, metabolic, clothingValue, ppdValue);
+
+		case3Data.uvalueValue = uVal.uValFinal(fullDataCase3.wallViews[12], fullDataCase3.glzViews[12], fullDataCase3.facadeDist[12], fullDataCase3.runDownCalc, parseFloat(case3Data.windowHeightValue), airtempValue, outdoorTempValue, case3Data.rvalueValue, case3Data.intLowEChecked, case3Data.intLowEEmissivity, airspeedValue, humidityValue, metabolic, clothingValue, ppdValue);
+
+		// Update the value in the form.
+		$("#calcuvalue").val(Math.round(case1Data.uvalueValue * 1000) / 1000);
+		$("#calcuvalue2").val(Math.round(case2Data.uvalueValue * 1000) / 1000);
+		$("#calcuvalue3").val(Math.round(case3Data.uvalueValue * 1000) / 1000);
+
+
+		// Re-run the functions with the new inputs.
+		fullDataCase1 = script.computeData(case1Data);
+		fullDataCase2 = script.computeData(case2Data);
+		fullDataCase3 = script.computeData(case3Data);
 		
-	})
+
+		// Update the PPD graph and facade SVG.
+		updateGraphData(fullDataCase1.dataSet, fullDataCase1.occPtInfo, graphPoints, ".connectLine", "circle.occdot1", orange);
+		updateFacade(case1Data, fullDataCase1.glzCoords, fullDataCase1.windowWidth, fullDataCase1.windowHeight);
+
+		updateGraphData(fullDataCase2.dataSet, fullDataCase2.occPtInfo, graphCase2Points, ".connectLine2", "circle.occdot2", blue);
+		updateFacade(case2Data, fullDataCase2.glzCoords, fullDataCase2.windowWidth, fullDataCase2.windowHeight);
+
+		updateGraphData(fullDataCase3.dataSet, fullDataCase3.occPtInfo, graphCase3Points, ".connectLine3", "circle.occdot3", green);
+		updateFacade(case3Data, fullDataCase3.glzCoords, fullDataCase3.windowWidth, fullDataCase3.windowHeight);
+
+
+
+		//updateGraphData(newDataset, newOccLocData);
+		//updateFacade(wallPoints, newGlzCoords, newGlzWidth, newGlzHeight); 
+
+		//thresholdDataText(newOccLocData);
+
+	}
+
 
 
 	
@@ -1474,8 +1583,8 @@ render.makeGraph = function () {
 			.transition()
 			.duration(1000);
 
-		//d3.selectAll(".occupantLine").remove();
-		//occupantDistanceRefLine();
+		d3.selectAll(".occupantLine").remove();
+		occupantDistanceRefLine();
 	}
 
 
@@ -1800,13 +1909,8 @@ render.makeGraph = function () {
 	//only use when cases hidden and shown
 	function resizeFacades(array) {
 
-
-		console.log("old: " + govWallLength);
-
 		//re-evaluate governing wall length
 		var govLength = d3.max(array);
-
-		console.log("new: " + govLength);
 
 		///Update svg size to match new ceiling height
 		var newProportinateMultiplier = facWidth/govLength;
@@ -1916,7 +2020,6 @@ render.makeGraph = function () {
 
 	}
 
-
 	
 	function checkOccupantImageSize(caseName, imageID, sliderID, labelID) {
 		// original image dimensions
@@ -1987,6 +2090,28 @@ render.makeGraph = function () {
 
 
 	/* ------ FUNCTIONS FOR GENERAL REFERENCE VISUALS ------ */
+
+	function determineGoverningWallLength() {
+		// longest wall length
+		var governingWallLength;
+
+		var arrayToCompare = [];
+
+		//if inputs are show, add wall length to array for comparison
+		if ($("#case1Label").hasClass("unselected") == false) {
+			arrayToCompare.push(case1Data.wallLen);
+		}
+		if ($("#case2Label").hasClass("unselected") == false) {
+			arrayToCompare.push(case2Data.wallLen);
+		}
+		if ($("#case3Label").hasClass("unselected") == false) {
+			arrayToCompare.push(case3Data.wallLen);
+		}
+
+		governingWallLength = d3.max(arrayToCompare);
+
+		return governingWallLength;
+	}
 
 	// Display text for occupancy dist from facade
 	function thresholdDataText(occdata, className) {
@@ -2074,9 +2199,9 @@ render.makeGraph = function () {
 		graphSvg.append("rect")
 			.attr("class", "thresholdRect")
 			.attr("x", 0)
-			.attr("y", 0)
+			.attr("y", function() { return y(data)})
 			.attr("width", width) //use width of graph
-			.attr("height", function() { return y(data)})
+			.attr("height", function() { return height - y(data)})
 			.attr("transform", function() {
 					return "translate(" + margin.left + "," + margin.top + ")";})
 			.style("fill", lightgrey);
@@ -2104,15 +2229,36 @@ render.makeGraph = function () {
 		d3.selectAll(".thresholdRect")
 			.transition()
 			.duration(400)
-			.attr("height", function() {return y(data)});
+			.attr("y", function() { return y(data)})
+			.attr("height", function() { return height - y(data)});
 	}
 
 
 	function occupantDistanceRefLine() {
 
-		var xPosition = parseFloat(d3.select("circle.occdot").attr("cx"));
-		var yPosition = parseFloat(d3.select("circle.occdot").attr("cy"));
-		var padding = (d3.select("circle.occdot").attr("r"))*1.8;
+		//find max cy of visible occ points
+		var compareOccupantArray = [];
+
+		if ($("#caseSelection #case1Label").hasClass("unselected") == false ) {
+			var case1YPosition = parseFloat(d3.select("circle.occdot1").attr("cy"));
+			compareOccupantArray.push(case1YPosition);
+		}
+
+		if ($("#caseSelection #case2Label").hasClass("unselected") == false ) {
+			var case2YPosition = parseFloat(d3.select("circle.occdot2").attr("cy"));
+			compareOccupantArray.push(case2YPosition);
+		}
+
+		if ($("#caseSelection #case3Label").hasClass("unselected") == false ) {
+			var case3YPosition = parseFloat(d3.select("circle.occdot3").attr("cy"));
+			compareOccupantArray.push(case2YPosition);
+		}
+
+
+
+		var xPosition = parseFloat(d3.select("circle.occdot1").attr("cx"));
+		var yPosition = d3.max(compareOccupantArray);
+		var padding = (d3.select("circle.occdot1").attr("r"))*1.8;
 
 		// add line
 		graphSvg.append("line")
@@ -2200,25 +2346,26 @@ render.makeGraph = function () {
 	function windowDimensions(glazingData, glazingWidth, glazingHeight) {
 
 		//get position of left-most window
-		var firstWindow = $(".window:last");
+		var firstWindow = $(".window1:last");
 
 
 		var leftEdgeWindow = parseFloat(firstWindow.attr("x"));
 		var middleWidth = parseFloat(firstWindow.attr("x")) + facadeScaleWidth(glazingWidth/2);
-		var verticalWindowMidpoint = parseFloat(firstWindow.attr("y")) + facadeScaleHeight(glazingHeight/2);
+		var verticalWindowMidpoint = parseFloat(firstWindow.attr("y")) + facadeScaleHeightCase1(glazingHeight/2);
 		var topOfWindow = parseFloat(firstWindow.attr("y"));
-		var bottomOfWindow = parseFloat(firstWindow.attr("y")) + facadeScaleHeight(glazingHeight);
-		var sillHeightPixels = facadeScaleHeight(glazingData[0][0][2]);
+		var bottomOfWindow = parseFloat(firstWindow.attr("y")) + facadeScaleHeightCase1(glazingHeight);
+		var sillHeightPixels = facadeScaleHeightCase1(glazingData[0][0][2]);
 		
 		try {
 			var windowSeparationPixels = facadeScaleWidth(glazingData[0][0][0]) - facadeScaleWidth(glazingData[1][0][0]);
 		} catch (err) {
-			var windowSeparationPixels = wallLen/2
+			var windowSeparationPixels = case1Data.wallLen/2
 		}
 
 
+
 		// window height
-		facadeSvg.append("g")
+		facadeSvgCase1.append("g")
 			.attr("id", "windowHeightDimLabel")
 			.attr("transform", "translate(" + (middleWidth + facMargin.left + 3) + "," + (verticalWindowMidpoint + facMargin.top) + ")")
 			.append("text")
@@ -2227,12 +2374,12 @@ render.makeGraph = function () {
 		    .attr("transform", "rotate(-90)")
 		    .text("Window Height");
 
-		facadeSvg.append("g")
+		facadeSvgCase1.append("g")
 			.attr("class", "dimensions")
 			.attr("id", "windowHeightDim")
 			.attr("transform", "translate(" + facMargin.left + "," + ( facMargin.top) + ")");
 
-		var windowHeightDimensions = facadeSvg.selectAll("#windowHeightDim");
+		var windowHeightDimensions = facadeSvgCase1.selectAll("#windowHeightDim");
 
 		windowHeightDimensions.append("line") // add line to left of text
 		    .attr("class", "dimline")
@@ -2253,12 +2400,12 @@ render.makeGraph = function () {
 
 
 		//window width
-		facadeSvg.append("g")
+		facadeSvgCase1.append("g")
 			.attr("class", "dimensions")
 			.attr("id", "windowWidthDim")
 			.attr("transform", "translate(" + facMargin.left + "," + ( facMargin.top) + ")");
 
-		var windowWidthDimensions = facadeSvg.selectAll("#windowWidthDim");
+		var windowWidthDimensions = facadeSvgCase1.selectAll("#windowWidthDim");
 
 		windowWidthDimensions.append("line") // add line to left of text
 		    .attr("class", "dimline")
@@ -2292,7 +2439,7 @@ render.makeGraph = function () {
 
 
 		//sill height
-		facadeSvg.append("g")
+		facadeSvgCase1.append("g")
 			.attr("id", "sillHeightDimLabelTop")
 			.attr("transform", "translate(" + (middleWidth + facMargin.left - 4) + "," + (bottomOfWindow + sillHeightPixels/2 + facMargin.top) + ")")
 			.append("text")
@@ -2301,7 +2448,7 @@ render.makeGraph = function () {
 		    .attr("transform", "rotate(-90)")
 		    .text("Sill");
 
-		facadeSvg.append("g")
+		facadeSvgCase1.append("g")
 			.attr("id", "sillHeightDimLabelBottom")
 			.attr("transform", "translate(" + (middleWidth + facMargin.left + 12) + "," + (bottomOfWindow + sillHeightPixels/2 + facMargin.top) + ")")
 			.append("text")
@@ -2310,12 +2457,12 @@ render.makeGraph = function () {
 		    .attr("transform", "rotate(-90)")
 		    .text("Height");
 
-		facadeSvg.append("g")
+		facadeSvgCase1.append("g")
 			.attr("class", "dimensions")
 			.attr("id", "sillHeightDim")
 			.attr("transform", "translate(" + facMargin.left + "," + ( facMargin.top) + ")");
 
-		var sillHeightDimensions = facadeSvg.selectAll("#sillHeightDim");
+		var sillHeightDimensions = facadeSvgCase1.selectAll("#sillHeightDim");
 
 		sillHeightDimensions.append("line") // add line to left of text
 		    .attr("class", "dimline")
@@ -2336,12 +2483,12 @@ render.makeGraph = function () {
 
 
 		//window separation
-		facadeSvg.append("g")
+		facadeSvgCase1.append("g")
 			.attr("class", "dimensions")
 			.attr("id", "windowSepDim")
 			.attr("transform", "translate(" + facMargin.left + "," + ( facMargin.top) + ")");
 
-		var windowSepDimensions = facadeSvg.selectAll("#windowSepDim");
+		var windowSepDimensions = facadeSvgCase1.selectAll("#windowSepDim");
 
 
 		windowSepDimensions.append("line") // add line to left of text

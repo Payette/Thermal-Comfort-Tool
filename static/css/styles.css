@@ -147,8 +147,8 @@ body {
 }
 
 
-#facade .dimline {
-	stroke-width: 1;
+.dimline {
+	stroke-width: 1px;
 	stroke: #777;
 	stroke-linecap: butt;
 	shape-rendering: crispEdges;
@@ -273,7 +273,6 @@ body {
 
 	cursor: pointer;
 }
-
 
 
 #caseSelection h2 span {
@@ -488,6 +487,17 @@ div.inputWrapperRight span {
 	width: 28px;
 	vertical-align: middle;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

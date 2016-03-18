@@ -74,7 +74,7 @@ uVal.uValMRT = function(opaqueViewFac, winViewFac, airTemp, outdoorTemp, opaqueR
 	if (winViewFac > 0.01) {
 		// Calculate the minimum acceptable MRT to satisfy the input PPD.
 		var minAcceptMRT = uVal.calcMinAcceptMRT(airTemp, vel, relHumid, metRate, cloLevel, targetPPD)
-		console.log(comf.pmv(airTemp, minAcceptMRT, vel, relHumid, metRate, cloLevel, 0).ppd)
+		//console.log(comf.pmv(airTemp, minAcceptMRT, vel, relHumid, metRate, cloLevel, 0).ppd)
 		//Calculate the temperature of the opaque wall and its contribution to the comfort.
 		var opaqueTemp = comf.calcInteriorTemp(airTemp, outdoorTemp, opaqueRVal, 8.29)
 		var opaqueContrib = uVal.MRTCondtribOfOpaque(opaqueTemp, opaqueViewFac, winViewFac, airTemp);
