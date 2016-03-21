@@ -154,39 +154,8 @@
 	right: -5px;
 	top: -5px;
 }
-.ui-selectable-helper {
-	position: absolute;
-	z-index: 100;
-	border: 1px dotted black;
-}
-.ui-accordion .ui-accordion-header {
-	display: block;
-	cursor: pointer;
-	position: relative;
-	margin-top: 2px;
-	padding: .5em .5em .5em .7em;
-	min-height: 0; /* support: IE7 */
-}
-.ui-accordion .ui-accordion-icons {
-	padding-left: 2.2em;
-}
-.ui-accordion .ui-accordion-noicons {
-	padding-left: .7em;
-}
-.ui-accordion .ui-accordion-icons .ui-accordion-icons {
-	padding-left: 2.2em;
-}
-.ui-accordion .ui-accordion-header .ui-accordion-header-icon {
-	position: absolute;
-	left: .5em;
-	top: 50%;
-	margin-top: -8px;
-}
-.ui-accordion .ui-accordion-content {
-	padding: 1em 2.2em;
-	border-top: 0;
-	overflow: auto;
-}
+
+
 .ui-autocomplete {
 	position: absolute;
 	top: 0;
@@ -308,6 +277,7 @@ button.ui-button::-moz-focus-inner {
 	overflow: hidden;
 	padding: 0;
 	vertical-align: middle;
+	float: left;
 }
 .ui-spinner-input {
 	border: none;
@@ -320,7 +290,7 @@ button.ui-button::-moz-focus-inner {
 	margin-right: 22px;
 }
 .ui-spinner-button {
-	width: 12px;
+	width: 10px;
 	height: 50%;
 	font-size: .5em;
 	padding: 0;
@@ -330,7 +300,7 @@ button.ui-button::-moz-focus-inner {
 	cursor: default;
 	display: block;
 	overflow: hidden;
-	right: 0;
+	right: 2px;
 }
 /* more specificity required here to override default borders */
 .ui-spinner a.ui-spinner-button {
@@ -355,7 +325,7 @@ button.ui-button::-moz-focus-inner {
 /* TR overrides */
 .ui-spinner .ui-icon-triangle-1-s {
 	/* need to fix icons sprite */
-	background-position: -9px 0px;
+	background-position: -10px 0px;
 }
 
 
@@ -539,7 +509,7 @@ button.ui-button::-moz-focus-inner {
 }
 
 /* positioning */
-.ui-icon-triangle-1-n { background-position: 3px 0px; }
+.ui-icon-triangle-1-n { background-position: 2px 0px; }
 
 
 

@@ -2,16 +2,8 @@ var script = script || {}
 
 
 //Pull the individual values from the form.
-var ceilingHeightValue = $("#ceiling").val();
-var wallLen = $("#wallWidth").val();
-var windowHeightValue = $("#windowHeight").val();
-var windowWidthValue = $("#windowWidth").val();
-var glzRatioValue = $("#glazing").val();
-var glzOrWidth = false;
-var sillHeightValue = $("#sill").val();
-var distanceWindows = $('#distWindow').val();
-var occDistToWallCenter = $("#occupantDist").val();
-var occDistFromFacade = $('#distFromFacade').val();
+
+
 
 if ($("#windowWidthCheck").is(":checked")) {
 	glzOrWidth = false;
@@ -19,13 +11,10 @@ if ($("#windowWidthCheck").is(":checked")) {
 	glzOrWidth = true;
 }
 
-var outdoorTempValue = $("#outdoortemp").val();
-var uvalueValue = $("#uvalue").val();
-var intLowEChecked = $("#lowECheck").is(":checked"); //provides a true/false
-var intLowEEmissivity = $("#lowE").val();
-var rvalueValue = $("#rvalue").val();
+var occDistFromFacade = $('#distFromFacade').val();
 var ppdValue = $("#ppd").val();
 
+var outdoorTempValue = $("#outdoortemp").val();
 var airtempValue = $("#airtemp").val();
 var radiantFloorChecked = $("#radiant").is(":checked"); //provides a true/false
 var airspeedValue = $("#airspeed").val();
@@ -34,22 +23,83 @@ var clothingValue = $("#clothing").val();
 var metabolic = $("#metabolic").val();
 
 
+var case1Data = {
+	ceilingHeightValue: $("#ceiling").val(),
+	wallLen: $("#wallWidth").val(),
+	windowHeightValue: $("#windowHeight").val(),
+	windowWidthValue: $("#windowWidth").val(),
+	glzRatioValue: $("#glazing").val(),
+	sillHeightValue: $("#sill").val(),
+	distanceWindows: $('#distWindow').val(),
+	
+	occDistToWallCenter: 0,
+
+	uvalueValue: $("#uvalue").val(),
+	intLowEChecked: $("#lowECheck").is(":checked"), //provides a true/false
+	intLowEEmissivity: $("#lowE").val(),
+	rvalueValue: $("#rvalue").val(),
+}
+
+
+
+var case2Data = {
+	ceilingHeightValue: $("#ceiling2").val(),
+	wallLen: $("#wallWidth2").val(),
+	windowHeightValue: $("#windowHeight2").val(),
+	windowWidthValue: $("#windowWidth2").val(),
+	glzRatioValue: $("#glazing2").val(),
+	sillHeightValue: $("#sill2").val(),
+	distanceWindows: $('#distWindow2').val(),
+
+	occDistToWallCenter: 0,
+
+	uvalueValue: $("#uvalue2").val(),
+	intLowEChecked: $("#lowECheck2").is(":checked"), //provides a true/false
+	intLowEEmissivity: $("#lowE2").val(),
+	rvalueValue: $("#rvalue2").val(),
+
+}
+
+
+var case3Data = {
+	ceilingHeightValue: $("#ceiling3").val(),
+	wallLen: $("#wallWidth3").val(),
+	windowHeightValue: $("#windowHeight3").val(),
+	windowWidthValue: $("#windowWidth3").val(),
+	glzRatioValue: $("#glazing3").val(),
+	sillHeightValue: $("#sill3").val(),
+	distanceWindows: $('#distWindow3').val(),
+
+	occDistToWallCenter: 0,
+
+	uvalueValue: $("#uvalue3").val(),
+	intLowEChecked: $("#lowECheck3").is(":checked"), //provides a true/false
+	intLowEEmissivity: $("#lowE3").val(),
+	rvalueValue: $("#rvalue3").val(),
+}
+
+
+
+
+
+
 //ensure slider has correct max value
-$("#occupantDist").attr("max", wallLen/2);
+$("#occupantDist").attr("max", case1Data.wallLen/2);
 
 
 
 // Main function to run the analysis.
-script.computeData = function() {
+script.computeData = function(object) {
 	// Compute the window and wall geometry.
-	var geoResult = geo.createGlazingForRect(parseFloat(ceilingHeightValue), wallLen, glzRatioValue/100, parseFloat(windowWidthValue), parseFloat(windowHeightValue), parseFloat(sillHeightValue), parseFloat(distanceWindows), glzOrWidth);
+	var geoResult = geo.createGlazingForRect(parseFloat(object.ceilingHeightValue), object.wallLen, object.glzRatioValue/100, parseFloat(object.windowWidthValue), parseFloat(object.windowHeightValue), parseFloat(object.sillHeightValue), parseFloat(object.distanceWindows), glzOrWidth);
 	
 	// Compute the view factors to make the graph.
-	var viewResult = geo.computeAllViewFac(geoResult.wallCoords, geoResult.glzCoords, occDistToWallCenter)
+	var viewResult = geo.computeAllViewFac(geoResult.wallCoords, geoResult.glzCoords, object.occDistToWallCenter)
 	
 	// Compute the PPD to make the graph.
-	var comfortResult = comf.getFullPPD(viewResult.wallViews, viewResult.glzViews, viewResult.facadeDist, viewResult.windIntervals, occDistToWallCenter, geoResult.windowHeight, uvalueValue, intLowEChecked, intLowEEmissivity, rvalueValue, airtempValue, outdoorTempValue, radiantFloorChecked, clothingValue, metabolic, airspeedValue, humidityValue)
+	var comfortResult = comf.getFullPPD(viewResult.wallViews, viewResult.glzViews, viewResult.facadeDist, viewResult.windIntervals, object.occDistToWallCenter, geoResult.windowHeight, object.uvalueValue, object.intLowEChecked, object.intLowEEmissivity, object.rvalueValue, airtempValue, outdoorTempValue, radiantFloorChecked, clothingValue, metabolic, airspeedValue, humidityValue)
 	
+
 	// Return all of the information in one dictionary
 	var r = {}
 	
@@ -70,6 +120,7 @@ script.computeData = function() {
 	r.occPtInfo = comfortResult.occPtInfo;  // The status of the occupant at the input location.
 	r.runDownCalc = comfortResult.runDownCalc;  // Boolean value for whether the occupant is in front of the window or not.
 	
+
 	return r
 }
 
