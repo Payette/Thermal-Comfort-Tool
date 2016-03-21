@@ -112,8 +112,8 @@
 
 		<div id="caseSelection">
 			<h2 id="case1Label"><span id="case1Button"></span>CASE 1</h2>
-			<h2 id="case2Label"><span id="case2Button"></span>CASE 2</h2>
-			<h2 id="case3Label"><span id="case3Button"></span>CASE 3</h2>
+			<h2 id="case2Label" class="unselected"><span id="case2Button" class="unselected"></span>CASE 2</h2>
+			<h2 id="case3Label" class="unselected"><span id="case3Button" class="unselected"></span>CASE 3</h2>
 		</div>	
 
 		<form id="form">	
@@ -141,12 +141,12 @@
 
 			<label for="">Set Glazing Amount By</label><br>
 
-			<label for="width" id="windowWidthLabel"><div class="customCheckStyle"><input type="checkbox" name="windowWidthCheck" id="windowWidthCheck" class="customCheck" checked><label for="windowWidthCheck"></label></div>Window Width (ft)<sup class="dimHover" id="windWidthButt">?</sup></label>
+			<label for="width" id="windowWidthLabel"><div class="customCheckStyle"><input type="checkbox" name="windowWidthCheck" id="windowWidthCheck" class="customCheck" checked><label for="windowWidthCheck" id="checkWindWidth"></label></div>Window Width (ft)<sup class="dimHover" id="windWidthButt">?</sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="width" id="windowWidth" value="4" step="0.5" class="case1"></div>
 			<div class="inputWrapperCenter"><input type="text" name="width2" id="windowWidth2" value="4" step="0.5" class="case2"></div>
 			<div class="inputWrapperRight"><input type="text" name="width3" id="windowWidth3" value="4" step="0.5" class="case3"></div><br>
 			
-			<label for="glazing" class="inactive" id="glazingLabel"><div class="customCheckStyle"><input type="checkbox" name="glazingRatioCheck" class="customCheck" id="glazingRatioCheck"><label for="glazingRatioCheck"></label></div>Glazing Ratio (%)</label>
+			<label for="glazing" class="inactive" id="glazingLabel"><div class="customCheckStyle"><input type="checkbox" name="glazingRatioCheck" class="customCheck" id="glazingRatioCheck"><label for="glazingRatioCheck" id="checkGlzRatio" class="unselected"></label></div>Glazing Ratio (%)</label>
 			<div class="inputWrapperLeft"><input type="text" name="glazing" class="inactive case1" id="glazing" value="" step="1"></div>
 			<div class="inputWrapperCenter"><input type="text" name="glazing2" class="inactive case2" id="glazing2" value="" step="1"></div>
 			<div class="inputWrapperRight"><input type="text" name="glazing3" class="inactive case3" id="glazing3" value="" step="1"></div><br>
@@ -170,22 +170,25 @@
 
 			<label for="">Window U-Value (Btu/hr*ft&sup2;*&deg;F)<sup id="fnref:1"><a href="#fn:1" rel="footnote">?</a></sup></label><br>
 
-			<label for="uvalue" id="uvalueLab"><input type="checkbox" name="provideUValueCheck" id="provideUValueCheck" class="customCheck" checked>Provide U-value</label>
+			<label for="uvalue" id="uvalueLab"><div class="customCheckStyle"><input type="checkbox" name="provideUValueCheck" id="provideUValueCheck" class="customCheck" checked><label for="provideUValueCheck" id="checkProvide"></label></div>Provide U-Value</label>
 
 			<div class="inputWrapperLeft"><input type="text" name="uvalue" id="uvalue" value="0.25" step="0.01" class="case1"></div>
 			<div class="inputWrapperCenter"><input type="text" name="uvalue2" id="uvalue2" value="0.25" step="0.01" class="case2"></div>
 			<div class="inputWrapperRight"><input type="text" name="uvalue3" id="uvalue3" value="0.25" step="0.01" class="case3"></div><br>
 
-			<label for="calcUValueCheck" id="calcUValueLabel" class="inactive"><input type="checkbox" name="calcUValueCheck" id="calcUValueCheck" class="customCheck">Calculate U-Value<sup id="fnref:2"><a href="#fn:2" rel="footnote">?</a></sup></label>
+			<label for="calcuvalue" id="calcUValueLabel" class="inactive"><div class="customCheckStyle"><input type="checkbox" name="calcUValueCheck" id="calcUValueCheck" class="customCheck"><label for="calcUValueCheck" id="checkCalculate" class="unselected"></label></div>Calculate U-Value<sup id="fnref:2"><a href="#fn:2" rel="footnote">?</a></sup></label>
 
 			<div class="inputWrapperLeft"><input type="text" name="calcuvalue" id="calcuvalue" value="" step="0.01" class="case1 inactive"></div>
 			<div class="inputWrapperCenter"><input type="text" name="calcuvalue2" id="calcuvalue2" value="" step="0.01" class="case2 inactive"></div>
 			<div class="inputWrapperRight"><input type="text" name="calcuvalue3" id="calcuvalue3" value="" step="0.01" class="case3 inactive"></div><br>
 
 			<label for="lowECheck">Room-side Low-E Coating<sup id="fnref:3"><a href="#fn:3" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="checkbox" name="lowECheck" id="lowECheck" class="checkbox case1"></div>
-			<div class="inputWrapperCenter"><input type="checkbox" name="lowECheck2" id="lowECheck2" class="checkbox case2"></div>
-			<div class="inputWrapperRight"><input type="checkbox" name="lowECheck3" id="lowECheck3" class="checkbox case3"></div><br>
+
+			<div class="inputWrapperLeft"><div class="customCheckStyleCentered case1"><input type="checkbox" name="lowECheck" id="lowECheck" class="checkbox customCheck"><label for="lowECheck" id="checkLowE1" class="unselected"></label></div></div>
+
+			<div class="inputWrapperCenter"><div class="customCheckStyleCentered case2" id="offsetMiddle"><input type="checkbox" name="lowECheck2" id="lowECheck2" class="checkbox customCheck"><label for="lowECheck2" id="checkLowE2" class="unselected"></label></div></div>
+
+			<div class="inputWrapperRight"><div class="customCheckStyleCentered case3" id="offsetLeft"><input type="checkbox" name="lowECheck3" id="lowECheck3" class="checkbox customCheck"><label for="lowECheck3" id="checkLowE3" class="unselected"></label></div></div><br>
 
 			<label for="lowE" class="inactive indent" id="lowELabel">Emissivity<sup id="fnref:4"><a href="#fn:4" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="lowE" id="lowE" value="" class="inactive case1" step="0.1"></div>

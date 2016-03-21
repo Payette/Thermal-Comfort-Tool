@@ -626,44 +626,7 @@ render.makeGraph = function () {
 
 
 
-    /* ------ HIDE AND RESIZE FACADE ------ */
-    $("#caseSelection #case1Label").on("click", function() {
-
-    	var array = [];
-    	
-    	if ($(this).hasClass("unselected") == true) {
-    		//becomes selected
-			$(this).removeClass("unselected");
-			$("#case1Button").removeClass("unselected");
-
-			$("#inputs input.case1, #case1FacadeWrapper, #sliderWrapper, .connectLine, .dotCase1, .occdot1").css("display", "initial");
-
-			// add case 2 wall length to array
-			array.push(case1Data.wallLen);
-
-		}
-
-		else if ($(this).hasClass("unselected") == false) {
-			// becomes unselected
-			$(this).addClass("unselected");
-			$("#case1Button").addClass("unselected");
-
-			$("#inputs input.case1, #case1FacadeWrapper, #sliderWrapper, .connectLine, .dotCase1, .occdot1").css("display", "none");
-		}
-
-		//check case 2
-		if ($("#caseSelection #case2Label").hasClass("unselected") == false ) {
-			array.push(case2Data.wallLen);
-		}
-
-		//check case 3
-		if ($("#caseSelection #case3Label").hasClass("unselected") == false ) {
-			array.push(case3Data.wallLen);
-		}
-
-		resizeFacades(array);
-	
-    });
+    /* ------ HIDE CASES AND RESIZE FACADE ------ */
 
     $("#caseSelection #case2Label").on("click", function() {
 
@@ -674,7 +637,7 @@ render.makeGraph = function () {
 			$(this).removeClass("unselected");
 			$("#case2Button").removeClass("unselected");
 
-			$("#inputs input.case2, #case2FacadeWrapper, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").css("display", "initial");
+			$("#inputs input.case2, div.case2, #case2FacadeWrapper, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").css("display", "initial");
 
 			// add case 2 wall length to array
 			array.push(case2Data.wallLen);
@@ -685,7 +648,7 @@ render.makeGraph = function () {
 			$(this).addClass("unselected");
 			$("#case2Button").addClass("unselected");
 
-			$("#inputs input.case2, #case2FacadeWrapper, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").css("display", "none");
+			$("#inputs input.case2, div.case2, #case2FacadeWrapper, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").css("display", "none");
 		}
 
 		//check case 1
@@ -711,7 +674,7 @@ render.makeGraph = function () {
 			$(this).removeClass("unselected");
 			$("#case3Button").removeClass("unselected");
 
-			$("#inputs input.case3, #case3FacadeWrapper, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3").css("display", "initial");
+			$("#inputs input.case3, div.case3, #case3FacadeWrapper, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3").css("display", "initial");
 
 			// add case 2 wall length to array
 			array.push(case2Data.wallLen);
@@ -722,7 +685,7 @@ render.makeGraph = function () {
 			$(this).addClass("unselected");
 			$("#case3Button").addClass("unselected");
 
-			$("#inputs input.case3, #case3FacadeWrapper, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3").css("display", "none");
+			$("#inputs input.case3, div.case3, #case3FacadeWrapper, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3").css("display", "none");
 		}
 
 		//check case 1
@@ -739,6 +702,9 @@ render.makeGraph = function () {
 	
     });
 
+
+
+    	
 
 
 	/* ------ DETECT CHANGES TO INPUT VALUES ------ */
@@ -791,14 +757,24 @@ render.makeGraph = function () {
 			$("#windowWidth, #windowWidth2, #windowWidth3, #windowWidthLabel").removeClass("inactive");
 			$("#glazing, #glazing2, #glazing3, #glazingLabel").addClass("inactive");
 
+			$("#checkWindWidth").removeClass("unselected");
+			$("#checkGlzRatio").addClass("unselected");
+
 			$("#glazingRatioCheck").removeAttr("checked");
+
 
 		} else if (($("#windowWidthCheck").is(":checked")) == false) {
 			glzOrWidth = true;
 			$("#windowWidth, #windowWidth2, #windowWidth3, #windowWidthLabel").addClass("inactive");
 			$("#glazing, #glazing2, #glazing3, #glazingLabel").removeClass("inactive");
 
+			
+
+			$("#checkGlzRatio").removeClass("unselected");
+			$("#checkWindWidth").addClass("unselected");
+
 			$("#glazingRatioCheck").attr("checked", "checked");
+
 		}
 	});
 	$("#glazingRatioCheck").change(function(event) {
@@ -807,12 +783,20 @@ render.makeGraph = function () {
 			$("#windowWidth, #windowWidth2, #windowWidth3, #windowWidthLabel").addClass("inactive");
 			$("#glazing, #glazing2, #glazing3, #glazingLabel").removeClass("inactive");
 
+			$("#checkGlzRatio").removeClass("unselected");
+			$("#checkWindWidth").addClass("unselected");
+
 			$("#windowWidthCheck").removeAttr("checked");
 
 		} else if (($("#glazingRatioCheck").is(":checked")) == false) {
 			glzOrWidth = false;
 			$("#windowWidth, #windowWidth2, #windowWidth3, #windowWidthLabel").removeClass("inactive");
 			$("#glazing, #glazing2, #glazing3, #glazingLabel").addClass("inactive");
+
+			
+
+			$("#checkWindWidth").removeClass("unselected");
+			$("#checkGlzRatio").addClass("unselected");
 
 			$("#windowWidthCheck").attr("checked", "checked");
 		}
@@ -824,6 +808,9 @@ render.makeGraph = function () {
 			$("#uvalue, #uvalue2, #uvalue3, #uvalueLab").removeClass("inactive");
 
 			$("#calcuvalue, #calcuvalue2, #calcuvalue3, #calcUValueLabel").addClass("inactive");
+
+			$("#checkProvide").removeClass("unselected");
+			$("#checkCalculate").addClass("unselected");
 			
 			$("#calcUValueCheck").removeAttr("checked");
 
@@ -832,6 +819,9 @@ render.makeGraph = function () {
 			$("#uvalue, #uvalue2, #uvalue3, #uvalueLab").addClass("inactive");
 
 			$("#calcuvalue, #calcuvalue2, #calcuvalue3, #calcUValueLabel").removeClass("inactive");
+
+			$("#checkProvide").addClass("unselected");
+			$("#checkCalculate").removeClass("unselected");
 
 			$("#calcUValueCheck").attr("checked", "checked");
 
@@ -848,19 +838,23 @@ render.makeGraph = function () {
 
 			$("#provideUValueCheck").removeAttr("checked");
 
+			$("#checkProvide").addClass("unselected");
+			$("#checkCalculate").removeClass("unselected");
+
 			autocalcUValues();
 
 		} else if (($("#calcUValueCheck").is(":checked")) == false) {
 
 			$("#uvalue, #uvalue2, #uvalue3, #uvalueLab").removeClass("inactive");
 			$("#calcuvalue, #calcuvalue2, #calcuvalue3, #calcUValueLabel").addClass("inactive");
+
+			$("#checkProvide").removeClass("unselected");
+			$("#checkCalculate").addClass("unselected");
 			
 			$("#provideUValueCheck").attr("checked", "checked");
 
 		}
 	})
-
-
 
 	
 	$("#outdoortemp").change(function(event) {
@@ -1047,12 +1041,16 @@ render.makeGraph = function () {
 
 				$("#lowE").removeClass("inactive");
 				$("#lowELabel").removeClass("inactive");
+				$("#checkLowE1").removeClass("unselected");
+
+
 
 			} else if (($("#lowECheck").is(":checked")) == false) {
 				case1Data.intLowEChecked = false;
 				$("#lowE").val(" ");
 				$("#lowE").addClass("inactive");
 				$("#lowELabel").addClass("inactive");
+				$("#checkLowE1").addClass("unselected");
 			}
 		}
 		else if (triggeredChange == "lowE") {
@@ -1191,12 +1189,14 @@ render.makeGraph = function () {
 
 				$("#lowE2").removeClass("inactive");
 				$("#lowELabel2").removeClass("inactive");
+				$("#checkLowE2").removeClass("unselected");
 
 			} else if (($("#lowECheck2").is(":checked")) == false) {
 				case2Data.intLowEChecked = false;
 				$("#lowE2").val(" ");
 				$("#lowE2").addClass("inactive");
 				$("#lowELabel2").addClass("inactive");
+				$("#checkLowE2").addClass("unselected");
 			}
 		}
 		else if (triggeredChange == "lowE2") {
@@ -1334,12 +1334,14 @@ render.makeGraph = function () {
 
 				$("#lowE3").removeClass("inactive");
 				$("#lowELabel3").removeClass("inactive");
+				$("#checkLowE3").removeClass("unselected");
 
 			} else if (($("#lowECheck3").is(":checked")) == false) {
 				case3Data.intLowEChecked = false;
 				$("#lowE3").val(" ");
 				$("#lowE3").addClass("inactive");
 				$("#lowELabel3").addClass("inactive");
+				$("#checkLowE3").addClass("unselected");
 			}
 		}
 		else if (triggeredChange == "lowE3") {

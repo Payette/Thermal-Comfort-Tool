@@ -297,9 +297,9 @@ span#case3Button {
 }
 
 /* -- show cases only when selected -- */
-/*#inputs input.case2, #inputs input.case3 {
+div.case2, div.case3, #inputs input.case2, #inputs input.case3 {
 	display: none;
-}*/
+}
 
 #caseSelection h2.unselected, #caseSelection h3.unselected {
 	color: #b9b9b9;
@@ -460,8 +460,8 @@ div.inputWrapperRight span {
 }
 
 #inputs label.indent {
-	padding-left: 22px;
-	width: 190px;
+	padding-left: 48px;
+	width: 164px;
 }
 
 
@@ -472,7 +472,7 @@ div.inputWrapperRight span {
 }
 
 #inputs input.inactive {
-	border-color: rgb(245, 245, 245);
+	border-color: rgb(235, 235, 235);
 	border-style: solid;
 	border-width: 1px;
 	color: #d5d5d5;
@@ -502,8 +502,19 @@ input[type=checkbox] {
 
 	vertical-align: middle;
 }
+
+#inputs div.customCheckStyleCentered {
+	width: 12px;
+	margin: 0px 0px 0px 9px;
+	position: relative;
+
+	vertical-align: middle;
+}
+
+
+
 /* box for the checkbox */
-#inputs div.customCheckStyle label {
+#inputs div.customCheckStyle label, #inputs div.customCheckStyleCentered label {
 	cursor: pointer;
 	position: absolute;
 	width: 12px;
@@ -513,17 +524,37 @@ input[type=checkbox] {
 	left: 0;
 	background: rgb(245, 245, 245);
 }
+
+#inputs div#offsetLeft label {
+	left: -19px;
+}
+
+#inputs div#offsetMiddle label {
+	left: -38px;
+}
+
+#inputs div.customCheckStyle label.unselected, #inputs div.customCheckStyleCentered label.unselected {
+	border: 1px solid rgb(235, 235, 235);
+	width: 10px;
+	height: 10px;
+	background: #fff;
+}
+
+
+
+
+
 /* tick for inside checkbox */
-#inputs div.customCheckStyle label:after {
-	opacity: 0.2;
+#inputs div.customCheckStyle label:after, #inputs div.customCheckStyleCentered label:after {
+	opacity: 1;
 	content: '';
 	position: absolute;
-	width: 7px;
+	width: 6px;
 	height: 4px;
 	background: transparent;
 	top: 3px;
-	left: 2px;
-	border: 2px solid #333;
+	left: 3px;
+	border: 2px solid #777;
 	border-top: none;
 	border-right: none;
 
@@ -532,18 +563,24 @@ input[type=checkbox] {
 	-o-transform: rotate(-45deg);
 	-ms-transform: rotate(-45deg);
 	transform: rotate(-45deg);
-
 }
 
-#inputs div.customCheckStyle label:hover::after {
+#inputs div.customCheckStyle label.unselected:after, #inputs div.customCheckStyleCentered label.unselected:after {
+	opacity: 0;
+}
+
+#inputs div.customCheckStyle label.unselected:hover::after, #inputs div.customCheckStyleCentered label.unselected:hover::after {
 	opacity: 0.5;
+	top: 2px;
+	left: 2px;
 }
 
-#inputs div.customCheckStyle input[type=checkbox]:checked label:after {
-	opacity: 1;
+
+
+
+#case2FacadeWrapper, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2, #case3FacadeWrapper, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3 {
+	display: none;
 }
-
-
 
 
 
