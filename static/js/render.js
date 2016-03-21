@@ -309,9 +309,10 @@ render.makeGraph = function () {
 				d3.select("#solution")
 				.text(". To reduce discomfort, try adjusting the window geometry or reducing the U-value.");
 
-				d3.select("#tooltip")
-				.style("top", (yPosition - margin.bottom/1.1) + "px");
+				console.log($("#tooltip").height());
 
+				d3.select("#tooltip")
+				.style("top", (yPosition - $("#tooltip").height() + 10) + "px");
 			} else if (d.govfact == "dwn") {
 				d3.select("#explain")
 				.text("downdraft");
@@ -319,8 +320,10 @@ render.makeGraph = function () {
 				d3.select("#solution")
 				.text(". To reduce discomfort, try decreasing the window height or U-value.");
 
+				console.log($("#tooltip").height());
+
 				d3.select("#tooltip")
-				.style("top", (yPosition - margin.bottom/1.3) + "px");
+				.style("top", (yPosition - $("#tooltip").height() + 10) + "px");
 
 			} 
 		}
@@ -686,6 +689,8 @@ render.makeGraph = function () {
 		resizeFacades(array);
 		// Update static tooltip text
 		thresholdDataText();
+		d3.selectAll(".occupantLine").remove();
+		occupantDistanceRefLine();
 	
     });
 
@@ -725,6 +730,8 @@ render.makeGraph = function () {
 		resizeFacades(array);
 		// Update static tooltip text
 		thresholdDataText();
+		d3.selectAll(".occupantLine").remove();
+		occupantDistanceRefLine();
 	
     });
 
@@ -743,6 +750,10 @@ render.makeGraph = function () {
 		updateData(case1Data);
 		updateData(case2Data);
 		updateData(case3Data);
+
+		thresholdDataText();
+		d3.selectAll(".occupantLine").remove();
+		occupantDistanceRefLine();
 	});
 	$("#distFromFacade").on("spinstop", function(event) {
 		occDistFromFacade = $(this).val();
@@ -752,6 +763,10 @@ render.makeGraph = function () {
 		updateData(case1Data);
 		updateData(case2Data);
 		updateData(case3Data);
+
+		thresholdDataText();
+		d3.selectAll(".occupantLine").remove();
+		occupantDistanceRefLine();
 	})
 
 	$("#ppd, #ppd2, #ppd3").change(function(event) {

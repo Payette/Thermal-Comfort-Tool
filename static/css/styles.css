@@ -96,7 +96,7 @@ body {
 #tooltip h1, #thresholdTooltip h1 {
 	font-family: "museo-sans", sans-serif;
 	font-weight: 500;
-	font-size: 12px;
+	font-size: 11px;
 	padding: 0 0 3px 0;
 	margin: 0;
 }
@@ -105,7 +105,7 @@ body {
 	margin: 0;
 	font-family: "museo-sans", sans-serif;
 	font-weight: 100;
-	font-size: 12px;
+	font-size: 11px;
 	color: black;
 	padding-bottom: 6px;
 }
