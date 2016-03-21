@@ -47,18 +47,18 @@ uVal.calcMinAcceptMRT =  function (airTemp, windSpeed, relHumid, metRate, cloLev
 	
 	function solve(target) {
 		
-		var epsilon = 0.001 // ta precision
+		var epsilon = 0.001 // tr precision
 		var a = -50
 		var b = 50
 		var fn = mrtclos(target)
-		t = util.secant(a, b, fn, epsilon)
+		var t = util.secant(a, b, fn, epsilon)
 		if (isNaN(t)) {
 			t = util.bisect(a, b, fn, epsilon, 0)
 		}
 		return t
 	}
 	
-	return solve(-pmvlimit)
+	return solve(-pmvlimit +0.01) // This is correct for error in the relation of PMV and PPD
 }
 
 // Functions that that help compute U-Values with an acceptable MRT threshold.
@@ -71,24 +71,34 @@ uVal.maxUOfMRT = function(minAcceptMRT, airTemp, outTemp, winViewFac, opaqueCont
 
 // Function that computes U-Values acceptable with MRT threshold.
 uVal.uValMRT = function(opaqueViewFac, winViewFac, airTemp, outdoorTemp, opaqueRVal, filmCoeff, lowEmissivity, vel, relHumid, metRate, cloLevel, targetPPD){
-	
-	// Calculate the minimum acceptable MRT to satisfy the input PPD.
-	var minAcceptMRT = uVal.calcMinAcceptMRT(airTemp, vel, relHumid, metRate, cloLevel, targetPPD)
-	
-	//Calculate the temperature of the opaque wall and its contribution to the comfort.
-	var opaqueTemp = comf.calcInteriorTemp(airTemp, outdoorTemp, opaqueRVal, 8.29)
-	var opaqueContrib = uVal.MRTCondtribOfOpaque(opaqueTemp, opaqueViewFac, winViewFac, airTemp);
-	
-	// Calculate the minimum acceptable U-Values for the PMV model.
-	var UMax = uVal.maxUOfMRT(minAcceptMRT, airTemp, outdoorTemp, winViewFac, opaqueContrib, filmCoeff);
-	if (filmCoeff > 5) {
-		var UVal = UMax;
+	if (winViewFac > 0.01) {
+		// Calculate the minimum acceptable MRT to satisfy the input PPD.
+		var minAcceptMRT = uVal.calcMinAcceptMRT(airTemp, vel, relHumid, metRate, cloLevel, targetPPD)
+		//console.log(comf.pmv(airTemp, minAcceptMRT, vel, relHumid, metRate, cloLevel, 0).ppd)
+		//Calculate the temperature of the opaque wall and its contribution to the comfort.
+		var opaqueTemp = comf.calcInteriorTemp(airTemp, outdoorTemp, opaqueRVal, 8.29)
+		var opaqueContrib = uVal.MRTCondtribOfOpaque(opaqueTemp, opaqueViewFac, winViewFac, airTemp);
+		
+		// Calculate the minimum acceptable U-Values for the PMV model.
+		var UMax = uVal.maxUOfMRT(minAcceptMRT, airTemp, outdoorTemp, winViewFac, opaqueContrib, filmCoeff);
+		if (filmCoeff > 5) {
+			var UVal = UMax;
+		} else {
+			var UVal = UMax/lowEmissivity;
+		}
+		
+		if (UVal < 0) {
+			UVal = 0
+		}
 	} else {
-		var UVal = UMax/lowEmissivity;
-	}
-	
-	if (UVal < 0) {
-		UVal = 0
+		// UValue function breaks at very small glazing view factors.
+		// In this case, let's just check if PMV is comfortable and, if so, we will just return a very high U-Value.
+		// Otherwise, we return a U-Value of zero.
+		if (comf.pmv(airTemp, airTemp, vel, relHumid, metRate, cloLevel, 0).ppd > 10){
+			var UVal = 0
+		}else{
+			var UVal = 10
+		}
 	}
 	
 	return UVal
@@ -127,7 +137,7 @@ uVal.uValDownD = function(PPDAccept, distToFacade, windowHgt, filmCoeff, airTemp
 
 
 // FUNCTION THAT RETURNS THE LOWEST U-VALUE GIVEN COMFORT CRITERIA
-uVal.uValFinal = function(opaqueViewFac, winViewFac, distToFacade, windowHgt, indoorTemp, outTemp, wallRVal, intLowE, lowEmissivity, airSpeed, relHumid, metRate, cloLevel, targetPPD){
+uVal.uValFinal = function(opaqueViewFac, winViewFac, distToFacade, runDownCalc, windowHgt, indoorTemp, outTemp, wallRVal, intLowE, lowEmissivity, airSpeed, relHumid, metRate, cloLevel, targetPPD){
 	// Convert window height to meters (yay for SI!!)
 	var windowHgtSI = windowHgt/3.28084
 	
@@ -153,7 +163,11 @@ uVal.uValFinal = function(opaqueViewFac, winViewFac, distToFacade, windowHgt, in
 	var uValMRT = uVal.uValMRT(opaqueViewFac, winViewFac, airTemp, outdoorTemp, opaqueRVal, filmCoeff, lowEmissivity, vel, relHumid, metRate, cloLevel, targetPPD)
 	
 	//Compute the required U-Value for the Downdraft model.
-	var uValDownD = uVal.uValDownD(targetPPD, distToFacade, windowHgtSI, filmCoeff, airTemp, outdoorTemp)
+	if (runDownCalc== true) {
+		var uValDownD = uVal.uValDownD(targetPPD, distToFacade, windowHgtSI, filmCoeff, airTemp, outdoorTemp)
+	} else {
+		var uValDownD = 10
+	}
 	
 	if (uValDownD < uValMRT){
 		var uValFinal = uValDownD/5.678263337

@@ -81,7 +81,7 @@ body {
 #tooltip, #thresholdTooltip {
 	position: absolute;
 	width: 200px;
-	height: auto;
+
 	padding: 10px;
 	pointer-events: none;
 	background-color: rgba(255,255,255,.8);
@@ -96,8 +96,7 @@ body {
 #tooltip h1, #thresholdTooltip h1 {
 	font-family: "museo-sans", sans-serif;
 	font-weight: 500;
-	font-size: 12px;
-	color: black;
+	font-size: 11px;
 	padding: 0 0 3px 0;
 	margin: 0;
 }
@@ -106,20 +105,48 @@ body {
 	margin: 0;
 	font-family: "museo-sans", sans-serif;
 	font-weight: 100;
-	font-size: 12px;
+	font-size: 11px;
 	color: black;
+	padding-bottom: 6px;
 }
 
-.intolerable {
-	color: rgb(227, 66, 52);
+.intolerable, .tolerable {
 	font-weight: 500;
 }
 
-.tolerable {
+
+#tooltip h1.case1Text, #thresholdTooltip h1.case1Text {
+	color: rgb(248, 151, 29);
+}
+
+#tooltip h1.case2Text, #thresholdTooltip h1.case2Text {
+	color: rgb(0, 160, 221);
+}
+
+#tooltip h1.case3Text, #thresholdTooltip h1.case3Text {
 	color: rgb(176, 199, 44);
-	font-weight: 500;
 }
 
+
+
+#thresholdTooltip h1 span#icon, #tooltip h1 span#icon {
+	display: block;
+	float: left;
+	width: 12px;
+	height: 12px;
+	margin: 0px 3px 0 0;
+	background-size: 11px 11px;
+	background-position: left bottom;
+	background-repeat: no-repeat;
+}
+
+#thresholdTooltip h1 span#icon.check, #tooltip h1 span#icon.check {
+	background-image: url(../../static/images/check.png);
+}
+
+#thresholdTooltip h1 span#icon.cross, #tooltip h1 span#icon.cross {
+	background-image: url(../../static/images/x.png);
+}
 
 
 
@@ -147,8 +174,8 @@ body {
 }
 
 
-#facade .dimline {
-	stroke-width: 1;
+.dimline {
+	stroke-width: 1px;
 	stroke: #777;
 	stroke-linecap: butt;
 	shape-rendering: crispEdges;
@@ -171,12 +198,26 @@ body {
 	stop-color: #C2E0FF;
 }
 
-#sliderWrapper {
-	width: 500px;
-	float: right;
+#sliderWrapper, #sliderWrapper2, #sliderWrapper3 {
+	width: 550px;
+	height: 50px
 }
 
-#sliderWrapper label {
+
+#occupantImage, #occupantImage2, #occupantImage3 {
+	position: relative;
+	width: 180px; 
+  	height: 250px;
+	background-image: url(../../static/images/slider.png);
+	background-size: 180px 250px;
+	display: inline-block;
+	bottom: 510px; /* imageHeight + facMargin.bottom*2*/
+	left: 0; /* = slidderWidth - imageWidth/2 */
+	opacity: .8;
+}
+
+
+#occDistLabel, #occDistLabel2, #occDistLabel3 {
 	font-family: "museo-sans", sans-serif;
 	font-size: 12px;
 	font-weight: 300;
@@ -184,39 +225,28 @@ body {
 	display: inline;
 	float: right;
 	margin-right: 10px;
-}
-
-#sliderWrapper output {
 	position: relative;
-	width: 360px; 
-  	height: 500px;
-	background-image: url(../../static/images/slider.png);
-	background-size: 360px 500px;
-	display: inline-block;
-	bottom: 510px; /* imageHeight + facMargin.bottom*2*/
-	left: 320px; /* = 500px - imageWidth/2 */
-	opacity: .8;
 }
 
 
-
-#occupantDist {
+#occupantDist, #occupantDist2, #occupantDist3 {
 	width: 250px;
 	margin: 0;
 	padding: 0;
 	border: 0;
 	float: right;
+	position: relative;
 }
 
 
-#occupantDist::-moz-range-track {
+#occupantDist::-moz-range-track, #occupantDist2::-moz-range-track, #occupantDist3::-moz-range-track {
 	-moz-appearance: none;
 	height: 2px;
 	background-color: #d5d5d5;
 	margin-right: 3px;
 	vertical-align:middle;
 }
-#occupantDist::-webkit-slider-runnable-track {
+#occupantDist::-webkit-slider-runnable-track, #occupantDist2::-webkit-slider-runnable-track, #occupantDist3::-webkit-slider-runnable-track {
 	-webkit-appearance: none;
 	height: 2px;
 	background-color: #d5d5d5;
@@ -224,7 +254,7 @@ body {
 	vertical-align:middle;
 }
 
-#occupantDist::-moz-range-thumb {
+#occupantDist::-moz-range-thumb, #occupantDist2::-moz-range-thumb, #occupantDist3::-moz-range-thumb {
 	-moz-appearance: none;
     background-color: #FFF;
     border: 3px solid rgb(150,150,150);
@@ -234,7 +264,7 @@ body {
     vertical-align:middle;
 }
 
-#occupantDist::-webkit-slider-thumb {
+#occupantDist::-webkit-slider-thumb, #occupantDist2::-webkit-slider-thumb, #occupantDist3::-webkit-slider-thumb {
 	-webkit-appearance: none;
     background-color: #FFF;
     border: 3px solid rgb(150,150,150);
@@ -243,6 +273,72 @@ body {
     width: 7px;
     vertical-align:middle;
 }
+
+
+
+
+
+
+
+#caseSelection {
+	display: block;
+	height: 20px;
+	margin-left: 206px; 
+}
+
+#caseSelection h2 {
+	width: 57px;
+	display: inline-block;
+	text-align: center;
+	font-size: 10px;
+
+	padding: 0;
+	margin: 0;
+	vertical-align: middle;
+
+	color: #000;
+
+	cursor: pointer;
+}
+
+
+#caseSelection h2 span {
+	display: block;
+	float: left;
+	width: 12px;
+	height: 12px;
+	margin: 0px 1px 0 5px;
+	background-size: 11px 11px;
+}
+
+span#case1Button {
+	background: url(../../static/images/expand-orange.png) 0 0 no-repeat;
+}
+
+span#case2Button {
+	background: url(../../static/images/expand-blue.png) 0 0 no-repeat;
+}
+
+span#case3Button {
+	background: url(../../static/images/expand-green.png) 0 0 no-repeat;
+}
+
+/* -- show cases only when selected -- */
+div.case2, div.case3, #inputs input.case2, #inputs input.case3 {
+	display: none;
+}
+
+#caseSelection h2.unselected, #caseSelection h3.unselected {
+	color: #b9b9b9;
+}
+
+
+span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unselected {
+	background: url(../../static/images/expand-unselected.png) 0 0 no-repeat;
+	background-size: 11px 11px;
+}
+
+
 
 
 
@@ -262,10 +358,16 @@ body {
 	line-height: 23px;
 }
 
+#inputs p {
+	font-size: 12px;
+	line-height: 1.4em;
+	font-weight: 100;
+}
+
 
 #inputs .inputgroup {
 	border: none;
-	padding: 0 0 10px 0;
+	padding: 0 0 15px 0;
 }
 
 
@@ -305,30 +407,77 @@ body {
 	width: 100%;
 }
 
+
+#inputs div.inputWrapperLeft {
+	width: 60px;
+	height: 16px;
+	padding: 2px 0px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+div.inputWrapperLeft span {
+	float:left;
+}
+
+#inputs div.inputWrapperCenter {
+	width: 41px;
+	height: 16px;
+	padding: 2px 0px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+div.inputWrapperCenter span {
+	float:left;
+}
+
+#inputs div.inputWrapperRight {
+	width: 60px;
+	height: 16px;
+	padding: 2px 0px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+div.inputWrapperRight span {
+	float: right;
+}
+
+
 #inputs input {
-	padding: 0;
-	margin: 3px 0;
+	padding: 2px 3px 1px 1px;
+	margin: 0px 12px 0px 0px;
 	display: inline-block;
 	float: left;
-	width: 38px;
+	width: 25px;
+	height: 13px;
 
-	border-style: solid;
+	background-color: rgb(245, 245, 245);
+
+	/*border-style: solid;
 	border-width: 1px;
-	border-color: #777;
+	border-color: #777;*/
 
 	font-family: "museo-sans", sans-serif;
 	font-weight: 300;
-	font-size: 10px;
+	font-size: 9px;
 	text-align: right;
 	color: black;
+
+}
+
+#inputs input#submit {
+	width: 30px;
+	padding: 0 1px 0 1px;
 }
 
 #inputs label {
 	margin: 0;
-	padding: 3px 10px 3px 0;
+	padding: 3px 3px 3px 0;
 	float: left;
 	clear: left;
-	width: 210px;
+	width: 212px;
 	text-align: left;
 	display: block;
 
@@ -338,8 +487,8 @@ body {
 }
 
 #inputs label.indent {
-	padding-left: 20px;
-	width: 190px;
+	padding-left: 48px;
+	width: 164px;
 }
 
 
@@ -350,16 +499,114 @@ body {
 }
 
 #inputs input.inactive {
-	border-color: #b9b9b9;
+	border-color: rgb(235, 235, 235);
+	border-style: solid;
+	border-width: 1px;
 	color: #d5d5d5;
 	font-style: italic;
 	cursor: default;
+	background-color: #fff;
+	padding: 1px 2px 0px 0px;
 }
 
 #inputs label input.customCheck {
-	margin-left: 20px;
-	width: 28px;
+	width: 15px;
 	vertical-align: middle;
+}
+
+
+
+
+/* custom checkbox styling */
+input[type=checkbox] {
+	visibility: hidden;
+}
+
+#inputs div.customCheckStyle {
+	width: 12px;
+	margin: 0px 5px 0px 20px;
+	position: relative;
+
+	vertical-align: middle;
+}
+
+#inputs div.customCheckStyleCentered {
+	width: 12px;
+	margin: 0px 0px 0px 9px;
+	position: relative;
+
+	vertical-align: middle;
+}
+
+
+
+/* box for the checkbox */
+#inputs div.customCheckStyle label, #inputs div.customCheckStyleCentered label {
+	cursor: pointer;
+	position: absolute;
+	width: 12px;
+	height: 12px;
+	padding: 1px;
+	top: 0;
+	left: 0;
+	background: rgb(245, 245, 245);
+}
+
+#inputs div#offsetLeft label {
+	left: -19px;
+}
+
+#inputs div#offsetMiddle label {
+	left: -38px;
+}
+
+#inputs div.customCheckStyle label.unselected, #inputs div.customCheckStyleCentered label.unselected {
+	border: 1px solid rgb(235, 235, 235);
+	width: 10px;
+	height: 10px;
+	background: #fff;
+}
+
+
+
+
+
+/* tick for inside checkbox */
+#inputs div.customCheckStyle label:after, #inputs div.customCheckStyleCentered label:after {
+	opacity: 1;
+	content: '';
+	position: absolute;
+	width: 6px;
+	height: 4px;
+	background: transparent;
+	top: 3px;
+	left: 3px;
+	border: 2px solid #777;
+	border-top: none;
+	border-right: none;
+
+	-webkit-transform: rotate(-45deg);
+	-moz-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+}
+
+#inputs div.customCheckStyle label.unselected:after, #inputs div.customCheckStyleCentered label.unselected:after {
+	opacity: 0;
+}
+
+#inputs div.customCheckStyle label.unselected:hover::after, #inputs div.customCheckStyleCentered label.unselected:hover::after {
+	opacity: 0.5;
+	top: 2px;
+	left: 2px;
+}
+
+
+
+
+#case2FacadeWrapper, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2, #case3FacadeWrapper, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3 {
+	display: none;
 }
 
 

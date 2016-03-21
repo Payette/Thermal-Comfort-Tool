@@ -4,6 +4,7 @@
 <head>
 	<link rel="stylesheet" type="text/css" href="static/css/styles.css" media="screen"/>
 	<link rel="stylesheet" type="text/css" href="static/css/bigfoot-default.css" media="screen"/>
+	<link rel="stylesheet" type="text/css" href="static/css/jquery-ui-1.10.4.custom.css" media="screen"/>
 
 	<meta charset = "UTF-8" />
 
@@ -23,9 +24,11 @@
 	<script type="text/javascript" charset="utf-8" src="static/js/util.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/urlobject.js"></script>
 	
+	
 
-	<!-- Footnote Options -->
+	
 	<script type="text/javascript">
+		// Footnote Options 
 		$.bigfoot({
         	activateOnHover: true,
             deleteOnUnhover: true,
@@ -33,6 +36,12 @@
 
         });
 
+		// Increment Buttons
+		$(function(){
+			$("#ceiling, #wallWidth, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #calcuvalue, #lowE, #rvalue, #ppd, #distFromFacade, #outdoortemp, #airtemp, #humidity, #airspeed, #clothing, #metabolic, #ceiling2, #wallWidth2, #windowHeight2, #windowWidth2, #glazing2, #sill2, #distWindow2, #uvalue2, #calcuvalue2, #lowE2, #rvalue2, #ppd2, #distFromFacade2, #outdoortemp2, #airtemp2, #humidity2, #airspeed2, #clothing2, #metabolic2, #ceiling3, #wallWidth3, #windowHeight3, #windowWidth3, #glazing3, #sill3, #distWindow3, #uvalue3, #calcuvalue3, #lowE3, #rvalue3, #ppd3, #distFromFacade3, #outdoortemp3, #airtemp3, #humidity3, #airspeed3, #clothing3, #metabolic3").spinner();
+		})
+		
+		
 
 	</script>
 
@@ -52,25 +61,42 @@
 
 		<div id="graphWrapper">
 			<div id="tooltip" class="hidden">
-				<h1><span id="PPDtext">100</span></h1>
-				<p><span id="discomfort">Tolerable</span> discomfort is due to <span id="explain">downdraft</span><span id="solution">.</span></p>
+				<h1><span id="icon" class="cross"></span> Case <span id="case">1</span>: <span id="PPDtext">100</span></h1>
+				<p><span id="discomfort">Tolerable discomfort</span> is due to <span id="explain">downdraft</span><span id="solution">.</span></p>
 			</div>
 
 			<div id="thresholdTooltip">
-				<h1><span id="thisPPDtext">100</span></h1>
-				<p><span id="thisDiscomfort">Tolerable</span> discomfort is due to <span id="thisExplain">downdraft</span><span id="thisSolution">.</span></p>
+				<!-- <h1><span id="icon" class="check"></span> <span id="thisPPDtext">100</span></h1>
+				<p><span id="thisDiscomfort">Tolerable discomfort</span> is due to <span id="thisExplain">downdraft</span><span id="thisSolution">.</span></p> -->
 			</div>
 		</div>
 
 		<div id="facadeWrapper">
-			<h1>Fa&ccedil;ade Representation</h1>
+			<div id="case1FacadeWrapper">
+				<h1><span></span>Case 1: Occupant experiences intolerable discomfort</h1>
+			</div>
+			<div id="sliderWrapper">
+				<input type="range" name="occupantDist" id="occupantDist" min="0" max="20" value="0"/>
+				<output for="occupantDist" id="occupantImage"/></output>
+				<label for="occupantDist" id="occDistLabel">Occupant Position</label>
+			</div>
+			<div id="case2FacadeWrapper">
+				<h1><span></span>Case 2: Occupant experiences intolerable discomfort</h1>
+			</div>
+			<div id="sliderWrapper2">
+				<input type="range" name="occupantDist2" id="occupantDist2" min="0" max="20" value="0"/>
+				<output for="occupantDist2" id="occupantImage2"/></output>
+				<label for="occupantDist2" id="occDistLabel2">Occupant Position</label>
+			</div>
+			<div id="case3FacadeWrapper">
+				<h1><span></span>Case 3: Occupant experiences intolerable discomfort</h1>
+			</div>
+			<div id="sliderWrapper3">
+				<input type="range" name="occupantDist3" id="occupantDist3" min="0" max="20" value="0"/>
+				<output for="occupantDist3" id="occupantImage3"/></output>
+				<label for="occupantDist3" id="occDistLabel3">Occupant Position</label>
+			</div>
 		</div>
-
-		<div id="sliderWrapper">
-			<input type="range" name="occupantDist" id="occupantDist" min="0" max="20" value="0"/>
-			<output for="occupantDist" id="occupantImage"></output>
-			<label for="occupantDist">Occupant Position</label>
-	 	</div>
 
 	</div>
 
@@ -80,56 +106,99 @@
 
 		<h1>Glazing and Comfort Analysis Tool</h1>
 
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
+		ultricies porttitor ex, a ultricies massa dictum nec. Suspendisse orci
+		nibh, scelerisque sit amet hendrerit in, ultrices ut mauris.</p>
 
-		<form id="form">		
+		<div id="caseSelection">
+			<h2 id="case1Label"><span id="case1Button"></span>CASE 1</h2>
+			<h2 id="case2Label" class="unselected"><span id="case2Button" class="unselected"></span>CASE 2</h2>
+			<h2 id="case3Label" class="unselected"><span id="case3Button" class="unselected"></span>CASE 3</h2>
+		</div>	
+
+		<form id="form">	
+
 		<fieldset class="inputgroup">
+
 			<legend class="heading">Fa&ccedil;ade Geometry</legend>
 			<hr>
 
 			<label for="ceiling">Ceiling Height (ft)</label>
-			<input type="text" name="ceiling" id="ceiling" value="12"><br>
+			<div class="inputWrapperLeft"><input type="text" name="ceiling" id="ceiling" min="1" max="100"  value="12" class="case1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="ceiling2" id="ceiling2" min="1" max="100"  value="12" class="case2"></div>
+			<div class="inputWrapperRight"><input type="text" name="ceiling3" id="ceiling3" min="1" max="100"  value="12" class="case3"></div><br>
 
 			<label for="wallWidth">Wall Length (ft)</label>
-			<input type="text" name="wallWidth" id="wallWidth" value="20"><br>
+			<div class="inputWrapperLeft"><input type="text" name="wallWidth" id="wallWidth" value="20" step="1" class="case1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="wallWidth2" id="wallWidth2" value="20" step="1" class="case2"></div>
+			<div class="inputWrapperRight"><input type="text" name="wallWidth3" id="wallWidth3" value="20" step="1" class="case3"></div><br>
 			
-			<label for="height">Window Height (ft)<sup class="dimHover" id="windHeightButt">?</sup></label>
-			<input type="text" name="height" id="windowHeight" value="8"><br>
+			<label for="windowHeight">Window Height (ft)<sup class="dimHover" id="windHeightButt">?</sup></label>
+			<div class="inputWrapperLeft"><input type="text" name="windowHeight" id="windowHeight" value="8" step="0.5" class="case1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="windowHeight2" id="windowHeight2" value="9" step="0.5" class="case2"></div>
+			<div class="inputWrapperRight"><input type="text" name="windowHeight3" id="windowHeight3" value="8" step="0.5" class="case3"></div><br>
 
 
 			<label for="">Set Glazing Amount By</label><br>
 
-			<label for="width" id="windowWidthLabel"><input type="checkbox" name="windowWidthCheck" id="windowWidthCheck" class="customCheck" checked>Window Width (ft)<sup class="dimHover" id="windWidthButt">?</sup></label>
-			<input type="text" name="width" id="windowWidth" value="4"><br>
+			<label for="width" id="windowWidthLabel"><div class="customCheckStyle"><input type="checkbox" name="windowWidthCheck" id="windowWidthCheck" class="customCheck" checked><label for="windowWidthCheck" id="checkWindWidth"></label></div>Window Width (ft)<sup class="dimHover" id="windWidthButt">?</sup></label>
+			<div class="inputWrapperLeft"><input type="text" name="width" id="windowWidth" value="4" step="0.5" class="case1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="width2" id="windowWidth2" value="4" step="0.5" class="case2"></div>
+			<div class="inputWrapperRight"><input type="text" name="width3" id="windowWidth3" value="4" step="0.5" class="case3"></div><br>
 			
-			<label for="glazing" class="inactive" id="glazingLabel"><input type="checkbox" name="glazingRatioCheck" class="customCheck" id="glazingRatioCheck">Glazing Ratio (%)</label>
-			<input type="text" name="glazing" class="inactive" id="glazing" value="40"><br>
+			<label for="glazing" class="inactive" id="glazingLabel"><div class="customCheckStyle"><input type="checkbox" name="glazingRatioCheck" class="customCheck" id="glazingRatioCheck"><label for="glazingRatioCheck" id="checkGlzRatio" class="unselected"></label></div>Glazing Ratio (%)</label>
+			<div class="inputWrapperLeft"><input type="text" name="glazing" class="inactive case1" id="glazing" value="" step="1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="glazing2" class="inactive case2" id="glazing2" value="" step="1"></div>
+			<div class="inputWrapperRight"><input type="text" name="glazing3" class="inactive case3" id="glazing3" value="" step="1"></div><br>
 
 
 			<label for="sill">Sill Height (ft)<sup class="dimHover" id="sillHeightButt">?</sup></label>
-			<input type="text" name="sill" id="sill" value="3"><br>
+			<div class="inputWrapperLeft"><input type="text" name="sill" id="sill" value="3" step="0.5" class="case1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="sill2" id="sill2" value="3" step="0.5" class="case2"></div>
+			<div class="inputWrapperRight"><input type="text" name="sill3" id="sill3" value="3" step="0.5" class="case3"></div><br>
 
 			<label for="distWindow">Window Separation (ft)<sup class="dimHover" id="windSepButt">?</sup></label>
-			<input type="text" name="distWindow" id="distWindow" value="6.67"><br>
+			<div class="inputWrapperLeft"><input type="text" name="distWindow" id="distWindow" value="6.67" step="1" class="case1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="distWindow2" id="distWindow2" value="6.67" step="1" class="case2"></div>
+			<div class="inputWrapperRight"><input type="text" name="distWindow3" id="distWindow3" value="6.67" step="1" class="case3"></div><br>
 		</fieldset>
 
 
 		<fieldset class="inputgroup">
 			<legend class="heading">Facade Performance</legend>
 			<hr>
-			<label for="uvalue">Window U-Value (Btu/hr*ft&sup2;*&deg;F)<sup id="fnref:1"><a href="#fn:1" rel="footnote">?</a></sup></label>
-			<input type="text" name="uvalue" id="uvalue" value="0.25"><br>
 
-			<label for="submit" id="submitLabel" class="inactive indent">Auto-calculate U-Value<sup id="fnref:2"><a href="#fn:2" rel="footnote">?</a></sup></label>
-			<input id="submit" class="inactive" name"submit" type="submit" value="try it!"/><br>
+			<label for="">Window U-Value (Btu/hr*ft&sup2;*&deg;F)<sup id="fnref:1"><a href="#fn:1" rel="footnote">?</a></sup></label><br>
+
+			<label for="uvalue" id="uvalueLab"><div class="customCheckStyle"><input type="checkbox" name="provideUValueCheck" id="provideUValueCheck" class="customCheck" checked><label for="provideUValueCheck" id="checkProvide"></label></div>Provide U-Value</label>
+
+			<div class="inputWrapperLeft"><input type="text" name="uvalue" id="uvalue" value="0.25" step="0.01" class="case1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="uvalue2" id="uvalue2" value="0.25" step="0.01" class="case2"></div>
+			<div class="inputWrapperRight"><input type="text" name="uvalue3" id="uvalue3" value="0.25" step="0.01" class="case3"></div><br>
+
+			<label for="calcuvalue" id="calcUValueLabel" class="inactive"><div class="customCheckStyle"><input type="checkbox" name="calcUValueCheck" id="calcUValueCheck" class="customCheck"><label for="calcUValueCheck" id="checkCalculate" class="unselected"></label></div>Calculate U-Value<sup id="fnref:2"><a href="#fn:2" rel="footnote">?</a></sup></label>
+
+			<div class="inputWrapperLeft"><input type="text" name="calcuvalue" id="calcuvalue" value="" step="0.01" class="case1 inactive"></div>
+			<div class="inputWrapperCenter"><input type="text" name="calcuvalue2" id="calcuvalue2" value="" step="0.01" class="case2 inactive"></div>
+			<div class="inputWrapperRight"><input type="text" name="calcuvalue3" id="calcuvalue3" value="" step="0.01" class="case3 inactive"></div><br>
 
 			<label for="lowECheck">Room-side Low-E Coating<sup id="fnref:3"><a href="#fn:3" rel="footnote">?</a></sup></label>
-			<input type="checkbox" name="lowECheck" id="lowECheck"><br>
+
+			<div class="inputWrapperLeft"><div class="customCheckStyleCentered case1"><input type="checkbox" name="lowECheck" id="lowECheck" class="checkbox customCheck"><label for="lowECheck" id="checkLowE1" class="unselected"></label></div></div>
+
+			<div class="inputWrapperCenter"><div class="customCheckStyleCentered case2" id="offsetMiddle"><input type="checkbox" name="lowECheck2" id="lowECheck2" class="checkbox customCheck"><label for="lowECheck2" id="checkLowE2" class="unselected"></label></div></div>
+
+			<div class="inputWrapperRight"><div class="customCheckStyleCentered case3" id="offsetLeft"><input type="checkbox" name="lowECheck3" id="lowECheck3" class="checkbox customCheck"><label for="lowECheck3" id="checkLowE3" class="unselected"></label></div></div><br>
 
 			<label for="lowE" class="inactive indent" id="lowELabel">Emissivity<sup id="fnref:4"><a href="#fn:4" rel="footnote">?</a></sup></label>
-			<input type="text" name="lowE" id="lowE" value="" class="inactive"><br>
+			<div class="inputWrapperLeft"><input type="text" name="lowE" id="lowE" value="" class="inactive case1" step="0.1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="lowE2" id="lowE2" value="" class="inactive case2" step="0.1"></div>
+			<div class="inputWrapperRight"><input type="text" name="lowE3" id="lowE3" value="" class="inactive case3" step="0.1"></div><br>
 
 			<label for="rvalue">Wall R-Value (Btu/hr*ft&sup2;*&deg;F)<sup id="fnref:5"><a href="#fn:5" rel="footnote">?</a></sup></label>
-			<input type="text" name="rvalue" id="rvalue" value="20"><br>
+			<div class="inputWrapperLeft"><input type="text" name="rvalue" id="rvalue" value="20" class="case1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="rvalue2" id="rvalue2" value="20" class="case2"></div>
+			<div class="inputWrapperRight"><input type="text" name="rvalue3" id="rvalue3" value="20" class="case3"></div><br>
 
 		</fieldset>
 
@@ -137,11 +206,15 @@
 			<legend>Occupancy Thresholds</legend>
 			<hr>
 
-			<label for="ppd">Dissatisfaction from Cold (%)<sup id="fnref:6"><a href="#fn:6" rel="footnote">?</a></sup></label>
-			<input type="text" name="ppd" id="ppd" value="10"><br>
+			<label for="ppd">Target PPD (%)<sup id="fnref:6"><a href="#fn:6" rel="footnote">?</a></sup></label>
+			<div class="inputWrapperLeft"><input type="text" name="ppd" id="ppd" value="10" min="5" max="30" class="case1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="ppd2" id="ppd2" value="10" min="5" max="30" class="case2"></div>
+			<div class="inputWrapperRight"><input type="text" name="ppd3" id="ppd3" value="10" min="5" max="30" class="case3"></div><br>
 
-			<label for="distFromFacade">Distance From Fa&ccedil;ade (ft)</label>
-			<input type="text" name="distFromFacade" id="distFromFacade" value="3"><br>
+			<label for="distFromFacade">Distance From Fa&ccedil;ade (ft)<sup id="fnref:13"><a href="#fn:13" rel="footnote">?</a></sup></label>
+			<div class="inputWrapperLeft"><input type="text" name="distFromFacade" id="distFromFacade" value="3" class="case1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="distFromFacade2" id="distFromFacade2" value="3" class="case2"></div>
+			<div class="inputWrapperRight"><input type="text" name="distFromFacade3" id="distFromFacade3" value="3" class="case3"></div><br>
 
 		</fieldset>
 
@@ -152,13 +225,19 @@
 			<hr>
 
 			<label for="outdoortemp">Outdoor Temperature (&deg;F)</label>
-			<input type="text" name="outdoortemp" id="outdoortemp" value="25"><br>
+			<div class="inputWrapperLeft"><input type="text" name="outdoortemp" id="outdoortemp" value="25" class="case1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="outdoortemp2" id="outdoortemp2" value="25" class="case2"></div>
+			<div class="inputWrapperRight"><input type="text" name="outdoortemp3" id="outdoortemp3" value="25" class="case3"></div><br>
 
 			<label for="airtemp">Indoor Ambient Temperature (&deg;F)<sup id="fnref:7"><a href="#fn:7" rel="footnote">?</a></sup></label>
-			<input type="text" name="airtemp" id="airtemp" value="72"><br>
+			<div class="inputWrapperLeft"><input type="text" name="airtemp" id="airtemp" value="72" class="case1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="airtemp2" id="airtemp2" value="72" class="case2"></div>
+			<div class="inputWrapperRight"><input type="text" name="airtemp3" id="airtemp3" value="72" class="case3"></div><br>
 
 			<label for="humidity">Relative Humidity (%)<sup id="fnref:8"><a href="#fn:8" rel="footnote">?</a></sup></label>
-			<input type="text" name="humidity" id="humidity" value="20"><br>
+			<div class="inputWrapperLeft"><input type="text" name="humidity" id="humidity" value="20" class="case1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="humidity2" id="humidity2" value="20" class="case2"></div>
+			<div class="inputWrapperRight"><input type="text" name="humidity3" id="humidity3" value="20" class="case3"></div><br>
 		</fieldset>
 
 
@@ -167,16 +246,25 @@
 			<hr>
 			
 			<label for="radiant">Radiant Floor<sup id="fnref:9"><a href="#fn:9" rel="footnote">?</a></sup></label>
-			<input type="checkbox" name="radiant" id="radiant"><br>
+			<div class="inputWrapperLeft"><input type="checkbox" name="radiant" id="radiant" class="case1"></div>
+			<div class="inputWrapperCenter"><input type="checkbox" name="radiant2" id="radiant2" class="case2"></div>
+			<div class="inputWrapperRight"><input type="checkbox" name="radiant3" id="radiant3" class="case3"></div><br>
 
 			<label for="airspeed">Air Speed (fpm)<sup id="fnref:10"><a href="#fn:10" rel="footnote">?</a></sup></label>
-			<input type="text" name="airspeed" id="airspeed" value="10"><br>
+			<div class="inputWrapperLeft"><input type="text" name="airspeed" id="airspeed" value="10" class="case1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="airspeed2" id="airspeed2" value="10" class="case2"></div>
+			<div class="inputWrapperRight"><input type="text" name="airspeed3" id="airspeed3" value="10" class="case3"></div><br>
 			
 			<label for="clothing">Clothing (clo)<sup id="fnref:11"><a href="#fn:11" rel="footnote">?</a></sup></label>
-			<input type="text" name="clothing" id="clothing" value="0.8"><br>
+			<div class="inputWrapperLeft"><input type="text" name="clothing" id="clothing" value="0.8" step="0.1" class="case1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="clothing2" id="clothing2" value="0.8" step="0.1" class="case2"></div>
+			<div class="inputWrapperRight"><input type="text" name="clothing3" id="clothing3" value="0.8" step="0.1" class="case3"></div><br>
 
 			<label for="metabolic">Metabolic Rate (met)<sup id="fnref:12"><a href="#fn:12" rel="footnote">?</a></sup></label>
-			<input type="text" name="metabolic" id="metabolic" value="1.2"><br>
+			<div class="inputWrapperLeft"><input type="text" name="metabolic" id="metabolic" value="1.2" step="0.1" class="case1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="metabolic2" id="metabolic2" value="1.2" step="0.1" class="case2"></div>
+			<div class="inputWrapperRight"><input type="text" name="metabolic3" id="metabolic3" value="1.2" step="0.1" class="case3"></div><br>
+
 		</fieldset>
 		</form>
 	</div>
@@ -186,40 +274,43 @@
 	<div class="footnotes">
 	<ol>
 	    <li class="footnote" id="fn:1"> <!-- u value -->
-	        <p>Some text about this thing<a href="#fnref:1" title="return to article"> ↩</a></p>
+	        <p>U-Value of the window assembly - including frame and edge<a href="#fnref:1" title="return to article"> ↩</a></p>
 	    </li>
 	    <li class="footnote" id="fn:2"> <!-- auto calculate u value -->
-	        <p>Some text about this thing<a href="#fnref:2" title="return to article"> ↩</a></p>
+	        <p>Press to calculate minimum U-Value needed to make the occupant comfortable<a href="#fnref:2" title="return to article"> ↩</a></p>
 	    </li>
 	    <li class="footnote" id="fn:3"> <!-- room side low e -->
-	        <p>Some text about this thing<a href="#fnref:3" title="return to article"> ↩</a></p>
+	        <p>Check to accont for a room-side Low-E coating<a href="#fnref:3" title="return to article"> ↩</a></p>
 	     </li>
 	     <li class="footnote" id="fn:4"><!-- emissivity -->
-	        <p>Some text about this thing<a href="#fnref:4" title="return to article"> ↩</a></p>
+	        <p>Emissivity of the room-side Low-E coating<a href="#fnref:4" title="return to article"> ↩</a></p>
 	    </li>
 	    <li class="footnote" id="fn:5"><!-- r value -->
-	        <p>Some text about this thing<a href="#fnref:5" title="return to article"> ↩</a></p>
+	        <p>R-Value of the wall assembly, including thermal bridges<a href="#fnref:5" title="return to article"> ↩</a></p>
 	    </li>
 	    <li class="footnote" id="fn:6"> <!-- PPD -->
-	        <p>Some text about this thing<a href="#fnref:6" title="return to article"> ↩</a></p>
+	        <p>The target Percentage of People Dissatisfied (PPD) from cold that you would like to remain below. This is indicative of how comfortable you would like your soace to be.  Common values are 10% and 20%.<a href="#fnref:6" title="return to article"> ↩</a></p>
 	    </li>
 	    <li class="footnote" id="fn:7"> <!-- indoor ambient temp -->
-	        <p>Some text about this thing<a href="#fnref:7" title="return to article"> ↩</a></p>
+	        <p>Temperature of the indoor air and interior surfaces<a href="#fnref:7" title="return to article"> ↩</a></p>
 	    </li>
 	    <li class="footnote" id="fn:8"> <!-- relative humidity -->
-	        <p>Some text about this thing<a href="#fnref:8" title="return to article"> ↩</a></p>
+	        <p>Relative humidity indoors<a href="#fnref:8" title="return to article"> ↩</a></p>
 	    </li>
 	    <li class="footnote" id="fn:9"> <!-- radiant floor -->
-	        <p>Some text about this thing<a href="#fnref:9" title="return to article"> ↩</a></p>
+	        <p>Check to account for the presence of a radiant floor<a href="#fnref:9" title="return to article"> ↩</a></p>
 	    </li>
 	    <li class="footnote" id="fn:10"> <!-- air speed -->
-	        <p>Some text about this thing<a href="#fnref:10" title="return to article"> ↩</a></p>
+	        <p>Average indoor air speed induced by the mechanical system<a href="#fnref:10" title="return to article"> ↩</a></p>
 	    </li>
 	    <li class="footnote" id="fn:11"> <!-- clothing -->
-	        <p>Some text about this thing<a href="#fnref:11" title="return to article"> ↩</a></p>
+	        <p>Clothing of the occupants in clo.  1 clo = a three-piece suit.<a href="#fnref:11" title="return to article"> ↩</a></p>
 	    </li>
 	    <li class="footnote" id="fn:12"> <!-- metabolic rate -->
-	        <p>Some text about this thing<a href="#fnref:12" title="return to article"> ↩</a></p>
+	        <p>Metabolic rate of the occupants in met.  1 met = seated resting.  1.2 met = typing.<a href="#fnref:12" title="return to article"> ↩</a></p>
+	    </li>
+		<li class="footnote" id="fn:13"> <!-- distance from facade -->
+	        <p>Distance from the facade at which you would like occupants to be comfortable.<a href="#fnref:13" title="return to article"> ↩</a></p>
 	    </li>
 	</ol>
 	</div>
@@ -231,7 +322,6 @@
 		var thisURL = location.href;
 		//call URL parser function
 		var urlParameters = urlObject({'url':thisURL}).parameters;
-		console.log(urlParameters);
 
 		//fill form with parameters, but only if values are provided in URL
 		if (typeof urlParameters.ceiling != 'undefined') {
@@ -301,9 +391,6 @@
 		if (typeof urlParameters.metabolic != 'undefined') {
 			$("#metabolic").val(urlParameters.metabolic);
 		}
-
-
-
 	</script>
 
  	<!-- Compute Data -->
