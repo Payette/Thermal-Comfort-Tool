@@ -220,85 +220,107 @@ render.makeGraph = function () {
 	// Add line at occupant location
 	occupantDistanceRefLine(); 
 
-	// add text and reference line at occupanct location
-	if (occPointData.ppd >= occPointData2.ppd && occPointData.ppd >= occPointData3.ppd) {
-		thresholdDataText(occPointData, "circle.occdot");
-	} else if (occPointData2.ppd >= occPointData.ppd && occPointData2.ppd >= occPointData3.ppd) {
-		thresholdDataText(occPointData2, "circle.occdot2");
-	} else if (occPointData3.ppd >= occPointData.ppd && occPointData3.ppd >= occPointData2.ppd) {
-		thresholdDataText(occPointData3, "circle.occdot3");
-	}
-	
+	// add text at occupanct location
+	thresholdDataText();
 
 
 	
 	
 	// Show text on hover over dot
-	var points = d3.selectAll(".dot");
+	var points = d3.selectAll(".dotCase1, .dotCase2, .dotCase3");
 	points.on("mouseover", function(d) {
 
 		//Get this dots x/y values, then augment for the tooltip
 		var xPosition = parseFloat(d3.select(this).attr("cx")) + margin.left;
 		var yPosition = parseFloat(d3.select(this).attr("cy"));
 
+		var caseText = "";
+
+		if (d3.select(this).attr("class") == "dotCase1") {
+			caseText = "1";
+			$("#tooltip h1").addClass("case1Text");
+			$("#tooltip h1").removeClass("case2Text");
+			$("#tooltip h1").removeClass("case3Text");
+		} else if (d3.select(this).attr("class") == "dotCase2") {
+			caseText = "2";
+			$("#tooltip h1").addClass("case2Text");
+			$("#tooltip h1").removeClass("case1Text");
+			$("#tooltip h1").removeClass("case3Text");
+		} else if (d3.select(this).attr("class") == "dotCase3") {
+			caseText = "3";
+			$("#tooltip h1").addClass("case3Text");
+			$("#tooltip h1").removeClass("case1Text");
+			$("#tooltip h1").removeClass("case2Text");
+		}
+
 		//Update the tooltip position and value
 		d3.select("#tooltip")
 			.style("left", xPosition + "px")
 			.select("#PPDtext")
-			.text(Math.round(d.ppd*10)/10 + "% PPD at " + d.dist + " ft from the façade");
+			.text(Math.round(d.ppd*10)/10 + "% PPD");
+
+
+		d3.select("#case")
+			.text(caseText);
+
+		
 
 		//tolerable discomfort
 		if (ppdValue >= d.ppd) {
 			d3.select("#discomfort")
-			.text("Tolerable")
+			.text("Tolerable discomfort")
 			.classed("tolerable", true)
 			.classed("intolerable", false);
 		
 			d3.select("#solution")
 			.text(".");
 
+			d3.select("span#icon")
+			.classed("check", true)
+			.classed("cross", false)
+
 			d3.select("#tooltip")
 			.style("top", (yPosition - margin.bottom/2) + "px")
 
 			if (d.govfact == "mrt") {
 				d3.select("#explain")
-				.text("a low mean radiant temperature")
-				.style("color", blue);
+				.text("a low mean radiant temperature");
 			} else if (d.govfact == "dwn") {
 				d3.select("#explain")
-				.text("downdraft")
-				.style("color", orange);
+				.text("downdraft");
 			} 
 		//intolerable discomfort
 		} else {
 			d3.select("#discomfort")
-			.text("Intolerable")
+			.text("Intolerable discomfort")
 			.classed("tolerable", false)
 			.classed("intolerable", true);
+
+			d3.select("span#icon")
+			.classed("check", false)
+			.classed("cross", true)
 
 			
 			//gov factors
 			if (d.govfact == "mrt") {
 				d3.select("#explain")
-				.text("a low mean radiant temperature")
-				.style("color", blue);
+				.text("a low mean radiant temperature");
 
 				d3.select("#solution")
-				.text(". Try adjusting the window geometry or reducing the U-value.");
+				.text(". To reduce discomfort, try adjusting the window geometry or reducing the U-value.");
 
 				d3.select("#tooltip")
-				.style("top", (yPosition - margin.bottom/1.2) + "px");
+				.style("top", (yPosition - margin.bottom/1.1) + "px");
 
 			} else if (d.govfact == "dwn") {
 				d3.select("#explain")
-				.text("downdraft")
-				.style("color", orange);
+				.text("downdraft");
 
 				d3.select("#solution")
-				.text(". Try reducing the window height or U-value.");
+				.text(". To reduce discomfort, try decreasing the window height or U-value.");
 
 				d3.select("#tooltip")
-				.style("top", (yPosition - margin.bottom/1.6) + "px");
+				.style("top", (yPosition - margin.bottom/1.3) + "px");
 
 			} 
 		}
@@ -662,6 +684,8 @@ render.makeGraph = function () {
 		}
 
 		resizeFacades(array);
+		// Update static tooltip text
+		thresholdDataText();
 	
     });
 
@@ -699,6 +723,8 @@ render.makeGraph = function () {
 		}
 
 		resizeFacades(array);
+		// Update static tooltip text
+		thresholdDataText();
 	
     });
 
@@ -743,12 +769,14 @@ render.makeGraph = function () {
 		}
 		// Update target PPD threshold line
 		updatePPDThreshold(ppdValue);	
+		thresholdDataText()
 	});
 	$("#ppd, #ppd2, #ppd3").on("spinstop", function(event) {
 		ppdValue = $(this).val();
 		$("#ppd, #ppd2, #ppd3").val(ppdValue);
 
-		updatePPDThreshold(ppdValue);	
+		updatePPDThreshold(ppdValue);
+		thresholdDataText()	
 	})
 
 	$("#windowWidthCheck").change(function(event) {
@@ -1475,6 +1503,9 @@ render.makeGraph = function () {
 			updateGraphData(newDataset, newOccLocData, graphPoints, ".connectLine", "circle.occdot1", orange);
 
 			updateFacade(case1Data, newGlzCoords, newGlzWidth, newGlzHeight);
+
+			occPointData = newOccLocData;
+
 		}
 		
 		else if (object == case2Data) {
@@ -1487,6 +1518,8 @@ render.makeGraph = function () {
 			updateGraphData(newDataset, newOccLocData, graphCase2Points, ".connectLine2", "circle.occdot2", blue);
 
 			updateFacade(case2Data, newGlzCoords, newGlzWidth, newGlzHeight);
+
+			occPointData2 = newOccLocData;
 		}
 
 		else if (object == case3Data) {
@@ -1499,10 +1532,12 @@ render.makeGraph = function () {
 			updateGraphData(newDataset, newOccLocData, graphCase3Points, ".connectLine3", "circle.occdot3", green);
 
 			updateFacade(case3Data, newGlzCoords, newGlzWidth, newGlzHeight);
+
+			occPointData3 = newOccLocData;
 		}
 
 		// Update static tooltip text
-		//thresholdDataText(newOccLocData);
+		thresholdDataText();
 
 		
 	}
@@ -1547,10 +1582,7 @@ render.makeGraph = function () {
 
 
 
-		//updateGraphData(newDataset, newOccLocData);
-		//updateFacade(wallPoints, newGlzCoords, newGlzWidth, newGlzHeight); 
-
-		//thresholdDataText(newOccLocData);
+		thresholdDataText();
 
 	}
 
@@ -1636,7 +1668,7 @@ render.makeGraph = function () {
 				.transition()
 				.duration(500);
 			//update windows
-			d3.selectAll("rect.window1").remove()
+			d3.selectAll("rect.window1").remove();
 			facadeSvgCase1.selectAll(".window1")
 				.data(glzData)
 				.enter()
@@ -2115,79 +2147,88 @@ render.makeGraph = function () {
 		return governingWallLength;
 	}
 
-	// Display text for occupancy dist from facade
-	function thresholdDataText(occdata, className) {
 
-	
-		var xPosition = parseFloat(d3.select(className).attr("cx")) + margin.left;
-		var yPosition = parseFloat(d3.select(className).attr("cy"));
+	function occupantPositionText(occdata, className, caseName) {
+
+		var downdraftSolution = "To reduce discomfort, try decreasing the window height or U-value.";
+		var mrtSolution = "To reduce discomfort, try adjusting the window geometry or decreasing the U-value.";
+
+		var text = "";
+		var reason = "";
+		var solution = "";
+
+		if (occdata.govfact == "dwn") {
+			reason = "downdraft";
+			solution = downdraftSolution;
+		} else {
+			reason = "a low mean radiant temperature";
+			solution = mrtSolution;
+		}
+
+
+		if (occdata.ppd <= ppdValue) {
+			text = "<h1 class=" + className + "><span id='icon' class='check'></span>" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD</h1><p><b>Tolerable discomfort</b> is due to " + reason + ".</p>";
+		} else {
+			text = "<h1 class=" + className + "><span id='icon' class='cross'></span>" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD</h1><p><b>Intolerable discomfort</b> is due to " + reason + ". " + solution + "</p>";
+		}
+
+		return text;
+	}
+
+
+
+
+
+
+
+
+
+	// Display text for occupancy dist from facade
+	function thresholdDataText() {
+		
+		var totalText = "";
+		$("#thresholdTooltip").empty();
+
+		var case1Text = occupantPositionText(occPointData, "case1Text", "Case 1");
+		var case2Text = occupantPositionText(occPointData2, "case2Text", "Case 2");
+		var case3Text = occupantPositionText(occPointData3, "case3Text", "Case 3");
+
+		//find min cy of visible occ points
+		var compareOccupantArray = [];
+
+
+		if ($("#caseSelection #case1Label").hasClass("unselected") == false ) {
+			totalText = case1Text;
+
+			var case1YPosition = parseFloat(d3.select("circle.occdot1").attr("cy"));
+			compareOccupantArray.push(case1YPosition);
+		}
+
+		if ($("#caseSelection #case2Label").hasClass("unselected") == false ) {
+			totalText = totalText + case2Text;
+
+			var case2YPosition = parseFloat(d3.select("circle.occdot2").attr("cy"));
+			compareOccupantArray.push(case2YPosition);
+		}
+
+		if ($("#caseSelection #case3Label").hasClass("unselected") == false ) {
+			totalText = totalText + case3Text;
+
+			var case3YPosition = parseFloat(d3.select("circle.occdot3").attr("cy"));
+			compareOccupantArray.push(case3YPosition);
+		}
+
+
+		$("#thresholdTooltip").append(totalText);
+
+		var divHeight = $("div#thresholdTooltip").height() - 20; //20 = padding
+
+		var xPosition = parseFloat(d3.select("circle.occdot1").attr("cx")) + margin.left; // same for all cases
+		var yPosition = d3.min(compareOccupantArray) - divHeight;
 
 		d3.select("#thresholdTooltip")
 		.style("left", xPosition + "px")
-		.select("#thisPPDtext")
-		.text(Math.round(occdata.ppd*10)/10 + "% PPD at " + occdata.dist + " ft from the façade");
-
-		// tolerable discomfort
-		if (ppdValue >= Math.round(occdata.ppd)) {
-
-			d3.select("#thisDiscomfort")
-			.text("Tolerable")
-			.classed("tolerable", true)
-			.classed("intolerable", false);
-
-			d3.select("#thisSolution")
-			.text(".");
-
-			//governing factor
-			if (occdata.govfact == "mrt") {
-				d3.select("#thisExplain")
-				.text("a low mean radiant temperature")
-				.style("color", blue);
-
-			} else if (occdata.govfact == "dwn") {
-				d3.select("#thisExplain")
-				.text("downdraft")
-				.style("color", orange);
-			}
-
-			d3.select("#thresholdTooltip")
-			.style("top", (yPosition - margin.bottom/2) + "px")
-
-
-		// intolerable discomfort
-		} else {
-			d3.select("#thisDiscomfort")
-			.text("Intolerable")
-			.classed("tolerable", false)
-			.classed("intolerable", true);
-
-			//governing factor
-			if (occdata.govfact == "mrt") {
-				d3.select("#thisExplain")
-				.text("a low mean radiant temperature")
-				.style("color", blue);
-
-				d3.select("#thisSolution")
-				.text(". Try adjusting the window geometry or reducing the U-value.");
-
-				d3.select("#thresholdTooltip")
-				.style("top", (yPosition - margin.bottom/1.2) + "px");
-
-			} else if (occdata.govfact == "dwn") {
-				d3.select("#thisExplain")
-				.text("downdraft")
-				.style("color", orange);
-
-				d3.select("#thisSolution")
-				.text(". Try reducing the window height or U-value.");
-
-				d3.select("#thresholdTooltip")
-				.style("top", (yPosition - margin.bottom/1.6) + "px");
-			}
-
-
-
-		}
+		.style("top", yPosition + "px");
 
 		 
 	} // end thresholdDataText
@@ -2253,7 +2294,7 @@ render.makeGraph = function () {
 
 		if ($("#caseSelection #case3Label").hasClass("unselected") == false ) {
 			var case3YPosition = parseFloat(d3.select("circle.occdot3").attr("cy"));
-			compareOccupantArray.push(case2YPosition);
+			compareOccupantArray.push(case3YPosition);
 		}
 
 
