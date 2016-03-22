@@ -119,7 +119,7 @@ uVal.uValDownD = function(PPDAccept, distToFacade, windowHgt, filmCoeff, airTemp
 
 	function solve(target) {
 
-		var epsilon = 0.1 // PPD precision
+		var epsilon = 0.01 // PPD precision
 		var a = 0
 		var b = 2
 		var fn = uvalclos(target)
