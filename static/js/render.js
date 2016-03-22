@@ -1965,11 +1965,15 @@ render.makeGraph = function () {
 
 
 
-		/*// Update dimensions
-		facadeSvg.selectAll("#facadeWidth, #facadeHeightDim, #facadeHeightDimLabel, #windowHeightDimLabel, #windowHeightDim, #sillHeightDim, #sillHeightDimLabelTop, #sillHeightDimLabelBottom, #windowSepDim").remove();
+		/*"#facadeWidth, #facadeHeightDim, #facadeHeightDimLabel, #windowHeightDimLabel, 
+		
 		drawHorziontalDimensions(wallPoints[0].wallWidth);
-		drawVerticalDimensions(wallPoints[0].wallHeight);
-		windowDimensions(glzData, newGlzWidth, newGlzHeight);*/
+		drawVerticalDimensions(wallPoints[0].wallHeight);*/
+
+		// Update dimensions
+		$("#windowHeightDimLabel, #sillHeightDimLabelTop, #sillHeightDimLabelBottom, .dimensions").remove();
+		windowDimensions(glzCoords, glzWidth, glzHeight);
+
 
 	}
 
@@ -2083,6 +2087,11 @@ render.makeGraph = function () {
 				return "translate(" + facMargin.left + "," + facMargin.top + ")";
 			})
 			.style("fill", "url(#blueGradient)");
+
+
+		// Update dimensions
+		$("#windowHeightDimLabel, #sillHeightDimLabelTop, #sillHeightDimLabelBottom, .dimensions").remove();
+		windowDimensions(glzCoords, glzWidth, glzHeight);
 
 
 	}
