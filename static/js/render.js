@@ -742,7 +742,7 @@ render.makeGraph = function () {
 
 	/* ------ DETECT CHANGES TO INPUT VALUES ------ */
 	// universal changes
-	$("#distFromFacade, #distFromFacade2, #distFromFacade3").change(function(event) {
+	$("#distFromFacade, #distFromFacade2, #distFromFacade3").focusout(function(event) {
 		occDistFromFacade = $(this).val();
 
 		$("#distFromFacade, #distFromFacade2, #distFromFacade3").val(occDistFromFacade);
@@ -755,7 +755,7 @@ render.makeGraph = function () {
 		d3.selectAll(".occupantLine").remove();
 		occupantDistanceRefLine();
 	});
-	$("#distFromFacade").on("spinstop", function(event) {
+	$("#distFromFacade").on("spinchange", function(event) {
 		occDistFromFacade = $(this).val();
 
 		$("#distFromFacade, #distFromFacade2, #distFromFacade3").val(occDistFromFacade);
@@ -769,7 +769,7 @@ render.makeGraph = function () {
 		occupantDistanceRefLine();
 	})
 
-	$("#ppd, #ppd2, #ppd3").change(function(event) {
+	$("#ppd, #ppd2, #ppd3").focusout(function(event) {
 		if ($(this).val() <= 4) {
 			ppdValue = 5;
 			$("#ppd, #ppd2, #ppd3").val(5);
@@ -786,7 +786,7 @@ render.makeGraph = function () {
 		updatePPDThreshold(ppdValue);
 		thresholdDataText()
 	});
-	$("#ppd, #ppd2, #ppd3").on("spinstop", function(event) {
+	$("#ppd, #ppd2, #ppd3").on("spinchange", function(event) {
 		ppdValue = $(this).val();
 		$("#ppd, #ppd2, #ppd3").val(ppdValue);
 
@@ -900,7 +900,7 @@ render.makeGraph = function () {
 	})
 
 
-	$("#outdoortemp").change(function(event) {
+	$("#outdoortemp").focusout(function(event) {
 		outdoorTempValue = $(this).val();
 
 		$("#outdoortemp, #outdoortemp2, #outdoortemp3").val(outdoorTempValue);
@@ -909,7 +909,7 @@ render.makeGraph = function () {
 		updateData(case2Data);
 		updateData(case3Data);
 	})
-	$("#outdoortemp").on("spinstop", function(event) {
+	$("#outdoortemp").on("spinchange", function(event) {
 		outdoorTempValue = $(this).val();
 		$("#outdoortemp, #outdoortemp2, #outdoortemp3").val(outdoorTempValue);
 		updateData(case1Data);
@@ -917,7 +917,7 @@ render.makeGraph = function () {
 		updateData(case3Data);
 	})
 
-	$("#airtemp, #airtemp2, #airtemp3").change(function(event) {
+	$("#airtemp, #airtemp2, #airtemp3").focusout(function(event) {
 		airtempValue = $(this).val();
 		$("#airtemp, #airtemp2, #airtemp3").val(airtempValue);
 
@@ -925,7 +925,7 @@ render.makeGraph = function () {
 		updateData(case2Data);
 		updateData(case3Data);
 	});
-	$("#airtemp").on("spinstop", function(event) {
+	$("#airtemp").on("spinchange", function(event) {
 		airtempValue = $(this).val();
 		$("#airtemp, #airtemp2, #airtemp3").val(airtempValue);
 
@@ -934,7 +934,7 @@ render.makeGraph = function () {
 		updateData(case3Data);
 	})
 
-	$("#humidity").change(function(event) {
+	$("#humidity").focusout(function(event) {
 		humidityValue = $(this).val();
 
 		$("#humidity, #humidity2, #humidity3").val(humidityValue);
@@ -943,7 +943,7 @@ render.makeGraph = function () {
 		updateData(case2Data);
 		updateData(case3Data);
 	})
-	$("#humidity").on("spinstop", function(event) {
+	$("#humidity").on("spinchange", function(event) {
 		humidityValue = $(this).val();
 
 		$("#humidity, #humidity2, #humidity3").val(humidityValue);
@@ -965,7 +965,7 @@ render.makeGraph = function () {
 		updateData(case3Data);
 	})
 
-	$("#airspeed, #airspeed2, #airspeed3").change(function(event) {
+	$("#airspeed, #airspeed2, #airspeed3").focusout(function(event) {
 		airspeedValue = $(this).val();
 
 		$("#airspeed, #airspeed2, #airspeed3").val(airspeedValue);
@@ -974,7 +974,7 @@ render.makeGraph = function () {
 		updateData(case2Data);
 		updateData(case3Data);
 	})
-	$("#airspeed").on("spinstop", function(event) {
+	$("#airspeed").on("spinchange", function(event) {
 		airspeedValue = $(this).val();
 
 		$("#airspeed, #airspeed2, #airspeed3").val(airspeedValue);
@@ -984,7 +984,7 @@ render.makeGraph = function () {
 		updateData(case3Data);
 	})
 
-	$("#clothing").change(function(event) {
+	$("#clothing").focusout(function(event) {
 		clothingValue = $(this).val();
 
 		$("#clothing, #clothing2, #clothing3").val(clothingValue);
@@ -993,7 +993,7 @@ render.makeGraph = function () {
 		updateData(case2Data);
 		updateData(case3Data);
 	})
-	$("#clothing").on("spinstop", function(event) {
+	$("#clothing").on("spinchange", function(event) {
 		clothingValue = $(this).val();
 
 		$("#clothing, #clothing2, #clothing3").val(clothingValue);
@@ -1003,7 +1003,7 @@ render.makeGraph = function () {
 		updateData(case3Data);
 	})
 
-	$("#metabolic").change(function(event) {
+	$("#metabolic").focusout(function(event) {
 		metabolic = $(this).val();
 
 		$("#metabolic, #metabolic2, #metabolic3").val(metabolic);
@@ -1012,13 +1012,36 @@ render.makeGraph = function () {
 		updateData(case2Data);
 		updateData(case3Data);
 	})
-	$("#metabolic").on("spinstop", function(event) {
+	$("#metabolic").on("spinchange", function(event) {
 		metabolic = $(this).val();
 
 		$("#metabolic, #metabolic2, #metabolic3").val(metabolic);
 
 		updateData(case1Data);
 		updateData(case2Data);
+		updateData(case3Data);
+	})
+
+
+	$("#occupantDist").change(function(event) {
+		//assign new value
+		case1Data.occDistToWallCenter = $(this).val();
+		$("#occupantDist").attr("value", case1Data.occDistToWallCenter);
+
+		updateOccupantImageLocation("#occupantImage", "#occupantDist", case1Data);
+
+		updateData(case1Data);
+	})
+	$("#occupantDist2").change(function(event) {
+		//assign new value
+		case2Data.occDistToWallCenter = $(this).val();
+		updateOccupantImageLocation("#occupantImage2", "#occupantDist2", case2Data);
+		updateData(case2Data);
+	})
+	$("#occupantDist3").change(function(event) {
+		//assign new value
+		case3Data.occDistToWallCenter = $(this).val();
+		updateOccupantImageLocation("#occupantImage3", "#occupantDist3", case3Data);
 		updateData(case3Data);
 	})
 
@@ -1026,15 +1049,13 @@ render.makeGraph = function () {
 
 
 	// Case 1 - Changes based on typed inputs
-	$("#ceiling, #wallWidth, #occupantDist, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowECheck, #lowE, #rvalue").change(function(event) {
+	$("#ceiling, #wallWidth, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowECheck, #lowE, #rvalue").focusout(function(event) {
 
 		//figure out what input changed
 		var triggeredChange = event.target.id;
 
-
 		if(triggeredChange == "ceiling") {
 			case1Data.ceilingHeightValue = $(this).val();
-
 
 		}
 		else if(triggeredChange == "wallWidth") {
@@ -1047,15 +1068,6 @@ render.makeGraph = function () {
 			checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");
 
 		}
-		else if(triggeredChange == "occupantDist") {
-			//assign new value
-			case1Data.occDistToWallCenter = $(this).val();
-			$("#occupantDist").attr("value", case1Data.occDistToWallCenter);
-
-			updateOccupantImageLocation("#occupantImage", "#occupantDist", case1Data);
-
-		}
-
 		else if (triggeredChange == "windowHeight") {
 			case1Data.windowHeightValue = $(this).val();
 		}
@@ -1102,7 +1114,6 @@ render.makeGraph = function () {
 		else if (triggeredChange == "rvalue") {
 			case1Data.rvalueValue = $(this).val();
 		}
-
 		else {
 			alert("Don't know what changed!");
 		}
@@ -1111,14 +1122,15 @@ render.makeGraph = function () {
 		updateData(case1Data);
 	})
 
+
 	// Case 1 - Changes based on increment buttons
-		$("#ceiling").on("spinstop", function(event) {
+		$("#ceiling").on("spinchange", function(event) {
 			case1Data.ceilingHeightValue = $(this).val();
 
 			updateData(case1Data);
 		})
 
-		$("#wallWidth").on("spinstop", function(event) {
+		$("#wallWidth").on("spinchange", function(event) {
 			case1Data.wallLen = $(this).val();
 
 
@@ -1133,46 +1145,46 @@ render.makeGraph = function () {
 		})
 
 
-		$("#windowHeight").on("spinstop", function(event) {
+		$("#windowHeight").on("spinchange", function(event) {
 			case1Data.windowHeightValue = $(this).val();
 			updateData(case1Data);
 		})
 
-		$("#windowWidth").on("spinstop", function(event) {
+		$("#windowWidth").on("spinchange", function(event) {
 			case1Data.windowWidthValue = $(this).val();
 			updateData(case1Data);
 		})
 
-		$("#glazing").on("spinstop", function(event) {
+		$("#glazing").on("spinchange", function(event) {
 			case1Data.glzRatioValue = $(this).val();
 			updateData(case1Data);
 		})
 
-		$("#sill").on("spinstop", function(event) {
+		$("#sill").on("spinchange", function(event) {
 			case1Data.sillHeightValue = $(this).val();
 
 			updateData(case1Data);
 		})
 
-		$("#distWindow").on("spinstop", function(event) {
+		$("#distWindow").on("spinchange", function(event) {
 			case1Data.distanceWindows = $(this).val();
 
 			updateData(case1Data);
 		})
 
-		$("#uvalue").on("spinstop", function(event) {
+		$("#uvalue").on("spinchange", function(event) {
 			case1Data.uvalueValue = $(this).val();
 
 			updateData(case1Data);
 		})
 
-		$("#lowE").on("spinstop", function(event) {
+		$("#lowE").on("spinchange", function(event) {
 			case1Data.intLowEEmissivity = $(this).val();
 
 			updateData(case1Data);
 		})
 
-		$("#rvalue").on("spinstop", function(event) {
+		$("#rvalue").on("spinchange", function(event) {
 			case1Data.rvalueValue = $(this).val();
 
 			updateData(case1Data);
@@ -1180,7 +1192,7 @@ render.makeGraph = function () {
 
 
 	// Case 2 - Changes based on typed inputs
-	$("#ceiling2, #wallWidth2, #occupantDist2, #windowHeight2, #windowWidth2, #glazing2, #sill2, #distWindow2, #uvalue2, #lowECheck2, #lowE2, #rvalue2").change(function(event) {
+	$("#ceiling2, #wallWidth2, #windowHeight2, #windowWidth2, #glazing2, #sill2, #distWindow2, #uvalue2, #lowECheck2, #lowE2, #rvalue2").focusout(function(event) {
 
 		//figure out what input changed
 		var triggeredChange = event.target.id;
@@ -1197,11 +1209,6 @@ render.makeGraph = function () {
 			checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
 			checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
 			checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");
-		}
-		else if(triggeredChange == "occupantDist2") {
-			//assign new value
-			case2Data.occDistToWallCenter = $(this).val();
-			updateOccupantImageLocation("#occupantImage2", "#occupantDist2", case2Data);
 		}
 
 		else if (triggeredChange == "windowHeight2") {
@@ -1257,14 +1264,14 @@ render.makeGraph = function () {
 		updateData(case2Data);
 	})
 
-	// Case 2 - Changes based on increment buttons
-		$("#ceiling2").on("spinstop", function(event) {
+	// Case 2 - Changes based on increment bttons
+		$("#ceiling2").on("spingchange", function(event) {
 			case2Data.ceilingHeightValue = $(this).val();
 
 			updateData(case2Data);
 		})
 
-		$("#wallWidth2").on("spinstop", function(event) {
+		$("#wallWidth2").on("spingchange", function(event) {
 			case2Data.wallLen = $(this).val();
 
 			$("#occupantDist2").attr("max", case2Data.wallLen/2);
@@ -1276,47 +1283,47 @@ render.makeGraph = function () {
 		})
 
 
-		$("#windowHeight2").on("spinstop", function(event) {
+		$("#windowHeight2").on("spingchange", function(event) {
 			case2Data.windowHeightValue = $(this).val();
 
 			updateData(case2Data);
 		})
 
-		$("#windowWidth2").on("spinstop", function(event) {
+		$("#windowWidth2").on("spingchange", function(event) {
 			case2Data.windowWidthValue = $(this).val();
 			updateData(case2Data);
 		})
 
-		$("#glazing2").on("spinstop", function(event) {
+		$("#glazing2").on("spingchange", function(event) {
 			case2Data.glzRatioValue = $(this).val();
 			updateData(case2Data);
 		})
 
-		$("#sill2").on("spinstop", function(event) {
+		$("#sill2").on("spingchange", function(event) {
 			case2Data.sillHeightValue = $(this).val();
 
 			updateData(case2Data);
 		})
 
-		$("#distWindow2").on("spinstop", function(event) {
+		$("#distWindow2").on("spingchange", function(event) {
 			case2Data.distanceWindows = $(this).val();
 
 			updateData(case2Data);
 		})
 
-		$("#uvalue2").on("spinstop", function(event) {
+		$("#uvalue2").on("spingchange", function(event) {
 			case2Data.uvalueValue = $(this).val();
 
 			updateData(case2Data);
 		})
 
-		$("#lowE2").on("spinstop", function(event) {
+		$("#lowE2").on("spingchange", function(event) {
 			case2Data.intLowEEmissivity = $(this).val();
 
 			updateData(case2Data);
 		})
 
-		$("#rvalue2").on("spinstop", function(event) {
+		$("#rvalue2").on("spingchange", function(event) {
 			case2Data.rvalueValue = $(this).val();
 
 			updateData(case2Data);
@@ -1324,7 +1331,7 @@ render.makeGraph = function () {
 
 
 	// Case 3 - Changes based on typed inputs
-	$("#ceiling3, #wallWidth3, #occupantDist3, #windowHeight3, #windowWidth3, #glazing3, #sill3, #distWindow3, #uvalue3, #lowECheck3, #lowE3, #rvalue3").change(function(event) {
+	$("#ceiling3, #wallWidth3, #windowHeight3, #windowWidth3, #glazing3, #sill3, #distWindow3, #uvalue3, #lowECheck3, #lowE3, #rvalue3").focusout(function(event) {
 
 		//figure out what input changed
 		var triggeredChange = event.target.id;
@@ -1342,11 +1349,6 @@ render.makeGraph = function () {
 			checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
 			checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
 			checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");
-		}
-		else if(triggeredChange == "occupantDist3") {
-			//assign new value
-			case3Data.occDistToWallCenter = $(this).val();
-			updateOccupantImageLocation("#occupantImage3", "#occupantDist3", case3Data);
 		}
 
 		else if (triggeredChange == "windowHeight3") {
@@ -1402,14 +1404,14 @@ render.makeGraph = function () {
 		updateData(case3Data);
 	})
 
-	// Case 3 - Changes based on increment buttons
-		$("#ceiling3").on("spinstop", function(event) {
+	// Case 3 - Changes based on increment bttons
+		$("#ceiling3").on("spingchange", function(event) {
 			case3Data.ceilingHeightValue = $(this).val();
 
 			updateData(case3Data);
 		})
 
-		$("#wallWidth2").on("spinstop", function(event) {
+		$("#wallWidth2").on("spingchange", function(event) {
 			case3Data.wallLen = $(this).val();
 
 
@@ -1422,46 +1424,46 @@ render.makeGraph = function () {
 		})
 
 
-		$("#windowHeight3").on("spinstop", function(event) {
+		$("#windowHeight3").on("spingchange", function(event) {
 			case3Data.windowHeightValue = $(this).val();
 			updateData(case3Data);
 		})
 
-		$("#windowWidth3").on("spinstop", function(event) {
+		$("#windowWidth3").on("spingchange", function(event) {
 			case3Data.windowWidthValue = $(this).val();
 			updateData(case3Data);
 		})
 
-		$("#glazing3").on("spinstop", function(event) {
+		$("#glazing3").on("spingchange", function(event) {
 			case3Data.glzRatioValue = $(this).val();
 			updateData(case3Data);
 		})
 
-		$("#sill3").on("spinstop", function(event) {
+		$("#sill3").on("spingchange", function(event) {
 			case3Data.sillHeightValue = $(this).val();
 
 			updateData(case3Data);
 		})
 
-		$("#distWindow3").on("spinstop", function(event) {
+		$("#distWindow3").on("spingchange", function(event) {
 			case3Data.distanceWindows = $(this).val();
 
 			updateData(case3Data);
 		})
 
-		$("#uvalue3").on("spinstop", function(event) {
+		$("#uvalue3").on("spingchange", function(event) {
 			case3Data.uvalueValue = $(this).val();
 
 			updateData(case3Data);
 		})
 
-		$("#lowE3").on("spinstop", function(event) {
+		$("#lowE3").on("spingchange", function(event) {
 			case3Data.intLowEEmissivity = $(this).val();
 
 			updateData(case3Data);
 		})
 
-		$("#rvalue3").on("spinstop", function(event) {
+		$("#rvalue3").on("spingchange", function(event) {
 			case3Data.rvalueValue = $(this).val();
 
 			updateData(case3Data);
