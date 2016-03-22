@@ -1026,7 +1026,7 @@ render.makeGraph = function () {
 
 
 	// Case 1 - Changes based on typed inputs
-	$("#ceiling, #wallWidth, #occupantDist, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowECheck, #lowE, #rvalue").change(function(event) {
+	$("#ceiling, #wallWidth, #occupantDist, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowECheck, #lowE, #rvalue").focusout(function(event) {
 
 		//figure out what input changed
 		var triggeredChange = event.target.id;
@@ -1515,6 +1515,10 @@ render.makeGraph = function () {
 			$("#sill").val(Math.round(object.sillHeightValue * 100) / 100);
 			$("#distWindow").val(Math.round(object.distanceWindows * 100) / 100);
 
+			glzCoords = newGlzCoords
+			glzWidth = newGlzWidth
+			glzHeight = newGlzHeight
+
 			updateGraphData(newDataset, newOccLocData, graphPoints, ".connectLine", "circle.occdot1", orange);
 
 			updateFacade(case1Data, newGlzCoords, newGlzWidth, newGlzHeight);
@@ -1530,6 +1534,10 @@ render.makeGraph = function () {
 			$("#sill2").val(Math.round(object.sillHeightValue * 100) / 100);
 			$("#distWindow2").val(Math.round(object.distanceWindows * 100) / 100);
 
+			glzCoordsCase2 = newGlzCoords
+			glzWidthCase2 = newGlzWidth
+			glzHeightCase2 = newGlzHeight
+
 			updateGraphData(newDataset, newOccLocData, graphCase2Points, ".connectLine2", "circle.occdot2", blue);
 
 			updateFacade(case2Data, newGlzCoords, newGlzWidth, newGlzHeight);
@@ -1543,6 +1551,10 @@ render.makeGraph = function () {
 			$("#windowHeight3").val(Math.round(object.windowHeightValue * 100) / 100);
 			$("#sill3").val(Math.round(object.sillHeightValue * 100) / 100);
 			$("#distWindow3").val(Math.round(object.distanceWindows * 100) / 100);
+
+			glzCoordsCase3 = newGlzCoords
+			glzWidthCase3 = newGlzWidth
+			glzHeightCase3 = newGlzHeight
 
 			updateGraphData(newDataset, newOccLocData, graphCase3Points, ".connectLine3", "circle.occdot3", green);
 

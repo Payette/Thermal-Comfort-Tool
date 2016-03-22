@@ -23,10 +23,8 @@ util.bisect = function(a, b, fn, epsilon, target) {
 util.secant = function(a, b, fn, epsilon) {
   // root-finding only
   var f1 = fn(a)
-  console.log(f1)
   if (Math.abs(f1) <= epsilon) return a
   var f2 = fn(b)
-  console.log(f2)
   if (Math.abs(f2) <= epsilon) return b
   var slope, c, f3
   for (var i = 0; i < 100; i++){

@@ -159,7 +159,7 @@ uVal.uValFinal = function(opaqueViewFac, winViewFac, distToFacade, runDownCalc, 
 
 	//Compute the required U-Value for PMV model.
 	var uValMRT = uVal.uValMRT(opaqueViewFac, winViewFac, airTemp, outdoorTemp, opaqueRVal, filmCoeff, lowEmissivity, vel, relHumid, metRate, cloLevel, targetPPD)
-
+	console.log()
 	//Compute the required U-Value for the Downdraft model.
 	if (runDownCalc== true) {
 		var uValDownD = uVal.uValDownD(targetPPD, distToFacade, windowHgtSI, filmCoeff, airTemp, outdoorTemp)
