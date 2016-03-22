@@ -9,48 +9,21 @@ var uVal = uVal || {}
 
 
 // FUNCTIONS FOR CALCULATING THE MAX U-VALUE WITH PMV
-// Function that converts a target PPD to a target PMV.
-uVal.calcPMVtarget = function(targetPPD){
-	var pmvGuess = 0
-	var increment = 0.01
-	var PPD = 100.0 - 95.0 * exp(-0.03353 * pow(pmvGuess, 4) - 0.2179 * pow(pmvGuess, 2))
-	var eps = 0.01
-	while (abs(targetPPD - PPD) > eps) {
-		pmvGuess = pmvGuess + increment
-		PPD = 100.0 - 95.0 * exp(-0.03353 * pow(pmvGuess, 4) - 0.2179 * pow(pmvGuess, 2))
-	}
-	return pmvGuess
-}
+// Function that computes U-Values acceptable using a set of view factors and window properties.
+uVal.uValMRT = function(opaqueViewFac, winViewFac, airTemp, outdoorTemp, opaqueRVal, filmCoeff, intLowE, lowEmissivity, vel, relHumid, metRate, cloLevel, targetPPD){
 
-//Function that computes the minimum acceptable MRT given PMV values and a PPD target.
-uVal.calcMinAcceptMRT =  function (airTemp, windSpeed, relHumid, metRate, cloLevel, targetPPD){
-	// Turn the target PPD into a target PMV.
-	if (targetPPD == 10){
-		var pmvlimit = 0.5
-	} else if (targetPPD == 6){
-		var pmvlimit = 0.220
-	} else if (targetPPD == 15){
-		var pmvlimit = 0.690
-	} else if (targetPPD == 20){
-		var pmvlimit = 0.84373
-	} else if (targetPPD < 5.0){
-		var pmvlimit = 0.0001
-	} else{
-        var pmvlimit = uVal.calcPMVtarget(targetPPD)
-	}
-
-	function mrtclos(target) {
-		return function(mrt) {
-			return comf.pmv(airTemp, mrt, windSpeed, relHumid, metRate, cloLevel, 0).pmv - target
+	function uvalclos(target) {
+		return function(uValGuess) {
+			return comf.calcFullMRTppd(winViewFac, opaqueViewFac, filmCoeff, airTemp, outdoorTemp, airTemp, opaqueRVal, uValGuess, intLowE, lowEmissivity, cloLevel, metRate, vel, relHumid).ppd - target
 		}
 	}
 
 	function solve(target) {
 
-		var epsilon = 0.001 // tr precision
-		var a = -50
-		var b = 50
-		var fn = mrtclos(target)
+		var epsilon = 0.01 // PPD precision
+		var a = 0.001 // Start Lower Guess for U-Value
+		var b = 10 // Start Upper Guess for U-Value
+		var fn = uvalclos(target)
 		var t = util.secant(a, b, fn, epsilon)
 		if (isNaN(t)) {
 			t = util.bisect(a, b, fn, epsilon, 0)
@@ -58,50 +31,12 @@ uVal.calcMinAcceptMRT =  function (airTemp, windSpeed, relHumid, metRate, cloLev
 		return t
 	}
 
-	return solve(-pmvlimit) // This is correct for error in the relation of PMV and PPD
-}
-
-// Functions that that help compute U-Values with an acceptable MRT threshold.
-uVal.MRTCondtribOfOpaque = function(opaqueTemp, opaqueView, windowView, airTemp) {
-    return (pow((airTemp+273),4)*(1-(opaqueView+windowView))) + (pow((opaqueTemp+273),4)*(opaqueView));
-}
-uVal.maxUOfMRT = function(minAcceptMRT, airTemp, outTemp, winViewFac, opaqueContrib, filmCoeff) {
-    return (((airTemp+273) - (pow(abs(((pow((minAcceptMRT+273),4))-opaqueContrib)/winViewFac), 0.25))) * filmCoeff) / (airTemp-outTemp)
-}
-
-// Function that computes U-Values acceptable with MRT threshold.
-uVal.uValMRT = function(opaqueViewFac, winViewFac, airTemp, outdoorTemp, opaqueRVal, filmCoeff, lowEmissivity, vel, relHumid, metRate, cloLevel, targetPPD){
-	if (winViewFac > 0.01) {
-		// Calculate the minimum acceptable MRT to satisfy the input PPD.
-		var minAcceptMRT = uVal.calcMinAcceptMRT(airTemp, vel, relHumid, metRate, cloLevel, targetPPD)
-		//console.log(comf.pmv(airTemp, minAcceptMRT, vel, relHumid, metRate, cloLevel, 0).ppd)
-		//Calculate the temperature of the opaque wall and its contribution to the comfort.
-		var opaqueTemp = comf.calcInteriorTemp(airTemp, outdoorTemp, opaqueRVal, 8.29)
-		var opaqueContrib = uVal.MRTCondtribOfOpaque(opaqueTemp, opaqueViewFac, winViewFac, airTemp);
-
-		// Calculate the minimum acceptable U-Values for the PMV model.
-		var UMax = uVal.maxUOfMRT(minAcceptMRT, airTemp, outdoorTemp, winViewFac, opaqueContrib, filmCoeff);
-		if (filmCoeff > 5) {
-			var UVal = UMax;
-		} else {
-			var UVal = UMax/lowEmissivity;
-		}
-
-		if (UVal < 0) {
-			UVal = 0
-		}
-	} else {
-		// UValue function breaks at very small glazing view factors.
-		// In this case, let's just check if PMV is comfortable and, if so, we will just return a very high U-Value.
-		// Otherwise, we return a U-Value of zero.
-		if (comf.pmv(airTemp, airTemp, vel, relHumid, metRate, cloLevel, 0).ppd > 10){
-			var UVal = 0
-		}else{
-			var UVal = 10
-		}
+	var correctuVal = solve(targetPPD)
+	if (correctuVal < 0) {
+		correctuVal = 0
 	}
 
-	return UVal
+	return correctuVal
 }
 
 
@@ -120,8 +55,8 @@ uVal.uValDownD = function(PPDAccept, distToFacade, windowHgt, filmCoeff, airTemp
 	function solve(target) {
 
 		var epsilon = 0.01 // PPD precision
-		var a = 0
-		var b = 2
+		var a = 0.001 // Start Lower Guess for U-Value
+		var b = 10 // Start Upper Guess for U-Value
 		var fn = uvalclos(target)
 		var t = util.secant(a, b, fn, epsilon)
 		if (isNaN(t)) {
@@ -158,8 +93,8 @@ uVal.uValFinal = function(opaqueViewFac, winViewFac, distToFacade, runDownCalc, 
 
 
 	//Compute the required U-Value for PMV model.
-	var uValMRT = uVal.uValMRT(opaqueViewFac, winViewFac, airTemp, outdoorTemp, opaqueRVal, filmCoeff, lowEmissivity, vel, relHumid, metRate, cloLevel, targetPPD)
-	console.log()
+	var uValMRT = uVal.uValMRT(opaqueViewFac, winViewFac, airTemp, outdoorTemp, opaqueRVal, filmCoeff, intLowE, lowEmissivity, vel, parseFloat(relHumid), parseFloat(metRate), parseFloat(cloLevel), parseFloat(targetPPD))
+
 	//Compute the required U-Value for the Downdraft model.
 	if (runDownCalc== true) {
 		var uValDownD = uVal.uValDownD(targetPPD, distToFacade, windowHgtSI, filmCoeff, airTemp, outdoorTemp)

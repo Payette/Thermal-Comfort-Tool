@@ -9,7 +9,7 @@ var round = Math.round;
 var comf = comf || {}
 
 
-// ***FUNCTIONS THAT COMPUTE GENERAL PHYSICAL PROPERTIES.
+//***FUNCTIONS THAT COMPUTE GENERAL PHYSICAL PROPERTIES.***
 
 // Function that returns the interior surface temperature given the temperature gradient across it, surface resistance, and film coefficient.
 comf.calcInteriorTemp = function(airTemp, outTemp, wallR, filmCoeff){
@@ -49,17 +49,22 @@ comf.velMaxFar = function(deltaT, windowHgt){
 // http://www.srh.noaa.gov/epz/?n=wxcalc_rh
 comf.dewptCalc = function(dbTemp, RH){
     var es = 6.112 * Math.exp((17.67 * dbTemp) / (dbTemp + 243.5))
-
     var e = (es * RH) / 100
-
     var Td = (243.5 * logarithm(e / 6.112)) / (17.67 - logarithm(e / 6.112))
-
     var dpTemp = round(Td,2)
     return dpTemp
 }
 
 
-// ***FUNCTIONS THAT COMPUTE COMFORT / PPD VALUES.
+// Function that calculates saturation pressure in torr.
+comf.FindSaturatedVaporPressureTorr = function(T) {
+    //calculates Saturated Vapor Pressure (Torr) at Temperature T  (C)
+    return exp(18.6686 - 4030.183 / (T + 235.0));
+}
+
+
+
+//***FUNCTIONS THAT COMPUTE COMFORT / PPD VALUES USING SETS OF CONDITIONS.***
 
 // Function that returns the radiant assymetry PPD due to a cold wall for a given interior temperature and average wall temperature.
 comf.calcPPDFromAssym = function(interiorTemp, avgWallTemp){
@@ -73,27 +78,13 @@ comf.calcPPDFromAssym = function(interiorTemp, avgWallTemp){
 comf.calcPPDFromDowndraft = function(windSpd, airTemp){
     return (13800*(pow((((windSpd*0.8)-0.04)/(airTemp-13.7))+0.0293, 2) - 0.000857))
 }
-// Function that computes downdraft PPD given window dimensions and properties.
-comf.calcFulldonwDppd = function(distSI, windowHgt, filmCoeff, airTemp, outdoorTemp, windowUVal){
-  // Get the difference between the surface temperature and the air
-	var glassAirDelta = airTemp - comf.calcInteriorTemp(airTemp, outdoorTemp, 1/windowUVal, filmCoeff)
-  // Get the temperature of the downdraft.
-  var downDraftTemp = comf.calcFloorAirTemp(airTemp, distSI, glassAirDelta)
-  if (distSI < 0.4){
-    var windSpd = comf.velMaxClose(glassAirDelta, windowHgt)
-  } else if (distSI < 2){
-    var windSpd = comf.velMaxMid(distSI, glassAirDelta, windowHgt)
-  } else{
-    var windSpd = comf.velMaxFar(glassAirDelta, windowHgt)
-  }
-  var finalDDppd = comf.calcPPDFromDowndraft(windSpd, downDraftTemp)
-  return finalDDppd
-}
 
-// Computes PPD given the 6 factors of PMV comfort.
+// The following 3 functions compute PPD given the 6 factors of PMV comfort.
 // This javascript function for calculating PMV comes from the CBE Comfort Tool.
 // Hoyt Tyler, Schiavon Stefano, Piccioli Alberto, Moon Dustin, and Steinfeld Kyle, 2013, CBE Thermal Comfort Tool.
 // Center for the Built Environment, University of California Berkeley, http://cbe.berkeley.edu/comforttool/
+comf.still_air_threshold = 0.1; // m/s
+
 comf.pmv = function(ta, tr, vel, rh, met, clo, wme) {
     // returns [pmv, ppd]
     // ta, air temperature (°C)
@@ -173,39 +164,309 @@ comf.pmv = function(ta, tr, vel, rh, met, clo, wme) {
     return r
 }
 
+comf.pierceSET = function(ta, tr, vel, rh, met, clo, wme) {
+
+    var TempSkinNeutral, TempBodyNeutral, SkinBloodFlowNeutral, TempSkin, TempCore,
+    SkinBloodFlow, MSHIV, ALFA, ESK, PressureInAtmospheres, TIMEH, LTIME, DELTA, RCL,
+    FACL, LR, RM, M, WCRIT, ICL, CHC, CHCA, CHCV, CHR, CTC, TOP, TCL, DRY, HFCS, ERES,
+    CRES, SCR, SSK, TCSK, TB, SKSIG, WARMS, COLDS, WARMC, COLDC, CRSIG, WARMB, COLDB,
+    REGSW, BDSIG, REA, RECL, EMAX, PRSW, PWET, EDIF, RA, TCL_OLD, TCCR, DTSK, DTCR, ERSW,
+    X, X_OLD, CHCS, TIM, STORE, HSK, RN, ECOMF, EREQ, HD, HE, W, PSSK, CHRS, CTCS,
+    RCLOS, RCLS, FACLS, FCLS, IMS, ICLS, RAS, REAS, RECLS, HD_S, HE_S;
+
+    var VaporPressure = rh * comf.FindSaturatedVaporPressureTorr(ta) / 100;
+    var AirVelocity = max(vel, 0.1);
+    var KCLO = 0.25;
+    var BODYWEIGHT = 69.9;
+    var BODYSURFACEAREA = 1.8258;
+    var METFACTOR = 58.2;
+    var SBC = 0.000000056697; // Stefan-Boltzmann constant (W/m2K4)
+    var CSW = 170;
+    var CDIL = 120;
+    var CSTR = 0.5;
+
+    TempSkinNeutral = 33.7; //setpoint (neutral) value for Tsk
+    TempCoreNeutral = 36.49; //setpoint value for Tcr
+    TempBodyNeutral = 36.49; //setpoint for Tb (.1*TempSkinNeutral + .9*TempCoreNeutral)
+    SkinBloodFlowNeutral = 6.3; //neutral value for SkinBloodFlow
+
+    //INITIAL VALUES - start of 1st experiment
+    TempSkin = TempSkinNeutral;
+    TempCore = TempCoreNeutral;
+    SkinBloodFlow = SkinBloodFlowNeutral;
+    MSHIV = 0.0;
+    ALFA = 0.1;
+    ESK = 0.1 * met;
+
+    //Start new experiment here (for graded experiments)
+    //UNIT CONVERSIONS (from input variables)
+
+    var p = 101325 / 1000; // TH : interface?
+
+    PressureInAtmospheres = p * 0.009869;
+    LTIME = 60.0;
+    TIMEH = LTIME / 60.0;
+    RCL = 0.155 * clo;
+    // AdjustICL(RCL, Conditions);  TH: I don't think this is used in the software
+
+    FACL = 1.0 + 0.15 * clo; //% INCREASE IN BODY SURFACE AREA DUE TO CLOTHING
+    LR = 2.2 / PressureInAtmospheres; //Lewis Relation is 2.2 at sea level
+    RM = met * METFACTOR;
+    M = met * METFACTOR;
+
+    if (clo <= 0) {
+        WCRIT = 0.38 * pow(AirVelocity, -0.29);
+        ICL = 1.0;
+    } else {
+        WCRIT = 0.59 * pow(AirVelocity, -0.08);
+        ICL = 0.45;
+    }
+
+    CHC = 3.0 * pow(PressureInAtmospheres, 0.53);
+    CHCV = 8.600001 * pow((AirVelocity * PressureInAtmospheres), 0.53);
+    CHC = max(CHC, CHCV);
+
+    //initial estimate of Tcl
+    CHR = 4.7;
+    CTC = CHR + CHC;
+    RA = 1.0 / (FACL * CTC); //resistance of air layer to dry heat transfer
+    TOP = (CHR * tr + CHC * ta) / CTC;
+    TCL = TOP + (TempSkin - TOP) / (CTC * (RA + RCL));
+
+    // ========================  BEGIN ITERATION
+    //
+    // Tcl and CHR are solved iteratively using: H(Tsk - To) = CTC(Tcl - To),
+    //  where H = 1/(Ra + Rcl) and Ra = 1/Facl*CTC
+    //
+
+    TCL_OLD = TCL;
+    var flag = true;
+    for (TIM = 1; TIM <= LTIME; TIM++) {
+        do {
+            if (flag) {
+                TCL_OLD = TCL;
+                CHR = 4.0 * SBC * pow(((TCL + tr) / 2.0 + 273.15), 3.0) * 0.72;
+                CTC = CHR + CHC;
+                RA = 1.0 / (FACL * CTC); //resistance of air layer to dry heat transfer
+                TOP = (CHR * tr + CHC * ta) / CTC;
+            }
+            TCL = (RA * TempSkin + RCL * TOP) / (RA + RCL);
+            flag = true;
+        } while (abs(TCL - TCL_OLD) > 0.01);
+        flag = false;
+        DRY = (TempSkin - TOP) / (RA + RCL);
+        HFCS = (TempCore - TempSkin) * (5.28 + 1.163 * SkinBloodFlow);
+        ERES = 0.0023 * M * (44.0 - VaporPressure);
+        CRES = 0.0014 * M * (34.0 - ta);
+        SCR = M - HFCS - ERES - CRES - wme;
+        SSK = HFCS - DRY - ESK;
+        TCSK = 0.97 * ALFA * BODYWEIGHT;
+        TCCR = 0.97 * (1 - ALFA) * BODYWEIGHT;
+        DTSK = (SSK * BODYSURFACEAREA) / (TCSK * 60.0); //deg C per minute
+        DTCR = SCR * BODYSURFACEAREA / (TCCR * 60.0); //deg C per minute
+        TempSkin = TempSkin + DTSK;
+        TempCore = TempCore + DTCR;
+        TB = ALFA * TempSkin + (1 - ALFA) * TempCore;
+        SKSIG = TempSkin - TempSkinNeutral;
+        WARMS = (SKSIG > 0) * SKSIG;
+        COLDS = ((-1.0 * SKSIG) > 0) * (-1.0 * SKSIG);
+        CRSIG = (TempCore - TempCoreNeutral);
+        WARMC = (CRSIG > 0) * CRSIG;
+        COLDC = ((-1.0 * CRSIG) > 0) * (-1.0 * CRSIG);
+        BDSIG = TB - TempBodyNeutral;
+        WARMB = (BDSIG > 0) * BDSIG;
+        COLDB = ((-1.0 * BDSIG) > 0) * (-1.0 * BDSIG);
+        SkinBloodFlow = (SkinBloodFlowNeutral + CDIL * WARMC) / (1 + CSTR * COLDS);
+        if (SkinBloodFlow > 90.0) SkinBloodFlow = 90.0;
+        if (SkinBloodFlow < 0.5) SkinBloodFlow = 0.5;
+        REGSW = CSW * WARMB * exp(WARMS / 10.7);
+        if (REGSW > 500.0) REGSW = 500.0;
+        ERSW = 0.68 * REGSW;
+        REA = 1.0 / (LR * FACL * CHC); //evaporative resistance of air layer
+        RECL = RCL / (LR * ICL); //evaporative resistance of clothing (icl=.45)
+        EMAX = (comf.FindSaturatedVaporPressureTorr(TempSkin) - VaporPressure) / (REA + RECL);
+        PRSW = ERSW / EMAX;
+        PWET = 0.06 + 0.94 * PRSW;
+        EDIF = PWET * EMAX - ERSW;
+        ESK = ERSW + EDIF;
+        if (PWET > WCRIT) {
+            PWET = WCRIT;
+            PRSW = WCRIT / 0.94;
+            ERSW = PRSW * EMAX;
+            EDIF = 0.06 * (1.0 - PRSW) * EMAX;
+            ESK = ERSW + EDIF;
+        }
+        if (EMAX < 0) {
+            EDIF = 0;
+            ERSW = 0;
+            PWET = WCRIT;
+            PRSW = WCRIT;
+            ESK = EMAX;
+        }
+        ESK = ERSW + EDIF;
+        MSHIV = 19.4 * COLDS * COLDC;
+        M = RM + MSHIV;
+        ALFA = 0.0417737 + 0.7451833 / (SkinBloodFlow + 0.585417);
+    }
+
+    //Define new heat flow terms, coeffs, and abbreviations
+    STORE = M - wme - CRES - ERES - DRY - ESK; //rate of body heat storage
+
+    HSK = DRY + ESK; //total heat loss from skin
+    RN = M - wme; //net metabolic heat production
+    ECOMF = 0.42 * (RN - (1 * METFACTOR));
+    if (ECOMF < 0.0) ECOMF = 0.0; //from Fanger
+    EREQ = RN - ERES - CRES - DRY;
+    EMAX = EMAX * WCRIT;
+    HD = 1.0 / (RA + RCL);
+    HE = 1.0 / (REA + RECL);
+    W = PWET;
+    PSSK = comf.FindSaturatedVaporPressureTorr(TempSkin);
+    // Definition of ASHRAE standard environment... denoted "S"
+    CHRS = CHR;
+    if (met < 0.85) {
+        CHCS = 3.0;
+    } else {
+        CHCS = 5.66 * pow(((met - 0.85)), 0.39);
+        if (CHCS < 3.0) CHCS = 3.0;
+    }
+    CTCS = CHCS + CHRS;
+    RCLOS = 1.52 / ((met - wme / METFACTOR) + 0.6944) - 0.1835;
+    RCLS = 0.155 * RCLOS;
+    FACLS = 1.0 + KCLO * RCLOS;
+    FCLS = 1.0 / (1.0 + 0.155 * FACLS * CTCS * RCLOS);
+    IMS = 0.45;
+    ICLS = IMS * CHCS / CTCS * (1 - FCLS) / (CHCS / CTCS - FCLS * IMS);
+    RAS = 1.0 / (FACLS * CTCS);
+    REAS = 1.0 / (LR * FACLS * CHCS);
+    RECLS = RCLS / (LR * ICLS);
+    HD_S = 1.0 / (RAS + RCLS);
+    HE_S = 1.0 / (REAS + RECLS);
+
+    // SET* (standardized humidity, clo, Pb, and CHC)
+    // determined using Newton//s iterative solution
+    // FNERRS is defined in the GENERAL SETUP section above
+
+    DELTA = 0.0001;
+    var ERR1, ERR2;
+    var dx = 100.0;
+    X_OLD = TempSkin - HSK / HD_S; //lower bound for SET
+    while (abs(dx) > 0.01) {
+        ERR1 = (HSK - HD_S * (TempSkin - X_OLD) - W * HE_S * (PSSK - 0.5 * comf.FindSaturatedVaporPressureTorr(X_OLD)));
+        ERR2 = (HSK - HD_S * (TempSkin - (X_OLD + DELTA)) - W * HE_S * (PSSK - 0.5 * comf.FindSaturatedVaporPressureTorr((X_OLD + DELTA))));
+        X = X_OLD - DELTA * ERR1 / (ERR2 - ERR1);
+        dx = X - X_OLD;
+        X_OLD = X;
+    }
+    return X;
+}
+
+comf.pmvElevatedAirspeed = function(ta, tr, vel, rh, met, clo, wme) {
+    // returns pmv at elevated airspeed (> comf.still_air_threshold)
+    var r = {}
+    var set = comf.pierceSET(ta, tr, vel, rh, met , clo, wme);
+    if (vel <= comf.still_air_threshold) {
+        var pmv = comf.pmv(ta, tr, vel, rh, met, clo, wme)
+        var ta_adj = ta
+        var ce = 0
+    } else {
+        var ce_l = 0;
+        var ce_r = 40;
+        var eps = 0.001;  // precision of ce
+        var fn = function(ce){
+            return (set - comf.pierceSET(ta - ce, tr - ce, comf.still_air_threshold, rh, met, clo, wme));
+        };
+        var ce = util.secant(ce_l, ce_r, fn, eps);
+        if (isNaN(ce)) {
+            ce = util.bisect(ce_l, ce_r, fn, eps, 0);
+        }
+        var pmv = comf.pmv(ta - ce, tr - ce, comf.still_air_threshold, rh, met, clo, wme);
+    }
+    r.pmv = pmv.pmv;
+    r.ppd = pmv.ppd;
+    r.set = set;
+    r.ta_adj = ta - ce;
+    r.tr_adj = tr - ce;
+    r.cooling_effect = ce;
+    return r
+}
 
 
-// ***FUNCTIONS THAT COMPUTE FINAL RESULTS.
 
-//Calculates the MRT and radiant assymetry PPD given a set of interior conditions and points
-comf.getMRTandRadAssym = function(winViewFacs, opaqueViewFacs, winFilmCoeff, airTemp, outdoorTemp, indoorSrfTemp, wallRVal, windowUVal){
-	var opaqueTemp = comf.calcInteriorTemp(airTemp, outdoorTemp, wallRVal+(1/8.29), 8.29)
+
+// ***FUNCTIONS THAT COMPUTE COMFORT / PPD VALUES FROM FACADE PROPERTIES.***
+//Computes the PPD from MRT given a set of window properties.
+comf.calcFullMRTppd = function(winView, opaView, winFilmCoeff, airTemp, outdoorTemp, indoorSrfTemp, wallRVal, windowUVal, intLowE, lowEmissivity, clo, met, vel, rh){
+  //Compute the inside temperature of the glass and wall.
+  var opaqueTemp = comf.calcInteriorTemp(airTemp, outdoorTemp, wallRVal+(1/8.29), 8.29)
 	var windowTemp = comf.calcInteriorTemp(airTemp, outdoorTemp, 1/windowUVal, winFilmCoeff)
-	var MRT = []
-	var radAssymPPD = []
 
+  // Compute the mrt.
+  if (intLowE != true){
+    var ptMRT = winView*windowTemp + opaView*opaqueTemp + (1-winView-opaView)*indoorSrfTemp
+  } else {
+    var ptMRT = (winView*windowTemp*lowEmissivity + opaView*opaqueTemp*0.9 + (1-winView-opaView)*indoorSrfTemp*0.9)/(winView*0.2 + (1-winView)*0.9)
+  }
+
+  //Compute the PMV at the point
+  var mrtResult = comf.pmvElevatedAirspeed(airTemp, ptMRT, vel, rh, met, clo, 0)
+	if (mrtResult.pmv > 0){
+		var finalMRTPPD = 0
+	} else {
+		var finalMRTPPD = mrtResult.ppd
+  }
+  //console.log(winView)
+  var r = {}
+    r.mrt = ptMRT;
+    r.ppd = finalMRTPPD;
+	  r.windowTemp = windowTemp;
+  return r
+}
+
+// Function that computes downdraft PPD given window dimensions and properties.
+comf.calcFulldonwDppd = function(distSI, windowHgt, filmCoeff, airTemp, outdoorTemp, windowUVal){
+  // Get the difference between the surface temperature and the air
+	var glassAirDelta = airTemp - comf.calcInteriorTemp(airTemp, outdoorTemp, 1/windowUVal, filmCoeff)
+  // Get the temperature of the downdraft.
+  var downDraftTemp = comf.calcFloorAirTemp(airTemp, distSI, glassAirDelta)
+  if (distSI < 0.4){
+    var windSpd = comf.velMaxClose(glassAirDelta, windowHgt)
+  } else if (distSI < 2){
+    var windSpd = comf.velMaxMid(distSI, glassAirDelta, windowHgt)
+  } else{
+    var windSpd = comf.velMaxFar(glassAirDelta, windowHgt)
+  }
+  var finalDDppd = comf.calcPPDFromDowndraft(windSpd, downDraftTemp)
+  return finalDDppd
+}
+
+
+
+
+// ***FUNCTIONS THAT COMPUTE CALCUALTE COMFORT FOR LISTS OF POINTS IN SPACE.***
+//Calculates the MRT and radiant assymetry PPD given a set of interior conditions and points
+comf.getMRTPPD = function(winViewFacs, opaqueViewFacs, winFilmCoeff, airTemp, outdoorTemp, indoorSrfTemp, wallRVal, windowUVal, intLowE, lowEmissivity, clo, met, airSpeed, rh){
+	var MRT = []
+  var mrtPPD = []
 	//Caclulate an MRT and the average temperature of the wall for the point
 	for (var i = 0; i < winViewFacs.length; i++) {
 		var winView = winViewFacs[i]
 		var opaView = opaqueViewFacs[i]
-		if (winFilmCoeff > 5){
-			var ptMRT = winView*windowTemp + opaView*opaqueTemp + (1-winView-opaView)*indoorSrfTemp
-			var avgWallTemp = (winView*windowTemp + opaView*opaqueTemp)/(winView+opaView)
-		} else {
-			var ptMRT = (winView*windowTemp*0.2 + opaView*opaqueTemp*0.9 + (1-winView-opaView)*indoorSrfTemp*0.9)/(winView*0.2 + (1-winView)*0.9)
-			var avgWallTemp = (winView*windowTemp*0.2 + opaView*opaqueTemp*0.9)/(winView*0.2 + opaView*0.9)
-		}
-		MRT.push(ptMRT)
-		radAssymPPD.push(comf.calcPPDFromAssym(indoorSrfTemp, avgWallTemp))
+		var ptValue = comf.calcFullMRTppd(winView, opaView, winFilmCoeff, airTemp, outdoorTemp, indoorSrfTemp, wallRVal, windowUVal, intLowE, lowEmissivity, clo, met, airSpeed, rh)
+		MRT.push(ptValue.mrt)
+    mrtPPD.push(ptValue.ppd)
+    var windowTemp = ptValue.windowTemp
 	}
+
 	// Return the results.
 	var r = {}
     r.mrt = MRT;
-    r.ppd = radAssymPPD;
-	r.windowTemp = windowTemp;
+    r.ppd = mrtPPD;
+	  r.windowTemp = windowTemp;
 
 	return r
 }
+
 
 // Calculates the PPD from downdraft given a set of interior conditions.
 comf.getDowndraftPPD = function(distToFacade, windowHgt, filmCoeff, airTemp, outdoorTemp, windowUVal){
@@ -221,6 +482,9 @@ comf.getDowndraftPPD = function(distToFacade, windowHgt, filmCoeff, airTemp, out
 }
 
 
+
+
+/// ***FUNCTION THAT COMPUTE FINAL RESULTS THE INTERFACE.***
 // Constructs a dictionary of PPD and the limiting factors from a given set of interior conditions.
 comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, occDistToWallCenter, windowHgt, glzUVal, intLowE, lowEmissivity, wallRVal, indoorTemp, outTemp, radiantFloor, clo, met, airSpeed, rh){
 	// Convert window height to meters (yay for SI!!)
@@ -252,25 +516,10 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, o
 		var winFilmCoeff = 8.29
 	}
 
-
 	// Get the radiant assymetry PPD results and the MRT values.
-	var radAssymResult = comf.getMRTandRadAssym(glzViewFac, wallViewFac, winFilmCoeff, airTemp, outdoorTemp, indoorSrfTemp, opaqueRVal, windowUVal)
-	var radAssymPPD = radAssymResult.ppd
-	var MRTvals = radAssymResult.mrt
-	var windowTemp = radAssymResult.windowTemp
-
-	// Get the MRT PPD results.
-	var mrtPPD = []
-	for (var i = 0; i < MRTvals.length; i++) {
-		var MRT = MRTvals[i]
-		var mrtResult = comf.pmv(airTemp, MRT, vel, rh, met, clo, 0)
-		if (mrtResult.pmv > 0){
-			var finalMRTPPD = 0
-		} else {
-			var finalMRTPPD = mrtResult.ppd
-		}
-		mrtPPD.push(finalMRTPPD)
-	}
+	var mrtPPDResult = comf.getMRTPPD(glzViewFac, wallViewFac, winFilmCoeff, airTemp, outdoorTemp, indoorSrfTemp, opaqueRVal, windowUVal, intLowE, lowEmissivity, clo, met, vel, rh)
+  windowTemp = mrtPPDResult.windowTemp
+  mrtPPD = mrtPPDResult.ppd
 
 	// Determine whether the occupant is in front of a window such that they can expereince downdraft.
 	var runDownCalc = false

@@ -31,7 +31,7 @@ var case1Data = {
 	glzRatioValue: $("#glazing").val(),
 	sillHeightValue: $("#sill").val(),
 	distanceWindows: $('#distWindow').val(),
-	
+
 	occDistToWallCenter: 0,
 
 	uvalueValue: $("#uvalue").val(),
@@ -92,17 +92,17 @@ $("#occupantDist").attr("max", case1Data.wallLen/2);
 script.computeData = function(object) {
 	// Compute the window and wall geometry.
 	var geoResult = geo.createGlazingForRect(parseFloat(object.ceilingHeightValue), object.wallLen, object.glzRatioValue/100, parseFloat(object.windowWidthValue), parseFloat(object.windowHeightValue), parseFloat(object.sillHeightValue), parseFloat(object.distanceWindows), glzOrWidth);
-	
+
 	// Compute the view factors to make the graph.
 	var viewResult = geo.computeAllViewFac(geoResult.wallCoords, geoResult.glzCoords, object.occDistToWallCenter)
-	
+
 	// Compute the PPD to make the graph.
-	var comfortResult = comf.getFullPPD(viewResult.wallViews, viewResult.glzViews, viewResult.facadeDist, viewResult.windIntervals, object.occDistToWallCenter, geoResult.windowHeight, object.uvalueValue, object.intLowEChecked, object.intLowEEmissivity, object.rvalueValue, airtempValue, outdoorTempValue, radiantFloorChecked, clothingValue, metabolic, airspeedValue, humidityValue)
-	
+	var comfortResult = comf.getFullPPD(viewResult.wallViews, viewResult.glzViews, viewResult.facadeDist, viewResult.windIntervals, object.occDistToWallCenter, geoResult.windowHeight, object.uvalueValue, object.intLowEChecked, object.intLowEEmissivity, object.rvalueValue, parseFloat(airtempValue), parseFloat(outdoorTempValue), radiantFloorChecked, parseFloat(clothingValue), parseFloat(metabolic), parseFloat(airspeedValue), parseFloat(humidityValue))
+
 
 	// Return all of the information in one dictionary
 	var r = {}
-	
+
 	r.wallCoords = geoResult.wallCoords;
 	r.glzCoords = geoResult.glzCoords;
 	r.glzRatio = geoResult.glzRatio;
@@ -110,16 +110,16 @@ script.computeData = function(object) {
 	r.windowHeight = geoResult.windowHeight;
 	r.sillHeight = geoResult.sillHeight;
 	r.centLineDist = geoResult.centLineDist;
-	
+
 	r.wallViews = viewResult.wallViews;
 	r.glzViews = viewResult.glzViews;
 	r.facadeDist = viewResult.facadeDist;
-	
+
 	r.condensation = comfortResult.condensation; // Text string value that is either: "certain", "risky", "none".
 	r.dataSet = comfortResult.myDataset; // Data to construct the graph.
 	r.occPtInfo = comfortResult.occPtInfo;  // The status of the occupant at the input location.
 	r.runDownCalc = comfortResult.runDownCalc;  // Boolean value for whether the occupant is in front of the window or not.
-	
+
 
 	return r
 }
