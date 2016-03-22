@@ -81,7 +81,7 @@ render.makeGraph = function () {
 	    .call(yAxis.ticks(4));
 
 	// add horizontal grid
-	graphSvg.append("g")         
+	graphSvg.append("g")
         .attr("class", "grid")
         .attr("transform", "translate(" + (margin.left) + "," + margin.top + ")")
         .call(yAxis
@@ -147,10 +147,10 @@ render.makeGraph = function () {
 
 
     // Add dots at each point
-	var graphPoints = graphSvg.selectAll(".dotCase1") 
-		.data(dataset) 
-		.enter() 
-		.append("circle") 
+	var graphPoints = graphSvg.selectAll(".dotCase1")
+		.data(dataset)
+		.enter()
+		.append("circle")
 		.attr("class","dotCase1")
 		.attr("r", 3.5)
 		.attr("cx", function(d) { return x(d.dist); })
@@ -159,10 +159,10 @@ render.makeGraph = function () {
 				return "translate(" + margin.left + "," + margin.top + ")";})
 		.style("fill", orange);
 
-	var graphCase2Points = graphSvg.selectAll(".dotCase2") 
-		.data(dataset2) 
-		.enter() 
-		.append("circle") 
+	var graphCase2Points = graphSvg.selectAll(".dotCase2")
+		.data(dataset2)
+		.enter()
+		.append("circle")
 		.attr("class","dotCase2")
 		.attr("r", 3.5)
 		.attr("cx", function(d) { return x(d.dist); })
@@ -171,10 +171,10 @@ render.makeGraph = function () {
 				return "translate(" + margin.left + "," + margin.top + ")";})
 		.style("fill", blue);
 
-	var graphCase3Points = graphSvg.selectAll(".dotCase3") 
-		.data(dataset3) 
-		.enter() 
-		.append("circle") 
+	var graphCase3Points = graphSvg.selectAll(".dotCase3")
+		.data(dataset3)
+		.enter()
+		.append("circle")
 		.attr("class","dotCase3")
 		.attr("r", 3.5)
 		.attr("cx", function(d) { return x(d.dist); })
@@ -184,7 +184,7 @@ render.makeGraph = function () {
 		.style("fill", green);
 
 	// Add point at occupant location
-	var occupantPoint = graphSvg.append("circle") 
+	var occupantPoint = graphSvg.append("circle")
 		.attr("class","occdot1")
 		.attr("r", 4)
 		.attr("cx", function(d) { return x(occPointData.dist); })
@@ -195,7 +195,7 @@ render.makeGraph = function () {
 		.style("stroke-width", 3)
 		.style("stroke", orange);
 
-	var occupantPoint2 = graphSvg.append("circle") 
+	var occupantPoint2 = graphSvg.append("circle")
 		.attr("class","occdot2")
 		.attr("r", 4)
 		.attr("cx", function(d) { return x(occPointData2.dist); })
@@ -206,7 +206,7 @@ render.makeGraph = function () {
 		.style("stroke-width", 3)
 		.style("stroke", blue);
 
-	var occupantPoint3 = graphSvg.append("circle") 
+	var occupantPoint3 = graphSvg.append("circle")
 		.attr("class","occdot3")
 		.attr("r", 4)
 		.attr("cx", function(d) { return x(occPointData3.dist); })
@@ -218,14 +218,14 @@ render.makeGraph = function () {
 		.style("stroke", green);
 
 	// Add line at occupant location
-	occupantDistanceRefLine(); 
+	occupantDistanceRefLine();
 
 	// add text at occupanct location
 	thresholdDataText();
 
 
-	
-	
+
+
 	// Show text on hover over dot
 	var points = d3.selectAll(".dotCase1, .dotCase2, .dotCase3");
 	points.on("mouseover", function(d) {
@@ -263,7 +263,7 @@ render.makeGraph = function () {
 		d3.select("#case")
 			.text(caseText);
 
-		
+
 
 		//tolerable discomfort
 		if (ppdValue >= d.ppd) {
@@ -271,7 +271,7 @@ render.makeGraph = function () {
 			.text("Tolerable discomfort")
 			.classed("tolerable", true)
 			.classed("intolerable", false);
-		
+
 			d3.select("#solution")
 			.text(".");
 
@@ -288,7 +288,7 @@ render.makeGraph = function () {
 			} else if (d.govfact == "dwn") {
 				d3.select("#explain")
 				.text("downdraft");
-			} 
+			}
 		//intolerable discomfort
 		} else {
 			d3.select("#discomfort")
@@ -300,7 +300,7 @@ render.makeGraph = function () {
 			.classed("check", false)
 			.classed("cross", true)
 
-			
+
 			//gov factors
 			if (d.govfact == "mrt") {
 				d3.select("#explain")
@@ -325,18 +325,18 @@ render.makeGraph = function () {
 				d3.select("#tooltip")
 				.style("top", (yPosition - $("#tooltip").height() + 10) + "px");
 
-			} 
+			}
 		}
-		
 
-		
 
-   
+
+
+
 		//Show the tooltip
 		$("#tooltip").fadeIn(300);
 		//Hide default text
 		$("#thresholdTooltip").fadeOut(300);
-		
+
   	})
    	.on("mouseout", function() {
    		//Hide the tooltip
@@ -345,7 +345,7 @@ render.makeGraph = function () {
    		setTimeout(checkTooltip, 1000);
    	})
 
-   	
+
 	function checkTooltip() {
 		// if hover tooltip is no longer visible
 		if ($("#tooltip").css("display") == "none") {
@@ -364,7 +364,7 @@ render.makeGraph = function () {
 
 /* ------ SET UP FACADE VARIABLES AND DATA FUNCTIONS ------ */
 	var facMargin = {top: 10, right: 3, bottom: 5, left: 50};
-	
+
 
 
 	// window coordinates
@@ -380,15 +380,15 @@ render.makeGraph = function () {
 	var glzWidthCase3 = allData3.windowWidth;
 	var glzHeightCase3 = allData3.windowHeight;
 
-	
+
 	// Set SVG height to be proportionate to wall length and extend of wall height
 
 	var facWidth = maxContainerWidth - facMargin.left - facMargin.right;
 
-	
+
 	var govWallLength = determineGoverningWallLength();
 
-	
+
 	var proportinateMultiplier = facWidth/govWallLength;
 
 	var facHeightCase1 = proportinateMultiplier*case1Data.ceilingHeightValue;
@@ -414,7 +414,7 @@ render.makeGraph = function () {
 				.range([0, facHeightCase3]); //output range
 
 
-					
+
 
 
 
@@ -426,8 +426,8 @@ render.makeGraph = function () {
 				.attr("width", facWidth + facMargin.left + facMargin.right)
 				.attr("height", facHeightCase1 + facMargin.top + facMargin.bottom);
 
-	var wallCase1 = facadeSvgCase1.append("rect") 
-		.attr("class","wall1") 
+	var wallCase1 = facadeSvgCase1.append("rect")
+		.attr("class","wall1")
 		.attr("x", 0)
 		.attr("y", 0)
 		.attr("width", function(d) {return facadeScaleWidth(case1Data.wallLen)})
@@ -458,8 +458,8 @@ render.makeGraph = function () {
 				.attr("width", facWidth + facMargin.left + facMargin.right)
 				.attr("height", facHeightCase2 + facMargin.top + facMargin.bottom);
 
-	var wallCase2 = facadeSvgCase2.append("rect") 
-		.attr("class","wall2") 
+	var wallCase2 = facadeSvgCase2.append("rect")
+		.attr("class","wall2")
 		.attr("x", 0)
 		.attr("y", 0)
 		.attr("width", function(d) {return facadeScaleWidth(case2Data.wallLen)})
@@ -490,8 +490,8 @@ render.makeGraph = function () {
 				.attr("width", facWidth + facMargin.left + facMargin.right)
 				.attr("height", facHeightCase3 + facMargin.top + facMargin.bottom);
 
-	var wallCase3 = facadeSvgCase3.append("rect") 
-		.attr("class","wall3") 
+	var wallCase3 = facadeSvgCase3.append("rect")
+		.attr("class","wall3")
 		.attr("x", 0)
 		.attr("y", 0)
 		.attr("width", function(d) {return facadeScaleWidth(case3Data.wallLen)})
@@ -527,14 +527,14 @@ render.makeGraph = function () {
 
 
 	//Initialize the windows
-/*	
+/*
 
-	
+
 	//Add facade dimensions
 	drawHorziontalDimensions(wallPoints[0].wallWidth);
 	drawVerticalDimensions(wallPoints[0].wallHeight);*/
-	
-	
+
+
 
 
 	//Add window dimensions to Case 1 facade
@@ -544,7 +544,7 @@ render.makeGraph = function () {
 
 
 
-	
+
 
 	$("#windHeightButt").on("mouseover", function() {
 		$("#windowHeightDimLabel, #windowHeightDim").fadeIn("fast");
@@ -656,7 +656,7 @@ render.makeGraph = function () {
     $("#caseSelection #case2Label").on("click", function() {
 
     	var array = [];
-    	
+
     	if ($(this).hasClass("unselected") == true) {
     		//becomes selected
 			$(this).removeClass("unselected");
@@ -691,13 +691,13 @@ render.makeGraph = function () {
 		thresholdDataText();
 		d3.selectAll(".occupantLine").remove();
 		occupantDistanceRefLine();
-	
+
     });
 
     $("#caseSelection #case3Label").on("click", function() {
 
     	var array = [];
-    	
+
     	if ($(this).hasClass("unselected") == true) {
     		//becomes selected
 			$(this).removeClass("unselected");
@@ -732,12 +732,12 @@ render.makeGraph = function () {
 		thresholdDataText();
 		d3.selectAll(".occupantLine").remove();
 		occupantDistanceRefLine();
-	
+
     });
 
 
 
-    	
+
 
 
 	/* ------ DETECT CHANGES TO INPUT VALUES ------ */
@@ -783,7 +783,7 @@ render.makeGraph = function () {
 			$("#ppd, #ppd2, #ppd3").val(ppdValue);
 		}
 		// Update target PPD threshold line
-		updatePPDThreshold(ppdValue);	
+		updatePPDThreshold(ppdValue);
 		thresholdDataText()
 	});
 	$("#ppd, #ppd2, #ppd3").on("spinstop", function(event) {
@@ -791,7 +791,7 @@ render.makeGraph = function () {
 		$("#ppd, #ppd2, #ppd3").val(ppdValue);
 
 		updatePPDThreshold(ppdValue);
-		thresholdDataText()	
+		thresholdDataText()
 	})
 
 	$("#windowWidthCheck").change(function(event) {
@@ -811,7 +811,7 @@ render.makeGraph = function () {
 			$("#windowWidth, #windowWidth2, #windowWidth3, #windowWidthLabel").addClass("inactive");
 			$("#glazing, #glazing2, #glazing3, #glazingLabel").removeClass("inactive");
 
-			
+
 
 			$("#checkGlzRatio").removeClass("unselected");
 			$("#checkWindWidth").addClass("unselected");
@@ -836,7 +836,7 @@ render.makeGraph = function () {
 			$("#windowWidth, #windowWidth2, #windowWidth3, #windowWidthLabel").removeClass("inactive");
 			$("#glazing, #glazing2, #glazing3, #glazingLabel").addClass("inactive");
 
-			
+
 
 			$("#checkWindWidth").removeClass("unselected");
 			$("#checkGlzRatio").addClass("unselected");
@@ -854,7 +854,7 @@ render.makeGraph = function () {
 
 			$("#checkProvide").removeClass("unselected");
 			$("#checkCalculate").addClass("unselected");
-			
+
 			$("#calcUValueCheck").removeAttr("checked");
 
 		} else if (($("#provideUValueCheck").is(":checked")) == false) {
@@ -893,13 +893,13 @@ render.makeGraph = function () {
 
 			$("#checkProvide").removeClass("unselected");
 			$("#checkCalculate").addClass("unselected");
-			
+
 			$("#provideUValueCheck").attr("checked", "checked");
 
 		}
 	})
 
-	
+
 	$("#outdoortemp").change(function(event) {
 		outdoorTempValue = $(this).val();
 
@@ -964,7 +964,7 @@ render.makeGraph = function () {
 		updateData(case2Data);
 		updateData(case3Data);
 	})
-	
+
 	$("#airspeed, #airspeed2, #airspeed3").change(function(event) {
 		airspeedValue = $(this).val();
 
@@ -983,7 +983,7 @@ render.makeGraph = function () {
 		updateData(case2Data);
 		updateData(case3Data);
 	})
-	
+
 	$("#clothing").change(function(event) {
 		clothingValue = $(this).val();
 
@@ -1027,11 +1027,11 @@ render.makeGraph = function () {
 
 	// Case 1 - Changes based on typed inputs
 	$("#ceiling, #wallWidth, #occupantDist, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowECheck, #lowE, #rvalue").change(function(event) {
-		
+
 		//figure out what input changed
 		var triggeredChange = event.target.id;
-		
-		
+
+
 		if(triggeredChange == "ceiling") {
 			case1Data.ceilingHeightValue = $(this).val();
 
@@ -1039,7 +1039,7 @@ render.makeGraph = function () {
 		}
 		else if(triggeredChange == "wallWidth") {
 			case1Data.wallLen = $(this).val();
-			
+
 			$("#occupantDist").attr("max", case1Data.wallLen/2);
 
 			checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
@@ -1053,9 +1053,9 @@ render.makeGraph = function () {
 			$("#occupantDist").attr("value", case1Data.occDistToWallCenter);
 
 			updateOccupantImageLocation("#occupantImage", "#occupantDist", case1Data);
- 			
+
 		}
-		
+
 		else if (triggeredChange == "windowHeight") {
 			case1Data.windowHeightValue = $(this).val();
 		}
@@ -1102,12 +1102,12 @@ render.makeGraph = function () {
 		else if (triggeredChange == "rvalue") {
 			case1Data.rvalueValue = $(this).val();
 		}
-		
+
 		else {
 			alert("Don't know what changed!");
 		}
-		
-		
+
+
 		updateData(case1Data);
 	})
 
@@ -1117,13 +1117,13 @@ render.makeGraph = function () {
 
 			updateData(case1Data);
 		})
-		
+
 		$("#wallWidth").on("spinstop", function(event) {
 			case1Data.wallLen = $(this).val();
 
 
 			$("#occupantDist").attr("max", case1Data.wallLen/2);
-			
+
 			checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
 			checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
 			checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");
@@ -1178,21 +1178,21 @@ render.makeGraph = function () {
 			updateData(case1Data);
 		})
 
-		
+
 	// Case 2 - Changes based on typed inputs
 	$("#ceiling2, #wallWidth2, #occupantDist2, #windowHeight2, #windowWidth2, #glazing2, #sill2, #distWindow2, #uvalue2, #lowECheck2, #lowE2, #rvalue2").change(function(event) {
-		
+
 		//figure out what input changed
 		var triggeredChange = event.target.id;
-		
-		
+
+
 		if(triggeredChange == "ceiling2") {
 			case2Data.ceilingHeightValue = $(this).val();
 
 		}
 		else if(triggeredChange == "wallWidth2") {
 			case2Data.wallLen = $(this).val();
-			
+
 			$("#occupantDist2").attr("max", case2Data.wallLen/2);
 			checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
 			checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
@@ -1203,7 +1203,7 @@ render.makeGraph = function () {
 			case2Data.occDistToWallCenter = $(this).val();
 			updateOccupantImageLocation("#occupantImage2", "#occupantDist2", case2Data);
 		}
-		
+
 		else if (triggeredChange == "windowHeight2") {
 			case2Data.windowHeightValue = $(this).val();
 		}
@@ -1248,12 +1248,12 @@ render.makeGraph = function () {
 		else if (triggeredChange == "rvalue2") {
 			case2Data.rvalueValue = $(this).val();
 		}
-		
+
 		else {
 			alert("Don't know what changed!");
 		}
-		
-		
+
+
 		updateData(case2Data);
 	})
 
@@ -1263,10 +1263,10 @@ render.makeGraph = function () {
 
 			updateData(case2Data);
 		})
-		
+
 		$("#wallWidth2").on("spinstop", function(event) {
 			case2Data.wallLen = $(this).val();
-			
+
 			$("#occupantDist2").attr("max", case2Data.wallLen/2);
 			checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
 			checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
@@ -1325,18 +1325,18 @@ render.makeGraph = function () {
 
 	// Case 3 - Changes based on typed inputs
 	$("#ceiling3, #wallWidth3, #occupantDist3, #windowHeight3, #windowWidth3, #glazing3, #sill3, #distWindow3, #uvalue3, #lowECheck3, #lowE3, #rvalue3").change(function(event) {
-		
+
 		//figure out what input changed
 		var triggeredChange = event.target.id;
-		
-		
+
+
 		if(triggeredChange == "ceiling3") {
 			case3Data.ceilingHeightValue = $(this).val();
 
 		}
 		else if(triggeredChange == "wallWidth3") {
 			case3Data.wallLen = $(this).val();
-			
+
 
 			$("#occupantDist3").attr("max", case3Data.wallLen/2);
 			checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
@@ -1348,7 +1348,7 @@ render.makeGraph = function () {
 			case3Data.occDistToWallCenter = $(this).val();
 			updateOccupantImageLocation("#occupantImage3", "#occupantDist3", case3Data);
 		}
-		
+
 		else if (triggeredChange == "windowHeight3") {
 			case3Data.windowHeightValue = $(this).val();
 		}
@@ -1393,12 +1393,12 @@ render.makeGraph = function () {
 		else if (triggeredChange == "rvalue3") {
 			case3Data.rvalueValue = $(this).val();
 		}
-		
+
 		else {
 			alert("Don't know what changed!");
 		}
-		
-		
+
+
 		updateData(case3Data);
 	})
 
@@ -1408,10 +1408,10 @@ render.makeGraph = function () {
 
 			updateData(case3Data);
 		})
-		
+
 		$("#wallWidth2").on("spinstop", function(event) {
 			case3Data.wallLen = $(this).val();
-			
+
 
 			$("#occupantDist3").attr("max", case3Data.wallLen/2);
 			checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
@@ -1469,7 +1469,7 @@ render.makeGraph = function () {
 
 
 
-	
+
 
 
 
@@ -1478,7 +1478,7 @@ render.makeGraph = function () {
 	function updateData(object) {
 		// Re-run the functions with the new inputs.
 		var fullData = script.computeData(object);
-		
+
 		//update datasets with new value
 		var newDataset = fullData.dataSet;
 		var newGlzCoords = fullData.glzCoords;
@@ -1490,8 +1490,8 @@ render.makeGraph = function () {
 		var newOccLocData = fullData.occPtInfo;
 
 
-		
-		
+
+
 		// Update values in object
 		//update window width
 		object.windowWidthValue = newGlzWidth;
@@ -1503,8 +1503,8 @@ render.makeGraph = function () {
 		object.sillHeightValue = newSillHeight;
 		//update dist btwn windows.
 		object.distanceWindows = newCentLineDist;
-		
-		
+
+
 
 		// Update the PPD graph and facade SVG.
 		// Update the geometry values in the form.
@@ -1522,7 +1522,7 @@ render.makeGraph = function () {
 			occPointData = newOccLocData;
 
 		}
-		
+
 		else if (object == case2Data) {
 			$("#windowWidth2").val(Math.round(object.windowWidthValue * 100) / 100);
 			$("#glazing2").val((Math.round(object.glzRatioValue)));
@@ -1554,11 +1554,11 @@ render.makeGraph = function () {
 		// Update static tooltip text
 		thresholdDataText();
 
-		
+
 	}
 
 
-	
+
 	function autocalcUValues() {
 
 		// Re-run the functions with the new inputs.
@@ -1583,7 +1583,7 @@ render.makeGraph = function () {
 		fullDataCase1 = script.computeData(case1Data);
 		fullDataCase2 = script.computeData(case2Data);
 		fullDataCase3 = script.computeData(case3Data);
-		
+
 
 		// Update the PPD graph and facade SVG.
 		updateGraphData(fullDataCase1.dataSet, fullDataCase1.occPtInfo, graphPoints, ".connectLine", "circle.occdot1", orange);
@@ -1603,7 +1603,7 @@ render.makeGraph = function () {
 
 
 
-	
+
 
 	/* ------ FUNCTIONS TO UPDATE VISUALS ------ */
 
@@ -1624,7 +1624,7 @@ render.makeGraph = function () {
 			.transition()
 			.duration(500);
 
-		//update occupant point if different		
+		//update occupant point if different
 		d3.selectAll(occSelector)
 			.attr("cx", function(d) { return x(upOccupantPoint.dist); })
 			.attr("cy", function(d) { return y(upOccupantPoint.ppd); })
@@ -1651,7 +1651,7 @@ render.makeGraph = function () {
 				.domain([0, govWallLength]) //input domain
 				.range([0, facWidth]); //output range
 
-		
+
 		if (object == case1Data) {
 			//redefine facade heights and height scale functions
 			facHeightCase1 = newProportinateMultiplier*object.ceilingHeightValue;
@@ -1659,16 +1659,16 @@ render.makeGraph = function () {
 			facHeightCase3 = newProportinateMultiplier*case3Data.ceilingHeightValue;
 
 			facadeScaleHeightCase1 = d3.scale.linear()
-				.domain([0, case1Data.ceilingHeightValue]) 
-				.range([0, facHeightCase1]); 
+				.domain([0, case1Data.ceilingHeightValue])
+				.range([0, facHeightCase1]);
 
 			facadeScaleHeightCase2 = d3.scale.linear()
-				.domain([0, case2Data.ceilingHeightValue]) 
-				.range([0, facHeightCase2]); 
+				.domain([0, case2Data.ceilingHeightValue])
+				.range([0, facHeightCase2]);
 
 			facadeScaleHeightCase3 = d3.scale.linear()
-				.domain([0, case3Data.ceilingHeightValue]) 
-				.range([0, facHeightCase3]); 
+				.domain([0, case3Data.ceilingHeightValue])
+				.range([0, facHeightCase3]);
 
 
 			/* -- UPDATE CASE 1 FACADE REPRESENTATION -- */
@@ -1697,7 +1697,7 @@ render.makeGraph = function () {
 					return "translate(" + facMargin.left + "," + facMargin.top + ")";
 				})
 				.style("fill", "url(#blueGradient)");
-		
+
 
 			/* -- UPDATE CASE 2 FACADE REPRESENTATION -- */
 			d3.select("#facadeCase2")
@@ -1757,16 +1757,16 @@ render.makeGraph = function () {
 			facHeightCase3 = newProportinateMultiplier*case3Data.ceilingHeightValue;
 
 			facadeScaleHeightCase1 = d3.scale.linear()
-				.domain([0, case1Data.ceilingHeightValue]) 
-				.range([0, facHeightCase1]); 
+				.domain([0, case1Data.ceilingHeightValue])
+				.range([0, facHeightCase1]);
 
 			facadeScaleHeightCase2 = d3.scale.linear()
-				.domain([0, case2Data.ceilingHeightValue]) 
-				.range([0, facHeightCase2]); 
+				.domain([0, case2Data.ceilingHeightValue])
+				.range([0, facHeightCase2]);
 
 			facadeScaleHeightCase3 = d3.scale.linear()
-				.domain([0, case3Data.ceilingHeightValue]) 
-				.range([0, facHeightCase3]); 
+				.domain([0, case3Data.ceilingHeightValue])
+				.range([0, facHeightCase3]);
 
 
 			/* -- UPDATE CASE 1 FACADE REPRESENTATION -- */
@@ -1794,7 +1794,7 @@ render.makeGraph = function () {
 					return "translate(" + facMargin.left + "," + facMargin.top + ")";
 				})
 				.style("fill", "url(#blueGradient)");
-		
+
 
 			/* -- UPDATE CASE 2 FACADE REPRESENTATION -- */
 			d3.select("#facadeCase2")
@@ -1854,16 +1854,16 @@ render.makeGraph = function () {
 			facHeightCase3 = newProportinateMultiplier*object.ceilingHeightValue;
 
 			facadeScaleHeightCase1 = d3.scale.linear()
-				.domain([0, case1Data.ceilingHeightValue]) 
-				.range([0, facHeightCase1]); 
+				.domain([0, case1Data.ceilingHeightValue])
+				.range([0, facHeightCase1]);
 
 			facadeScaleHeightCase2 = d3.scale.linear()
-				.domain([0, case2Data.ceilingHeightValue]) 
-				.range([0, facHeightCase2]); 
+				.domain([0, case2Data.ceilingHeightValue])
+				.range([0, facHeightCase2]);
 
 			facadeScaleHeightCase3 = d3.scale.linear()
-				.domain([0, case3Data.ceilingHeightValue]) 
-				.range([0, facHeightCase3]); 
+				.domain([0, case3Data.ceilingHeightValue])
+				.range([0, facHeightCase3]);
 
 
 			/* -- UPDATE CASE 1 FACADE REPRESENTATION -- */
@@ -1945,7 +1945,7 @@ render.makeGraph = function () {
 		}
 
 
-		
+
 
 		/*// Update dimensions
 		facadeSvg.selectAll("#facadeWidth, #facadeHeightDim, #facadeHeightDimLabel, #windowHeightDimLabel, #windowHeightDim, #sillHeightDim, #sillHeightDimLabelTop, #sillHeightDimLabelBottom, #windowSepDim").remove();
@@ -1976,16 +1976,16 @@ render.makeGraph = function () {
 		facHeightCase3=newProportinateMultiplier*case3Data.ceilingHeightValue;
 
 		facadeScaleHeightCase1 = d3.scale.linear()
-			.domain([0, case1Data.ceilingHeightValue]) 
-			.range([0, facHeightCase1]); 
+			.domain([0, case1Data.ceilingHeightValue])
+			.range([0, facHeightCase1]);
 
 		facadeScaleHeightCase2 = d3.scale.linear()
-			.domain([0, case2Data.ceilingHeightValue]) 
-			.range([0, facHeightCase2]); 
+			.domain([0, case2Data.ceilingHeightValue])
+			.range([0, facHeightCase2]);
 
 		facadeScaleHeightCase3 = d3.scale.linear()
-			.domain([0, case3Data.ceilingHeightValue]) 
-				.range([0, facHeightCase3]); 
+			.domain([0, case3Data.ceilingHeightValue])
+				.range([0, facHeightCase3]);
 
 
 		/* -- UPDATE CASE 1 FACADE REPRESENTATION -- */
@@ -2013,7 +2013,7 @@ render.makeGraph = function () {
 				return "translate(" + facMargin.left + "," + facMargin.top + ")";
 			})
 			.style("fill", "url(#blueGradient)");
-	
+
 
 		/* -- UPDATE CASE 2 FACADE REPRESENTATION -- */
 		d3.select("#facadeCase2")
@@ -2069,17 +2069,17 @@ render.makeGraph = function () {
 
 	}
 
-	
+
 	function checkOccupantImageSize(caseName, imageID, sliderID, labelID) {
 		// original image dimensions
 		var originalHeight = 500;
 		var originalWidth = 360;
 
 		//assume 4.25ft sitting height
-		var resizeHeight; 
+		var resizeHeight;
 
 		if (caseName == case1Data) {
-			resizeHeight = Math.round(facadeScaleHeightCase1(4.25)); 
+			resizeHeight = Math.round(facadeScaleHeightCase1(4.25));
 		} else if (caseName == case2Data) {
 			resizeHeight = Math.round(facadeScaleHeightCase2(4.25));
 		} else if (caseName == case3Data) {
@@ -2103,7 +2103,7 @@ render.makeGraph = function () {
 			left: newLeft,
 			bottom: newBottom,
 			backgroundSize: newbackgroundsize,
-		}) 
+		})
 
 		$(sliderID).css({
 			width: facadeScaleWidth(caseName.wallLen)/2,
@@ -2113,9 +2113,9 @@ render.makeGraph = function () {
 		$(labelID).css({
 			right: diffBtwSVGandFacade + facMargin.right,
 		})
-		
+
 	}
-	
+
 	function updateOccupantImageLocation(imageID, sliderID, caseName) {
 
 
@@ -2200,7 +2200,7 @@ render.makeGraph = function () {
 
 	// Display text for occupancy dist from facade
 	function thresholdDataText() {
-		
+
 		var totalText = "";
 		$("#thresholdTooltip").empty();
 
@@ -2245,7 +2245,7 @@ render.makeGraph = function () {
 		.style("left", xPosition + "px")
 		.style("top", yPosition + "px");
 
-		 
+
 	} // end thresholdDataText
 
 
@@ -2413,7 +2413,7 @@ render.makeGraph = function () {
 		var topOfWindow = parseFloat(firstWindow.attr("y"));
 		var bottomOfWindow = parseFloat(firstWindow.attr("y")) + facadeScaleHeightCase1(glazingHeight);
 		var sillHeightPixels = facadeScaleHeightCase1(glazingData[0][0][2]);
-		
+
 		try {
 			var windowSeparationPixels = facadeScaleWidth(glazingData[0][0][0]) - facadeScaleWidth(glazingData[1][0][0]);
 		} catch (err) {
@@ -2565,7 +2565,7 @@ render.makeGraph = function () {
 			.attr("y2", verticalWindowMidpoint)
 			.attr("marker-end", "url(#arrowhead)");
 
-		
+
 
 		windowSepDimensions.append("text")
 		    .attr("class", "facadelabel")
@@ -2580,12 +2580,3 @@ render.makeGraph = function () {
 
 
 } //end makeGraph()
-
-
-
-
-
-
-
-
-
