@@ -1609,6 +1609,10 @@ render.makeGraph = function () {
 		updateGraphData(fullDataCase3.dataSet, fullDataCase3.occPtInfo, graphCase3Points, ".connectLine3", "circle.occdot3", green);
 		updateFacade(case3Data, fullDataCase3.glzCoords, fullDataCase3.windowWidth, fullDataCase3.windowHeight);
 
+		occPointData = fullDataCase1.occPtInfo;
+		occPointData2 = fullDataCase2.occPtInfo;
+		occPointData3 = fullDataCase3.occPtInfo;
+
 
 
 		thresholdDataText();
