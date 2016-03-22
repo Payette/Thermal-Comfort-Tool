@@ -1026,7 +1026,7 @@ render.makeGraph = function () {
 
 
 	// Case 1 - Changes based on typed inputs
-	$("#ceiling, #wallWidth, #occupantDist, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowECheck, #lowE, #rvalue").focusout(function(event) {
+	$("#ceiling, #wallWidth, #occupantDist, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowECheck, #lowE, #rvalue").change(function(event) {
 
 		//figure out what input changed
 		var triggeredChange = event.target.id;
