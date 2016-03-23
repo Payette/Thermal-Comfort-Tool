@@ -495,22 +495,33 @@ div.inputWrapperRight span {
 
 	background-color: rgb(245, 245, 245);
 
-	/*border-style: solid;
-	border-width: 1px;
-	border-color: #777;*/
+	border: none;
 
 	font-family: "museo-sans", sans-serif;
 	font-weight: 300;
 	font-size: 9px;
 	text-align: right;
 	color: black;
-
 }
 
-#inputs input#submit {
-	width: 30px;
-	padding: 0 1px 0 1px;
+#inputs input.inactive {
+	border-color: rgb(235, 235, 235);
+	border-style: solid;
+	border-width: 1px;
+	color: #d5d5d5;
+	font-style: italic;
+	cursor: default;
+	background-color: #fff;
+	padding: 1px 2px 0px 0px;
 }
+
+#inputs input.noChange {
+	margin: 0px 1px 0px 0px;
+	width: 36px;
+	text-align: center;
+}
+
+
 
 #inputs label {
 	margin: 0;
@@ -538,16 +549,7 @@ div.inputWrapperRight span {
 	font-weight: 100;
 }
 
-#inputs input.inactive {
-	border-color: rgb(235, 235, 235);
-	border-style: solid;
-	border-width: 1px;
-	color: #d5d5d5;
-	font-style: italic;
-	cursor: default;
-	background-color: #fff;
-	padding: 1px 2px 0px 0px;
-}
+
 
 #inputs label input.customCheck {
 	width: 15px;
@@ -587,17 +589,18 @@ input[type=checkbox] {
 	width: 12px;
 	height: 12px;
 	padding: 1px;
-	top: 0;
+	top: 1px;
 	left: 0;
 	background: rgb(245, 245, 245);
 }
 
 #inputs div#offsetLeft label {
-	left: -19px;
+	top: -5px;
+	left: 20px;
 }
 
 #inputs div#offsetMiddle label {
-	left: -38px;
+	top: -5px;
 }
 
 #inputs div.customCheckStyle label.unselected, #inputs div.customCheckStyleCentered label.unselected {
