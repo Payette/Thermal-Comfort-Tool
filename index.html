@@ -38,7 +38,7 @@
 
 		// Increment Buttons
 		$(function(){
-			$("#ceiling, #wallWidth, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #calcuvalue, #lowE, #rvalue, #ppd, #distFromFacade, #outdoortemp, #airtemp, #humidity, #airspeed, #clothing, #metabolic, #ceiling2, #wallWidth2, #windowHeight2, #windowWidth2, #glazing2, #sill2, #distWindow2, #uvalue2, #calcuvalue2, #lowE2, #rvalue2, #ppd2, #distFromFacade2, #outdoortemp2, #airtemp2, #humidity2, #airspeed2, #clothing2, #metabolic2, #ceiling3, #wallWidth3, #windowHeight3, #windowWidth3, #glazing3, #sill3, #distWindow3, #uvalue3, #calcuvalue3, #lowE3, #rvalue3, #ppd3, #distFromFacade3, #outdoortemp3, #airtemp3, #humidity3, #airspeed3, #clothing3, #metabolic3").spinner();
+			$("#ceiling, #wallWidth, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowE, #rvalue, #ppd, #distFromFacade, #outdoortemp, #airtemp, #humidity, #airspeed, #clothing, #metabolic, #ceiling2, #wallWidth2, #windowHeight2, #windowWidth2, #glazing2, #sill2, #distWindow2, #uvalue2, #lowE2, #rvalue2, #ppd2, #distFromFacade2, #outdoortemp2, #airtemp2, #humidity2, #airspeed2, #clothing2, #metabolic2, #ceiling3, #wallWidth3, #windowHeight3, #windowWidth3, #glazing3, #sill3, #distWindow3, #uvalue3, #lowE3, #rvalue3, #ppd3, #distFromFacade3, #outdoortemp3, #airtemp3, #humidity3, #airspeed3, #clothing3, #metabolic3").spinner();
 		})
 		
 		
@@ -66,14 +66,12 @@
 			</div>
 
 			<div id="thresholdTooltip">
-				<!-- <h1><span id="icon" class="check"></span> <span id="thisPPDtext">100</span></h1>
-				<p><span id="thisDiscomfort">Tolerable discomfort</span> is due to <span id="thisExplain">downdraft</span><span id="thisSolution">.</span></p> -->
 			</div>
 		</div>
 
 		<div id="facadeWrapper">
 			<div id="case1FacadeWrapper">
-				<h1><span></span>Case 1: Occupant experiences intolerable discomfort</h1>
+				<div id="case1FacadeHeading" class="facadeHeading"><h1><span></span>Case 1: Occupant experiences intolerable discomfort</h1></div>
 			</div>
 			<div id="sliderWrapper">
 				<input type="range" name="occupantDist" id="occupantDist" min="0" max="20" value="0"/>
@@ -81,7 +79,7 @@
 				<label for="occupantDist" id="occDistLabel">Occupant Position</label>
 			</div>
 			<div id="case2FacadeWrapper">
-				<h1><span></span>Case 2: Occupant experiences intolerable discomfort</h1>
+				<div id="case2FacadeHeading" class="facadeHeading"><h1><span></span>Case 2: Occupant experiences intolerable discomfort</h1></div>
 			</div>
 			<div id="sliderWrapper2">
 				<input type="range" name="occupantDist2" id="occupantDist2" min="0" max="20" value="0"/>
@@ -89,7 +87,7 @@
 				<label for="occupantDist2" id="occDistLabel2">Occupant Position</label>
 			</div>
 			<div id="case3FacadeWrapper">
-				<h1><span></span>Case 3: Occupant experiences intolerable discomfort</h1>
+				<div id="case3FacadeHeading" class="facadeHeading"><h1><span></span>Case 3: Occupant experiences intolerable discomfort</h1></div>
 			</div>
 			<div id="sliderWrapper3">
 				<input type="range" name="occupantDist3" id="occupantDist3" min="0" max="20" value="0"/>
@@ -106,9 +104,7 @@
 
 		<h1>Glazing and Comfort Analysis Tool</h1>
 
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-		ultricies porttitor ex, a ultricies massa dictum nec. Suspendisse orci
-		nibh, scelerisque sit amet hendrerit in, ultrices ut mauris.</p>
+		<p>Use this tool to evaluate the potential thermal discomfort caused by cold glazing on occupants in the winter time. To learn more about the principles behind downdraft discomfort, radiant discomfort and how to mitigate them, please refer to our resources at the end of this page.</p>
 
 		<div id="caseSelection">
 			<h2 id="case1Label"><span id="case1Button"></span>CASE 1</h2>
@@ -135,7 +131,7 @@
 			
 			<label for="windowHeight">Window Height (ft)<sup class="dimHover" id="windHeightButt">?</sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="windowHeight" id="windowHeight" value="8" step="0.5" class="case1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="windowHeight2" id="windowHeight2" value="9" step="0.5" class="case2"></div>
+			<div class="inputWrapperCenter"><input type="text" name="windowHeight2" id="windowHeight2" value="8" step="0.5" class="case2"></div>
 			<div class="inputWrapperRight"><input type="text" name="windowHeight3" id="windowHeight3" value="8" step="0.5" class="case3"></div><br>
 
 
@@ -147,9 +143,9 @@
 			<div class="inputWrapperRight"><input type="text" name="width3" id="windowWidth3" value="4" step="0.5" class="case3"></div><br>
 			
 			<label for="glazing" class="inactive" id="glazingLabel"><div class="customCheckStyle"><input type="checkbox" name="glazingRatioCheck" class="customCheck" id="glazingRatioCheck"><label for="glazingRatioCheck" id="checkGlzRatio" class="unselected"></label></div>Glazing Ratio (%)</label>
-			<div class="inputWrapperLeft"><input type="text" name="glazing" class="inactive case1" id="glazing" value="" step="1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="glazing2" class="inactive case2" id="glazing2" value="" step="1"></div>
-			<div class="inputWrapperRight"><input type="text" name="glazing3" class="inactive case3" id="glazing3" value="" step="1"></div><br>
+			<div class="inputWrapperLeft"><input type="text" name="glazing" class="inactive case1" id="glazing" value="40" step="1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="glazing2" class="inactive case2" id="glazing2" value="40" step="1"></div>
+			<div class="inputWrapperRight"><input type="text" name="glazing3" class="inactive case3" id="glazing3" value="40" step="1"></div><br>
 
 
 			<label for="sill">Sill Height (ft)<sup class="dimHover" id="sillHeightButt">?</sup></label>
@@ -184,7 +180,7 @@
 
 			<label for="lowECheck">Room-side Low-E Coating<sup id="fnref:3"><a href="#fn:3" rel="footnote">?</a></sup></label>
 
-			<div class="inputWrapperLeft"><div class="customCheckStyleCentered case1"><input type="checkbox" name="lowECheck" id="lowECheck" class="checkbox customCheck"><label for="lowECheck" id="checkLowE1" class="unselected"></label></div></div>
+			<div class="inputWrapperLeft"><div class="customCheckStyleCentered case1"><input type="checkbox" name="lowECheckThis" id="lowECheck" class="checkbox customCheck"><label for="lowECheck" id="checkLowE1" class="unselected"></label></div></div>
 
 			<div class="inputWrapperCenter"><div class="customCheckStyleCentered case2" id="offsetMiddle"><input type="checkbox" name="lowECheck2" id="lowECheck2" class="checkbox customCheck"><label for="lowECheck2" id="checkLowE2" class="unselected"></label></div></div>
 
@@ -246,9 +242,12 @@
 			<hr>
 			
 			<label for="radiant">Radiant Floor<sup id="fnref:9"><a href="#fn:9" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="checkbox" name="radiant" id="radiant" class="case1"></div>
-			<div class="inputWrapperCenter"><input type="checkbox" name="radiant2" id="radiant2" class="case2"></div>
-			<div class="inputWrapperRight"><input type="checkbox" name="radiant3" id="radiant3" class="case3"></div><br>
+			<div class="inputWrapperLeft"><div class="customCheckStyleCentered case1"><input type="checkbox" name="radiant" id="radiant" class="checkbox customCheck"><label for="radiant" id="radiantCheck1" class="unselected"></label></div></div>
+			<div class="inputWrapperCenter"><div class="customCheckStyleCentered case2" id="offsetMiddle"><input type="checkbox" name="radiant2" id="radiant2" class="checkbox customCheck"><label for="radiant2" id="radiantCheck2" class="unselected"></label></div></div>
+			<div class="inputWrapperRight"><div class="customCheckStyleCentered case3" id="offsetLeft"><input type="checkbox" name="radiant3" id="radiant3" class="checkbox customCheck"><label for="radiant3" id="radiantCheck3" class="unselected"></label></div></div><br>
+
+
+
 
 			<label for="airspeed">Air Speed (fpm)<sup id="fnref:10"><a href="#fn:10" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="airspeed" id="airspeed" value="10" class="case1"></div>
