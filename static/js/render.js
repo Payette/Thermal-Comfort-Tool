@@ -481,7 +481,7 @@ render.makeGraph = function () {
 		.attr("transform", function() {
 			return "translate(" + facMargin.left + "," + facMargin.top + ")";
 		})
-		.style("fill", "url(#blueGradient)");
+		.style("fill", "url(#blueGradient2)");
 
 
 // Case 3 Facade
@@ -513,7 +513,7 @@ render.makeGraph = function () {
 		.attr("transform", function() {
 			return "translate(" + facMargin.left + "," + facMargin.top + ")";
 		})
-		.style("fill", "url(#blueGradient)");
+		.style("fill", "url(#blueGradient3)");
 
 
 
@@ -576,15 +576,7 @@ render.makeGraph = function () {
 	})
 
 
-
-
-
-
-
-
-
-
-	/* ---- SVG DEFINITIONS ---- */
+		/* ---- SVG DEFINITIONS ---- */
 
 	var defs = facadeSvgCase1.append("defs");
 	var defsCase2 = facadeSvgCase2.append("defs");
@@ -604,6 +596,8 @@ render.makeGraph = function () {
         .attr("x2", "6")
         .attr("y1", "0")
         .attr("y2", "6");
+
+
 
 
     //gradient fill
@@ -645,6 +639,14 @@ render.makeGraph = function () {
     blueGradient3.append("stop")
     	.attr("class", "blueGradientStop2")
     	.attr("offset", "100%")
+
+
+
+
+
+
+
+
 
 
 
@@ -1059,8 +1061,9 @@ render.makeGraph = function () {
 
 
 
+
 	// Case 1 - Changes based on typed inputs
-	$("#ceiling, #wallWidth, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowECheck, #lowE, #rvalue").focusout(function(event) {
+	$("#ceiling, #wallWidth, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowE, #rvalue").focusout(function(event) {
 
 		//figure out what input changed
 		var triggeredChange = event.target.id;
@@ -1098,27 +1101,7 @@ render.makeGraph = function () {
 		else if (triggeredChange == "uvalue") {
 			case1Data.uvalueValue = $(this).val();
 		}
-		else if (triggeredChange == "lowECheck") {
-
-			if (($("#lowECheck").is(":checked")) == true) {
-				case1Data.intLowEChecked = true;
-				$("#lowE").val(0.2);
-				case1Data.intLowEEmissivity = 0.2;
-
-				$("#lowE").removeClass("inactive");
-				$("#lowELabel").removeClass("inactive");
-				$("#checkLowE1").removeClass("unselected");
-
-
-
-			} else if (($("#lowECheck").is(":checked")) == false) {
-				case1Data.intLowEChecked = false;
-				$("#lowE").val(" ");
-				$("#lowE").addClass("inactive");
-				$("#lowELabel").addClass("inactive");
-				$("#checkLowE1").addClass("unselected");
-			}
-		}
+	
 		else if (triggeredChange == "lowE") {
 			case1Data.intLowEEmissivity = $(this).val();
 		}
@@ -1131,6 +1114,29 @@ render.makeGraph = function () {
 
 
 		updateData(case1Data);
+	})
+	$("#lowECheck").change(function(event) {
+
+		if (($("#lowECheck").is(":checked")) == true) {
+			case1Data.intLowEChecked = true;
+			$("#lowE").val(0.2);
+			case1Data.intLowEEmissivity = 0.2;
+
+			$("#lowE").removeClass("inactive");
+			$("#lowELabel").removeClass("inactive");
+			$("#checkLowE1").removeClass("unselected");
+
+
+		} else if (($("#lowECheck").is(":checked")) == false) {
+			case1Data.intLowEChecked = false;
+			$("#lowE").val(" ");
+			$("#lowE").addClass("inactive");
+			$("#lowELabel").addClass("inactive");
+			$("#checkLowE1").addClass("unselected");
+		}
+
+		updateData(case1Data);
+
 	})
 
 
@@ -1203,7 +1209,7 @@ render.makeGraph = function () {
 
 
 	// Case 2 - Changes based on typed inputs
-	$("#ceiling2, #wallWidth2, #windowHeight2, #windowWidth2, #glazing2, #sill2, #distWindow2, #uvalue2, #lowECheck2, #lowE2, #rvalue2").focusout(function(event) {
+	$("#ceiling2, #wallWidth2, #windowHeight2, #windowWidth2, #glazing2, #sill2, #distWindow2, #uvalue2, #lowE2, #rvalue2").focusout(function(event) {
 
 		//figure out what input changed
 		var triggeredChange = event.target.id;
@@ -1241,25 +1247,6 @@ render.makeGraph = function () {
 		else if (triggeredChange == "uvalue2") {
 			case2Data.uvalueValue = $(this).val();
 		}
-		else if (triggeredChange == "lowECheck2") {
-
-			if (($("#lowECheck2").is(":checked")) == true) {
-				case2Data.intLowEChecked = true;
-				$("#lowE2").val(0.2);
-				case2Data.intLowEEmissivity = 0.2;
-
-				$("#lowE2").removeClass("inactive");
-				$("#lowELabel2").removeClass("inactive");
-				$("#checkLowE2").removeClass("unselected");
-
-			} else if (($("#lowECheck2").is(":checked")) == false) {
-				case2Data.intLowEChecked = false;
-				$("#lowE2").val(" ");
-				$("#lowE2").addClass("inactive");
-				$("#lowELabel2").addClass("inactive");
-				$("#checkLowE2").addClass("unselected");
-			}
-		}
 		else if (triggeredChange == "lowE2") {
 			case2Data.intLowEEmissivity = $(this).val();
 		}
@@ -1273,6 +1260,29 @@ render.makeGraph = function () {
 
 
 		updateData(case2Data);
+	})
+
+	$("#lowECheck2").change(function(event){
+
+		if (($("#lowECheck2").is(":checked")) == true) {
+			case2Data.intLowEChecked = true;
+			$("#lowE2").val(0.2);
+			case2Data.intLowEEmissivity = 0.2;
+
+			$("#lowE2").removeClass("inactive");
+			$("#lowELabel2").removeClass("inactive");
+			$("#checkLowE2").removeClass("unselected");
+
+		} else if (($("#lowECheck2").is(":checked")) == false) {
+			case2Data.intLowEChecked = false;
+			$("#lowE2").val(" ");
+			$("#lowE2").addClass("inactive");
+			$("#lowELabel2").addClass("inactive");
+			$("#checkLowE2").addClass("unselected");
+		}
+
+		updateData(case2Data);
+
 	})
 
 	// Case 2 - Changes based on increment bttons
@@ -1342,7 +1352,7 @@ render.makeGraph = function () {
 
 
 	// Case 3 - Changes based on typed inputs
-	$("#ceiling3, #wallWidth3, #windowHeight3, #windowWidth3, #glazing3, #sill3, #distWindow3, #uvalue3, #lowECheck3, #lowE3, #rvalue3").focusout(function(event) {
+	$("#ceiling3, #wallWidth3, #windowHeight3, #windowWidth3, #glazing3, #sill3, #distWindow3, #uvalue3, #lowE3, #rvalue3").focusout(function(event) {
 
 		//figure out what input changed
 		var triggeredChange = event.target.id;
@@ -1381,25 +1391,6 @@ render.makeGraph = function () {
 		else if (triggeredChange == "uvalue3") {
 			case3Data.uvalueValue = $(this).val();
 		}
-		else if (triggeredChange == "lowECheck3") {
-
-			if (($("#lowECheck3").is(":checked")) == true) {
-				case3Data.intLowEChecked = true;
-				$("#lowE3").val(0.2);
-				case3Data.intLowEEmissivity = 0.2;
-
-				$("#lowE3").removeClass("inactive");
-				$("#lowELabel3").removeClass("inactive");
-				$("#checkLowE3").removeClass("unselected");
-
-			} else if (($("#lowECheck3").is(":checked")) == false) {
-				case3Data.intLowEChecked = false;
-				$("#lowE3").val(" ");
-				$("#lowE3").addClass("inactive");
-				$("#lowELabel3").addClass("inactive");
-				$("#checkLowE3").addClass("unselected");
-			}
-		}
 		else if (triggeredChange == "lowE3") {
 			case3Data.intLowEEmissivity = $(this).val();
 		}
@@ -1413,6 +1404,25 @@ render.makeGraph = function () {
 
 
 		updateData(case3Data);
+	})
+
+	$("#lowECheck3").change(function(event) {
+		if (($("#lowECheck3").is(":checked")) == true) {
+			case3Data.intLowEChecked = true;
+			$("#lowE3").val(0.2);
+			case3Data.intLowEEmissivity = 0.2;
+
+			$("#lowE3").removeClass("inactive");
+			$("#lowELabel3").removeClass("inactive");
+			$("#checkLowE3").removeClass("unselected");
+
+		} else if (($("#lowECheck3").is(":checked")) == false) {
+			case3Data.intLowEChecked = false;
+			$("#lowE3").val(" ");
+			$("#lowE3").addClass("inactive");
+			$("#lowELabel3").addClass("inactive");
+			$("#checkLowE3").addClass("unselected");
+		}
 	})
 
 	// Case 3 - Changes based on increment bttons
@@ -1753,7 +1763,7 @@ render.makeGraph = function () {
 				.attr("transform", function() {
 					return "translate(" + facMargin.left + "," + facMargin.top + ")";
 				})
-				.style("fill", "url(#blueGradient)");
+				.style("fill", "url(#blueGradient2)");
 
 
 			/* -- UPDATE CASE 3 FACADE REPRESENTATION -- */
@@ -1779,7 +1789,7 @@ render.makeGraph = function () {
 				.attr("transform", function() {
 					return "translate(" + facMargin.left + "," + facMargin.top + ")";
 				})
-				.style("fill", "url(#blueGradient)");
+				.style("fill", "url(#blueGradient3)");
 
 		} else if (object == case2Data) {
 			//redefine facade heights and height scale functions
@@ -1850,7 +1860,7 @@ render.makeGraph = function () {
 				.attr("transform", function() {
 					return "translate(" + facMargin.left + "," + facMargin.top + ")";
 				})
-				.style("fill", "url(#blueGradient)");
+				.style("fill", "url(#blueGradient2)");
 
 
 			/* -- UPDATE CASE 3 FACADE REPRESENTATION -- */
@@ -1876,7 +1886,7 @@ render.makeGraph = function () {
 				.attr("transform", function() {
 					return "translate(" + facMargin.left + "," + facMargin.top + ")";
 				})
-				.style("fill", "url(#blueGradient)");
+				.style("fill", "url(#blueGradient3)");
 
 		} else if (object == case3Data) {
 			//redefine facade heights and height scale functions
@@ -1946,7 +1956,7 @@ render.makeGraph = function () {
 				.attr("transform", function() {
 					return "translate(" + facMargin.left + "," + facMargin.top + ")";
 				})
-				.style("fill", "url(#blueGradient)");
+				.style("fill", "url(#blueGradient2)");
 
 
 			/* -- UPDATE CASE 3 FACADE REPRESENTATION -- */
@@ -1972,7 +1982,7 @@ render.makeGraph = function () {
 				.attr("transform", function() {
 					return "translate(" + facMargin.left + "," + facMargin.top + ")";
 				})
-				.style("fill", "url(#blueGradient)");
+				.style("fill", "url(#blueGradient3)");
 		}
 
 
@@ -2073,7 +2083,7 @@ render.makeGraph = function () {
 			.attr("transform", function() {
 				return "translate(" + facMargin.left + "," + facMargin.top + ")";
 			})
-			.style("fill", "url(#blueGradient)");
+			.style("fill", "url(#blueGradient2)");
 
 
 		/* -- UPDATE CASE 3 FACADE REPRESENTATION -- */
@@ -2099,7 +2109,7 @@ render.makeGraph = function () {
 			.attr("transform", function() {
 				return "translate(" + facMargin.left + "," + facMargin.top + ")";
 			})
-			.style("fill", "url(#blueGradient)");
+			.style("fill", "url(#blueGradient3)");
 
 
 		// Update dimensions

@@ -232,6 +232,12 @@ body {
 	stop-color: #C2E0FF;
 }
 
+rect.window1, rect.window2, rect.window3 {
+	fill: url(#blueGradient);
+}
+
+
+
 #sliderWrapper, #sliderWrapper2, #sliderWrapper3 {
 	width: 550px;
 	height: 50px
