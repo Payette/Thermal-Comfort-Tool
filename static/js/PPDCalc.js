@@ -411,11 +411,11 @@ comf.calcFullMRTppd = function(winView, opaView, winFilmCoeff, airTemp, outdoorT
   //Compute the PMV at the point
   var mrtResult = comf.pmvElevatedAirspeed(airTemp, ptMRT, vel, rh, met, clo, 0)
 	if (mrtResult.pmv > 0){
-		var finalMRTPPD = 0
+		var finalMRTPPD = 5
 	} else {
 		var finalMRTPPD = mrtResult.ppd
   }
-  //console.log(winView)
+
   var r = {}
     r.mrt = ptMRT;
     r.ppd = finalMRTPPD;
