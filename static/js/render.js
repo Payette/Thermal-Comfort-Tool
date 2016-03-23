@@ -34,7 +34,7 @@ render.makeGraph = function () {
 	/* ------ SET UP GRAPH VARIABLES AND DATA FUNCTIONS ------ */
 	var margin = {top: 57, right: 0, bottom: 75, left: 50},
     	width = maxContainerWidth - margin.left - margin.right,
-    	height = 400 - margin.top - margin.bottom;
+    	height = 370 - margin.top - margin.bottom;
 
 
 	// Set up scale functions
