@@ -663,7 +663,9 @@ render.makeGraph = function () {
 			$(this).removeClass("unselected");
 			$("#case2Button").removeClass("unselected");
 
-			$("#inputs input.case2, div.case2, #case2FacadeWrapper, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").css("display", "initial");
+			$("#inputs input.case2, div.case2, #case2FacadeWrapper, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").show();
+
+			
 
 			// add case 2 wall length to array
 			array.push(case2Data.wallLen);
@@ -674,7 +676,7 @@ render.makeGraph = function () {
 			$(this).addClass("unselected");
 			$("#case2Button").addClass("unselected");
 
-			$("#inputs input.case2, div.case2, #case2FacadeWrapper, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").css("display", "none");
+			$("#inputs input.case2, div.case2, #case2FacadeWrapper, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").hide();
 		}
 
 		//check case 1
@@ -706,7 +708,7 @@ render.makeGraph = function () {
 			$(this).removeClass("unselected");
 			$("#case3Button").removeClass("unselected");
 
-			$("#inputs input.case3, div.case3, #case3FacadeWrapper, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3").css("display", "initial");
+			$("#inputs input.case3, div.case3, #case3FacadeWrapper, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3").show();
 
 			// add case 2 wall length to array
 			array.push(case2Data.wallLen);
@@ -717,7 +719,7 @@ render.makeGraph = function () {
 			$(this).addClass("unselected");
 			$("#case3Button").addClass("unselected");
 
-			$("#inputs input.case3, div.case3, #case3FacadeWrapper, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3").css("display", "none");
+			$("#inputs input.case3, div.case3, #case3FacadeWrapper, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3").hide();
 		}
 
 		//check case 1
