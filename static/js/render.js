@@ -762,8 +762,8 @@ render.makeGraph = function () {
 
 		updateFacadeHeadings();
 	});
-	$("#distFromFacade").on("spinchange", function(event) {
-		occDistFromFacade = $(this).val();
+	$("#distFromFacade").on("spin", function(event, ui) {
+		occDistFromFacade = ui.value;
 
 		$("#distFromFacade, #distFromFacade2, #distFromFacade3").val(occDistFromFacade);
 
@@ -795,8 +795,8 @@ render.makeGraph = function () {
 		updatePPDThreshold(ppdValue);
 		thresholdDataText()
 	});
-	$("#ppd, #ppd2, #ppd3").on("spinchange", function(event) {
-		ppdValue = $(this).val();
+	$("#ppd, #ppd2, #ppd3").on("spin", function(event, ui) {
+		ppdValue = ui.value;
 		$("#ppd, #ppd2, #ppd3").val(ppdValue);
 
 		updatePPDThreshold(ppdValue);
@@ -920,8 +920,8 @@ render.makeGraph = function () {
 		updateData(case2Data);
 		updateData(case3Data);
 	})
-	$("#outdoortemp").on("spinchange", function(event) {
-		outdoorTempValue = $(this).val();
+	$("#outdoortemp").on("spin", function(event, ui) {
+		outdoorTempValue = ui.value;
 		$("#outdoortemp, #outdoortemp2, #outdoortemp3").val(outdoorTempValue);
 		updateData(case1Data);
 		updateData(case2Data);
@@ -936,8 +936,8 @@ render.makeGraph = function () {
 		updateData(case2Data);
 		updateData(case3Data);
 	});
-	$("#airtemp").on("spinchange", function(event) {
-		airtempValue = $(this).val();
+	$("#airtemp").on("spin", function(event, ui) {
+		airtempValue = ui.value;
 		$("#airtemp, #airtemp2, #airtemp3").val(airtempValue);
 
 		updateData(case1Data);
@@ -954,8 +954,8 @@ render.makeGraph = function () {
 		updateData(case2Data);
 		updateData(case3Data);
 	})
-	$("#humidity").on("spinchange", function(event) {
-		humidityValue = $(this).val();
+	$("#humidity").on("spin", function(event, ui) {
+		humidityValue = ui.value;
 
 		$("#humidity, #humidity2, #humidity3").val(humidityValue);
 
@@ -990,8 +990,8 @@ render.makeGraph = function () {
 		updateData(case2Data);
 		updateData(case3Data);
 	})
-	$("#airspeed").on("spinchange", function(event) {
-		airspeedValue = $(this).val();
+	$("#airspeed").on("spin", function(event, ui) {
+		airspeedValue = ui.value;
 
 		$("#airspeed, #airspeed2, #airspeed3").val(airspeedValue);
 
@@ -1009,8 +1009,8 @@ render.makeGraph = function () {
 		updateData(case2Data);
 		updateData(case3Data);
 	})
-	$("#clothing").on("spinchange", function(event) {
-		clothingValue = $(this).val();
+	$("#clothing").on("spin", function(event, ui) {
+		clothingValue = ui.value;
 
 		$("#clothing, #clothing2, #clothing3").val(clothingValue);
 
@@ -1028,8 +1028,8 @@ render.makeGraph = function () {
 		updateData(case2Data);
 		updateData(case3Data);
 	})
-	$("#metabolic").on("spinchange", function(event) {
-		metabolic = $(this).val();
+	$("#metabolic").on("spin", function(event, ui) {
+		metabolic = ui.value;
 
 		$("#metabolic, #metabolic2, #metabolic3").val(metabolic);
 
@@ -1072,6 +1072,7 @@ render.makeGraph = function () {
 		var triggeredChange = event.target.id;
 
 		if(triggeredChange == "ceiling") {
+
 			case1Data.ceilingHeightValue = $(this).val();
 
 		}
@@ -1079,10 +1080,6 @@ render.makeGraph = function () {
 			case1Data.wallLen = $(this).val();
 
 			$("#occupantDist").attr("max", case1Data.wallLen/2);
-
-			checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
-			checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
-			checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");
 
 		}
 		else if (triggeredChange == "windowHeight") {
@@ -1115,7 +1112,6 @@ render.makeGraph = function () {
 			alert("Don't know what changed!");
 		}
 
-
 		updateData(case1Data);
 	})
 	$("#lowECheck").change(function(event) {
@@ -1144,68 +1140,61 @@ render.makeGraph = function () {
 
 
 	// Case 1 - Changes based on increment buttons
-		$("#ceiling").on("spinchange", function(event) {
-			case1Data.ceilingHeightValue = $(this).val();
-
+		$("#ceiling").on("spin", function(event, ui) {
+			case1Data.ceilingHeightValue = ui.value;
 			updateData(case1Data);
 		})
 
-		$("#wallWidth").on("spinchange", function(event) {
-			case1Data.wallLen = $(this).val();
-
+		$("#wallWidth").on("spin", function(event, ui) {
+			case1Data.wallLen = ui.value;
 
 			$("#occupantDist").attr("max", case1Data.wallLen/2);
-
-			checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
-			checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
-			checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");
-
-
+			
 			updateData(case1Data);
 		})
 
 
-		$("#windowHeight").on("spinchange", function(event) {
-			case1Data.windowHeightValue = $(this).val();
+		$("#windowHeight").on("spin", function(event, ui) {
+			case1Data.windowHeightValue = ui.value;
 			updateData(case1Data);
 		})
 
-		$("#windowWidth").on("spinchange", function(event) {
-			case1Data.windowWidthValue = $(this).val();
+		$("#windowWidth").on("spin", function(event, ui) {
+			case1Data.windowWidthValue = ui.value;
 			updateData(case1Data);
 		})
 
-		$("#glazing").on("spinchange", function(event) {
-			case1Data.glzRatioValue = $(this).val();
+		$("#glazing").on("spin", function(event, ui) {
+			case1Data.glzRatioValue = ui.value;
 			updateData(case1Data);
 		})
 
-		$("#sill").on("spinchange", function(event) {
-			case1Data.sillHeightValue = $(this).val();
-
-			updateData(case1Data);
-		})
-
-		$("#distWindow").on("spinchange", function(event) {
-			case1Data.distanceWindows = $(this).val();
+		$("#sill").on("spin", function(event, ui) {
+			case1Data.sillHeightValue = ui.value;
 
 			updateData(case1Data);
 		})
 
-		$("#uvalue").on("spinchange", function(event) {
-			case1Data.uvalueValue = $(this).val();
+		$("#distWindow").on("spin", function(event, ui) {
+			case1Data.distanceWindows = ui.value;
 
 			updateData(case1Data);
 		})
 
-		$("#lowE").on("spinchange", function(event) {
-			case1Data.intLowEEmissivity = $(this).val();
+		$("#uvalue").on("spin", function(event, ui) {
+			case1Data.uvalueValue = ui.value;
 
 			updateData(case1Data);
 		})
 
-		$("#rvalue").on("spinchange", function(event) {
-			case1Data.rvalueValue = $(this).val();
+		$("#lowE").on("spin", function(event, ui) {
+			case1Data.intLowEEmissivity = ui.value;
+
+			updateData(case1Data);
+		})
+
+		$("#rvalue").on("spin", function(event, ui) {
+			case1Data.rvalueValue = ui.value;
 
 			updateData(case1Data);
 		})
@@ -1226,9 +1215,6 @@ render.makeGraph = function () {
 			case2Data.wallLen = $(this).val();
 
 			$("#occupantDist2").attr("max", case2Data.wallLen/2);
-			checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
-			checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
-			checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");
 		}
 
 		else if (triggeredChange == "windowHeight2") {
@@ -1289,66 +1275,63 @@ render.makeGraph = function () {
 	})
 
 	// Case 2 - Changes based on increment bttons
-		$("#ceiling2").on("spingchange", function(event) {
-			case2Data.ceilingHeightValue = $(this).val();
+		$("#ceiling2").on("spin", function(event, ui) {
+			case2Data.ceilingHeightValue = ui.value;
 
 			updateData(case2Data);
 		})
 
-		$("#wallWidth2").on("spingchange", function(event) {
-			case2Data.wallLen = $(this).val();
+		$("#wallWidth2").on("spin", function(event, ui) {
+			case2Data.wallLen = ui.value;
 
 			$("#occupantDist2").attr("max", case2Data.wallLen/2);
-			checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
-			checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
-			checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");
 
 			updateData(case2Data);
 		})
 
 
-		$("#windowHeight2").on("spingchange", function(event) {
-			case2Data.windowHeightValue = $(this).val();
+		$("#windowHeight2").on("spin", function(event, ui) {
+			case2Data.windowHeightValue = ui.value;
 
 			updateData(case2Data);
 		})
 
-		$("#windowWidth2").on("spingchange", function(event) {
-			case2Data.windowWidthValue = $(this).val();
+		$("#windowWidth2").on("spin", function(event, ui) {
+			case2Data.windowWidthValue = ui.value;
 			updateData(case2Data);
 		})
 
-		$("#glazing2").on("spingchange", function(event) {
-			case2Data.glzRatioValue = $(this).val();
+		$("#glazing2").on("spin", function(event, ui) {
+			case2Data.glzRatioValue = ui.value;
 			updateData(case2Data);
 		})
 
-		$("#sill2").on("spingchange", function(event) {
-			case2Data.sillHeightValue = $(this).val();
-
-			updateData(case2Data);
-		})
-
-		$("#distWindow2").on("spingchange", function(event) {
-			case2Data.distanceWindows = $(this).val();
+		$("#sill2").on("spin", function(event, ui) {
+			case2Data.sillHeightValue = ui.value;
 
 			updateData(case2Data);
 		})
 
-		$("#uvalue2").on("spingchange", function(event) {
-			case2Data.uvalueValue = $(this).val();
+		$("#distWindow2").on("spin", function(event, ui) {
+			case2Data.distanceWindows = ui.value;
 
 			updateData(case2Data);
 		})
 
-		$("#lowE2").on("spingchange", function(event) {
-			case2Data.intLowEEmissivity = $(this).val();
+		$("#uvalue2").on("spin", function(event, ui) {
+			case2Data.uvalueValue = ui.value;
 
 			updateData(case2Data);
 		})
 
-		$("#rvalue2").on("spingchange", function(event) {
-			case2Data.rvalueValue = $(this).val();
+		$("#lowE2").on("spin", function(event, ui) {
+			case2Data.intLowEEmissivity = ui.value;
+
+			updateData(case2Data);
+		})
+
+		$("#rvalue2").on("spin", function(event, ui) {
+			case2Data.rvalueValue = ui.value;
 
 			updateData(case2Data);
 		})
@@ -1368,11 +1351,8 @@ render.makeGraph = function () {
 		else if(triggeredChange == "wallWidth3") {
 			case3Data.wallLen = $(this).val();
 
-
 			$("#occupantDist3").attr("max", case3Data.wallLen/2);
-			checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
-			checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
-			checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");
+
 		}
 
 		else if (triggeredChange == "windowHeight3") {
@@ -1429,66 +1409,64 @@ render.makeGraph = function () {
 	})
 
 	// Case 3 - Changes based on increment bttons
-		$("#ceiling3").on("spingchange", function(event) {
-			case3Data.ceilingHeightValue = $(this).val();
+		$("#ceiling3").on("spin", function(event, ui) {
+			case3Data.ceilingHeightValue = ui.value;
 
 			updateData(case3Data);
 		})
 
-		$("#wallWidth2").on("spingchange", function(event) {
-			case3Data.wallLen = $(this).val();
+		$("#wallWidth2").on("spin", function(event, ui) {
+			case3Data.wallLen = ui.value;
 
 
 			$("#occupantDist3").attr("max", case3Data.wallLen/2);
-			checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
-			checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
-			checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");
+
 
 			updateData(case3Data);
 		})
 
 
-		$("#windowHeight3").on("spingchange", function(event) {
-			case3Data.windowHeightValue = $(this).val();
+		$("#windowHeight3").on("spin", function(event, ui) {
+			case3Data.windowHeightValue = ui.value;
 			updateData(case3Data);
 		})
 
-		$("#windowWidth3").on("spingchange", function(event) {
-			case3Data.windowWidthValue = $(this).val();
+		$("#windowWidth3").on("spin", function(event, ui) {
+			case3Data.windowWidthValue = ui.value;
 			updateData(case3Data);
 		})
 
-		$("#glazing3").on("spingchange", function(event) {
-			case3Data.glzRatioValue = $(this).val();
+		$("#glazing3").on("spin", function(event, ui) {
+			case3Data.glzRatioValue = ui.value;
 			updateData(case3Data);
 		})
 
-		$("#sill3").on("spingchange", function(event) {
-			case3Data.sillHeightValue = $(this).val();
-
-			updateData(case3Data);
-		})
-
-		$("#distWindow3").on("spingchange", function(event) {
-			case3Data.distanceWindows = $(this).val();
+		$("#sill3").on("spin", function(event, ui) {
+			case3Data.sillHeightValue = ui.value;
 
 			updateData(case3Data);
 		})
 
-		$("#uvalue3").on("spingchange", function(event) {
-			case3Data.uvalueValue = $(this).val();
+		$("#distWindow3").on("spin", function(event, ui) {
+			case3Data.distanceWindows = ui.value;
 
 			updateData(case3Data);
 		})
 
-		$("#lowE3").on("spingchange", function(event) {
-			case3Data.intLowEEmissivity = $(this).val();
+		$("#uvalue3").on("spin", function(event, ui) {
+			case3Data.uvalueValue = ui.value;
 
 			updateData(case3Data);
 		})
 
-		$("#rvalue3").on("spingchange", function(event) {
-			case3Data.rvalueValue = $(this).val();
+		$("#lowE3").on("spin", function(event, ui) {
+			case3Data.intLowEEmissivity = ui.value;
+
+			updateData(case3Data);
+		})
+
+		$("#rvalue3").on("spin", function(event, ui) {
+			case3Data.rvalueValue = ui.value;
 
 			updateData(case3Data);
 		})
@@ -1991,6 +1969,10 @@ render.makeGraph = function () {
 		$("#windowHeightDimLabel, #sillHeightDimLabelTop, #sillHeightDimLabelBottom, .dimensions").remove();
 		windowDimensions(glzCoords, glzWidth, glzHeight);
 
+		checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
+			checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
+			checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");
+
 
 	}
 
@@ -2107,11 +2089,21 @@ render.makeGraph = function () {
 		$("#windowHeightDimLabel, #sillHeightDimLabelTop, #sillHeightDimLabelBottom, .dimensions").remove();
 		windowDimensions(glzCoords, glzWidth, glzHeight);
 
+		checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
+			checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
+			checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");
+
 
 	}
 
 
 	function checkOccupantImageSize(caseName, imageID, sliderID, labelID) {
+
+
+
+		var imageHeight = $("#occupantImage").height();
+		var imageWidth = $("#occupantImage").width();
+
 		// original image dimensions
 		var originalHeight = 500;
 		var originalWidth = 360;
