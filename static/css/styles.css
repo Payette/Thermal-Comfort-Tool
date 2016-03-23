@@ -232,9 +232,9 @@ body {
 	stop-color: #C2E0FF;
 }
 
-rect.window1, rect.window2, rect.window3 {
-	fill: url(#blueGradient);
-}
+ rect.window1, rect.window2, rect.window3 {
+	fill: #E1F0FF;
+} 
 
 
 

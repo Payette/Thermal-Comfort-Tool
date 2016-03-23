@@ -448,8 +448,7 @@ render.makeGraph = function () {
 		.attr("height", facadeScaleHeightCase1(glzHeight))
 		.attr("transform", function() {
 			return "translate(" + facMargin.left + "," + facMargin.top + ")";
-		})
-		.style("fill", "url(#blueGradient)");
+		});
 
 
 // Case 2 Facade
@@ -480,8 +479,7 @@ render.makeGraph = function () {
 		.attr("height", facadeScaleHeightCase2(glzHeightCase2))
 		.attr("transform", function() {
 			return "translate(" + facMargin.left + "," + facMargin.top + ")";
-		})
-		.style("fill", "url(#blueGradient2)");
+		});
 
 
 // Case 3 Facade
@@ -512,8 +510,7 @@ render.makeGraph = function () {
 		.attr("height", facadeScaleHeightCase2(glzHeightCase3))
 		.attr("transform", function() {
 			return "translate(" + facMargin.left + "," + facMargin.top + ")";
-		})
-		.style("fill", "url(#blueGradient3)");
+		});
 
 
 
@@ -579,8 +576,8 @@ render.makeGraph = function () {
 		/* ---- SVG DEFINITIONS ---- */
 
 	var defs = facadeSvgCase1.append("defs");
-	var defsCase2 = facadeSvgCase2.append("defs");
-	var defsCase3 = facadeSvgCase3.append("defs");
+	var defs2 = facadeSvgCase2.append("defs");
+	var defs3 = facadeSvgCase3.append("defs");
 
 	//arrowhead marker
     var arrow = defs.append("marker")
@@ -612,33 +609,34 @@ render.makeGraph = function () {
     	.attr("offset", "60%");
     blueGradient.append("stop")
     	.attr("class", "blueGradientStop2")
-    	.attr("offset", "100%")
+    	.attr("offset", "100%");
 
-    var blueGradient2 = defsCase2.append("linearGradient")
-    	.attr("id", "blueGradient")
+    var blueGradient2 = defs2.append("linearGradient")
+    	.attr("id", "blueGradient2")
     	.attr( 'x1', '0' )
         .attr( 'x2', '0' )
         .attr( 'y1', '0' )
         .attr( 'y2', '1' ); // makes vertical gradient
-    blueGradient2.append("stop")
+    blueGradient.append("stop")
     	.attr("class", "blueGradientStop1")
     	.attr("offset", "60%");
-    blueGradient2.append("stop")
+    blueGradient.append("stop")
     	.attr("class", "blueGradientStop2")
     	.attr("offset", "100%")
 
-    var blueGradient3 = defsCase3.append("linearGradient")
-    	.attr("id", "blueGradient")
+    var blueGradient3 = defs3.append("linearGradient")
+    	.attr("id", "blueGradient3")
     	.attr( 'x1', '0' )
         .attr( 'x2', '0' )
         .attr( 'y1', '0' )
         .attr( 'y2', '1' ); // makes vertical gradient
-    blueGradient3.append("stop")
+    blueGradient.append("stop")
     	.attr("class", "blueGradientStop1")
     	.attr("offset", "60%");
-    blueGradient3.append("stop")
+    blueGradient.append("stop")
     	.attr("class", "blueGradientStop2")
     	.attr("offset", "100%")
+
 
 
 
@@ -1741,8 +1739,7 @@ render.makeGraph = function () {
 				.attr("height", facadeScaleHeightCase1(newGlzHeight))
 				.attr("transform", function() {
 					return "translate(" + facMargin.left + "," + facMargin.top + ")";
-				})
-				.style("fill", "url(#blueGradient)");
+				});
 
 
 			/* -- UPDATE CASE 2 FACADE REPRESENTATION -- */
@@ -1767,8 +1764,7 @@ render.makeGraph = function () {
 				.attr("height", facadeScaleHeightCase1(glzHeightCase2))
 				.attr("transform", function() {
 					return "translate(" + facMargin.left + "," + facMargin.top + ")";
-				})
-				.style("fill", "url(#blueGradient2)");
+				});
 
 
 			/* -- UPDATE CASE 3 FACADE REPRESENTATION -- */
@@ -1793,8 +1789,7 @@ render.makeGraph = function () {
 				.attr("height", facadeScaleHeightCase1(glzHeightCase3))
 				.attr("transform", function() {
 					return "translate(" + facMargin.left + "," + facMargin.top + ")";
-				})
-				.style("fill", "url(#blueGradient3)");
+				});
 
 		} else if (object == case2Data) {
 			//redefine facade heights and height scale functions
@@ -1838,8 +1833,7 @@ render.makeGraph = function () {
 				.attr("height", facadeScaleHeightCase1(glzHeight))
 				.attr("transform", function() {
 					return "translate(" + facMargin.left + "," + facMargin.top + ")";
-				})
-				.style("fill", "url(#blueGradient)");
+				});
 
 
 			/* -- UPDATE CASE 2 FACADE REPRESENTATION -- */
@@ -1864,8 +1858,7 @@ render.makeGraph = function () {
 				.attr("height", facadeScaleHeightCase1(newGlzHeight))
 				.attr("transform", function() {
 					return "translate(" + facMargin.left + "," + facMargin.top + ")";
-				})
-				.style("fill", "url(#blueGradient2)");
+				});
 
 
 			/* -- UPDATE CASE 3 FACADE REPRESENTATION -- */
@@ -1890,8 +1883,7 @@ render.makeGraph = function () {
 				.attr("height", facadeScaleHeightCase1(glzHeightCase3))
 				.attr("transform", function() {
 					return "translate(" + facMargin.left + "," + facMargin.top + ")";
-				})
-				.style("fill", "url(#blueGradient3)");
+				});
 
 		} else if (object == case3Data) {
 			//redefine facade heights and height scale functions
@@ -1935,8 +1927,7 @@ render.makeGraph = function () {
 				.attr("height", facadeScaleHeightCase1(glzHeight))
 				.attr("transform", function() {
 					return "translate(" + facMargin.left + "," + facMargin.top + ")";
-				})
-				.style("fill", "url(#blueGradient)");
+				});
 
 			/* -- UPDATE CASE 2 FACADE REPRESENTATION -- */
 			d3.select("#facadeCase2")
@@ -1960,8 +1951,7 @@ render.makeGraph = function () {
 				.attr("height", facadeScaleHeightCase1(glzHeightCase2))
 				.attr("transform", function() {
 					return "translate(" + facMargin.left + "," + facMargin.top + ")";
-				})
-				.style("fill", "url(#blueGradient2)");
+				});
 
 
 			/* -- UPDATE CASE 3 FACADE REPRESENTATION -- */
@@ -1986,8 +1976,7 @@ render.makeGraph = function () {
 				.attr("height", facadeScaleHeightCase1(newGlzHeight))
 				.attr("transform", function() {
 					return "translate(" + facMargin.left + "," + facMargin.top + ")";
-				})
-				.style("fill", "url(#blueGradient3)");
+				});
 		}
 
 
@@ -2061,8 +2050,7 @@ render.makeGraph = function () {
 			.attr("height", facadeScaleHeightCase1(glzHeight))
 			.attr("transform", function() {
 				return "translate(" + facMargin.left + "," + facMargin.top + ")";
-			})
-			.style("fill", "url(#blueGradient)");
+			});
 
 
 		/* -- UPDATE CASE 2 FACADE REPRESENTATION -- */
@@ -2087,8 +2075,7 @@ render.makeGraph = function () {
 			.attr("height", facadeScaleHeightCase1(glzHeightCase2))
 			.attr("transform", function() {
 				return "translate(" + facMargin.left + "," + facMargin.top + ")";
-			})
-			.style("fill", "url(#blueGradient2)");
+			});
 
 
 		/* -- UPDATE CASE 3 FACADE REPRESENTATION -- */
@@ -2113,8 +2100,7 @@ render.makeGraph = function () {
 			.attr("height", facadeScaleHeightCase1(glzHeightCase3))
 			.attr("transform", function() {
 				return "translate(" + facMargin.left + "," + facMargin.top + ")";
-			})
-			.style("fill", "url(#blueGradient3)");
+			});
 
 
 		// Update dimensions
