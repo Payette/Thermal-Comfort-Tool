@@ -242,9 +242,12 @@
 			<hr>
 			
 			<label for="radiant">Radiant Floor<sup id="fnref:9"><a href="#fn:9" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="checkbox" name="radiant" id="radiant" class="case1"></div>
-			<div class="inputWrapperCenter"><input type="checkbox" name="radiant2" id="radiant2" class="case2"></div>
-			<div class="inputWrapperRight"><input type="checkbox" name="radiant3" id="radiant3" class="case3"></div><br>
+			<div class="inputWrapperLeft"><div class="customCheckStyleCentered case1"><input type="checkbox" name="radiant" id="radiant" class="checkbox customCheck"><label for="radiant" id="radiantCheck1" class="unselected"></label></div></div>
+			<div class="inputWrapperCenter"><div class="customCheckStyleCentered case2" id="offsetMiddle"><input type="checkbox" name="radiant2" id="radiant2" class="checkbox customCheck"><label for="radiant2" id="radiantCheck2" class="unselected"></label></div></div>
+			<div class="inputWrapperRight"><div class="customCheckStyleCentered case3" id="offsetLeft"><input type="checkbox" name="radiant3" id="radiant3" class="checkbox customCheck"><label for="radiant3" id="radiantCheck3" class="unselected"></label></div></div><br>
+
+
+
 
 			<label for="airspeed">Air Speed (fpm)<sup id="fnref:10"><a href="#fn:10" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="airspeed" id="airspeed" value="10" class="case1"></div>

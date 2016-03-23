@@ -969,8 +969,13 @@ render.makeGraph = function () {
 	$("#radiant, #radiant2, #radiant3").change(function(event) {
 		if (($("#radiant").is(":checked")) == true) {
 			radiantFloorChecked = true;
+
+			$("#radiantCheck1, #radiantCheck2, #radiantCheck3").removeClass("unselected");
+
 		} else if (($("#radiant").is(":checked")) == false) {
 			radiantFloorChecked = false;
+
+			$("#radiantCheck1, #radiantCheck2, #radiantCheck3").addClass("unselected");
 		}
 
 		updateData(case1Data);
