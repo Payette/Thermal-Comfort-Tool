@@ -152,19 +152,53 @@ body {
 
 
 
+
+
 #facadeWrapper {
 
 }
 
-
 #facadeWrapper h1 {
 	font-family: "museo-sans", sans-serif;
-	font-weight: 700;
+	font-weight: 300;
 	font-size: 12px;
-	text-transform: uppercase;
 	padding: 15px 0 0 50px;
 	margin: 0;
 }
+
+.facadeHeading h1 span#iconLarge {
+	display: block;
+	float: left;
+	width: 12px;
+	height: 12px;
+	margin: 0px 3px 0 0;
+	background-size: 11px 11px;
+	background-position: left bottom;
+	background-repeat: no-repeat;
+}
+
+.facadeHeading h1 span#iconLarge.check {
+	background-image: url(../../static/images/check.png);
+}
+
+.facadeHeading h1 span#iconLarge.cross {
+	background-image: url(../../static/images/x.png);
+}
+
+.facadeHeading h1.case1Text {
+	color: rgb(248, 151, 29);
+}
+
+.facadeHeading h1.case2Text {
+	color: rgb(0, 160, 221);
+}
+
+.facadeHeading h1.case3Text {
+	color: rgb(176, 199, 44);
+}
+
+
+
 
 .facadelabel {
 	font-family: "museo-sans", sans-serif;

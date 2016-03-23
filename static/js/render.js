@@ -419,6 +419,7 @@ render.makeGraph = function () {
 
 
 /* ------ MAKE THE FACADE ------ */
+
 // Case 1 Facade
 	var facadeSvgCase1 = d3.select("#case1FacadeWrapper")
 				.append("svg")
@@ -540,8 +541,8 @@ render.makeGraph = function () {
 	//Add window dimensions to Case 1 facade
 	windowDimensions(glzCoords, glzWidth, glzHeight);
 
-
-
+	//Update headings
+	updateFacadeHeadings();
 
 
 
@@ -692,6 +693,8 @@ render.makeGraph = function () {
 		d3.selectAll(".occupantLine").remove();
 		occupantDistanceRefLine();
 
+		updateFacadeHeadings();
+
     });
 
     $("#caseSelection #case3Label").on("click", function() {
@@ -733,6 +736,8 @@ render.makeGraph = function () {
 		d3.selectAll(".occupantLine").remove();
 		occupantDistanceRefLine();
 
+		updateFacadeHeadings();
+
     });
 
 
@@ -754,6 +759,8 @@ render.makeGraph = function () {
 		thresholdDataText();
 		d3.selectAll(".occupantLine").remove();
 		occupantDistanceRefLine();
+
+		updateFacadeHeadings();
 	});
 	$("#distFromFacade").on("spinchange", function(event) {
 		occDistFromFacade = $(this).val();
@@ -767,6 +774,8 @@ render.makeGraph = function () {
 		thresholdDataText();
 		d3.selectAll(".occupantLine").remove();
 		occupantDistanceRefLine();
+
+		updateFacadeHeadings();
 	})
 
 	$("#ppd, #ppd2, #ppd3").focusout(function(event) {
@@ -791,7 +800,9 @@ render.makeGraph = function () {
 		$("#ppd, #ppd2, #ppd3").val(ppdValue);
 
 		updatePPDThreshold(ppdValue);
-		thresholdDataText()
+		thresholdDataText();
+
+		updateFacadeHeadings();
 	})
 
 	$("#windowWidthCheck").change(function(event) {
@@ -1568,6 +1579,7 @@ render.makeGraph = function () {
 		// Update static tooltip text
 		thresholdDataText();
 
+		updateFacadeHeadings();
 
 	}
 
@@ -1616,6 +1628,7 @@ render.makeGraph = function () {
 
 
 		thresholdDataText();
+		updateFacadeHeadings();
 
 	}
 
@@ -2219,8 +2232,34 @@ render.makeGraph = function () {
 
 
 
+	function facadeCaseHeadings(occdata, className, caseName) {
 
+		var text = "";
 
+		if (occdata.ppd <= ppdValue) {
+			text = "<h1 class=" + className + "><span id='iconLarge' class='check'></span><b>" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD</b> Occupant experiences tolerable discomfort</h1>";
+		} else {
+			text = "<h1 class=" + className + "><span id='iconLarge' class='cross'></span>" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD. Occupant experiences intolerable discomfort</h1>";
+		}
+
+		return text;
+
+	}
+
+	function updateFacadeHeadings() {
+
+		$("#case1FacadeHeading").empty();
+		$("#case2FacadeHeading").empty();
+		$("#case3FacadeHeading").empty();
+
+		var case1Heading = facadeCaseHeadings(occPointData, "case1Text", "Case 1");
+		var case2Heading = facadeCaseHeadings(occPointData2, "case2Text", "Case 2");
+		var case3Heading = facadeCaseHeadings(occPointData3, "case3Text", "Case 3");
+
+		$("#case1FacadeHeading").append(case1Heading);
+		$("#case2FacadeHeading").append(case2Heading);
+		$("#case3FacadeHeading").append(case3Heading);
+	}
 
 
 
@@ -2228,12 +2267,17 @@ render.makeGraph = function () {
 	// Display text for occupancy dist from facade
 	function thresholdDataText() {
 
+
 		var totalText = "";
 		$("#thresholdTooltip").empty();
 
 		var case1Text = occupantPositionText(occPointData, "case1Text", "Case 1");
 		var case2Text = occupantPositionText(occPointData2, "case2Text", "Case 2");
 		var case3Text = occupantPositionText(occPointData3, "case3Text", "Case 3");
+	
+
+		
+
 
 		//find min cy of visible occ points
 		var compareOccupantArray = [];
