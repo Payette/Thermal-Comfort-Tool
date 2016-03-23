@@ -1081,10 +1081,6 @@ render.makeGraph = function () {
 
 			$("#occupantDist").attr("max", case1Data.wallLen/2);
 
-			checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
-			checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
-			checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");
-
 		}
 		else if (triggeredChange == "windowHeight") {
 			case1Data.windowHeightValue = $(this).val();
@@ -1115,7 +1111,6 @@ render.makeGraph = function () {
 		else {
 			alert("Don't know what changed!");
 		}
-
 
 		updateData(case1Data);
 	})
@@ -1153,14 +1148,8 @@ render.makeGraph = function () {
 		$("#wallWidth").on("spin", function(event, ui) {
 			case1Data.wallLen = ui.value;
 
-
 			$("#occupantDist").attr("max", case1Data.wallLen/2);
-
-			checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
-			checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
-			checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");
-
-
+			
 			updateData(case1Data);
 		})
 
@@ -1226,9 +1215,6 @@ render.makeGraph = function () {
 			case2Data.wallLen = $(this).val();
 
 			$("#occupantDist2").attr("max", case2Data.wallLen/2);
-			checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
-			checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
-			checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");
 		}
 
 		else if (triggeredChange == "windowHeight2") {
@@ -1299,9 +1285,6 @@ render.makeGraph = function () {
 			case2Data.wallLen = ui.value;
 
 			$("#occupantDist2").attr("max", case2Data.wallLen/2);
-			checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
-			checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
-			checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");
 
 			updateData(case2Data);
 		})
@@ -1368,11 +1351,8 @@ render.makeGraph = function () {
 		else if(triggeredChange == "wallWidth3") {
 			case3Data.wallLen = $(this).val();
 
-
 			$("#occupantDist3").attr("max", case3Data.wallLen/2);
-			checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
-			checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
-			checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");
+
 		}
 
 		else if (triggeredChange == "windowHeight3") {
@@ -1440,9 +1420,7 @@ render.makeGraph = function () {
 
 
 			$("#occupantDist3").attr("max", case3Data.wallLen/2);
-			checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
-			checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
-			checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");
+
 
 			updateData(case3Data);
 		})
@@ -1991,6 +1969,10 @@ render.makeGraph = function () {
 		$("#windowHeightDimLabel, #sillHeightDimLabelTop, #sillHeightDimLabelBottom, .dimensions").remove();
 		windowDimensions(glzCoords, glzWidth, glzHeight);
 
+		checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
+			checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
+			checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");
+
 
 	}
 
@@ -2107,11 +2089,21 @@ render.makeGraph = function () {
 		$("#windowHeightDimLabel, #sillHeightDimLabelTop, #sillHeightDimLabelBottom, .dimensions").remove();
 		windowDimensions(glzCoords, glzWidth, glzHeight);
 
+		checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
+			checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
+			checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");
+
 
 	}
 
 
 	function checkOccupantImageSize(caseName, imageID, sliderID, labelID) {
+
+
+
+		var imageHeight = $("#occupantImage").height();
+		var imageWidth = $("#occupantImage").width();
+
 		// original image dimensions
 		var originalHeight = 500;
 		var originalWidth = 360;
