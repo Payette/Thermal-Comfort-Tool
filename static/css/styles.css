@@ -155,7 +155,12 @@ body {
 
 
 #facadeWrapper {
+	width: 100%
+	overflow: auto;
+}
 
+#case1FacadeWrapper, #case2FacadeWrapper, #case3FacadeWrapper {
+	float: left;
 }
 
 #facadeWrapper h1 {
@@ -240,7 +245,7 @@ body {
 
 #sliderWrapper, #sliderWrapper2, #sliderWrapper3 {
 	width: 550px;
-	height: 50px
+	height: 10px;
 }
 
 
@@ -298,9 +303,9 @@ body {
 	-moz-appearance: none;
     background-color: #FFF;
     border: 3px solid rgb(150,150,150);
-    border-radius: 6.5px;
-    height: 7px;
-    width: 7px;
+    border-radius: 5px;
+    height: 5px;
+    width: 5px;
     vertical-align:middle;
 }
 
@@ -308,22 +313,47 @@ body {
 	-webkit-appearance: none;
     background-color: #FFF;
     border: 3px solid rgb(150,150,150);
-    border-radius: 6.5px;
-    height: 7px;
-    width: 7px;
+    border-radius: 5px;
+    height: 5px;
+    width: 5px;
     vertical-align:middle;
 }
 
 
 
 
+#options {	
+	overflow: auto;
+	width: 100%;
+
+	padding: 10px 0px 15px 0px;
+}
+
+
+#options h2 {
+	color: #000;
+	font-weight: 700;
+	font-size: 12px;
+	text-transform: uppercase;
+	padding: 0;
+	margin: 0;
+
+	float: left;
+}
+
+
+#caseWrapper {
+	overflow: auto;
+	width: 100%;
+	display: inline-block;
+	height: 16px;
+}
 
 
 
 #caseSelection {
 	display: block;
-	height: 20px;
-	margin-left: 206px; 
+	float: right;
 }
 
 #caseSelection h2 {
@@ -334,7 +364,7 @@ body {
 
 	padding: 0;
 	margin: 0;
-	vertical-align: middle;
+	vertical-align: top;
 
 	color: #000;
 
@@ -385,6 +415,7 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 
 
 
+
 #inputs {
 	float: left;
 	width: 390px;
@@ -396,6 +427,8 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 	font-weight: 700px;
 	font-size: 23px;
 	line-height: 23px;
+	margin: 0;
+	padding-bottom: 18px;
 }
 
 #inputs p {
@@ -423,7 +456,13 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 	text-transform: uppercase;
 	padding: 0 0 5px 0;
 	margin: 0;
+	width: 190px;
 }
+
+#inputs legend.first {
+	float: left;
+}
+
 
 #inputs ul {
 	font-family: "museo-sans", sans-serif;
@@ -520,6 +559,26 @@ div.inputWrapperRight span {
 	width: 36px;
 	text-align: center;
 }
+
+
+#uValButton {
+	width: 100%;
+	overflow: auto;
+	margin: 4px 0 4px 215px;
+}
+
+#inputs input[type=button]#calcUValue {
+	color: #777;
+	width: 48px;
+	padding: 3px 2px;
+	height: 20px;
+	margin: 0;
+	border-radius: 10px;
+	border: 1px solid #777;
+	background-color: #fff;
+	cursor: pointer;
+}
+
 
 
 
@@ -648,10 +707,10 @@ input[type=checkbox] {
 
 
 
-#case2FacadeWrapper, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2, #case3FacadeWrapper, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3 {
+/*#case2FacadeWrapper, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2, #case3FacadeWrapper, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3 {
 	display: none;
 }
-
+*/
 
 
 
