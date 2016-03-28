@@ -32,9 +32,9 @@ render.makeGraph = function () {
 
 
 	/* ------ SET UP GRAPH VARIABLES AND DATA FUNCTIONS ------ */
-	var margin = {top: 45, right: 0, bottom: 50, left: 50},
+	var margin = {top: 45, right: 0, bottom: 45, left: 50},
     	width = maxContainerWidth - margin.left - margin.right,
-    	height = 320 - margin.top - margin.bottom;
+    	height = 325 - margin.top - margin.bottom;
 
 
 	// Set up scale functions
@@ -95,7 +95,7 @@ render.makeGraph = function () {
 	    .attr("class", "axislabel")
 	    .attr("text-anchor", "middle")
 	    .attr("x", width/2 + margin.left)
-	    .attr("y", height + margin.top + margin.bottom - 10)
+	    .attr("y", height + margin.top + margin.bottom - 6)
 	    .text("Occupant Distance from Façade (ft)");
 
 	graphSvg.append("g")
@@ -677,7 +677,22 @@ render.makeGraph = function () {
 
 
 
+    function sizeButton() {
+    	if (($("#caseSelection #case2Label").hasClass("unselected")==true) && ($("#caseSelection #case3Label").hasClass("unselected")==true)) {
 
+    		$("#calcUValue").css("width","48px");
+
+    	} else if (($("#caseSelection #case2Label").hasClass("unselected")==true) && ($("#caseSelection #case3Label").hasClass("unselected")==false)) {
+    		$("#calcUValue").css("width","171px");
+
+    	} else if (($("#caseSelection #case2Label").hasClass("unselected")==false) && ($("#caseSelection #case3Label").hasClass("unselected")==true)) {
+    		$("#calcUValue").css("width","101px");
+
+    	} else if (($("#caseSelection #case2Label").hasClass("unselected")==false) && ($("#caseSelection #case3Label").hasClass("unselected")==false)) {
+    		$("#calcUValue").css("width","171px");
+
+    	}
+    }
 
 
 
@@ -694,7 +709,7 @@ render.makeGraph = function () {
     		//becomes selected
 			$(this).removeClass("unselected");
 
-
+			sizeButton();
 
 			$("#inputs input.case2, div.case2, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").css("display","inline-block");
 
@@ -703,13 +718,14 @@ render.makeGraph = function () {
 			d3.selectAll("rect.window2").classed("white", false);
 			d3.selectAll("rect.window2").classed("blue", true);
 
-			
 
 		}
 
 		else if ($(this).hasClass("unselected") == false) {
 			// becomes unselected
 			$(this).addClass("unselected");
+
+			sizeButton();
 
 
 			$("#inputs input.case2, div.case2, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").css("display","none");
@@ -739,6 +755,8 @@ render.makeGraph = function () {
     		//becomes selected
 			$(this).removeClass("unselected");
 
+			sizeButton();
+
 			$("#inputs input.case3, div.case3, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3").css("display","inline-block");
 
 			d3.selectAll("rect.wall3").classed("outlined", false);
@@ -750,6 +768,8 @@ render.makeGraph = function () {
 		else if ($(this).hasClass("unselected") == false) {
 			// becomes unselected
 			$(this).addClass("unselected");
+
+			sizeButton();
 
 			$("#inputs input.case3, div.case3, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3").css("display","none");
 
@@ -776,10 +796,10 @@ render.makeGraph = function () {
 
 	/* ------ DETECT CHANGES TO INPUT VALUES ------ */
 	// universal changes
-	$("#distFromFacade, #distFromFacade2, #distFromFacade3").focusout(function(event) {
+	$("#distFromFacade").change(function(event) {
 		occDistFromFacade = $(this).val();
 
-		$("#distFromFacade, #distFromFacade2, #distFromFacade3").val(occDistFromFacade);
+		$("#distFromFacade").val(occDistFromFacade);
 
 		updateData(case1Data);
 		updateData(case2Data);
@@ -791,48 +811,25 @@ render.makeGraph = function () {
 
 		updateFacadeHeadings();
 	});
-	$("#distFromFacade").on("spin", function(event, ui) {
-		occDistFromFacade = ui.value;
 
-		$("#distFromFacade, #distFromFacade2, #distFromFacade3").val(occDistFromFacade);
-
-		updateData(case1Data);
-		updateData(case2Data);
-		updateData(case3Data);
-
-		thresholdDataText();
-		d3.selectAll(".occupantLine").remove();
-		occupantDistanceRefLine();
-
-		updateFacadeHeadings();
-	})
-
-	$("#ppd, #ppd2, #ppd3").focusout(function(event) {
+	$("#ppd").change(function(event) {
 		if ($(this).val() <= 4) {
 			ppdValue = 5;
-			$("#ppd, #ppd2, #ppd3").val(5);
+			$("#ppd").val(5);
 		}
 		else if ($(this).val() >30) {
 			ppdValue = 30;
-			$("#ppd, #ppd2, #ppd3").val(30);
+			$("#ppd").val(30);
 		}
 		else {
 			ppdValue = $(this).val();
-			$("#ppd, #ppd2, #ppd3").val(ppdValue);
+			$("#ppd").val(ppdValue);
 		}
 		// Update target PPD threshold line
 		updatePPDThreshold(ppdValue);
 		thresholdDataText()
 	});
-	$("#ppd, #ppd2, #ppd3").on("spin", function(event, ui) {
-		ppdValue = ui.value;
-		$("#ppd, #ppd2, #ppd3").val(ppdValue);
 
-		updatePPDThreshold(ppdValue);
-		thresholdDataText();
-
-		updateFacadeHeadings();
-	})
 
 	$("#windowWidthCheck").change(function(event) {
 		if (($("#windowWidthCheck").is(":checked")) == true) {

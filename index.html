@@ -38,7 +38,7 @@
 
 		// Increment Buttons
 		$(function(){
-			$("#ceiling, #wallWidth, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowE, #rvalue, #ppd, #distFromFacade, #outdoortemp, #airtemp, #humidity, #airspeed, #clothing, #metabolic, #ceiling2, #wallWidth2, #windowHeight2, #windowWidth2, #glazing2, #sill2, #distWindow2, #uvalue2, #lowE2, #rvalue2, #ppd2, #distFromFacade2, #outdoortemp2, #airtemp2, #humidity2, #airspeed2, #clothing2, #metabolic2, #ceiling3, #wallWidth3, #windowHeight3, #windowWidth3, #glazing3, #sill3, #distWindow3, #uvalue3, #lowE3, #rvalue3, #ppd3, #distFromFacade3, #outdoortemp3, #airtemp3, #humidity3, #airspeed3, #clothing3, #metabolic3").spinner();
+			$("#ceiling, #wallWidth, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowE, #rvalue, #outdoortemp, #airtemp, #humidity, #airspeed, #clothing, #metabolic, #ceiling2, #wallWidth2, #windowHeight2, #windowWidth2, #glazing2, #sill2, #distWindow2, #uvalue2, #lowE2, #rvalue2, #outdoortemp2, #airtemp2, #humidity2, #airspeed2, #clothing2, #metabolic2, #ceiling3, #wallWidth3, #windowHeight3, #windowWidth3, #glazing3, #sill3, #distWindow3, #uvalue3, #lowE3, #rvalue3, #outdoortemp3, #airtemp3, #humidity3, #airspeed3, #clothing3, #metabolic3").spinner();
 		})
 		
 		
@@ -57,7 +57,7 @@
 	<div id="header"><img src="static/images/header.png"></div>
 	<div id="wrapper">
 
-	<div id="visual">
+	<div class="left">
 
 		<div id="facadeWrapper">
 			<div id="case1FacadeWrapper">
@@ -100,20 +100,33 @@
 		<div id="occupancyWrapper">
 			<form id="occupantSliders">
 				<fieldset class="inputgroup">
-					<legend>Occupancy Thresholds</legend>
-					<hr>
-
-					<label for="ppd">Target PPD (%)</label>
-					<input type="text" name="ppd" id="ppd" value="10" min="5" max="30" class="case1"><br>
+					<!-- <legend>Occupancy Thresholds</legend>
+					<hr> -->
 
 					<label for="distFromFacade">Distance From Fa&ccedil;ade (ft)<sup id="fnref:13"><a href="#fn:13" rel="footnote">?</a></sup></label>
-					<input type="text" name="distFromFacade" id="distFromFacade" value="3" class="case1">
+					<div class="occSlider"><input type="range" name="distFromFacade" id="distFromFacade" value="3" min="1" max="12" step="0.25" class="case1"></div>
+
+					<label for="ppd">Target Percentage of People Dissatisfied from Cold (PPD)<br><p>The Predicted Percentage of Dissatisfied (PPD) occupants is a common way to define a threshold below which conditions are considered thermally acceptable. The industry standard is typically 10%, which means that 90% of occupants are thermally comfortable. 20% PPD is sometimes used for transient spaces, such as corridors. It is not possible to use a PPD lower than 5%. This tool only estimates occupant dissatisfaction from cold conditions.</p></label>
+					<div class="occSlider"><input type="range" name="ppd" id="ppd" value="10" min="5" max="30" class="case1"></div><br>
+
 				</fieldset>
 
 			</form>
 		</div>
 		
-
+		<div id="explanation">
+			<h1>Reasons for Discomfort</h1>
+			<div class="innerLeft">
+				<h2><span></span>Downdraft Discomfort</h2>
+				<p>Cold convective air currents formed by room air hitting the cold window create discomfort at the occupant’s feet and ankles. The strength of these currents depends on the height of the window pane, as well as the interior temperature of the glass.</p>
+				<p>To minimize downdraft discomfort, try decreasing window height, decreasing the window U-Value, or using a glazing-assembly without a room-side low-e coating.</p>
+			</div>
+			<div class="innerRight">
+				<h2><span></span>Radiant Discomfort</h2>
+				<p>Cold interior glazing surfaces affect the mean radiant temperature of occupants, and in turn makes them feel cold. This discomfort depends on how much the occupant “sees” of the glazing, how cold the interior glazing surface is, and the emissivity of the glazing. If the glazing has a room-side low-e coating the radiant discomfort will be greatly reduced.</p>
+				<p>To minimize radiant discomfort, try decreasing the total amount of glazing, increasing the sill height, decreasing the window U-Value, or using a glazing assembly with a room-side low-e coating.</p>
+			</div>
+		</div>
 		
 
 	</div>
@@ -179,7 +192,7 @@
 			<div class="inputWrapperCenter"><input type="text" name="width2" id="windowWidth2" value="4.5" step="0.5" class="case2"></div>
 			<div class="inputWrapperRight"><input type="text" name="width3" id="windowWidth3" value="4.5" step="0.5" class="case3"></div><br>
 			
-			<label for="glazing" class="inactive" id="glazingLabel"><div class="customCheckStyle"><input type="checkbox" name="glazingRatioCheck" class="customCheck" id="glazingRatioCheck"><label for="glazingRatioCheck" id="checkGlzRatio" class="unselected"></label></div>Glazing Ratio (%)</label>
+			<label for="glazing" class="inactive" id="glazingLabel"><div class="customCheckStyle"><input type="checkbox" name="glazingRatioCheck" class="customCheck" id="glazingRatioCheck"><label for="glazingRatioCheck" id="checkGlzRatio" class="unselected"></label></div>Window-to-Wall Ratio (%)</label>
 			<div class="inputWrapperLeft"><input type="text" name="glazing" class="inactive case1" id="glazing" value="50" step="1"></div>
 			<div class="inputWrapperCenter"><input type="text" name="glazing2" class="inactive case2" id="glazing2" value="50" step="1"></div>
 			<div class="inputWrapperRight"><input type="text" name="glazing3" class="inactive case3" id="glazing3" value="50" step="1"></div><br>
@@ -229,7 +242,7 @@
 			<div class="inputWrapperCenter"><input type="text" name="outdoortemp2" id="outdoortemp2" value="25" class="case2"></div>
 			<div class="inputWrapperRight"><input type="text" name="outdoortemp3" id="outdoortemp3" value="25" class="case3"></div><br>
 
-			<label for="airtemp">Indoor Ambient Temperature (&deg;F)<sup id="fnref:7"><a href="#fn:7" rel="footnote">?</a></sup></label>
+			<label for="airtemp">Indoor Temperature (&deg;F)<sup id="fnref:7"><a href="#fn:7" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="airtemp" id="airtemp" value="72" class="case1"></div>
 			<div class="inputWrapperCenter"><input type="text" name="airtemp2" id="airtemp2" value="72" class="case2"></div>
 			<div class="inputWrapperRight"><input type="text" name="airtemp3" id="airtemp3" value="72" class="case3"></div><br>
