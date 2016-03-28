@@ -61,37 +61,58 @@
 
 		<div id="facadeWrapper">
 			<div id="case1FacadeWrapper">
-				<!-- <div id="case1FacadeHeading" class="facadeHeading"><h1><span></span>Case 1: Occupant experiences intolerable discomfort</h1></div> -->
-			</div>
+				<div id="case1Chart"></div>
+				<h1 class="facadeHeading case1Text">Case 1</h1>
 <!-- 			<div id="sliderWrapper">
-				<input type="range" name="occupantDist" id="occupantDist" min="0" max="20" value="0"/>
-				<output for="occupantDist" id="occupantImage"/></output>
-			</div> -->
+					<input type="range" name="occupantDist" id="occupantDist" min="0" max="20" value="0"/>
+					<output for="occupantDist" id="occupantImage"/></output>
+				</div> -->
+			</div>
 			<div id="case2FacadeWrapper">
-				<!-- <div id="case2FacadeHeading" class="facadeHeading"><h1><span></span>Case 2: Occupant experiences intolerable discomfort</h1></div> -->
-			</div>
+				<div id="case2Chart"></div>
+				<h1 id="case2Heading" class="facadeHeading greyText">Case 2</h1>
 <!-- 			<div id="sliderWrapper2">
-				<input type="range" name="occupantDist2" id="occupantDist2" min="0" max="20" value="0"/>
-				<output for="occupantDist2" id="occupantImage2"/></output>
-			</div> -->
-			<div id="case3FacadeWrapper">
-				<!-- <div id="case3FacadeHeading" class="facadeHeading"><h1><span></span>Case 3: Occupant experiences intolerable discomfort</h1></div> -->
+					<input type="range" name="occupantDist2" id="occupantDist2" min="0" max="20" value="0"/>
+					<output for="occupantDist2" id="occupantImage2"/></output>
+				</div> -->
 			</div>
+			<div id="case3FacadeWrapper">
+				<div id="case3Chart"></div>
+				<h1 id="case3Heading" class="facadeHeading greyText">Case 3</h1>
 <!-- 			<div id="sliderWrapper3">
-				<input type="range" name="occupantDist3" id="occupantDist3" min="0" max="20" value="0"/>
-				<output for="occupantDist3" id="occupantImage3"/></output>
-			</div> -->
+					<input type="range" name="occupantDist3" id="occupantDist3" min="0" max="20" value="0"/>
+					<output for="occupantDist3" id="occupantImage3"/></output>
+				</div> -->
+			</div>
 		</div>
 
 		<div id="graphWrapper">
-			<div id="tooltip" class="hidden">
-				<h1><span id="icon" class="cross"></span> Case <span id="case">1</span>: <span id="PPDtext">100</span></h1>
-				<p><span id="discomfort">Tolerable discomfort</span> is due to <span id="explain">downdraft</span><span id="solution">.</span></p>
+ 			<div id="tooltip" class="hidden">
+				<!-- <h1><span id="icon" class="cross"></span> Case <span id="case">1</span>: <span id="PPDtext">100</span></h1>
+				<p><span id="discomfort">Tolerable discomfort</span> is due to <span id="explain">downdraft</span><span id="solution">.</span></p> -->
 			</div>
 
 			<div id="thresholdTooltip">
-			</div>
+			</div> 
 		</div>
+
+
+		<div id="occupancyWrapper">
+			<form id="occupantSliders">
+				<fieldset class="inputgroup">
+					<legend>Occupancy Thresholds</legend>
+					<hr>
+
+					<label for="ppd">Target PPD (%)</label>
+					<input type="text" name="ppd" id="ppd" value="10" min="5" max="30" class="case1"><br>
+
+					<label for="distFromFacade">Distance From Fa&ccedil;ade (ft)<sup id="fnref:13"><a href="#fn:13" rel="footnote">?</a></sup></label>
+					<input type="text" name="distFromFacade" id="distFromFacade" value="3" class="case1">
+				</fieldset>
+
+			</form>
+		</div>
+		
 
 		
 
@@ -197,22 +218,6 @@
 
 		</fieldset>
 
-		<fieldset class="inputgroup">
-			<legend>Occupancy Thresholds</legend>
-			<hr>
-
-			<label for="ppd">Target PPD (%)<sup id="fnref:6"><a href="#fn:6" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="ppd" id="ppd" value="10" min="5" max="30" class="case1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="ppd2" id="ppd2" value="10" min="5" max="30" class="case2"></div>
-			<div class="inputWrapperRight"><input type="text" name="ppd3" id="ppd3" value="10" min="5" max="30" class="case3"></div><br>
-
-			<label for="distFromFacade">Distance From Fa&ccedil;ade (ft)<sup id="fnref:13"><a href="#fn:13" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="distFromFacade" id="distFromFacade" value="3" class="case1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="distFromFacade2" id="distFromFacade2" value="3" class="case2"></div>
-			<div class="inputWrapperRight"><input type="text" name="distFromFacade3" id="distFromFacade3" value="3" class="case3"></div><br>
-
-		</fieldset>
-
 
 
 		<fieldset class="inputgroup">
@@ -286,9 +291,6 @@
 	    </li>
 	    <li class="footnote" id="fn:5"><!-- r value -->
 	        <p>R-Value of the wall assembly, including thermal bridges<a href="#fnref:5" title="return to article"> ↩</a></p>
-	    </li>
-	    <li class="footnote" id="fn:6"> <!-- PPD -->
-	        <p>The target Percentage of People Dissatisfied (PPD) from cold that you would like to remain below. This is indicative of how comfortable you would like your soace to be.  Common values are 10% and 20%.<a href="#fnref:6" title="return to article"> ↩</a></p>
 	    </li>
 	    <li class="footnote" id="fn:7"> <!-- indoor ambient temp -->
 	        <p>Temperature of the indoor air and interior surfaces<a href="#fnref:7" title="return to article"> ↩</a></p>
