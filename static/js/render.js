@@ -687,7 +687,6 @@ render.makeGraph = function () {
 
     $("#caseSelection #case2Label").on("click", function() {
 
-    	var array = [];
 
     	if ($(this).hasClass("unselected") == true) {
     		//becomes selected
@@ -697,10 +696,6 @@ render.makeGraph = function () {
 
 			$("#inputs input.case2, div.case2, #case2FacadeWrapper, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").css("display","inline-block");
 
-			
-
-			// add case 2 wall length to array
-			array.push(case2Data.wallLen);
 		}
 
 		else if ($(this).hasClass("unselected") == false) {
@@ -711,17 +706,6 @@ render.makeGraph = function () {
 			$("#inputs input.case2, div.case2, #case2FacadeWrapper, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").css("display","none");
 		}
 
-		//check case 1
-		if ($("#caseSelection #case1Label").hasClass("unselected") == false ) {
-			array.push(case1Data.wallLen);
-		}
-
-		//check case 3
-		if ($("#caseSelection #case3Label").hasClass("unselected") == false ) {
-			array.push(case3Data.wallLen);
-		}
-
-		resizeFacades(array);
 		// Update static tooltip text
 		thresholdDataText();
 		d3.selectAll(".occupantLine").remove();
@@ -733,7 +717,6 @@ render.makeGraph = function () {
 
     $("#caseSelection #case3Label").on("click", function() {
 
-    	var array = [];
 
     	if ($(this).hasClass("unselected") == true) {
     		//becomes selected
@@ -741,9 +724,6 @@ render.makeGraph = function () {
 			$("#case3Button").removeClass("unselected");
 
 			$("#inputs input.case3, div.case3, #case3FacadeWrapper, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3").css("display","inline-block");
-
-			// add case 2 wall length to array
-			array.push(case2Data.wallLen);
 		}
 
 		else if ($(this).hasClass("unselected") == false) {
@@ -754,17 +734,7 @@ render.makeGraph = function () {
 			$("#inputs input.case3, div.case3, #case3FacadeWrapper, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3").css("display","none");
 		}
 
-		//check case 1
-		if ($("#caseSelection #case1Label").hasClass("unselected") == false ) {
-			array.push(case1Data.wallLen);
-		}
 
-		//check case 2
-		if ($("#caseSelection #case2Label").hasClass("unselected") == false ) {
-			array.push(case2Data.wallLen);
-		}
-
-		resizeFacades(array);
 		// Update static tooltip text
 		thresholdDataText();
 		d3.selectAll(".occupantLine").remove();
@@ -1061,55 +1031,179 @@ render.makeGraph = function () {
 
 			case1Data.ceilingHeightValue = $(this).val();
 
+			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
+				case2Data.ceilingHeightValue = case1Data.ceilingHeightValue;
+				$("#ceiling2").val(case2Data.ceilingHeightValue);
+			}
+			if ($("#caseSelection #case3Label").hasClass("unselected") == true){
+				case3Data.ceilingHeightValue = case1Data.ceilingHeightValue;
+				$("#ceiling3").val(case3Data.ceilingHeightValue);
+			}
+
 		}
 		else if(triggeredChange == "wallWidth") {
 			case1Data.wallLen = $(this).val();
 
 			$("#occupantDist").attr("max", case1Data.wallLen/2);
 
+			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
+				case2Data.wallLen = case1Data.wallLen;
+				$("#wallWidth2").val(case2Data.wallLen);
+			}
+			if ($("#caseSelection #case3Label").hasClass("unselected") == true){
+				case3Data.wallLen = case1Data.wallLen;
+				$("#wallWidth3").val(case3Data.wallLen);
+			}
+
 		}
 		else if (triggeredChange == "windowHeight") {
 			case1Data.windowHeightValue = $(this).val();
+
+			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
+				case2Data.windowHeightValue = case1Data.windowHeightValue;
+				$("#windowHeight2").val(case2Data.windowHeightValue);
+			}
+			if ($("#caseSelection #case3Label").hasClass("unselected") == true){
+				case3Data.windowHeightValue = case1Data.windowHeightValue;
+				$("#windowHeight3").val(case3Data.windowHeightValue);
+			}
 		}
 		else if (triggeredChange == "windowWidth") {
 			case1Data.windowWidthValue = $(this).val();
+
+			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
+				case2Data.windowWidthValue = case1Data.windowWidthValue;
+				$("#windowWidth2").val(case2Data.windowWidthValue);
+			}
+			if ($("#caseSelection #case3Label").hasClass("unselected") == true){
+				case3Data.windowWidthValue = case1Data.windowWidthValue;
+				$("#windowWidth3").val(case3Data.windowWidthValue);
+			}
+
 		}
 		else if (triggeredChange == "glazing") {
 			case1Data.glzRatioValue = $(this).val();
+
+			$("#occupantDist").attr("max", case1Data.wallLen/2);
+
+			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
+				case2Data.glzRatioValue = case1Data.glzRatioValue;
+				$("#glazing2").val(case2Data.glzRatioValue);
+			}
+			if ($("#caseSelection #case3Label").hasClass("unselected") == true){
+				case3Data.glzRatioValue = case1Data.glzRatioValue;
+				$("#glazing3").val(case3Data.glzRatioValue);
+			}
 		}
 		else if (triggeredChange == "sill") {
 			case1Data.sillHeightValue = $(this).val();
+
+			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
+				case2Data.sillHeightValue = case1Data.sillHeightValue;
+				$("#sill2").val(case2Data.sillHeightValue);
+			}
+			if ($("#caseSelection #case3Label").hasClass("unselected") == true){
+				case3Data.sillHeightValue = case1Data.sillHeightValue;
+				$("#sill3").val(case3Data.sillHeightValue);
+			}
 		}
 		else if (triggeredChange == "distWindow") {
 			case1Data.distanceWindows = $(this).val();
+
+			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
+				case2Data.distanceWindows = case1Data.distanceWindows;
+				$("#distWindow2").val(case2Data.distanceWindows);
+			}
+			if ($("#caseSelection #case3Label").hasClass("unselected") == true){
+				case3Data.distanceWindows = case1Data.distanceWindows;
+				$("#distWindow3").val(case3Data.distanceWindows);
+			}
+
 		}
 
 		else if (triggeredChange == "uvalue") {
 			case1Data.uvalueValue = $(this).val();
+
+			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
+				case2Data.uvalueValue = case1Data.uvalueValue;
+				$("#uvalue2").val(case2Data.uvalueValue);
+			}
+			if ($("#caseSelection #case3Label").hasClass("unselected") == true){
+				case3Data.uvalueValue = case1Data.uvalueValue;
+				$("#uvalue3").val(case3Data.uvalueValue);
+			}
 		}
 	
 		else if (triggeredChange == "lowE") {
 			case1Data.intLowEEmissivity = $(this).val();
+
+			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
+				case2Data.intLowEEmissivity = case1Data.intLowEEmissivity;
+				$("#lowE2").val(case2Data.intLowEEmissivity);
+			}
+			if ($("#caseSelection #case3Label").hasClass("unselected") == true){
+				case3Data.intLowEEmissivity = case1Data.intLowEEmissivity;
+				$("#lowE3").val(case3Data.intLowEEmissivity);
+			}
 		}
 		else if (triggeredChange == "rvalue") {
 			case1Data.rvalueValue = $(this).val();
+
+			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
+				case2Data.rvalueValue = case1Data.rvalueValue;
+				$("#rvalue2").val(case2Data.rvalueValue);
+			}
+			if ($("#caseSelection #case3Label").hasClass("unselected") == true){
+				case3Data.rvalueValue = case1Data.rvalueValue;
+				$("#rvalue3").val(case3Data.rvalueValue);
+			}
 		}
 		else {
 			alert("Don't know what changed!");
 		}
 
 		updateData(case1Data);
+
+		if ($("#caseSelection #case2Label").hasClass("unselected") == true){
+			updateData(case2Data);
+		}
+		if ($("#caseSelection #case3Label").hasClass("unselected") == true){
+			updateData(case3Data);
+		}
+
+		
+		
 	})
 	$("#lowECheck").change(function(event) {
 
 		if (($("#lowECheck").is(":checked")) == true) {
 			case1Data.intLowEChecked = true;
 			$("#lowE").val(0.2);
+
 			case1Data.intLowEEmissivity = 0.2;
 
 			$("#lowE").removeClass("inactive");
 			$("#lowELabel").removeClass("inactive");
 			$("#checkLowE1").removeClass("unselected");
+
+			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
+				case2Data.intLowEChecked = case1Data.intLowEChecked;
+				$("#lowE2").val(0.2);
+
+				case2Data.intLowEEmissivity = 0.2;
+
+				$("#lowE2").removeClass("inactive");
+				$("#checkLowE2").removeClass("unselected");
+			}
+			if ($("#caseSelection #case3Label").hasClass("unselected") == true){
+				case3Data.intLowEChecked = case1Data.intLowEChecked;
+				$("#lowE3").val(0.2);
+
+				case3Data.intLowEEmissivity = 0.2;
+
+				$("#lowE3").removeClass("inactive");
+				$("#checkLowE3").removeClass("unselected");
+			}
 
 
 		} else if (($("#lowECheck").is(":checked")) == false) {
@@ -1118,16 +1212,51 @@ render.makeGraph = function () {
 			$("#lowE").addClass("inactive");
 			$("#lowELabel").addClass("inactive");
 			$("#checkLowE1").addClass("unselected");
+
+			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
+				case2Data.intLowEChecked = case1Data.intLowEChecked;
+				$("#lowE2").val(" ");
+
+				$("#lowE2").addClass("inactive");
+				$("#checkLowE2").addClass("unselected");
+			}
+			if ($("#caseSelection #case3Label").hasClass("unselected") == true){
+				case3Data.intLowEChecked = case1Data.intLowEChecked;
+				$("#lowE3").val(" ");
+
+				$("#lowE3").addClass("inactive");
+				$("#checkLowE3").addClass("unselected");
+			}
+
+
 		}
 
 		updateData(case1Data);
 
+		if ($("#caseSelection #case2Label").hasClass("unselected") == true){
+			updateData(case2Data);
+		}
+		if ($("#caseSelection #case3Label").hasClass("unselected") == true){
+			updateData(case3Data);
+		}
 	})
 
 
 	// Case 1 - Changes based on increment buttons
 		$("#ceiling").on("spin", function(event, ui) {
 			case1Data.ceilingHeightValue = ui.value;
+
+			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
+				case2Data.ceilingHeightValue = case1Data.ceilingHeightValue;
+				$("#ceiling2").val(case2Data.ceilingHeightValue);
+				updateData(case2Data);
+			}
+			if ($("#caseSelection #case3Label").hasClass("unselected") == true){
+				case3Data.ceilingHeightValue = case1Data.ceilingHeightValue;
+				$("#ceiling3").val(case3Data.ceilingHeightValue);
+				updateData(case3Data);
+			}
+
 			updateData(case1Data);
 		})
 
@@ -1135,28 +1264,87 @@ render.makeGraph = function () {
 			case1Data.wallLen = ui.value;
 
 			$("#occupantDist").attr("max", case1Data.wallLen/2);
+
+			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
+				case2Data.wallLen = case1Data.wallLen;
+				$("#wallWidth2").val(case2Data.wallLen);
+				updateData(case2Data);
+			}
+			if ($("#caseSelection #case3Label").hasClass("unselected") == true){
+				case3Data.wallLen = case1Data.wallLen;
+				$("#wallWidth3").val(case3Data.wallLen);
+				updateData(case3Data);
+			}
 			
 			updateData(case1Data);
+					
 		})
-
 
 		$("#windowHeight").on("spin", function(event, ui) {
 			case1Data.windowHeightValue = ui.value;
+
+			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
+				case2Data.windowHeightValue = case1Data.windowHeightValue;
+				$("#windowHeight2").val(case2Data.windowHeightValue);
+				updateData(case2Data);
+			}
+			if ($("#caseSelection #case3Label").hasClass("unselected") == true){
+				case3Data.windowHeightValue = case1Data.windowHeightValue;
+				$("#windowHeight3").val(case3Data.windowHeightValue);
+				updateData(case3Data);
+			}
+
+
 			updateData(case1Data);
 		})
 
 		$("#windowWidth").on("spin", function(event, ui) {
 			case1Data.windowWidthValue = ui.value;
+
+			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
+				case2Data.windowWidthValue = case1Data.windowWidthValue;
+				$("#windowWidth2").val(case2Data.windowWidthValue);
+				updateData(case2Data);
+			}
+			if ($("#caseSelection #case3Label").hasClass("unselected") == true){
+				case3Data.windowWidthValue = case1Data.windowWidthValue;
+				$("#windowWidth3").val(case3Data.windowWidthValue);
+				updateData(case3Data);
+			}
+
 			updateData(case1Data);
 		})
 
 		$("#glazing").on("spin", function(event, ui) {
 			case1Data.glzRatioValue = ui.value;
+
+			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
+				case2Data.glzRatioValue = case1Data.glzRatioValue;
+				$("#glazing2").val(case2Data.glzRatioValue);
+				updateData(case2Data);
+			}
+			if ($("#caseSelection #case3Label").hasClass("unselected") == true){
+				case3Data.glzRatioValue = case1Data.glzRatioValue;
+				$("#glazing3").val(case3Data.glzRatioValue);
+				updateData(case3Data);
+			}
+
 			updateData(case1Data);
 		})
 
 		$("#sill").on("spin", function(event, ui) {
 			case1Data.sillHeightValue = ui.value;
+
+			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
+				case2Data.sillHeightValue = case1Data.sillHeightValue;
+				$("#sill2").val(case2Data.sillHeightValue);
+				updateData(case2Data);
+			}
+			if ($("#caseSelection #case3Label").hasClass("unselected") == true){
+				case3Data.sillHeightValue = case1Data.sillHeightValue;
+				$("#sill3").val(case3Data.sillHeightValue);
+				updateData(case3Data);
+			}
 
 			updateData(case1Data);
 		})
@@ -1164,11 +1352,33 @@ render.makeGraph = function () {
 		$("#distWindow").on("spin", function(event, ui) {
 			case1Data.distanceWindows = ui.value;
 
+			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
+				case2Data.distanceWindows = case1Data.distanceWindows;
+				$("#distWindow2").val(case2Data.distanceWindows);
+				updateData(case2Data);
+			}
+			if ($("#caseSelection #case3Label").hasClass("unselected") == true){
+				case3Data.distanceWindows = case1Data.distanceWindows;
+				$("#distWindow3").val(case3Data.distanceWindows);
+				updateData(case3Data);
+			}
+
 			updateData(case1Data);
 		})
 
 		$("#uvalue").on("spin", function(event, ui) {
 			case1Data.uvalueValue = ui.value;
+
+			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
+				case2Data.uvalueValue = case1Data.uvalueValue;
+				$("#uvalue2").val(case2Data.uvalueValue);
+				updateData(case2Data);
+			}
+			if ($("#caseSelection #case3Label").hasClass("unselected") == true){
+				case3Data.uvalueValue = case1Data.uvalueValue;
+				$("#uvalue3").val(case3Data.uvalueValue);
+				updateData(case3Data);
+			}
 
 			updateData(case1Data);
 		})
@@ -1176,11 +1386,33 @@ render.makeGraph = function () {
 		$("#lowE").on("spin", function(event, ui) {
 			case1Data.intLowEEmissivity = ui.value;
 
+			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
+				case2Data.intLowEEmissivity = case1Data.intLowEEmissivity;
+				$("#lowE2").val(case2Data.intLowEEmissivity);
+				updateData(case2Data);
+			}
+			if ($("#caseSelection #case3Label").hasClass("unselected") == true){
+				case3Data.intLowEEmissivity = case1Data.intLowEEmissivity;
+				$("#lowE3").val(case3Data.intLowEEmissivity);
+				updateData(case3Data);
+			}
+
 			updateData(case1Data);
 		})
 
 		$("#rvalue").on("spin", function(event, ui) {
 			case1Data.rvalueValue = ui.value;
+
+			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
+				case2Data.rvalueValue = case1Data.rvalueValue;
+				$("#rvalue2").val(case2Data.rvalueValue);
+				updateData(case2Data);
+			}
+			if ($("#caseSelection #case3Label").hasClass("unselected") == true){
+				case3Data.rvalueValue = case1Data.rvalueValue;
+				$("#rvalue3").val(case3Data.rvalueValue);
+				updateData(case3Data);
+			}
 
 			updateData(case1Data);
 		})
@@ -1394,7 +1626,7 @@ render.makeGraph = function () {
 		}
 	})
 
-	// Case 3 - Changes based on increment bttons
+	// Case 3 - Changes based on increment buttons
 		$("#ceiling3").on("spin", function(event, ui) {
 			case3Data.ceilingHeightValue = ui.value;
 
@@ -1471,6 +1703,7 @@ render.makeGraph = function () {
 
 		//update datasets with new value
 		var newDataset = fullData.dataSet;
+
 		var newGlzCoords = fullData.glzCoords;
 		var newGlzWidth = fullData.windowWidth;
 		var newGlzHeight = fullData.windowHeight;
@@ -1505,13 +1738,11 @@ render.makeGraph = function () {
 			$("#sill").val(Math.round(object.sillHeightValue * 100) / 100);
 			$("#distWindow").val(Math.round(object.distanceWindows * 100) / 100);
 
-			glzCoords = newGlzCoords
-			glzWidth = newGlzWidth
-			glzHeight = newGlzHeight
+			glzCoords = newGlzCoords;
+			glzWidth = newGlzWidth;
+			glzHeight = newGlzHeight;
 
 			updateGraphData(newDataset, newOccLocData, graphPoints, ".connectLine", "circle.occdot1", orange);
-
-			updateFacade(case1Data, newGlzCoords, newGlzWidth, newGlzHeight);
 
 			occPointData = newOccLocData;
 
@@ -1524,13 +1755,11 @@ render.makeGraph = function () {
 			$("#sill2").val(Math.round(object.sillHeightValue * 100) / 100);
 			$("#distWindow2").val(Math.round(object.distanceWindows * 100) / 100);
 
-			glzCoordsCase2 = newGlzCoords
-			glzWidthCase2 = newGlzWidth
-			glzHeightCase2 = newGlzHeight
+			glzCoordsCase2 = newGlzCoords;
+			glzWidthCase2 = newGlzWidth;
+			glzHeightCase2 = newGlzHeight;
 
 			updateGraphData(newDataset, newOccLocData, graphCase2Points, ".connectLine2", "circle.occdot2", blue);
-
-			updateFacade(case2Data, newGlzCoords, newGlzWidth, newGlzHeight);
 
 			occPointData2 = newOccLocData;
 		}
@@ -1548,10 +1777,10 @@ render.makeGraph = function () {
 
 			updateGraphData(newDataset, newOccLocData, graphCase3Points, ".connectLine3", "circle.occdot3", green);
 
-			updateFacade(case3Data, newGlzCoords, newGlzWidth, newGlzHeight);
-
 			occPointData3 = newOccLocData;
 		}
+
+		updateFacade();
 
 		// Update static tooltip text
 		thresholdDataText();
@@ -1645,32 +1874,13 @@ render.makeGraph = function () {
 	}
 
 
-	function updateFacade(object, glzData, newGlzWidth, newGlzHeight) {
+	function updateFacade() {
 
 		//re-evaluate scales
 		defineScales();
 
-		if (object == case1Data) {
-			glzCoords = glzData;
-			glzWidth = newGlzWidth;
-			glzHeight = newGlzHeight;
-		}
 
-		if (object == case2Data) {
-			glzCoordsCase2 = glzData;
-			glzWidthCase2 = newGlzWidth;
-			glzHeightCase2 = newGlzHeight;
-		}
-
-		if (object == case3Data) {
-			glzCoordsCase3 = glzData;
-			glzWidthCase3 = newGlzWidth;
-			glzHeightCase3 = newGlzHeight;
-		}
-
-
-
-	/* -- UPDATE CASE 1 FACADE REPRESENTATION -- */
+		/* -- UPDATE CASE 1 FACADE REPRESENTATION -- */
 		//update wall
 		d3.select("#facadeCase1")
 			.attr("height", facHeight + facMargin.top + facMargin.bottom)
@@ -1692,104 +1902,6 @@ render.makeGraph = function () {
 			.attr("y", function(d) {return (facadeScaleHeight(case1Data.ceilingHeightValue - d[3][2]))})
 			.attr("width", facadeScaleWidth(glzWidth))
 			.attr("height", facadeScaleHeight(glzHeight))
-			.attr("transform", function() {
-				return "translate(" + facMargin.left + "," + facMargin.top + ")";
-			});
-
-
-	/* -- UPDATE CASE 2 FACADE REPRESENTATION -- */
-		d3.select("#facadeCase2")
-			.attr("height", facHeight + facMargin.top + facMargin.bottom)
-			.transition()
-			.duration(500);
-		wallCase2.attr("width", function(d) {return facadeScaleWidth(case2Data.wallLen)})
-			.attr("height", function(d) {return facadeScaleHeight(case2Data.ceilingHeightValue)})
-			.transition()
-			.duration(500);
-		//update windows
-		d3.selectAll("rect.window2").remove()
-		facadeSvgCase2.selectAll(".window2")
-			.data(glzCoordsCase2)
-			.enter()
-			.append("rect")
-			.attr("class", "window2")
-			.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facadeScaleWidth(case2Data.wallLen)/2)})
-			.attr("y", function(d) {return (facadeScaleHeight(case2Data.ceilingHeightValue - d[3][2]))})
-			.attr("width", facadeScaleWidth(glzWidthCase2))
-			.attr("height", facadeScaleHeight(glzHeightCase2))
-			.attr("transform", function() {
-				return "translate(" + facMargin.left + "," + facMargin.top + ")";
-			});
-
-
-	/* -- UPDATE CASE 3 FACADE REPRESENTATION -- */
-		d3.select("#facadeCase3")
-			.attr("height", facHeight + facMargin.top + facMargin.bottom)
-			.transition()
-			.duration(500);
-		wallCase3.attr("width", function(d) {return facadeScaleWidth(case3Data.wallLen)})
-			.attr("height", function(d) {return facadeScaleHeight(case3Data.ceilingHeightValue)})
-			.transition()
-			.duration(500);
-		//update windows
-		d3.selectAll("rect.window3").remove()
-		facadeSvgCase3.selectAll(".window3")
-			.data(glzCoordsCase3)
-			.enter()
-			.append("rect")
-			.attr("class", "window3")
-			.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facadeScaleWidth(case3Data.wallLen)/2)})
-			.attr("y", function(d) {return (facadeScaleHeight(case3Data.ceilingHeightValue - d[3][2]))})
-			.attr("width", facadeScaleWidth(glzWidthCase3))
-			.attr("height", facadeScaleHeight(glzHeightCase3))
-			.attr("transform", function() {
-				return "translate(" + facMargin.left + "," + facMargin.top + ")";
-			});
-
-
-		/*"#facadeWidth, #facadeHeightDim, #facadeHeightDimLabel, #windowHeightDimLabel, 
-		
-		drawHorziontalDimensions(wallPoints[0].wallWidth);
-		drawVerticalDimensions(wallPoints[0].wallHeight);*/
-
-		// Update dimensions
-		$("#windowHeightDimLabel, #sillHeightDimLabelTop, #sillHeightDimLabelBottom, .dimensions").remove();
-		windowDimensions(glzCoords, glzWidth, glzHeight);
-/*
-		checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
-		checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
-		checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");*/
-
-
-	}
-
-	//only use when cases hidden and shown
-	function resizeFacades(array) {
-
-		defineScales();
-
-
-		/* -- UPDATE CASE 1 FACADE REPRESENTATION -- */
-		//update wall
-		d3.select("#facadeCase1")
-			.attr("height", facHeight + facMargin.top + facMargin.bottom)
-			.transition()
-			.duration(500);
-		wallCase1.attr("width", function(d) {return facadeScaleWidth(case1Data.wallLen)})
-			.attr("height", function(d) {return facadeScaleHeight(case1Data.ceilingHeightValue)})
-			.transition()
-			.duration(500);
-		//update windows
-		d3.selectAll("rect.window1").remove()
-		facadeSvgCase1.selectAll(".window1")
-			.data(glzCoords)
-			.enter()
-			.append("rect")
-			.attr("class", "window1")
-			.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facadeScaleWidth(case1Data.wallLen)/2)})
-			.attr("y", function(d) {return (facadeScaleHeight(case1Data.ceilingHeightValue - d[3][2]))})
-			.attr("width", facadeScaleWidth(glzWidth))
-			.attr("height", facadeScaleHeightCase1(glzHeight))
 			.attr("transform", function() {
 				return "translate(" + facMargin.left + "," + facMargin.top + ")";
 			});
@@ -1822,7 +1934,7 @@ render.makeGraph = function () {
 
 		/* -- UPDATE CASE 3 FACADE REPRESENTATION -- */
 		d3.select("#facadeCase3")
-			.attr("height", facHeightCase3 + facMargin.top + facMargin.bottom)
+			.attr("height", facHeight + facMargin.top + facMargin.bottom)
 			.transition()
 			.duration(500);
 		wallCase3.attr("width", function(d) {return facadeScaleWidth(case3Data.wallLen)})
@@ -1845,16 +1957,22 @@ render.makeGraph = function () {
 			});
 
 
+		/*"#facadeWidth, #facadeHeightDim, #facadeHeightDimLabel, #windowHeightDimLabel, 
+		
+		drawHorziontalDimensions(wallPoints[0].wallWidth);
+		drawVerticalDimensions(wallPoints[0].wallHeight);*/
+
 		// Update dimensions
 		$("#windowHeightDimLabel, #sillHeightDimLabelTop, #sillHeightDimLabelBottom, .dimensions").remove();
 		windowDimensions(glzCoords, glzWidth, glzHeight);
-
-/*		checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
-			checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
-			checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");*/
+		/*
+		checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
+		checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
+		checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");*/
 
 
 	}
+
 
 
 	function checkOccupantImageSize(caseName, imageID, sliderID, labelID) {
