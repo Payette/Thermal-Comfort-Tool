@@ -30,8 +30,9 @@
 	<script type="text/javascript">
 		// Footnote Options 
 		$.bigfoot({
-        	activateOnHover: true,
-            deleteOnUnhover: true,
+        	activateOnHover: false,
+            deleteOnUnhover: false,
+            popoverDeleteDelay: 250,
 			buttonMarkup: "<div class=\"bigfoot-footnote__container\"> <button class=\"bigfoot-footnote__button\" rel=\"footnote\" id=\"{{SUP:data-footnote-backlink-ref}}\" data-footnote-number=\"{{FOOTNOTENUM}}\" data-footnote-identifier=\"{{FOOTNOTEID}}\" alt=\"See Footnote {{FOOTNOTENUM}}\" data-bigfoot-footnote=\"{{FOOTNOTECONTENT}}\">?</button></div>"
 
         });
@@ -261,6 +262,7 @@
 		<fieldset class="inputgroup">
 			<legend class="heading">Advanced Options</legend>
 			<hr>
+			<p>It is recommended to use the default values for these variables unless you have an atypical building program and are very familiar with their impact on the PMV model.</p>
 			
 	<!-- 		<label for="radiant">Radiant Floor<sup id="fnref:9"><a href="#fn:9" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><div class="customCheckStyleCentered case1"><input type="checkbox" name="radiant" id="radiant" class="checkbox customCheck"><label for="radiant" id="radiantCheck1" class="unselected"></label></div></div>
@@ -269,25 +271,25 @@
 
 			<label for="rvalue">Wall R-Value (Btu/hr*ft&sup2;*&deg;F)<sup id="fnref:5"><a href="#fn:5" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="rvalue" id="rvalue" value="20" class="case1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="rvalue2" id="rvalue2" value="20" class="case2"></div>
-			<div class="inputWrapperRight"><input type="text" name="rvalue3" id="rvalue3" value="20" class="case3"></div><br>
+			<div class="inputWrapperCenter"><hr class="case2"></div>
+			<div class="inputWrapperRight"><hr class="case3"></div><br>
 
 
 
 			<label for="airspeed">Air Speed (fpm)<sup id="fnref:10"><a href="#fn:10" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="airspeed" id="airspeed" value="10" class="case1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="airspeed2" id="airspeed2" value="10" class="case2"></div>
-			<div class="inputWrapperRight"><input type="text" name="airspeed3" id="airspeed3" value="10" class="case3"></div><br>
+			<div class="inputWrapperCenter"><hr class="case2"></div>
+			<div class="inputWrapperRight"><hr class="case3"></div><br>
 			
 			<label for="clothing">Clothing (clo)<sup id="fnref:11"><a href="#fn:11" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="clothing" id="clothing" value="0.8" step="0.1" class="case1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="clothing2" id="clothing2" value="0.8" step="0.1" class="case2"></div>
-			<div class="inputWrapperRight"><input type="text" name="clothing3" id="clothing3" value="0.8" step="0.1" class="case3"></div><br>
+			<div class="inputWrapperCenter"><hr class="case2"></div>
+			<div class="inputWrapperRight"><hr class="case3"></div><br>
 
 			<label for="metabolic">Metabolic Rate (met)<sup id="fnref:12"><a href="#fn:12" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="metabolic" id="metabolic" value="1.2" step="0.1" class="case1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="metabolic2" id="metabolic2" value="1.2" step="0.1" class="case2"></div>
-			<div class="inputWrapperRight"><input type="text" name="metabolic3" id="metabolic3" value="1.2" step="0.1" class="case3"></div><br>
+			<div class="inputWrapperCenter"><hr class="case2"></div>
+			<div class="inputWrapperRight"><hr class="case3"></div><br>
 
 		</fieldset>
 		</form>

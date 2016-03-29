@@ -654,6 +654,7 @@ render.makeGraph = function () {
 			sizeButton();
 
 			$("#inputs input.case2, div.case2, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").css("display","inline-block");
+			$("hr.case2").css("display","block");
 
 			d3.selectAll("rect.wall2").classed("outlined", false);
 			d3.selectAll("rect.wall2").classed("filled", true);
@@ -670,7 +671,7 @@ render.makeGraph = function () {
 			sizeButton();
 
 
-			$("#inputs input.case2, div.case2, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").css("display","none");
+			$("#inputs input.case2, div.case2, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2, hr.case2").css("display","none");
 
 			d3.selectAll("rect.wall2").classed("outlined", true);
 			d3.selectAll("rect.wall2").classed("filled", false);
@@ -700,6 +701,7 @@ render.makeGraph = function () {
 			sizeButton();
 
 			$("#inputs input.case3, div.case3, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3").css("display","inline-block");
+			$("hr.case3").css("display","block");
 
 			d3.selectAll("rect.wall3").classed("outlined", false);
 			d3.selectAll("rect.wall3").classed("filled", true);
@@ -713,7 +715,7 @@ render.makeGraph = function () {
 
 			sizeButton();
 
-			$("#inputs input.case3, div.case3, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3").css("display","none");
+			$("#inputs input.case3, div.case3, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3, hr.case3").css("display","none");
 
 			d3.selectAll("rect.wall3").classed("outlined", true);
 			d3.selectAll("rect.wall3").classed("filled", false);
@@ -984,6 +986,14 @@ render.makeGraph = function () {
 	})
 
 
+
+
+	$("#ceiling, #wallWidth, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowE, #rvalue").keypress(function(event) {
+		alert("pressed!");
+
+		$("button").preventDefault();
+
+	});
 
 
 
