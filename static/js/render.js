@@ -221,115 +221,60 @@ render.makeGraph = function () {
 	occupantDistanceRefLine();
 
 	// add text at occupanct location
-/*	thresholdDataText();
+	thresholdDataText();
 
-*/
+
 
 
 	// Show text on hover over dot
 	var points = d3.selectAll(".dotCase1, .dotCase2, .dotCase3");
 	points.on("mouseover", function(d) {
 
-		//Get this dots x/y values, then augment for the tooltip
-		var xPosition = parseFloat(d3.select(this).attr("cx")) + margin.left;
-		var yPosition = parseFloat(d3.select(this).attr("cy"));
+		
 
-		var caseText = "";
+		var hoverText = "";
+		var discomfortReason = "";
+		var thisIcon = "";
 
-		if (d3.select(this).attr("class") == "dotCase1") {
-			caseText = "1";
-			$("#tooltip h1").addClass("case1Text");
-			$("#tooltip h1").removeClass("case2Text");
-			$("#tooltip h1").removeClass("case3Text");
-		} else if (d3.select(this).attr("class") == "dotCase2") {
-			caseText = "2";
-			$("#tooltip h1").addClass("case2Text");
-			$("#tooltip h1").removeClass("case1Text");
-			$("#tooltip h1").removeClass("case3Text");
-		} else if (d3.select(this).attr("class") == "dotCase3") {
-			caseText = "3";
-			$("#tooltip h1").addClass("case3Text");
-			$("#tooltip h1").removeClass("case1Text");
-			$("#tooltip h1").removeClass("case2Text");
+		$("#tooltip").empty();
+
+		// discomfort reason
+		if (d.govfact == "mrt") {
+			discomfortReason = "radiant discomfort";
+		} else if (d.govfact == "dwn") {
+			discomfortReason = "downdraft discomfort";
 		}
 
-		//Update the tooltip position and value
-		d3.select("#tooltip")
-			.style("left", xPosition + "px")
-			.select("#PPDtext")
-			.text(Math.round(d.ppd*10)/10 + "% PPD");
-
-
-		d3.select("#case")
-			.text(caseText);
-
-
-
-		//tolerable discomfort
-		if (ppdValue >= d.ppd) {
-			d3.select("#discomfort")
-			.text("Tolerable discomfort")
-			.classed("tolerable", true)
-			.classed("intolerable", false);
-
-			d3.select("#solution")
-			.text(".");
-
-			d3.select("span#icon")
-			.classed("check", true)
-			.classed("cross", false)
-
-			d3.select("#tooltip")
-			.style("top", (yPosition - margin.bottom/2) + "px")
-
-			if (d.govfact == "mrt") {
-				d3.select("#explain")
-				.text("a low mean radiant temperature");
-			} else if (d.govfact == "dwn") {
-				d3.select("#explain")
-				.text("downdraft");
-			}
-		//intolerable discomfort
+		// ppd icon
+		if (d.ppd <= ppdValue) {
+			thisIcon = "check";
 		} else {
-			d3.select("#discomfort")
-			.text("Intolerable discomfort")
-			.classed("tolerable", false)
-			.classed("intolerable", true);
-
-			d3.select("span#icon")
-			.classed("check", false)
-			.classed("cross", true)
-
-
-			//gov factors
-			if (d.govfact == "mrt") {
-				d3.select("#explain")
-				.text("a low mean radiant temperature");
-
-				d3.select("#solution")
-				.text(". To reduce discomfort, try adjusting the window geometry or reducing the U-value.");
-
-				console.log($("#tooltip").height());
-
-				d3.select("#tooltip")
-				.style("top", (yPosition - $("#tooltip").height() + 10) + "px");
-			} else if (d.govfact == "dwn") {
-				d3.select("#explain")
-				.text("downdraft");
-
-				d3.select("#solution")
-				.text(". To reduce discomfort, try decreasing the window height or U-value.");
-
-				console.log($("#tooltip").height());
-
-				d3.select("#tooltip")
-				.style("top", (yPosition - $("#tooltip").height() + 10) + "px");
-
-			}
+			thisIcon = "cross";
 		}
 
+		
+		if (d3.select(this).attr("class") == "dotCase1") {
+			hoverText = "<h1 class='case1Text'><span id='icon' class='" + thisIcon + "'></span>CASE 1: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason;
+
+		} else if (d3.select(this).attr("class") == "dotCase2") {
+			hoverText = "<h1 class='case1Text'><span id='icon' class='" + thisIcon + "'></span>CASE 2: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason;
+			
+		} else if (d3.select(this).attr("class") == "dotCase3") {
+			hoverText = "<h1 class='case1Text'><span id='icon' class='" + thisIcon + "'></span>CASE 3: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason;
+			
+		}
+
+		$("#tooltip").append(hoverText);
+
+		//Get this dots x/y values, then augment for the tooltip
+		var thisHeight = $("#tooltip").height();
+		var xPosition = parseFloat(d3.select(this).attr("cx")) + margin.left;
+		var yPosition = parseFloat(d3.select(this).attr("cy")) - thisHeight + 10;
 
 
+		d3.select("#tooltip")
+		.style("left", xPosition + "px")
+		.style("top", yPosition + "px");
 
 
 		//Show the tooltip
@@ -568,9 +513,6 @@ render.makeGraph = function () {
 	//Add window dimensions to Case 1 facade
 	windowDimensions(glzCoords, glzWidth, glzHeight);
 
-	//Update headings
-	updateFacadeHeadings();
-
 
 
 
@@ -741,7 +683,7 @@ render.makeGraph = function () {
 		d3.selectAll(".occupantLine").remove();
 		occupantDistanceRefLine();
 
-		updateFacadeHeadings();
+
 
     });
 
@@ -785,7 +727,6 @@ render.makeGraph = function () {
 		d3.selectAll(".occupantLine").remove();
 		occupantDistanceRefLine();
 
-		updateFacadeHeadings();
 
     });
 
@@ -800,6 +741,7 @@ render.makeGraph = function () {
 		occDistFromFacade = $(this).val();
 
 		$("#distFromFacade").val(occDistFromFacade);
+		$("#distOutput").val(occDistFromFacade + " ft");
 
 		updateData(case1Data);
 		updateData(case2Data);
@@ -809,21 +751,23 @@ render.makeGraph = function () {
 		d3.selectAll(".occupantLine").remove();
 		occupantDistanceRefLine();
 
-		updateFacadeHeadings();
 	});
 
 	$("#ppd").change(function(event) {
 		if ($(this).val() <= 4) {
 			ppdValue = 5;
 			$("#ppd").val(5);
+			$("#ppdOutput").val("5%");
 		}
 		else if ($(this).val() >30) {
 			ppdValue = 30;
 			$("#ppd").val(30);
+			$("#ppdOutput").val("30%");
 		}
 		else {
 			ppdValue = $(this).val();
 			$("#ppd").val(ppdValue);
+			$("#ppdOutput").val(ppdValue + "%");
 		}
 		// Update target PPD threshold line
 		updatePPDThreshold(ppdValue);
@@ -1807,8 +1751,6 @@ render.makeGraph = function () {
 		// Update static tooltip text
 		thresholdDataText();
 
-		updateFacadeHeadings();
-
 	}
 
 
@@ -1856,7 +1798,6 @@ render.makeGraph = function () {
 
 
 		thresholdDataText();
-		updateFacadeHeadings();
 
 	}
 
@@ -2103,62 +2044,24 @@ render.makeGraph = function () {
 
 	function occupantPositionText(occdata, className, caseName) {
 
-		var downdraftSolution = "To reduce discomfort, try decreasing the window height or U-value.";
-		var mrtSolution = "To reduce discomfort, try adjusting the window geometry or decreasing the U-value.";
-
 		var text = "";
 		var reason = "";
-		var solution = "";
 
 		if (occdata.govfact == "dwn") {
-			reason = "downdraft";
-			solution = downdraftSolution;
+			reason = "downdraft discomfort";
 		} else {
-			reason = "a low mean radiant temperature";
-			solution = mrtSolution;
+			reason = "radiant discomfort";
 		}
 
 
 		if (occdata.ppd <= ppdValue) {
-			text = "<h1 class=" + className + "><span id='icon' class='check'></span>" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD</h1><p><b>Tolerable discomfort</b> is due to " + reason + ".</p>";
+			text = "<h1 class=" + className + "><span id='icon' class='check'></span>" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1>";
 		} else {
-			text = "<h1 class=" + className + "><span id='icon' class='cross'></span>" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD</h1><p><b>Intolerable discomfort</b> is due to " + reason + ". " + solution + "</p>";
+			text = "<h1 class=" + className + "><span id='icon' class='cross'></span>" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1>";
 		}
 
 		return text;
 	}
-
-
-
-	function facadeCaseHeadings(occdata, className, caseName) {
-
-		var text = "";
-
-		if (occdata.ppd <= ppdValue) {
-			text = "<h1 class=" + className + "><span id='iconLarge' class='check'></span><b>" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD</b> Occupant experiences tolerable discomfort</h1>";
-		} else {
-			text = "<h1 class=" + className + "><span id='iconLarge' class='cross'></span>" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD. Occupant experiences intolerable discomfort</h1>";
-		}
-
-		return text;
-
-	}
-
-	function updateFacadeHeadings() {
-
-		$("#case1FacadeHeading").empty();
-		$("#case2FacadeHeading").empty();
-		$("#case3FacadeHeading").empty();
-
-		var case1Heading = facadeCaseHeadings(occPointData, "case1Text", "Case 1");
-		var case2Heading = facadeCaseHeadings(occPointData2, "case2Text", "Case 2");
-		var case3Heading = facadeCaseHeadings(occPointData3, "case3Text", "Case 3");
-
-		$("#case1FacadeHeading").append(case1Heading);
-		$("#case2FacadeHeading").append(case2Heading);
-		$("#case3FacadeHeading").append(case3Heading);
-	}
-
 
 
 
@@ -2205,7 +2108,7 @@ render.makeGraph = function () {
 
 		$("#thresholdTooltip").append(totalText);
 
-		var divHeight = $("div#thresholdTooltip").height() - 20; //20 = padding
+		var divHeight = $("div#thresholdTooltip").height() - 10; //10 = padding
 
 		var xPosition = parseFloat(d3.select("circle.occdot1").attr("cx")) + margin.left; // same for all cases
 		var yPosition = d3.min(compareOccupantArray) - divHeight;

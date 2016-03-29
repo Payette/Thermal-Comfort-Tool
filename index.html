@@ -84,15 +84,16 @@
 					<output for="occupantDist3" id="occupantImage3"/></output>
 				</div> -->
 			</div>
+			<div style="clear:both;"></div>
 		</div>
 
 		<div id="graphWrapper">
  			<div id="tooltip" class="hidden">
-				<!-- <h1><span id="icon" class="cross"></span> Case <span id="case">1</span>: <span id="PPDtext">100</span></h1>
-				<p><span id="discomfort">Tolerable discomfort</span> is due to <span id="explain">downdraft</span><span id="solution">.</span></p> -->
+
 			</div>
 
 			<div id="thresholdTooltip">
+
 			</div> 
 		</div>
 
@@ -103,11 +104,11 @@
 					<!-- <legend>Occupancy Thresholds</legend>
 					<hr> -->
 
-					<label for="distFromFacade">Distance From Fa&ccedil;ade (ft)<sup id="fnref:13"><a href="#fn:13" rel="footnote">?</a></sup></label>
-					<div class="occSlider"><input type="range" name="distFromFacade" id="distFromFacade" value="3" min="1" max="12" step="0.25" class="case1"></div>
+					<label for="distFromFacade">Occupant Distance From Fa&ccedil;ade (ft)<sup id="fnref:13"><a href="#fn:13" rel="footnote">?</a></sup></label>
+					<div class="occSlider"><input type="range" name="distFromFacade" id="distFromFacade" value="3" min="1" max="12" step="0.25" class="case1"><output id="distOutput" for="distFromFacade">3 ft</output></div>
 
-					<label for="ppd">Target Percentage of People Dissatisfied from Cold (PPD)<br><p>The Predicted Percentage of Dissatisfied (PPD) occupants is a common way to define a threshold below which conditions are considered thermally acceptable. The industry standard is typically 10%, which means that 90% of occupants are thermally comfortable. 20% PPD is sometimes used for transient spaces, such as corridors. It is not possible to use a PPD lower than 5%. This tool only estimates occupant dissatisfaction from cold conditions.</p></label>
-					<div class="occSlider"><input type="range" name="ppd" id="ppd" value="10" min="5" max="30" class="case1"></div><br>
+					<label for="ppd">Acceptable Percentage of People Dissatisfied from Cold (PPD)<br><p>The Predicted Percentage of Dissatisfied (PPD) is a common metric to define occupant’s predicted satisfactions with their environment. The industry standard is typically 10%, which means that 90% of occupants are thermally comfortable. It is not possible to get a PPD lower than 5%. This tool only estimates occupant dissatisfaction from cold conditions.</p></label>
+					<div class="occSlider"><input type="range" name="ppd" id="ppd" value="10" min="5" max="30" class="case1"><output id="ppdOutput" for="ppd">10%</output></div><br>
 
 				</fieldset>
 
@@ -116,15 +117,18 @@
 		
 		<div id="explanation">
 			<h1>Reasons for Discomfort</h1>
-			<div class="innerLeft">
+			<div id="col">
+				<div class="keepTogether">
 				<h2><span></span>Downdraft Discomfort</h2>
-				<p>Cold convective air currents formed by room air hitting the cold window create discomfort at the occupant’s feet and ankles. The strength of these currents depends on the height of the window pane, as well as the interior temperature of the glass.</p>
-				<p>To minimize downdraft discomfort, try decreasing window height, decreasing the window U-Value, or using a glazing-assembly without a room-side low-e coating.</p>
-			</div>
-			<div class="innerRight">
+				<p>Cold interior glass surfaces affect the mean radiant temperature of occupants, and in turn makes them feel cold. This discomfort depends on how much the occupant “sees” of the glass, how cold the interior glass surface is, and the emissivity of the glass. If the glass has a room-side low-e coating the radiant discomfort will be greatly reduced.</p>
+				<p>To minimize radiant discomfort, try decreasing the total amount of glass, increasing the sill height, decreasing the window U-Value, or using a glass assembly with a room-side low-e coating.</p>
+				</div>
+
+				<div class="keepTogether">
 				<h2><span></span>Radiant Discomfort</h2>
-				<p>Cold interior glazing surfaces affect the mean radiant temperature of occupants, and in turn makes them feel cold. This discomfort depends on how much the occupant “sees” of the glazing, how cold the interior glazing surface is, and the emissivity of the glazing. If the glazing has a room-side low-e coating the radiant discomfort will be greatly reduced.</p>
-				<p>To minimize radiant discomfort, try decreasing the total amount of glazing, increasing the sill height, decreasing the window U-Value, or using a glazing assembly with a room-side low-e coating.</p>
+				<p>Cold convective air currents, formed by warm room air hitting the cold window surface, create discomfort at the occupant’s feet and ankles. The strength of these currents depends on the height of the window pane, as well as the interior temperature of the glass.</p>
+				<p>To minimize downdraft discomfort, try decreasing window height, decreasing the window U-Value, or using a glass assembly without a room-side low-e coating.</p>
+				</div>
 			</div>
 		</div>
 		

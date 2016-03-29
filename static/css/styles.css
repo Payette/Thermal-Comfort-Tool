@@ -27,6 +27,7 @@ body {
 
 #graphWrapper {
 	height: auto;
+	position: relative;
 }
 
 #graph .axislabel, #graph .axis text {
@@ -77,8 +78,7 @@ body {
 
 #tooltip, #thresholdTooltip {
 	position: absolute;
-	width: 200px;
-
+	width: 240px;
 	padding: 10px;
 	pointer-events: none;
 	background-color: rgba(255,255,255,.8);
@@ -92,8 +92,8 @@ body {
 
 #tooltip h1, #thresholdTooltip h1 {
 	font-family: "museo-sans", sans-serif;
-	font-weight: 500;
-	font-size: 11px;
+	font-weight: 300;
+	font-size: 10px;
 	padding: 0 0 3px 0;
 	margin: 0;
 }
@@ -112,17 +112,7 @@ body {
 }
 
 
-#tooltip h1.case1Text, #thresholdTooltip h1.case1Text {
-	color: rgb(248, 151, 29);
-}
 
-#tooltip h1.case2Text, #thresholdTooltip h1.case2Text {
-	color: rgb(0, 160, 221);
-}
-
-#tooltip h1.case3Text, #thresholdTooltip h1.case3Text {
-	color: rgb(176, 199, 44);
-}
 
 
 
@@ -248,7 +238,7 @@ rect.blue {
 
 
 #occupancyWrapper {
-	margin: 30px 0px;
+	margin: 20px 0 0 0;
 }
 
 
@@ -258,14 +248,27 @@ rect.blue {
 }
 
 .occSlider {
-	width: 200px;
-	padding-right: 20px;
+	width: 190px;
 	float: right;
 }
 
 #ppd, #distFromFacade {
-	width: 100%;
+	display: inline-block;
+	width: 80%;
+	float: left;
 	margin: 0;
+}
+
+#ppd p {
+	margin: 0;
+}
+
+.occSlider output {
+	float: right;
+	display: inline-block;
+
+	font-weight: 300;
+	font-size: 12px;
 }
 
 
@@ -629,14 +632,15 @@ div.inputWrapperRight span {
 
 #occupantSliders label {
 	color: #000;
-	width: 320px;
+	width: 350px;
 }
 
 #occupantSliders label p {
 	font-size: 10px;
 	line-height: 15px;
-	font-style: italic;
 	color: #777;
+	font-weight: 100;
+	margin: 3px 0 0 0;
 }
 
 
@@ -771,8 +775,9 @@ input[type=checkbox] {
 #explanation {
 	border: solid 2px #000;
 	padding: 10px;
-	margin: 0;
+	margin: 15px 0 0 0;
 }
+
 
 #explanation h1 {
 	margin: 0;
@@ -784,27 +789,43 @@ input[type=checkbox] {
 	font-family: "museo-sans", sans-serif;
 }
 
-#explanation h2 {
-	margin: 0;
+#col {
+	column-count:2;
+	-moz-column-count:2;
+	-webkit-column-count: 2;
+
+	-moz-column-gap: 26px;
+	-webkit-column-gap: 26px;
+	column-gap: 26px;
+
+	column-width: 250px;
+	-webkit-column-count: 250px;
+	-moz-column-count: 250px;
+}
+
+#col h2 {
+	margin: 0 0 5px 0;
 	font-weight: 300;
 	font-size: 12px;
 
 	font-family: "museo-sans", sans-serif;
+
+	-moz-column-break-before: always;
+	-webkit-column-break-before: always;
+	break-before: always;
 }
 
-#explanation p {
+#col p {
 	font-family: "museo-sans", sans-serif;
-	font-size: 12px;
-	line-height: 1.4;
-	margin: 0 0 1.6 0;
+	font-size: 10px;
+	line-height: 1.5;
+	margin: 0;
+ 	padding-bottom: 5px;
 }
 
-
-.innerLeft, .innerRight {
+.keepTogether {
 	display: inline-block;
-	width: 260px;
-
-	vertical-align: top;
+	width: 100%;
 }
 
 
