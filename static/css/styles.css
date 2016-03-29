@@ -17,7 +17,7 @@ body {
 	width: 100%;
 }
 
-#visual {
+.left {
 	position: relative;
 	float: left;
 	width: 550px;
@@ -26,19 +26,17 @@ body {
 }
 
 #graphWrapper {
-	
+	height: auto;
+	position: relative;
 }
 
-#graph .axislabel {
+#graph .axislabel, #graph .axis text {
 	font-family: "museo-sans", sans-serif;
-	font-size: 12px;
+	font-size: 11px;
 	font-weight: 300;
 }
 
-#graph .axis text {
-    font-family: "museo-sans", sans-serif;
-    font-size: 12px;
-}
+
 
 #graph .axis path,
 #graph .axis line {
@@ -80,8 +78,7 @@ body {
 
 #tooltip, #thresholdTooltip {
 	position: absolute;
-	width: 200px;
-
+	width: 240px;
 	padding: 10px;
 	pointer-events: none;
 	background-color: rgba(255,255,255,.8);
@@ -95,8 +92,8 @@ body {
 
 #tooltip h1, #thresholdTooltip h1 {
 	font-family: "museo-sans", sans-serif;
-	font-weight: 500;
-	font-size: 11px;
+	font-weight: 300;
+	font-size: 10px;
 	padding: 0 0 3px 0;
 	margin: 0;
 }
@@ -115,17 +112,7 @@ body {
 }
 
 
-#tooltip h1.case1Text, #thresholdTooltip h1.case1Text {
-	color: rgb(248, 151, 29);
-}
 
-#tooltip h1.case2Text, #thresholdTooltip h1.case2Text {
-	color: rgb(0, 160, 221);
-}
-
-#tooltip h1.case3Text, #thresholdTooltip h1.case3Text {
-	color: rgb(176, 199, 44);
-}
 
 
 
@@ -155,46 +142,36 @@ body {
 
 
 #facadeWrapper {
-
+	width: 100%
+	overflow: auto;
 }
 
-#facadeWrapper h1 {
+#case1FacadeWrapper, #case2FacadeWrapper, #case3FacadeWrapper {
+	float: left;
+}
+
+
+.facadeHeading {
 	font-family: "museo-sans", sans-serif;
-	font-weight: 300;
-	font-size: 12px;
-	padding: 15px 0 0 50px;
+	font-weight: 500;
+	font-size: 10px;
 	margin: 0;
 }
 
-.facadeHeading h1 span#iconLarge {
-	display: block;
-	float: left;
-	width: 12px;
-	height: 12px;
-	margin: 0px 3px 0 0;
-	background-size: 11px 11px;
-	background-position: left bottom;
-	background-repeat: no-repeat;
+.greyText {
+	color: #b9b9b9;
 }
 
-.facadeHeading h1 span#iconLarge.check {
-	background-image: url(../../static/images/check.png);
+.case1Text {
+	color: rgb(21,222,154);
 }
 
-.facadeHeading h1 span#iconLarge.cross {
-	background-image: url(../../static/images/x.png);
+.case2Text {
+	color: rgb(0,168,150);
 }
 
-.facadeHeading h1.case1Text {
-	color: rgb(248, 151, 29);
-}
-
-.facadeHeading h1.case2Text {
-	color: rgb(0, 160, 221);
-}
-
-.facadeHeading h1.case3Text {
-	color: rgb(176, 199, 44);
+.case3Text {
+	color: rgb(0,108,131);
 }
 
 
@@ -216,12 +193,12 @@ body {
 }
 
 
-
-
-
 #windowHeightDimLabel, #windowHeightDim, #windowWidthDim, #sillHeightDim, #sillHeightDimLabelTop, #sillHeightDimLabelBottom, #windowSepDim {
 	display: none;
 }
+
+
+
 
 
 .blueGradientStop1 {
@@ -232,15 +209,66 @@ body {
 	stop-color: #C2E0FF;
 }
 
- rect.window1, rect.window2, rect.window3 {
-	fill: #E1F0FF;
-} 
 
+rect.filled {
+	fill: rgb(190,190,190);
+	stroke: none;
+	stroke: rgb(190,190,190);
+	stroke-width: 1px;
+	stroke-dasharray: 0;
+}
+
+rect.outlined {
+	fill: #fff;
+	stroke: rgb(190,190,190);
+	stroke-width: 1px;
+	stroke-dasharray: 4, 3;
+}
+
+rect.white {
+	fill: #fff;
+}
+
+rect.blue {
+	fill: #E1F0FF;
+}
+
+
+
+
+
+#occupancyWrapper {
+	margin: 20px 0 0 0;
+}
 
 
 #sliderWrapper, #sliderWrapper2, #sliderWrapper3 {
-	width: 550px;
-	height: 50px
+	width: 86px;
+	height: 10px;
+}
+
+.occSlider {
+	width: 190px;
+	float: right;
+}
+
+#ppd, #distFromFacade {
+	display: inline-block;
+	width: 80%;
+	float: left;
+	margin: 0;
+}
+
+#ppd p {
+	margin: 0;
+}
+
+.occSlider output {
+	float: right;
+	display: inline-block;
+
+	font-weight: 300;
+	font-size: 12px;
 }
 
 
@@ -279,14 +307,14 @@ body {
 }
 
 
-#occupantDist::-moz-range-track, #occupantDist2::-moz-range-track, #occupantDist3::-moz-range-track {
+#occupantDist::-moz-range-track, #occupantDist2::-moz-range-track, #occupantDist3::-moz-range-track, #ppd::-moz-range-track, #distFromFacade::-moz-range-track {
 	-moz-appearance: none;
 	height: 2px;
 	background-color: #d5d5d5;
 	margin-right: 3px;
 	vertical-align:middle;
 }
-#occupantDist::-webkit-slider-runnable-track, #occupantDist2::-webkit-slider-runnable-track, #occupantDist3::-webkit-slider-runnable-track {
+#occupantDist::-webkit-slider-runnable-track, #occupantDist2::-webkit-slider-runnable-track, #occupantDist3::-webkit-slider-runnable-track, #ppd::-webkit-slider-runnable-track, #distFromFacade::-webkit-slider-runnable-track {
 	-webkit-appearance: none;
 	height: 2px;
 	background-color: #d5d5d5;
@@ -294,36 +322,61 @@ body {
 	vertical-align:middle;
 }
 
-#occupantDist::-moz-range-thumb, #occupantDist2::-moz-range-thumb, #occupantDist3::-moz-range-thumb {
+#occupantDist::-moz-range-thumb, #occupantDist2::-moz-range-thumb, #occupantDist3::-moz-range-thumb, #ppd::-moz-range-thumb, #distFromFacade::-moz-range-thumb {
 	-moz-appearance: none;
     background-color: #FFF;
     border: 3px solid rgb(150,150,150);
-    border-radius: 6.5px;
-    height: 7px;
-    width: 7px;
+    border-radius: 5px;
+    height: 5px;
+    width: 5px;
     vertical-align:middle;
 }
 
-#occupantDist::-webkit-slider-thumb, #occupantDist2::-webkit-slider-thumb, #occupantDist3::-webkit-slider-thumb {
+#occupantDist::-webkit-slider-thumb, #occupantDist2::-webkit-slider-thumb, #occupantDist3::-webkit-slider-thumb, #ppd::-webkit-slider-thumb, #distFromFacade::-webkit-slider-thumb {
 	-webkit-appearance: none;
     background-color: #FFF;
     border: 3px solid rgb(150,150,150);
-    border-radius: 6.5px;
-    height: 7px;
-    width: 7px;
+    border-radius: 5px;
+    height: 5px;
+    width: 5px;
     vertical-align:middle;
 }
 
 
 
 
+#options {	
+	overflow: auto;
+	width: 100%;
+
+	padding: 10px 0px 15px 0px;
+}
+
+
+#options h2 {
+	color: #000;
+	font-weight: 700;
+	font-size: 12px;
+	text-transform: uppercase;
+	padding: 0;
+	margin: 0;
+
+	float: left;
+}
+
+
+#caseWrapper {
+	overflow: auto;
+	width: 100%;
+	display: inline-block;
+	height: 16px;
+}
 
 
 
 #caseSelection {
 	display: block;
-	height: 20px;
-	margin-left: 206px; 
+	float: right;
 }
 
 #caseSelection h2 {
@@ -334,7 +387,7 @@ body {
 
 	padding: 0;
 	margin: 0;
-	vertical-align: middle;
+	vertical-align: top;
 
 	color: #000;
 
@@ -352,15 +405,15 @@ body {
 }
 
 span#case1Button {
-	background: url(../../static/images/expand-orange.png) 0 0 no-repeat;
+	background: url(../../static/images/expand-case1.png) 0 0 no-repeat;
 }
 
 span#case2Button {
-	background: url(../../static/images/expand-blue.png) 0 0 no-repeat;
+	background: url(../../static/images/expand-case2.png) 0 0 no-repeat;
 }
 
 span#case3Button {
-	background: url(../../static/images/expand-green.png) 0 0 no-repeat;
+	background: url(../../static/images/expand-case3.png) 0 0 no-repeat;
 }
 
 /* -- show cases only when selected -- */
@@ -385,6 +438,7 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 
 
 
+
 #inputs {
 	float: left;
 	width: 390px;
@@ -392,38 +446,52 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 	font-family: "museo-sans", sans-serif;
 }
 
-#inputs h1 {
+#occupantSliders {
+	width: 550px;
+
+	font-family: "museo-sans", sans-serif;
+}
+
+#inputs h1, #occupantSliders h1 {
 	font-weight: 700px;
 	font-size: 23px;
 	line-height: 23px;
+	margin: 0;
+	padding-bottom: 18px;
 }
 
-#inputs p {
+#inputs p, #occupantSliders p {
 	font-size: 12px;
 	line-height: 1.4em;
 	font-weight: 100;
 }
 
 
-#inputs .inputgroup {
+#inputs .inputgroup, #occupantSliders .inputgroup {
 	border: none;
 	padding: 0 0 15px 0;
 }
 
 
-#inputs #legend {
+#inputs #legend, #occupantSliders #legend {
 	border: none;
 	padding: 0 0 10px 0;
 	margin-bottom: 20px;
 }
 
-#inputs legend {
+#inputs legend, #occupantSliders legend {
 	font-weight: 700;
 	font-size: 12px;
 	text-transform: uppercase;
 	padding: 0 0 5px 0;
 	margin: 0;
+	width: 190px;
 }
+
+#inputs legend.first {
+	float: left;
+}
+
 
 #inputs ul {
 	font-family: "museo-sans", sans-serif;
@@ -437,7 +505,7 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 
 
 
-#inputs hr {
+#inputs hr, #occupantSliders hr {
 	padding: 0;
 	margin: 0 0 5px 0;
 	background: #000;
@@ -522,20 +590,59 @@ div.inputWrapperRight span {
 }
 
 
+#uValButton {
+	width: 100%;
+	overflow: auto;
+	margin: 4px 0 4px 215px;
+}
 
-#inputs label {
+#inputs input[type=button]#calcUValue {
+	color: #777;
+	width: 48px;
+	padding: 3px 2px;
+	height: 20px;
+	margin: 0;
+	border-radius: 10px;
+	border: 1px solid #777;
+	background-color: #fff;
+	cursor: pointer;
+	text-align: center;
+}
+
+
+
+
+#inputs label, #occupantSliders label {
 	margin: 0;
 	padding: 3px 3px 3px 0;
 	float: left;
-	clear: left;
-	width: 212px;
+	clear: left;	
 	text-align: left;
 	display: block;
 
-	color: #777;
+	
 	font-weight: 300;
 	font-size: 12px;
 }
+
+#inputs label {
+	color: #777;
+	width: 212px;
+}
+
+#occupantSliders label {
+	color: #000;
+	width: 350px;
+}
+
+#occupantSliders label p {
+	font-size: 10px;
+	line-height: 15px;
+	color: #777;
+	font-weight: 100;
+	margin: 3px 0 0 0;
+}
+
 
 #inputs label.indent {
 	padding-left: 48px;
@@ -648,7 +755,7 @@ input[type=checkbox] {
 
 
 
-#case2FacadeWrapper, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2, #case3FacadeWrapper, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3 {
+#sliderWrapper2, .connectLine2, .dotCase2, .occdot2, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3 {
 	display: none;
 }
 
@@ -665,21 +772,63 @@ input[type=checkbox] {
 
 
 
-
-
-/* remove below here */
-.facadeaxis path,
-.facadeaxis line {
-	fill: none;
-	stroke-width: 1;
-	stroke: black;
+#explanation {
+	border: solid 2px #000;
+	padding: 10px;
+	margin: 15px 0 0 0;
 }
 
-.facadeaxis text {
-    font-family: "museo-sans", sans-serif;
-    font-size: 11px;
+
+#explanation h1 {
+	margin: 0;
+	padding-bottom: 5px;
+	font-weight: 700;
+	font-size: 12px;
+	text-transform: uppercase;
+
+	font-family: "museo-sans", sans-serif;
 }
-/* remove above here */
+
+#col {
+	column-count:2;
+	-moz-column-count:2;
+	-webkit-column-count: 2;
+
+	-moz-column-gap: 26px;
+	-webkit-column-gap: 26px;
+	column-gap: 26px;
+
+	column-width: 250px;
+	-webkit-column-count: 250px;
+	-moz-column-count: 250px;
+}
+
+#col h2 {
+	margin: 0 0 5px 0;
+	font-weight: 300;
+	font-size: 12px;
+
+	font-family: "museo-sans", sans-serif;
+
+	-moz-column-break-before: always;
+	-webkit-column-break-before: always;
+	break-before: always;
+}
+
+#col p {
+	font-family: "museo-sans", sans-serif;
+	font-size: 10px;
+	line-height: 1.5;
+	margin: 0;
+ 	padding-bottom: 5px;
+}
+
+.keepTogether {
+	display: inline-block;
+	width: 100%;
+}
+
+
 
 
 
