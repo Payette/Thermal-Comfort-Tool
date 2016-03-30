@@ -350,7 +350,12 @@ render.makeGraph = function () {
 	function defineScales() {
 
 		var proportinateMult;
-		var inputProportion = determineInputProportion();
+
+		var proportionData = determineInputProportion();
+
+		var inputProportion = proportionData.maxProportion;
+		var maxCeilingCase = proportionData.maxCeilingCase;
+		var maxLengthCase = proportionData.maxLengthCase;
 
 		// determine whether to use max ceiling height or max wall length for setting scales
 
@@ -359,7 +364,7 @@ render.makeGraph = function () {
 			wallSVGWidth = maxAllowableFacWidth;
 
 			// make svg height proportionate to facade width
-			proportinateMult = case1Data.ceilingHeightValue/case1Data.wallLen;
+			proportinateMult = maxLengthCase.ceilingHeightValue/maxLengthCase.wallLen;
 			wallSVGHeight = proportinateMult*wallSVGWidth;
 			
 		} else if (inputProportion < governingProportion) {
@@ -367,18 +372,18 @@ render.makeGraph = function () {
 			// ceiling height should be maximized
 			wallSVGHeight = maxAllowableFacHeight;
 
-			proportinateMult = case1Data.wallLen/case1Data.ceilingHeightValue;
+			proportinateMult = maxCeilingCase.wallLen/maxCeilingCase.ceilingHeightValue;
 			wallSVGWidth = proportinateMult*wallSVGHeight;
 
 			// make svg width proportionate to facade height
 		}
 
 		facadeScaleWidth = d3.scale.linear()
-				.domain([0, case1Data.wallLen]) //input domain
+				.domain([0, maxLengthCase.wallLen]) //input domain
 				.range([0, wallSVGWidth]); //output range
 
 		facadeScaleHeight = d3.scale.linear()
-				.domain([0, case1Data.ceilingHeightValue]) //input domain
+				.domain([0, maxCeilingCase.ceilingHeightValue]) //input domain
 				.range([0, wallSVGHeight]); //output range
 
 		//overall SVG height can vary - determined by whether ceiling height or wall length governs
@@ -2116,17 +2121,37 @@ render.makeGraph = function () {
 
 	function determineInputProportion() {
 
+		var svgProportionData = {};
+
 
 		// find the max ceiling height and wall length out of the 3 cases
 		var ceilingHeightArray = [case1Data.ceilingHeightValue, case2Data.ceilingHeightValue, case3Data.ceilingHeightValue];
 		var maxCeilingHeight = d3.max(ceilingHeightArray);
 
+		if (maxCeilingHeight == case1Data.ceilingHeightValue) {
+			svgProportionData.maxCeilingCase = case1Data;
+		} else if (maxCeilingHeight == case2Data.ceilingHeightValue) {
+			svgProportionData.maxCeilingCase = case2Data;
+		} else if (maxCeilingHeight == case3Data.ceilingHeightValue) {
+			svgProportionData.maxCeilingCase = case3Data;
+		};
+
+
 		var wallLengthArray = [case1Data.wallLen, case2Data.wallLen, case3Data.wallLen];
 		var maxWallLength = d3.max(wallLengthArray);
 
-		var thisProportion = maxWallLength/maxCeilingHeight;
+		if (maxWallLength == case1Data.wallLen) {
+			svgProportionData.maxLengthCase = case1Data;
+		} else if (maxWallLength == case2Data.wallLen) {
+			svgProportionData.maxLengthCase = case2Data;
+		} else if (maxWallLength == case3Data.wallLen) {
+			svgProportionData.maxLengthCase = case3Data;
+		};
 
-		return thisProportion;
+
+		svgProportionData.maxProportion = maxWallLength/maxCeilingHeight;
+
+		return svgProportionData;
 	}
 
 
