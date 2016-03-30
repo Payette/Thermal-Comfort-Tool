@@ -18,17 +18,20 @@ render.makeGraph = function () {
 	// Case 1 Data
 	var allData = script.computeData(case1Data);
 	var dataset = allData.dataSet;
-	var occPointData = allData.occPtInfo;
+	var occPointData = allData.occPtInfo
+	var condensation1 = allData.condensation;
 
 	//Case 2 Data
 	var allData2 = script.computeData(case2Data);
 	var dataset2 = allData2.dataSet;
 	var occPointData2 = allData2.occPtInfo;
+	var condensation2 = allData2.condensation;
 
 	//Case 3 Data
 	var allData3 = script.computeData(case3Data);
 	var dataset3 = allData3.dataSet;
 	var occPointData3 = allData3.occPtInfo;
+	var condensation3 = allData3.condensation;
 
 
 	/* ------ SET UP GRAPH VARIABLES AND DATA FUNCTIONS ------ */
@@ -297,6 +300,20 @@ render.makeGraph = function () {
 			//Show default text
 			$("#thresholdTooltip").fadeIn(300);
 		}
+	}
+
+
+	// check for condensation
+
+	checkCondensation();
+
+	function checkCondensation() {
+
+		console.log(allData.condensation);
+
+		/*if (allData.condensation == "none") {
+			$("#condensation").css("display","block")
+		}*/
 	}
 
 
