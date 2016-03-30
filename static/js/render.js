@@ -835,58 +835,7 @@ render.makeGraph = function () {
 
 
 
-	$("#outdoortemp").focusout(function(event) {
-		outdoorTempValue = $(this).val();
 
-		$("#outdoortemp, #outdoortemp2, #outdoortemp3").val(outdoorTempValue);
-
-		updateData(case1Data);
-		updateData(case2Data);
-		updateData(case3Data);
-	})
-	$("#outdoortemp").on("spin", function(event, ui) {
-		outdoorTempValue = ui.value;
-		$("#outdoortemp, #outdoortemp2, #outdoortemp3").val(outdoorTempValue);
-		updateData(case1Data);
-		updateData(case2Data);
-		updateData(case3Data);
-	})
-
-	$("#airtemp, #airtemp2, #airtemp3").focusout(function(event) {
-		airtempValue = $(this).val();
-		$("#airtemp, #airtemp2, #airtemp3").val(airtempValue);
-
-		updateData(case1Data);
-		updateData(case2Data);
-		updateData(case3Data);
-	});
-	$("#airtemp").on("spin", function(event, ui) {
-		airtempValue = ui.value;
-		$("#airtemp, #airtemp2, #airtemp3").val(airtempValue);
-
-		updateData(case1Data);
-		updateData(case2Data);
-		updateData(case3Data);
-	})
-
-	$("#humidity").focusout(function(event) {
-		humidityValue = $(this).val();
-
-		$("#humidity, #humidity2, #humidity3").val(humidityValue);
-
-		updateData(case1Data);
-		updateData(case2Data);
-		updateData(case3Data);
-	})
-	$("#humidity").on("spin", function(event, ui) {
-		humidityValue = ui.value;
-
-		$("#humidity, #humidity2, #humidity3").val(humidityValue);
-
-		updateData(case1Data);
-		updateData(case2Data);
-		updateData(case3Data);
-	})
 
 	/*$("#radiant, #radiant2, #radiant3").change(function(event) {
 		if (($("#radiant").is(":checked")) == true) {
@@ -905,10 +854,30 @@ render.makeGraph = function () {
 		updateData(case3Data);
 	})*/
 
-	$("#airspeed, #airspeed2, #airspeed3").focusout(function(event) {
+
+	$("#rvalue").focusout(function(event) {
+		rvalueValue = $(this).val();
+		$("#rvalue").val(rvalueValue);
+
+		updateData(case1Data);
+		updateData(case2Data);
+		updateData(case3Data);
+	})
+	$("#rvalue").on("spin", function(event, ui) {
+		rvalueValue = ui.value;
+		$("#rvalue").val(rvalueValue);
+
+		updateData(case1Data);
+		updateData(case2Data);
+		updateData(case3Data);
+	})
+
+
+
+	$("#airspeed").focusout(function(event) {
 		airspeedValue = $(this).val();
 
-		$("#airspeed, #airspeed2, #airspeed3").val(airspeedValue);
+		$("#airspeed").val(airspeedValue);
 
 		updateData(case1Data);
 		updateData(case2Data);
@@ -917,7 +886,7 @@ render.makeGraph = function () {
 	$("#airspeed").on("spin", function(event, ui) {
 		airspeedValue = ui.value;
 
-		$("#airspeed, #airspeed2, #airspeed3").val(airspeedValue);
+		$("#airspeed").val(airspeedValue);
 
 		updateData(case1Data);
 		updateData(case2Data);
@@ -927,7 +896,7 @@ render.makeGraph = function () {
 	$("#clothing").focusout(function(event) {
 		clothingValue = $(this).val();
 
-		$("#clothing, #clothing2, #clothing3").val(clothingValue);
+		$("#clothing").val(clothingValue);
 
 		updateData(case1Data);
 		updateData(case2Data);
@@ -936,7 +905,7 @@ render.makeGraph = function () {
 	$("#clothing").on("spin", function(event, ui) {
 		clothingValue = ui.value;
 
-		$("#clothing, #clothing2, #clothing3").val(clothingValue);
+		$("#clothing").val(clothingValue);
 
 		updateData(case1Data);
 		updateData(case2Data);
@@ -946,7 +915,7 @@ render.makeGraph = function () {
 	$("#metabolic").focusout(function(event) {
 		metabolic = $(this).val();
 
-		$("#metabolic, #metabolic2, #metabolic3").val(metabolic);
+		$("#metabolic").val(metabolic);
 
 		updateData(case1Data);
 		updateData(case2Data);
@@ -955,7 +924,7 @@ render.makeGraph = function () {
 	$("#metabolic").on("spin", function(event, ui) {
 		metabolic = ui.value;
 
-		$("#metabolic, #metabolic2, #metabolic3").val(metabolic);
+		$("#metabolic").val(metabolic);
 
 		updateData(case1Data);
 		updateData(case2Data);
@@ -988,17 +957,24 @@ render.makeGraph = function () {
 
 
 
-	$("#ceiling, #wallWidth, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowE, #rvalue").keypress(function(event) {
-		alert("pressed!");
+	$("#ceiling, #wallWidth, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowE, #outdoortemp, #airtemp, #humidity, #ceiling2, #wallWidth2, #windowHeight2, #windowWidth2, #glazing2, #sill2, #distWindow2, #uvalue2, #lowE2, #outdoortemp2, #airtemp2, #humidity2, #ceiling3, #wallWidth3, #windowHeight3, #windowWidth3, #glazing3, #sill3, #distWindow3, #uvalue3, #lowE3, #outdoortemp3, #airtemp3, #humidity3, #rvalue, #airspeed, #clothing, #metabolic").keydown(function(event) {
 
-		$("button").preventDefault();
+		if (event.keyCode == 13) {
+			$(this).blur();
+			event.preventDefault();
+		}
 
 	});
 
 
 
+
+
+
+
+
 	// Case 1 - Changes based on typed inputs
-	$("#ceiling, #wallWidth, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowE, #rvalue").focusout(function(event) {
+	$("#ceiling, #wallWidth, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowE, #outdoortemp, #airtemp, #humidity").focusout(function(event) {
 
 		//figure out what input changed
 		var triggeredChange = event.target.id;
@@ -1122,18 +1098,43 @@ render.makeGraph = function () {
 				$("#lowE3").val(case3Data.intLowEEmissivity);
 			}
 		}
-		else if (triggeredChange == "rvalue") {
-			case1Data.rvalueValue = $(this).val();
+		else if (triggeredChange == "outdoortemp") {
+			case1Data.outdoorTempValue = $(this).val();
 
 			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
-				case2Data.rvalueValue = case1Data.rvalueValue;
-				$("#rvalue2").val(case2Data.rvalueValue);
+				case2Data.outdoorTempValue = case1Data.outdoorTempValue;
+				$("#outdoortemp2").val(case2Data.outdoorTempValue);
 			}
 			if ($("#caseSelection #case3Label").hasClass("unselected") == true){
-				case3Data.rvalueValue = case1Data.rvalueValue;
-				$("#rvalue3").val(case3Data.rvalueValue);
+				case3Data.outdoorTempValue = case1Data.outdoorTempValue;
+				$("#outdoortemp3").val(case3Data.outdoorTempValue);
 			}
 		}
+		else if (triggeredChange == "airtemp") {
+			case1Data.airtempValue = $(this).val();
+
+			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
+				case2Data.airtempValue = case1Data.airtempValue;
+				$("#airtemp2").val(case2Data.airtempValue);
+			}
+			if ($("#caseSelection #case3Label").hasClass("unselected") == true){
+				case3Data.airtempValue = case1Data.airtempValue;
+				$("#airtemp3").val(case3Data.airtempValue);
+			}
+		}
+		else if (triggeredChange == "humidity") {
+			case1Data.humidityValue = $(this).val();
+
+			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
+				case2Data.humidityValue = case1Data.humidityValue;
+				$("#humidity2").val(case2Data.humidityValue);
+			}
+			if ($("#caseSelection #case3Label").hasClass("unselected") == true){
+				case3Data.humidityValue = case1Data.humidityValue;
+				$("#humidity3").val(case3Data.humidityValue);
+			}
+		}
+		
 		else {
 			alert("Don't know what changed!");
 		}
@@ -1376,26 +1377,64 @@ render.makeGraph = function () {
 			updateData(case1Data);
 		})
 
-		$("#rvalue").on("spin", function(event, ui) {
-			case1Data.rvalueValue = ui.value;
+		$("#outdoortemp").on("spin", function(event, ui) {
+			case1Data.outdoorTempValue = ui.value;
 
 			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
-				case2Data.rvalueValue = case1Data.rvalueValue;
-				$("#rvalue2").val(case2Data.rvalueValue);
+				case2Data.outdoorTempValue = case1Data.outdoorTempValue;
+				$("#outdoortemp2").val(case2Data.outdoorTempValue);
 				updateData(case2Data);
 			}
 			if ($("#caseSelection #case3Label").hasClass("unselected") == true){
-				case3Data.rvalueValue = case1Data.rvalueValue;
-				$("#rvalue3").val(case3Data.rvalueValue);
+				case3Data.outdoorTempValue = case1Data.outdoorTempValue;
+				$("#outdoortemp3").val(case3Data.outdoorTempValue);
 				updateData(case3Data);
 			}
 
 			updateData(case1Data);
 		})
 
+		$("#airtemp").on("spin", function(event, ui) {
+			case1Data.airtempValue = ui.value;
+
+			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
+				case2Data.airtempValue = case1Data.airtempValue;
+				$("#airtemp2").val(case2Data.airtempValue);
+				updateData(case2Data);
+			}
+			if ($("#caseSelection #case3Label").hasClass("unselected") == true){
+				case3Data.airtempValue = case1Data.airtempValue;
+				$("#airtemp3").val(case3Data.airtempValue);
+				updateData(case3Data);
+			}
+
+			updateData(case1Data);
+		})
+
+		$("#humidity").on("spin", function(event, ui) {
+			case1Data.humidityValue = ui.value;
+
+			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
+				case2Data.humidityValue = case1Data.humidityValue;
+				$("#humidity2").val(case2Data.humidityValue);
+				updateData(case2Data);
+			}
+			if ($("#caseSelection #case3Label").hasClass("unselected") == true){
+				case3Data.humidityValue = case1Data.humidityValue;
+				$("#humidity3").val(case3Data.humidityValue);
+				updateData(case3Data);
+			}
+
+			updateData(case1Data);
+		})
+
+		
+
+		
+
 
 	// Case 2 - Changes based on typed inputs
-	$("#ceiling2, #wallWidth2, #windowHeight2, #windowWidth2, #glazing2, #sill2, #distWindow2, #uvalue2, #lowE2, #rvalue2").focusout(function(event) {
+	$("#ceiling2, #wallWidth2, #windowHeight2, #windowWidth2, #glazing2, #sill2, #distWindow2, #uvalue2, #lowE2, #outdoortemp2, #airtemp2, #humidity2").focusout(function(event) {
 
 		//figure out what input changed
 		var triggeredChange = event.target.id;
@@ -1433,9 +1472,17 @@ render.makeGraph = function () {
 		else if (triggeredChange == "lowE2") {
 			case2Data.intLowEEmissivity = $(this).val();
 		}
-		else if (triggeredChange == "rvalue2") {
-			case2Data.rvalueValue = $(this).val();
+		else if (triggeredChange == "outdoortemp2") {
+			case2Data.outdoorTempValue = $(this).val();
 		}
+		else if (triggeredChange == "airtemp2") {
+			case2Data.airtempValue = $(this).val();
+		}
+		else if (triggeredChange == "humidity2") {
+			case2Data.humidityValue = $(this).val();
+		}
+
+
 
 		else {
 			alert("Don't know what changed!");
@@ -1524,15 +1571,26 @@ render.makeGraph = function () {
 			updateData(case2Data);
 		})
 
-		$("#rvalue2").on("spin", function(event, ui) {
-			case2Data.rvalueValue = ui.value;
+		$("#outdoortemp2").on("spin", function(event, ui) {
+			case2Data.outdoorTempValue = ui.value;
+
+			updateData(case2Data);
+		})
+
+		$("#airtemp2").on("spin", function(event, ui) {
+			case2Data.airtempValue = ui.value;
+
+			updateData(case2Data);
+		})
+		$("#humidity2").on("spin", function(event, ui) {
+			case2Data.humidityValue = ui.value;
 
 			updateData(case2Data);
 		})
 
 
 	// Case 3 - Changes based on typed inputs
-	$("#ceiling3, #wallWidth3, #windowHeight3, #windowWidth3, #glazing3, #sill3, #distWindow3, #uvalue3, #lowE3, #rvalue3").focusout(function(event) {
+	$("#ceiling3, #wallWidth3, #windowHeight3, #windowWidth3, #glazing3, #sill3, #distWindow3, #uvalue3, #lowE3, #outdoortemp3, #airtemp3, #humidity3").focusout(function(event) {
 
 		//figure out what input changed
 		var triggeredChange = event.target.id;
@@ -1573,6 +1631,15 @@ render.makeGraph = function () {
 		}
 		else if (triggeredChange == "rvalue3") {
 			case3Data.rvalueValue = $(this).val();
+		}
+		else if (triggeredChange == "outdoortemp3") {
+			case3Data.outdoorTempValue = $(this).val();
+		}
+		else if (triggeredChange == "airtemp3") {
+			case3Data.airtempValue = $(this).val();
+		}
+		else if (triggeredChange == "humidity3") {
+			case3Data.humidityValue = $(this).val();
 		}
 
 		else {
@@ -1659,10 +1726,21 @@ render.makeGraph = function () {
 			updateData(case3Data);
 		})
 
-		$("#rvalue3").on("spin", function(event, ui) {
-			case3Data.rvalueValue = ui.value;
+		$("#outdoortemp3").on("spin", function(event, ui) {
+			case3Data.outdoorTempValue = ui.value;
 
-			updateData(case3Data);
+			updateData(case2Data);
+		})
+
+		$("#airtemp3").on("spin", function(event, ui) {
+			case3Data.airtempValue = ui.value;
+
+			updateData(case2Data);
+		})
+		$("#humidity3").on("spin", function(event, ui) {
+			case3Data.humidityValue = ui.value;
+
+			updateData(case2Data);
 		})
 
 
