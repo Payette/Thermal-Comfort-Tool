@@ -571,7 +571,7 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, o
 
 
 	// Calculate whether there is risk of condensation.
-	var dewPoint = comf.dewptCalc(indoorTemp, rh)
+	var dewPoint = comf.dewptCalc(airTemp, rh)
 	if (windowTemp < dewPoint){
 		var condensation = "certain"
 	} else if (windowTemp < dewPoint+3){
