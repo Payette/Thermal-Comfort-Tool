@@ -454,7 +454,7 @@ comf.getMRTPPD = function(winViewFacs, opaqueViewFacs, winFilmCoeff, airTemp, ou
 		var opaView = opaqueViewFacs[i]
 		var ptValue = comf.calcFullMRTppd(winView, opaView, winFilmCoeff, airTemp, outdoorTemp, indoorSrfTemp, wallRVal, windowUVal, intLowE, lowEmissivity, clo, met, airSpeed, rh)
 		MRT.push(ptValue.mrt)
-    mrtPPD.push(ptValue.ppd)
+    mrtPPD.push(round(ptValue.ppd*10)/10)
     var windowTemp = ptValue.windowTemp
 	}
 
@@ -571,7 +571,7 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, o
 
 
 	// Calculate whether there is risk of condensation.
-	var dewPoint = comf.dewptCalc(indoorTemp, rh)
+	var dewPoint = comf.dewptCalc(airTemp, rh)
 	if (windowTemp < dewPoint){
 		var condensation = "certain"
 	} else if (windowTemp < dewPoint+3){
