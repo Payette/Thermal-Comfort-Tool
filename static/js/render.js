@@ -309,7 +309,7 @@ render.makeGraph = function () {
 
 	function checkCondensation() {
 
-		console.log(allData.condensation);
+		console.log("condensation is " + allData.condensation);
 
 		/*if (allData.condensation == "none") {
 			$("#condensation").css("display","block")
@@ -1787,8 +1787,9 @@ render.makeGraph = function () {
 		var newSillHeight = fullData.sillHeight;
 		var newCentLineDist = fullData.centLineDist;
 		var newOccLocData = fullData.occPtInfo;
+		var newCondensation = fullData.condensation;
 
-
+		console.log("condensation is " + newCondensation);
 
 
 		// Update values in object
