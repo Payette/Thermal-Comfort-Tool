@@ -701,7 +701,7 @@ input[type=checkbox] {
 
 #inputs div.customCheckStyleCentered {
 	width: 12px;
-	margin: 0px 0px 0px 9px;
+	margin: 0;
 	position: relative;
 
 	vertical-align: middle;
@@ -723,7 +723,7 @@ input[type=checkbox] {
 
 #inputs div#offsetLeft label {
 	top: -5px;
-	left: 20px;
+	left: 19px;
 }
 
 #inputs div#offsetMiddle label {

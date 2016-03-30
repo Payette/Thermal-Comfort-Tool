@@ -2224,16 +2224,39 @@ render.makeGraph = function () {
 					return "translate(" + margin.left + "," + margin.top + ")";})
 			.style("fill", lightgrey);
 
+		var ppdLine = graphSvg.append("g")
+			.attr("class", "referenceLineGroup")
+			.attr("transform", function() {
+					return "translate(" + margin.left + "," + margin.top + ")";})
+
+
 		// add line
-		graphSvg.append("line")
+		ppdLine.append("line")
 			.attr("class","refLine")
 			.attr("x1", 0)
 			.attr("x2", width)
 			.attr("y1", y(data))
 			.attr("y2", y(data))
-			.attr("transform", function() {
-					return "translate(" + margin.left + "," + margin.top + ")";})
 			.style("stroke", "black");
+
+
+		// add symbols
+		ppdLine.append("svg:image")
+			.attr("class", "checkLine")
+			.attr("xlink:href", "static/images/check.png")
+			.attr("x", 4)
+			.attr("y", y(data) + 4)
+			.attr("width", 12)
+			.attr("height", 12);
+
+		var crossLine = ppdLine.append("svg:image")
+			.attr("class", "crossLine")
+			.attr("xlink:href", "static/images/x.png")
+			.attr("x", 4)
+			.attr("y", y(data) - 16)
+			.attr("width", 12)
+			.attr("height", 12);
+
 	}
 
 
@@ -2249,6 +2272,17 @@ render.makeGraph = function () {
 			.duration(400)
 			.attr("y", function() { return y(data)})
 			.attr("height", function() { return height - y(data)});
+
+		// add symbols
+		d3.selectAll(".checkLine")
+			.transition()
+			.duration(400)
+			.attr("y", y(data) + 4);
+
+		d3.selectAll(".crossLine")
+			.transition()
+			.duration(400)
+			.attr("y", y(data) - 16);
 	}
 
 
