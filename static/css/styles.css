@@ -626,9 +626,14 @@ div.inputWrapperRight span {
 #inputs p {
 	font-size: 10px;
 	line-height: 15px;
-	color: #777;
 	font-weight: 100;
 }
+
+#inputs p.subtext {
+	color: #777;
+}
+
+
 
 
 
@@ -775,11 +780,19 @@ input[type=checkbox] {
 
 
 
-
-div#condensation {
-	position: absolute;
+#inputs div#condensation {
 	bottom: 40px;
 	left: 218px;
+}
+
+#inputs div#uvaluePop {
+	bottom: 110px;
+	left: 218px;
+}
+
+
+#inputs div.alert {
+	position: absolute;
 
 	background-color: rgb(245, 245, 245);
 	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
@@ -790,7 +803,7 @@ div#condensation {
 	display: none;
 }
 
-div#condensation p {
+ #inputs div.alert p {
 	color: #f72734;
 	margin: 0;
 }

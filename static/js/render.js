@@ -305,16 +305,9 @@ render.makeGraph = function () {
 
 	// check for condensation
 
-	checkCondensation();
+	checkCondensation(allData.condensation, allData2.condensation, allData3.condensation);
 
-	function checkCondensation() {
-
-		console.log("condensation is " + allData.condensation);
-
-		/*if (allData.condensation == "none") {
-			$("#condensation").css("display","block")
-		}*/
-	}
+	
 
 
 
@@ -641,27 +634,12 @@ render.makeGraph = function () {
 
 
 
-    function sizeButton() {
-    	if (($("#caseSelection #case2Label").hasClass("unselected")==true) && ($("#caseSelection #case3Label").hasClass("unselected")==true)) {
-
-    		$("#calcUValue").css("width","48px");
-
-    	} else if (($("#caseSelection #case2Label").hasClass("unselected")==true) && ($("#caseSelection #case3Label").hasClass("unselected")==false)) {
-    		$("#calcUValue").css("width","171px");
-
-    	} else if (($("#caseSelection #case2Label").hasClass("unselected")==false) && ($("#caseSelection #case3Label").hasClass("unselected")==true)) {
-    		$("#calcUValue").css("width","101px");
-
-    	} else if (($("#caseSelection #case2Label").hasClass("unselected")==false) && ($("#caseSelection #case3Label").hasClass("unselected")==false)) {
-    		$("#calcUValue").css("width","171px");
-
-    	}
-    }
+    
 
 
 
 
-    /* ------ HIDE/SHOW CASES ------ */
+    /* ------ HIDE/SHOW CASES / ALERTS ------ */
 
     $("#caseSelection #case2Label").on("click", function() {
 
@@ -754,6 +732,17 @@ render.makeGraph = function () {
 
     });
 
+    // remove condensation alert on click
+    $("#condensation").on("click", function() {
+    	$("#condensation").css("display","none");
+    	$("#humidity, #humidity2, #humidity3").css("color", "black");
+    })
+
+	// remove uvalue alert on click
+    $("#uvaluePop").on("click", function() {
+    	$("#uvaluePop").css("display","none");
+    	$("#uvalue, #uvalue2, #uvalue3, #airtemp, #airtemp2, #airtemp3, #clothing").css("color", "black");
+    })
 
 
 
@@ -979,6 +968,7 @@ render.makeGraph = function () {
 
 
 
+	// prevent enter from trigger footnotes, use enter to update value in field
 	$("#ceiling, #wallWidth, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowE, #outdoortemp, #airtemp, #humidity, #ceiling2, #wallWidth2, #windowHeight2, #windowWidth2, #glazing2, #sill2, #distWindow2, #uvalue2, #lowE2, #outdoortemp2, #airtemp2, #humidity2, #ceiling3, #wallWidth3, #windowHeight3, #windowWidth3, #glazing3, #sill3, #distWindow3, #uvalue3, #lowE3, #outdoortemp3, #airtemp3, #humidity3, #rvalue, #airspeed, #clothing, #metabolic").keydown(function(event) {
 
 		if (event.keyCode == 13) {
@@ -1789,8 +1779,6 @@ render.makeGraph = function () {
 		var newOccLocData = fullData.occPtInfo;
 		var newCondensation = fullData.condensation;
 
-		console.log("condensation is " + newCondensation);
-
 
 		// Update values in object
 		//update window width
@@ -1819,6 +1807,8 @@ render.makeGraph = function () {
 			glzWidth = newGlzWidth;
 			glzHeight = newGlzHeight;
 
+			checkCondensation(newCondensation, allData2.condensation, allData3.condensation);
+
 			updateGraphData(newDataset, newOccLocData, graphPoints, ".connectLine", "circle.occdot1", color1);
 
 			occPointData = newOccLocData;
@@ -1836,6 +1826,8 @@ render.makeGraph = function () {
 			glzWidthCase2 = newGlzWidth;
 			glzHeightCase2 = newGlzHeight;
 
+			checkCondensation(allData.condensation, newCondensation, allData3.condensation);
+
 			updateGraphData(newDataset, newOccLocData, graphCase2Points, ".connectLine2", "circle.occdot2", color2);
 
 			occPointData2 = newOccLocData;
@@ -1848,9 +1840,11 @@ render.makeGraph = function () {
 			$("#sill3").val(Math.round(object.sillHeightValue * 100) / 100);
 			$("#distWindow3").val(Math.round(object.distanceWindows * 100) / 100);
 
-			glzCoordsCase3 = newGlzCoords
-			glzWidthCase3 = newGlzWidth
-			glzHeightCase3 = newGlzHeight
+			glzCoordsCase3 = newGlzCoords;
+			glzWidthCase3 = newGlzWidth;
+			glzHeightCase3 = newGlzHeight;
+
+			checkCondensation(allData.condensation, allData2.condensation, newCondensation);
 
 			updateGraphData(newDataset, newOccLocData, graphCase3Points, ".connectLine3", "circle.occdot3", color3);
 
@@ -1874,11 +1868,11 @@ render.makeGraph = function () {
 		var fullDataCase3 = script.computeData(case3Data);
 
 		//Compute the U-Value required to make the occupant comfortable.
-		case1Data.uvalueValue = uVal.uValFinal(fullDataCase1.wallViews[12], fullDataCase1.glzViews[12], fullDataCase1.facadeDist[12], fullDataCase1.runDownCalc, parseFloat(case1Data.windowHeightValue), airtempValue, outdoorTempValue, case1Data.rvalueValue, case1Data.intLowEChecked, case1Data.intLowEEmissivity, airspeedValue, humidityValue, metabolic, clothingValue, ppdValue);
+		case1Data.uvalueValue = uVal.uValFinal(fullDataCase1.wallViews[12], fullDataCase1.glzViews[12], fullDataCase1.facadeDist[12], fullDataCase1.runDownCalc, parseFloat(case1Data.windowHeightValue), case1Data.airtempValue, case1Data.outdoorTempValue, rvalueValue, case1Data.intLowEChecked, case1Data.intLowEEmissivity, airspeedValue, case1Data.humidityValue, metabolic, clothingValue, ppdValue);
 
-		case2Data.uvalueValue = uVal.uValFinal(fullDataCase2.wallViews[12], fullDataCase2.glzViews[12], fullDataCase2.facadeDist[12], fullDataCase2.runDownCalc, parseFloat(case2Data.windowHeightValue), airtempValue, outdoorTempValue, case2Data.rvalueValue, case2Data.intLowEChecked, case2Data.intLowEEmissivity, airspeedValue, humidityValue, metabolic, clothingValue, ppdValue);
+		case2Data.uvalueValue = uVal.uValFinal(fullDataCase2.wallViews[12], fullDataCase2.glzViews[12], fullDataCase2.facadeDist[12], fullDataCase2.runDownCalc, parseFloat(case2Data.windowHeightValue), case2Data.airtempValue, case2Data.outdoorTempValue, rvalueValue, case2Data.intLowEChecked, case2Data.intLowEEmissivity, airspeedValue, case2Data.humidityValue, metabolic, clothingValue, ppdValue);
 
-		case3Data.uvalueValue = uVal.uValFinal(fullDataCase3.wallViews[12], fullDataCase3.glzViews[12], fullDataCase3.facadeDist[12], fullDataCase3.runDownCalc, parseFloat(case3Data.windowHeightValue), airtempValue, outdoorTempValue, case3Data.rvalueValue, case3Data.intLowEChecked, case3Data.intLowEEmissivity, airspeedValue, humidityValue, metabolic, clothingValue, ppdValue);
+		case3Data.uvalueValue = uVal.uValFinal(fullDataCase3.wallViews[12], fullDataCase3.glzViews[12], fullDataCase3.facadeDist[12], fullDataCase3.runDownCalc, parseFloat(case3Data.windowHeightValue), case3Data.airtempValue, case3Data.outdoorTempValue, rvalueValue, case3Data.intLowEChecked, case3Data.intLowEEmissivity, airspeedValue, case3Data.humidityValue, metabolic, clothingValue, ppdValue);
 
 		// Update the value in the form.
 		$("#uvalue").val(Math.round(case1Data.uvalueValue * 1000) / 1000);
@@ -1901,6 +1895,8 @@ render.makeGraph = function () {
 
 		updateGraphData(fullDataCase3.dataSet, fullDataCase3.occPtInfo, graphCase3Points, ".connectLine3", "circle.occdot3", color3);
 		updateFacade(case3Data, fullDataCase3.glzCoords, fullDataCase3.windowWidth, fullDataCase3.windowHeight);
+
+		checkUValue(case1Data.uvalueValue, case2Data.uvalueValue, case3Data.uvalueValue);
 
 		occPointData = fullDataCase1.occPtInfo;
 		occPointData2 = fullDataCase2.occPtInfo;
@@ -2136,6 +2132,75 @@ render.makeGraph = function () {
 
 
 	/* ------ FUNCTIONS FOR GENERAL REFERENCE VISUALS ------ */
+
+	function sizeButton() {
+    	if (($("#caseSelection #case2Label").hasClass("unselected")==true) && ($("#caseSelection #case3Label").hasClass("unselected")==true)) {
+
+    		$("#calcUValue").css("width","48px");
+
+    	} else if (($("#caseSelection #case2Label").hasClass("unselected")==true) && ($("#caseSelection #case3Label").hasClass("unselected")==false)) {
+    		$("#calcUValue").css("width","171px");
+
+    	} else if (($("#caseSelection #case2Label").hasClass("unselected")==false) && ($("#caseSelection #case3Label").hasClass("unselected")==true)) {
+    		$("#calcUValue").css("width","101px");
+
+    	} else if (($("#caseSelection #case2Label").hasClass("unselected")==false) && ($("#caseSelection #case3Label").hasClass("unselected")==false)) {
+    		$("#calcUValue").css("width","171px");
+
+    	}
+    }
+
+	function checkCondensation(conValue1, conValue2, conValue3) {
+
+		if (conValue1 != "none" || conValue2 != "none" || conValue3 != "none") {
+			$("#condensation").css("display","block");
+
+			if (conValue1 != "none") {
+				$("#humidity").css("color", "#f72734");
+			}
+
+			if (conValue2 != "none") {
+				$("#humidity2").css("color", "#f72734");
+			}
+
+			if (conValue3 != "none") {
+				$("#humidity3").css("color", "#f72734");
+			}
+
+		} else {
+			$("#condensation").css("display","none")
+			$("#humidity, #humidity2, #humidity3").css("color", "black");
+		}
+	}
+
+	function checkUValue(UValue1, UValue2, UValue3) {
+
+		if (UValue1 <= 0.05 || UValue2 <= 0.05 || UValue3 <= 0.05) {
+			$("#uvaluePop").css("display","block");
+
+			if (UValue1 <= 0.05) {
+				$("#uvalue").css("color", "#f72734");
+				$("#airtemp").css("color", "#f72734");
+				$("#clothing").css("color", "#f72734");
+			}
+
+			if (UValue2 <= 0.05) {
+				$("#uvalue2").css("color", "#f72734");
+				$("#airtemp2").css("color", "#f72734");
+				$("#clothing").css("color", "#f72734");
+			}
+
+			if (UValue3 <= 0.05) {
+				$("#uvalue3").css("color", "#f72734");
+				$("#airtemp3").css("color", "#f72734");
+				$("#clothing").css("color", "#f72734");
+			}
+
+		} else {
+			$("#uvaluePop").css("display","none")
+			$("#uvalue, #uvalue2, #uvalue3").css("color", "black");
+		}
+	}
 
 	function determineInputProportion() {
 
