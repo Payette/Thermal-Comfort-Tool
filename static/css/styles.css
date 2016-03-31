@@ -889,6 +889,44 @@ input[type=checkbox] {
 }
 
 
+.keepTogether span.discomfortIcon {
+	display: block;
+	float: left;
+	width: 12px;
+	height: 12px;
+	margin: 0px 5px 0 0;
+	background-size: 10px 10px;
+	background-position: left bottom;
+	background-repeat: no-repeat;
+}
+
+.blackTri {
+	background-image: url(../../static/images/triangle-black.png);
+}
+
+.blackCirc {
+	background-image: url(../../static/images/circle-black.png);
+}
+
+.redTri {
+	background-image: url(../../static/images/triangle-red.png);
+}
+
+.redCirc {
+	background-image: url(../../static/images/circle-red.png);
+}
+
+.greyTri {
+	background-image: url(../../static/images/triangle-grey.png);
+}
+
+.greyCirc {
+	background-image: url(../../static/images/circle-grey.png);
+}
+
+
+
+
 
 /* -- show cases only when selected -- */
 div.case2, div.case3, #inputs input.case2, #inputs input.case3, hr.case2, hr.case3 {
