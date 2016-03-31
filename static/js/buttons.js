@@ -8,9 +8,9 @@ $(".optionButton#IP").on("click", function(event) {
 		$(".units, .unitsTemp, .unitsUVal").removeClass("SI");
 		$(".units, .unitsTemp, .unitsUVal").addClass("IP");
 		$(".units, .unitsTemp, .unitsUVal").empty();
-		$(".units").append("(ft)");
-		$(".unitsTemp").append("(&deg;F)");
-		$(".unitsUVal").append("(Btu/hr*ft&sup2;*&deg;F)");
+		$(".units").append("ft");
+		$(".unitsTemp").append("&deg;F");
+		$(".unitsUVal").append("Btu/hr*ft&sup2;*&deg;F");
 	}
 })
 
@@ -25,8 +25,8 @@ $(".optionButton#SI").on("click", function(event) {
 		$(".units, .unitsTemp, .unitsUVal").removeClass("IP");
 		$(".units, .unitsTemp, .unitsUVal").addClass("SI");
 		$(".units, .unitsTemp, .unitsUVal").empty();
-		$(".units").append("(m)");
-		$(".unitsTemp").append("(&deg;C)");
-		$(".unitsUVal").append("(W/hr*m&sup2;*K)");
+		$(".units").append("m");
+		$(".unitsTemp").append("&deg;C");
+		$(".unitsUVal").append("W/hr*m&sup2;*K");
 	}
 })
