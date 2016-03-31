@@ -361,8 +361,6 @@ div#units, div#share {
 
 
 #inputs input[type=button].optionButton {
-	color: #777;
-	background-color: #fff;
 	padding: 1px 2px;
 	height: 16px;
 	margin: 0 5px;
@@ -373,6 +371,18 @@ div#units, div#share {
 	display: inline-block;
 	float: left;
 }
+
+#inputs input[type=button].optionButton.unselected {
+	color: #777;
+	background-color: #fff;
+}
+
+#inputs input[type=button].optionButton.selected {
+	color: #fff;
+	background-color: #777;
+}
+
+
 
 #inputs input[type=button].optionButton#PDF,  #inputs input[type=button].optionButton#URL{
 	width: 75px;

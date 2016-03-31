@@ -23,6 +23,7 @@
 	<script type="text/javascript" charset="utf-8" src="static/js/UValCalc.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/util.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/urlobject.js"></script>
+
 	
 	
 
@@ -147,8 +148,8 @@
 		<div id="options">
 			<div id="units">
 				<h2>Units</h2>
-				<input type="button" name="IP" id="IP" value="IP" class="optionButton">
-				<input type="button" name="SI" id="SI" value="SI" class="optionButton">
+				<input type="button" name="IP" id="IP" value="IP" class="optionButton selected">
+				<input type="button" name="SI" id="SI" value="SI" class="optionButton unselected">
 				<div style="clear:both;"></div>
 			</div>
 			<div id="share">
@@ -176,22 +177,22 @@
 			</div>
 			<hr>
 
-			<label for="ceiling">Ceiling Height (ft)</label>
+			<label for="ceiling">Ceiling Height <span class="units IP">(ft)</span></label>
 			<div class="inputWrapperLeft"><input type="text" name="ceiling" id="ceiling" min="1" max="100"  value="12" class="case1"></div>
 			<div class="inputWrapperCenter"><input type="text" name="ceiling2" id="ceiling2" min="1" max="100"  value="12" class="case2"></div>
 			<div class="inputWrapperRight"><input type="text" name="ceiling3" id="ceiling3" min="1" max="100"  value="12" class="case3"></div><br>
 
-			<label for="wallWidth">Room Length (ft)</label>
+			<label for="wallWidth">Room Length <span class="units IP">(ft)</span></label>
 			<div class="inputWrapperLeft"><input type="text" name="wallWidth" id="wallWidth" value="18" step="1" class="case1"></div>
 			<div class="inputWrapperCenter"><input type="text" name="wallWidth2" id="wallWidth2" value="18" step="1" class="case2"></div>
 			<div class="inputWrapperRight"><input type="text" name="wallWidth3" id="wallWidth3" value="18" step="1" class="case3"></div><br>
 			
-			<label for="windowHeight">Window Height (ft)<sup class="dimHover" id="windHeightButt">?</sup></label>
+			<label for="windowHeight">Window Height <span class="units IP">(ft)</span><sup class="dimHover" id="windHeightButt">?</sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="windowHeight" id="windowHeight" value="8" step="0.5" class="case1"></div>
 			<div class="inputWrapperCenter"><input type="text" name="windowHeight2" id="windowHeight2" value="8" step="0.5" class="case2"></div>
 			<div class="inputWrapperRight"><input type="text" name="windowHeight3" id="windowHeight3" value="8" step="0.5" class="case3"></div><br>
 
-			<label for="sill">Sill Height (ft)<sup class="dimHover" id="sillHeightButt">?</sup></label>
+			<label for="sill">Sill Height <span class="units IP">(ft)</span><sup class="dimHover" id="sillHeightButt">?</sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="sill" id="sill" value="3" step="0.5" class="case1"></div>
 			<div class="inputWrapperCenter"><input type="text" name="sill2" id="sill2" value="3" step="0.5" class="case2"></div>
 			<div class="inputWrapperRight"><input type="text" name="sill3" id="sill3" value="3" step="0.5" class="case3"></div><br>
@@ -199,7 +200,7 @@
 
 			<label for="">Set Glazing Amount By</label><br>
 
-			<label for="width" id="windowWidthLabel"><div class="customCheckStyle"><input type="checkbox" name="windowWidthCheck" id="windowWidthCheck" class="customCheck" checked><label for="windowWidthCheck" id="checkWindWidth"></label></div>Window Width (ft)<sup class="dimHover" id="windWidthButt">?</sup></label>
+			<label for="width" id="windowWidthLabel"><div class="customCheckStyle"><input type="checkbox" name="windowWidthCheck" id="windowWidthCheck" class="customCheck" checked><label for="windowWidthCheck" id="checkWindWidth"></label></div>Window Width <span class="units IP">(ft)</span><sup class="dimHover" id="windWidthButt">?</sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="width" id="windowWidth" value="4.5" step="0.5" class="case1"></div>
 			<div class="inputWrapperCenter"><input type="text" name="width2" id="windowWidth2" value="4.5" step="0.5" class="case2"></div>
 			<div class="inputWrapperRight"><input type="text" name="width3" id="windowWidth3" value="4.5" step="0.5" class="case3"></div><br>
@@ -210,7 +211,7 @@
 			<div class="inputWrapperRight"><input type="text" name="glazing3" class="inactive case3" id="glazing3" value="50" step="1"></div><br>
 
 
-			<label for="distWindow">Window Separation (ft)<sup class="dimHover" id="windSepButt">?</sup></label>
+			<label for="distWindow">Window Separation <span class="units IP">(ft)</span><sup class="dimHover" id="windSepButt">?</sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="distWindow" id="distWindow" value="6" step="1" class="case1"></div>
 			<div class="inputWrapperCenter"><input type="text" name="distWindow2" id="distWindow2" value="6" step="1" class="case2"></div>
 			<div class="inputWrapperRight"><input type="text" name="distWindow3" id="distWindow3" value="6" step="1" class="case3"></div><br>
@@ -225,7 +226,7 @@
 				<p>Warning! Thermal comfort cannot be achieved given the current glazing geometry and space/occupancy conditions, regardless of glazing performance. This is commonly due to low indoor air temperatures or low clothing values.</p>
 			</div>
 
-			<label for="uvalue">Window U-Value (Btu/hr*ft&sup2;*&deg;F)<sup id="fnref:1"><a href="#fn:1" rel="footnote">?</a></sup></label>
+			<label for="uvalue">Window U-Value <span class="unitsUVal IP">(Btu/hr*ft&sup2;*&deg;F)</span><sup id="fnref:1"><a href="#fn:1" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="uvalue" id="uvalue" value="0.25" step="0.01" class="case1"></div>
 			<div class="inputWrapperCenter"><input type="text" name="uvalue2" id="uvalue2" value="0.25" step="0.01" class="case2"></div>
 			<div class="inputWrapperRight"><input type="text" name="uvalue3" id="uvalue3" value="0.25" step="0.01" class="case3"></div><br>
@@ -253,12 +254,12 @@
 			<legend class="heading">Other</legend>
 			<hr>
 
-			<label for="outdoortemp">Outdoor Temperature (&deg;F)</label>
+			<label for="outdoortemp">Outdoor Temperature <span class="unitsTemp IP">(&deg;F)</span></label>
 			<div class="inputWrapperLeft"><input type="text" name="outdoortemp" id="outdoortemp" value="25" class="case1"></div>
 			<div class="inputWrapperCenter"><input type="text" name="outdoortemp2" id="outdoortemp2" value="25" class="case2"></div>
 			<div class="inputWrapperRight"><input type="text" name="outdoortemp3" id="outdoortemp3" value="25" class="case3"></div><br>
 
-			<label for="airtemp">Indoor Temperature (&deg;F)<sup id="fnref:7"><a href="#fn:7" rel="footnote">?</a></sup></label>
+			<label for="airtemp">Indoor Temperature <span class="unitsTemp IP">(&deg;F)</span><sup id="fnref:7"><a href="#fn:7" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="airtemp" id="airtemp" value="72" class="case1"></div>
 			<div class="inputWrapperCenter"><input type="text" name="airtemp2" id="airtemp2" value="72" class="case2"></div>
 			<div class="inputWrapperRight"><input type="text" name="airtemp3" id="airtemp3" value="72" class="case3"></div><br>
@@ -284,7 +285,7 @@
 			<div class="inputWrapperCenter"><div class="customCheckStyleCentered case2" id="offsetMiddle"><input type="checkbox" name="radiant2" id="radiant2" class="checkbox customCheck"><label for="radiant2" id="radiantCheck2" class="unselected"></label></div></div>
 			<div class="inputWrapperRight"><div class="customCheckStyleCentered case3" id="offsetLeft"><input type="checkbox" name="radiant3" id="radiant3" class="checkbox customCheck"><label for="radiant3" id="radiantCheck3" class="unselected"></label></div></div><br> -->
 
-			<label for="rvalue">Wall R-Value (Btu/hr*ft&sup2;*&deg;F)<sup id="fnref:5"><a href="#fn:5" rel="footnote">?</a></sup></label>
+			<label for="rvalue">Wall R-Value <span class="unitsUVal IP">(Btu/hr*ft&sup2;*&deg;F)</span><sup id="fnref:5"><a href="#fn:5" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="rvalue" id="rvalue" value="20" class="case1"></div>
 			<div class="inputWrapperCenter"><hr class="case2"></div>
 			<div class="inputWrapperRight"><hr class="case3"></div><br>
@@ -430,6 +431,8 @@
 
  	<!-- Compute Data -->
 	<script type="text/javascript" src="static/js/script.js"></script> 
+
+	<script type="text/javascript" charset="utf-8" src="static/js/buttons.js"></script>
 
 
 
