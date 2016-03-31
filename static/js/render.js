@@ -205,35 +205,53 @@ render.makeGraph = function () {
 		.style("fill", color3);
 
 	// Add point at occupant location
-	var occupantPoint = graphSvg.append("circle")
+	var occupantPoint = graphSvg.append("path")
 		.attr("class","occdot1")
-		.attr("r", 4)
-		.attr("cx", function(d) { return x(occPointData.dist); })
-		.attr("cy", function(d) { return y(occPointData.ppd); })
+		.attr("d", d3.svg.symbol()
+			.type(function() {
+				if (occPointData.govfact == "dwn") {
+					return "triangle-up";
+				} else if (occPointData.govfact == "mrt") {
+					return "circle";
+				}
+			})
+			.size("35"))
 		.attr("transform", function() {
-				return "translate(" + margin.left + "," + margin.top + ")";})
+				return "translate(" + (margin.left + x(occPointData.dist)) + "," + (margin.top + y(occPointData.ppd)) + ")";})
 		.style("fill", "#FFF")
 		.style("stroke-width", 3)
 		.style("stroke", color1);
 
-	var occupantPoint2 = graphSvg.append("circle")
+	var occupantPoint2 = graphSvg.append("path")
 		.attr("class","occdot2")
-		.attr("r", 4)
-		.attr("cx", function(d) { return x(occPointData2.dist); })
-		.attr("cy", function(d) { return y(occPointData2.ppd); })
+		.attr("d", d3.svg.symbol()
+			.type(function() {
+				if (occPointData2.govfact == "dwn") {
+					return "triangle-up";
+				} else if (occPointData2.govfact == "mrt") {
+					return "circle";
+				}
+			})
+			.size("35"))
 		.attr("transform", function() {
-				return "translate(" + margin.left + "," + margin.top + ")";})
+				return "translate(" + (margin.left + x(occPointData2.dist)) + "," + (margin.top + y(occPointData2.ppd)) + ")";})
 		.style("fill", "#FFF")
 		.style("stroke-width", 3)
 		.style("stroke", color2);
 
-	var occupantPoint3 = graphSvg.append("circle")
+	var occupantPoint3 = graphSvg.append("path")
 		.attr("class","occdot3")
-		.attr("r", 4)
-		.attr("cx", function(d) { return x(occPointData3.dist); })
-		.attr("cy", function(d) { return y(occPointData3.ppd); })
+		.attr("d", d3.svg.symbol()
+			.type(function() {
+				if (occPointData3.govfact == "dwn") {
+					return "triangle-up";
+				} else if (occPointData3.govfact == "mrt") {
+					return "circle";
+				}
+			})
+			.size("35"))
 		.attr("transform", function() {
-				return "translate(" + margin.left + "," + margin.top + ")";})
+				return "translate(" + (margin.left + x(occPointData3.dist)) + "," + (margin.top + y(occPointData3.ppd)) + ")";})
 		.style("fill", "#FFF")
 		.style("stroke-width", 3)
 		.style("stroke", color3);
@@ -1827,7 +1845,7 @@ render.makeGraph = function () {
 
 			checkCondensation(newCondensation, allData2.condensation, allData3.condensation);
 
-			updateGraphData(newDataset, newOccLocData, graphPoints, ".connectLine", "circle.occdot1");
+			updateGraphData(newDataset, newOccLocData, graphPoints, ".connectLine", ".occdot1");
 
 			occPointData = newOccLocData;
 
@@ -1846,7 +1864,7 @@ render.makeGraph = function () {
 
 			checkCondensation(allData.condensation, newCondensation, allData3.condensation);
 
-			updateGraphData(newDataset, newOccLocData, graphCase2Points, ".connectLine2", "circle.occdot2");
+			updateGraphData(newDataset, newOccLocData, graphCase2Points, ".connectLine2", ".occdot2");
 
 			occPointData2 = newOccLocData;
 		}
@@ -1864,7 +1882,7 @@ render.makeGraph = function () {
 
 			checkCondensation(allData.condensation, allData2.condensation, newCondensation);
 
-			updateGraphData(newDataset, newOccLocData, graphCase3Points, ".connectLine3", "circle.occdot3");
+			updateGraphData(newDataset, newOccLocData, graphCase3Points, ".connectLine3", ".occdot3");
 
 			occPointData3 = newOccLocData;
 		}
@@ -1905,13 +1923,13 @@ render.makeGraph = function () {
 
 
 		// Update the PPD graph and facade SVG.
-		updateGraphData(fullDataCase1.dataSet, fullDataCase1.occPtInfo, graphPoints, ".connectLine", "circle.occdot1");
+		updateGraphData(fullDataCase1.dataSet, fullDataCase1.occPtInfo, graphPoints, ".connectLine", ".occdot1");
 		updateFacade(case1Data, fullDataCase1.glzCoords, fullDataCase1.windowWidth, fullDataCase1.windowHeight);
 
-		updateGraphData(fullDataCase2.dataSet, fullDataCase2.occPtInfo, graphCase2Points, ".connectLine2", "circle.occdot2");
+		updateGraphData(fullDataCase2.dataSet, fullDataCase2.occPtInfo, graphCase2Points, ".connectLine2", ".occdot2");
 		updateFacade(case2Data, fullDataCase2.glzCoords, fullDataCase2.windowWidth, fullDataCase2.windowHeight);
 
-		updateGraphData(fullDataCase3.dataSet, fullDataCase3.occPtInfo, graphCase3Points, ".connectLine3", "circle.occdot3");
+		updateGraphData(fullDataCase3.dataSet, fullDataCase3.occPtInfo, graphCase3Points, ".connectLine3", ".occdot3");
 		updateFacade(case3Data, fullDataCase3.glzCoords, fullDataCase3.windowWidth, fullDataCase3.windowHeight);
 
 		checkUValue(case1Data.uvalueValue, case2Data.uvalueValue, case3Data.uvalueValue);
@@ -1959,10 +1977,19 @@ render.makeGraph = function () {
 
 		//update occupant point if different
 		d3.selectAll(occSelector)
-			.attr("cx", function(d) { return x(upOccupantPoint.dist); })
-			.attr("cy", function(d) { return y(upOccupantPoint.ppd); })
+			.attr("d", d3.svg.symbol()
+				.type(function() {
+					if (upOccupantPoint.govfact == "dwn") {
+						return "triangle-up";
+					} else if (upOccupantPoint.govfact == "mrt") {
+						return "circle";
+					}
+				})
+				.size("35"))
+			.attr("transform", function() {
+				return "translate(" + (margin.left + x(upOccupantPoint.dist)) + "," + (margin.top + y(upOccupantPoint.ppd)) + ")";})
 			.transition()
-			.duration(1000);
+			.duration(500);
 
 		d3.selectAll(".occupantLine").remove();
 		occupantDistanceRefLine();
@@ -2308,21 +2335,21 @@ render.makeGraph = function () {
 		if ($("#caseSelection #case1Label").hasClass("unselected") == false ) {
 			totalText = case1Text;
 
-			var case1YPosition = parseFloat(d3.select("circle.occdot1").attr("cy"));
+			var case1YPosition = y(occPointData.ppd);
 			compareOccupantArray.push(case1YPosition);
 		}
 
 		if ($("#caseSelection #case2Label").hasClass("unselected") == false ) {
 			totalText = totalText + case2Text;
 
-			var case2YPosition = parseFloat(d3.select("circle.occdot2").attr("cy"));
+			var case2YPosition = y(occPointData2.ppd);
 			compareOccupantArray.push(case2YPosition);
 		}
 
 		if ($("#caseSelection #case3Label").hasClass("unselected") == false ) {
 			totalText = totalText + case3Text;
 
-			var case3YPosition = parseFloat(d3.select("circle.occdot3").attr("cy"));
+			var case3YPosition = y(occPointData3.ppd);
 			compareOccupantArray.push(case3YPosition);
 		}
 
@@ -2331,7 +2358,7 @@ render.makeGraph = function () {
 
 		var divHeight = $("div#thresholdTooltip").height() - 10; //10 = padding
 
-		var xPosition = parseFloat(d3.select("circle.occdot1").attr("cx")) + margin.left; // same for all cases
+		var xPosition = x(occPointData.dist) + margin.left; // same for all cases
 		var yPosition = d3.min(compareOccupantArray) - divHeight;
 
 		d3.select("#thresholdTooltip")
@@ -2425,25 +2452,25 @@ render.makeGraph = function () {
 		var compareOccupantArray = [];
 
 		if ($("#caseSelection #case1Label").hasClass("unselected") == false ) {
-			var case1YPosition = parseFloat(d3.select("circle.occdot1").attr("cy"));
+			var case1YPosition = y(occPointData.ppd);
 			compareOccupantArray.push(case1YPosition);
 		}
 
 		if ($("#caseSelection #case2Label").hasClass("unselected") == false ) {
-			var case2YPosition = parseFloat(d3.select("circle.occdot2").attr("cy"));
+			var case2YPosition = y(occPointData2.ppd);
 			compareOccupantArray.push(case2YPosition);
 		}
 
 		if ($("#caseSelection #case3Label").hasClass("unselected") == false ) {
-			var case3YPosition = parseFloat(d3.select("circle.occdot3").attr("cy"));
+			var case3YPosition = y(occPointData3.ppd);
 			compareOccupantArray.push(case3YPosition);
 		}
 
 
 
-		var xPosition = parseFloat(d3.select("circle.occdot1").attr("cx"));
+		var xPosition = x(occPointData.dist);
 		var yPosition = d3.max(compareOccupantArray);
-		var padding = (d3.select("circle.occdot1").attr("r"))*1.8;
+		var padding = 8;
 
 		// add line
 		graphSvg.append("line")
