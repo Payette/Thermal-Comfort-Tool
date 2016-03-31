@@ -219,7 +219,7 @@ render.makeGraph = function () {
 		.attr("transform", function() {
 				return "translate(" + (margin.left + x(occPointData.dist)) + "," + (margin.top + y(occPointData.ppd)) + ")";})
 		.style("fill", "#FFF")
-		.style("stroke-width", 3)
+		.style("stroke-width", 2)
 		.style("stroke", color1);
 
 	var occupantPoint2 = graphSvg.append("path")
@@ -236,7 +236,7 @@ render.makeGraph = function () {
 		.attr("transform", function() {
 				return "translate(" + (margin.left + x(occPointData2.dist)) + "," + (margin.top + y(occPointData2.ppd)) + ")";})
 		.style("fill", "#FFF")
-		.style("stroke-width", 3)
+		.style("stroke-width", 2)
 		.style("stroke", color2);
 
 	var occupantPoint3 = graphSvg.append("path")
@@ -253,7 +253,7 @@ render.makeGraph = function () {
 		.attr("transform", function() {
 				return "translate(" + (margin.left + x(occPointData3.dist)) + "," + (margin.top + y(occPointData3.ppd)) + ")";})
 		.style("fill", "#FFF")
-		.style("stroke-width", 3)
+		.style("stroke-width", 2)
 		.style("stroke", color3);
 
 	// Add line at occupant location
@@ -307,8 +307,10 @@ render.makeGraph = function () {
 
 		//Get this dots x/y values, then augment for the tooltip
 		var thisHeight = $("#tooltip").height();
-		var xPosition = parseFloat(d3.select(this).attr("cx")) + margin.left;
-		var yPosition = parseFloat(d3.select(this).attr("cy")) - thisHeight + 10;
+		var xPosition = x(d.dist) + margin.left;
+		var yPosition = y(d.ppd) - thisHeight + 13;
+
+
 
 
 		d3.select("#tooltip")
@@ -542,9 +544,9 @@ render.makeGraph = function () {
 
 
 	//Ensure size of occupant image is correct
-/*	checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
-	checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
-	checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");*/
+	checkOccupantImageSize(case1Data, "#occupantImage", "#sliderWrapper", "#case1Heading");
+	checkOccupantImageSize(case2Data, "#occupantImage2", "#sliderWrapper2", "#case2Heading");
+	checkOccupantImageSize(case3Data, "#occupantImage3", "#sliderWrapper3", "#case3Heading");
 
 
 
@@ -981,6 +983,7 @@ render.makeGraph = function () {
 
 	$("#occupantDist").change(function(event) {
 		//assign new value
+
 		case1Data.occDistToWallCenter = $(this).val();
 		$("#occupantDist").attr("value", case1Data.occDistToWallCenter);
 
@@ -1715,6 +1718,8 @@ render.makeGraph = function () {
 			$("#lowELabel3").addClass("inactive");
 			$("#checkLowE3").addClass("unselected");
 		}
+
+		updateData(case3Data);
 	})
 
 	// Case 3 - Changes based on increment buttons
@@ -2099,10 +2104,10 @@ render.makeGraph = function () {
 		// Update dimensions
 		$("#windowHeightDimLabel, #sillHeightDimLabelTop, #sillHeightDimLabelBottom, .dimensions").remove();
 		windowDimensions(glzCoords, glzWidth, glzHeight);
-		/*
-		checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist",  "#occDistLabel");
-		checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#occDistLabel2");
-		checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#occDistLabel3");*/
+		
+		checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist", "#case1Heading");
+		checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#case2Heading");
+		checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#case3Heading");
 
 
 	}
@@ -2110,8 +2115,6 @@ render.makeGraph = function () {
 
 
 	function checkOccupantImageSize(caseName, imageID, sliderID, labelID) {
-
-
 
 		var imageHeight = $("#occupantImage").height();
 		var imageWidth = $("#occupantImage").width();
@@ -2121,15 +2124,7 @@ render.makeGraph = function () {
 		var originalWidth = 360;
 
 		//assume 4.25ft sitting height
-		var resizeHeight;
-
-		if (caseName == case1Data) {
-			resizeHeight = Math.round(facadeScaleHeightCase1(4.25));
-		} else if (caseName == case2Data) {
-			resizeHeight = Math.round(facadeScaleHeightCase2(4.25));
-		} else if (caseName == case3Data) {
-			resizeHeight = Math.round(facadeScaleHeightCase3(4.25));
-		}
+		var resizeHeight = resizeHeight = Math.round(facadeScaleHeight(4.25));
 
 
 		var resizeWidth = Math.round((resizeHeight/originalHeight)*originalWidth);
@@ -2137,7 +2132,7 @@ render.makeGraph = function () {
 		var diffBtwSVGandFacade = facWidth - facadeScaleWidth(caseName.wallLen);
 
 
-		var newLeft = margin.left - resizeWidth/2 + facadeScaleWidth(caseName.wallLen/2);
+		var newLeft = 0 - resizeWidth/2;
 		var newBottom = Math.round(resizeHeight + facMargin.bottom*2);
 
 		var newbackgroundsize = resizeWidth.toString() + "px " + resizeHeight.toString() + "px";
@@ -2145,19 +2140,21 @@ render.makeGraph = function () {
 		$(imageID).css({
 			width: resizeWidth,
 			height: resizeHeight,
-			left: newLeft,
+			//left: newLeft,
 			bottom: newBottom,
 			backgroundSize: newbackgroundsize,
 		})
 
-		$(sliderID).css({
-			width: facadeScaleWidth(caseName.wallLen)/2,
-			right: diffBtwSVGandFacade + facMargin.right,
+		$(labelID).css({
+			width: facadeScaleWidth(caseName.wallLen)/2
 		})
 
-		$(labelID).css({
-			right: diffBtwSVGandFacade + facMargin.right,
+
+		$(sliderID).css({
+			width: facadeScaleWidth(caseName.wallLen)/2,
 		})
+
+		
 
 	}
 
@@ -2174,11 +2171,11 @@ render.makeGraph = function () {
 
 		var newPosition = sliderScale(caseName.occDistToWallCenter);
 
-		var newLeft = margin.left - imageWidth/2 + facadeScaleWidth(caseName.wallLen/2) + newPosition;
+		var newLeftPosition = (0 - imageWidth/2 + newPosition) + "px";
 
 	   	// Move occupant image
 	   	$(imageID).css({
-	       left: newLeft,
+	       left: newLeftPosition,
 		})
 	}
 
@@ -2325,8 +2322,6 @@ render.makeGraph = function () {
 		var case3Text = occupantPositionText(occPointData3, "case3Text", "Case 3");
 	
 
-		
-
 
 		//find min cy of visible occ points
 		var compareOccupantArray = [];
@@ -2335,22 +2330,22 @@ render.makeGraph = function () {
 		if ($("#caseSelection #case1Label").hasClass("unselected") == false ) {
 			totalText = case1Text;
 
-			var case1YPosition = y(occPointData.ppd);
-			compareOccupantArray.push(case1YPosition);
+			var case1Position = occPointData.ppd;
+			compareOccupantArray.push(case1Position);
 		}
 
 		if ($("#caseSelection #case2Label").hasClass("unselected") == false ) {
 			totalText = totalText + case2Text;
 
-			var case2YPosition = y(occPointData2.ppd);
-			compareOccupantArray.push(case2YPosition);
+			var case2Position = occPointData2.ppd;
+			compareOccupantArray.push(case2Position);
 		}
 
 		if ($("#caseSelection #case3Label").hasClass("unselected") == false ) {
 			totalText = totalText + case3Text;
 
-			var case3YPosition = y(occPointData3.ppd);
-			compareOccupantArray.push(case3YPosition);
+			var case3Position = occPointData3.ppd;
+			compareOccupantArray.push(case3Position);
 		}
 
 
@@ -2359,7 +2354,17 @@ render.makeGraph = function () {
 		var divHeight = $("div#thresholdTooltip").height() - 10; //10 = padding
 
 		var xPosition = x(occPointData.dist) + margin.left; // same for all cases
-		var yPosition = d3.min(compareOccupantArray) - divHeight;
+		var yPosition;
+		if (d3.max(compareOccupantArray) < 25) {
+			// all ppd values are less than 25
+			yPosition = y(d3.max(compareOccupantArray)) - divHeight;
+		} else if (($("#caseSelection #case2Label").hasClass("unselected") == true) && ($("#caseSelection #case3Label").hasClass("unselected") == true) && occPointData.ppd > 25) {
+			// only case 1 is shown, and it's ppd is more than 25
+			yPosition = y(occPointData.ppd) - divHeight;
+		} else {
+			// multiple cases are shown, and one of them has a ppd more than 25
+			yPosition = y(d3.min(compareOccupantArray)) + divHeight + margin.top;
+		}
 
 		d3.select("#thresholdTooltip")
 		.style("left", xPosition + "px")
@@ -2578,36 +2583,21 @@ render.makeGraph = function () {
 
 		// window height
 		facadeSvgCase1.append("g")
-			.attr("id", "windowHeightDimLabel")
-			.attr("transform", "translate(" + (middleWidth + facMargin.left + 3) + "," + (verticalWindowMidpoint + facMargin.top) + ")")
-			.append("text")
-		    .attr("class", "facadelabel")
-		    .attr("text-anchor", "middle")
-		    .attr("transform", "rotate(-90)")
-		    .text("Window Height");
-
-		facadeSvgCase1.append("g")
 			.attr("class", "dimensions")
 			.attr("id", "windowHeightDim")
 			.attr("transform", "translate(" + facMargin.left + "," + ( facMargin.top) + ")");
 
 		var windowHeightDimensions = facadeSvgCase1.selectAll("#windowHeightDim");
 
-		windowHeightDimensions.append("line") // add line to left of text
-		    .attr("class", "dimline")
-		    .attr("x2", middleWidth)
-			.attr("x1", middleWidth)
-			.attr("y1", verticalWindowMidpoint + 50)
-			.attr("y2", bottomOfWindow)
-			.attr("marker-end", "url(#arrowhead)");
-
-		windowHeightDimensions.append("line") // add line to right of text
+		windowHeightDimensions.append("line") 
 		    .attr("class", "dimline")
 		    .attr("x2", middleWidth)
 			.attr("x1", middleWidth)
 			.attr("y1", topOfWindow)
-			.attr("y2", verticalWindowMidpoint - 50)
+			.attr("y2", bottomOfWindow)
+			.attr("marker-end", "url(#arrowhead)")
 			.attr("marker-start", "url(#arrowhead)");
+
 
 
 
@@ -2619,55 +2609,18 @@ render.makeGraph = function () {
 
 		var windowWidthDimensions = facadeSvgCase1.selectAll("#windowWidthDim");
 
-		windowWidthDimensions.append("line") // add line to left of text
+		windowWidthDimensions.append("line") 
 		    .attr("class", "dimline")
 		    .attr("x1", leftEdgeWindow)
-			.attr("x2", middleWidth - 25)
-			.attr("y1", verticalWindowMidpoint)
-			.attr("y2", verticalWindowMidpoint)
-			.attr("marker-start", "url(#arrowhead)");
-
-		windowWidthDimensions.append("line") // add line to right of text
-		    .attr("class", "dimline")
-		    .attr("x1", middleWidth + 25)
 			.attr("x2", leftEdgeWindow + facadeScaleWidth(glazingWidth))
 			.attr("y1", verticalWindowMidpoint)
 			.attr("y2", verticalWindowMidpoint)
+			.attr("marker-start", "url(#arrowhead)")
 			.attr("marker-end", "url(#arrowhead)");
 
-		windowWidthDimensions.append("text")
-		    .attr("class", "facadelabel")
-		    .attr("text-anchor", "middle")
-		    .attr("x", middleWidth)
-		    .attr("y", verticalWindowMidpoint - 3)
-		    .text("Window");
-
-		windowWidthDimensions.append("text")
-		    .attr("class", "facadelabel")
-		    .attr("text-anchor", "middle")
-		    .attr("x", middleWidth)
-		    .attr("y", verticalWindowMidpoint + 12)
-		    .text("Width");
 
 
 		//sill height
-		facadeSvgCase1.append("g")
-			.attr("id", "sillHeightDimLabelTop")
-			.attr("transform", "translate(" + (middleWidth + facMargin.left - 4) + "," + (bottomOfWindow + sillHeightPixels/2 + facMargin.top) + ")")
-			.append("text")
-		    .attr("class", "facadelabel")
-		    .attr("text-anchor", "middle")
-		    .attr("transform", "rotate(-90)")
-		    .text("Sill");
-
-		facadeSvgCase1.append("g")
-			.attr("id", "sillHeightDimLabelBottom")
-			.attr("transform", "translate(" + (middleWidth + facMargin.left + 12) + "," + (bottomOfWindow + sillHeightPixels/2 + facMargin.top) + ")")
-			.append("text")
-		    .attr("class", "facadelabel")
-		    .attr("text-anchor", "middle")
-		    .attr("transform", "rotate(-90)")
-		    .text("Height");
 
 		facadeSvgCase1.append("g")
 			.attr("class", "dimensions")
@@ -2676,21 +2629,15 @@ render.makeGraph = function () {
 
 		var sillHeightDimensions = facadeSvgCase1.selectAll("#sillHeightDim");
 
-		sillHeightDimensions.append("line") // add line to left of text
-		    .attr("class", "dimline")
-		    .attr("x2", middleWidth)
-			.attr("x1", middleWidth)
-			.attr("y1", bottomOfWindow + sillHeightPixels/2 + 10)
-			.attr("y2", bottomOfWindow + sillHeightPixels)
-			.attr("marker-end", "url(#arrowhead)");
-
-		sillHeightDimensions.append("line") // add line to right of text
+		sillHeightDimensions.append("line")
 		    .attr("class", "dimline")
 		    .attr("x2", middleWidth)
 			.attr("x1", middleWidth)
 			.attr("y1", bottomOfWindow)
-			.attr("y2", bottomOfWindow + sillHeightPixels/2 - 10)
+			.attr("y2", bottomOfWindow + sillHeightPixels)
+			.attr("marker-end", "url(#arrowhead)")
 			.attr("marker-start", "url(#arrowhead)");
+
 
 
 
@@ -2703,30 +2650,15 @@ render.makeGraph = function () {
 		var windowSepDimensions = facadeSvgCase1.selectAll("#windowSepDim");
 
 
-		windowSepDimensions.append("line") // add line to left of text
+		windowSepDimensions.append("line")
 		    .attr("class", "dimline")
 		    .attr("x1", middleWidth)
-			.attr("x2", middleWidth + windowSeparationPixels/2 - 60)
-			.attr("y1", verticalWindowMidpoint)
-			.attr("y2", verticalWindowMidpoint)
-			.attr("marker-start", "url(#arrowhead)");
-
-		windowSepDimensions.append("line") // add line to right of text
-		    .attr("class", "dimline")
-		    .attr("x1", middleWidth + windowSeparationPixels/2 + 60)
 			.attr("x2", middleWidth + windowSeparationPixels)
 			.attr("y1", verticalWindowMidpoint)
 			.attr("y2", verticalWindowMidpoint)
+			.attr("marker-start", "url(#arrowhead)")
 			.attr("marker-end", "url(#arrowhead)");
 
-
-
-		windowSepDimensions.append("text")
-		    .attr("class", "facadelabel")
-		    .attr("text-anchor", "middle")
-		    .attr("x", middleWidth + windowSeparationPixels/2)
-		    .attr("y", verticalWindowMidpoint + 4)
-		    .text("Window Separation");
 
 	}
 

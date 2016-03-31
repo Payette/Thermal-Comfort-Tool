@@ -63,27 +63,27 @@
 		<div id="facadeWrapper">
 			<div id="case1FacadeWrapper">
 				<div id="case1Chart"></div>
-				<h1 class="facadeHeading case1Text">Case 1</h1>
-<!-- 			<div id="sliderWrapper">
+				<h1 id="case1Heading" class="facadeHeading case1Text">Case 1</h1>
+ 				<div id="sliderWrapper">
 					<input type="range" name="occupantDist" id="occupantDist" min="0" max="20" value="0"/>
 					<output for="occupantDist" id="occupantImage"/></output>
-				</div> -->
+				</div>
 			</div>
 			<div id="case2FacadeWrapper">
 				<div id="case2Chart"></div>
 				<h1 id="case2Heading" class="facadeHeading greyText">Case 2</h1>
-<!-- 			<div id="sliderWrapper2">
+	 			<div id="sliderWrapper2">
 					<input type="range" name="occupantDist2" id="occupantDist2" min="0" max="20" value="0"/>
 					<output for="occupantDist2" id="occupantImage2"/></output>
-				</div> -->
+				</div> 
 			</div>
 			<div id="case3FacadeWrapper">
 				<div id="case3Chart"></div>
 				<h1 id="case3Heading" class="facadeHeading greyText">Case 3</h1>
-<!-- 			<div id="sliderWrapper3">
+ 			<div id="sliderWrapper3">
 					<input type="range" name="occupantDist3" id="occupantDist3" min="0" max="20" value="0"/>
 					<output for="occupantDist3" id="occupantImage3"/></output>
-				</div> -->
+				</div> 
 			</div>
 			<div style="clear:both;"></div>
 		</div>
@@ -145,12 +145,19 @@
 		<p>This tool evaluates potential thermal discomfort caused by glazing design and properties on occupants in the winter time. To learn more about the principles behind downdraft and radiant discomfort, and how to mitigate them, refer to the resources at the end of this page.</p>
 
 		<div id="options">
-			<h2>Units</h2>
-			<input type="button" name="IP" id="IP" value="IP">
-			<input type="button" name="SI" id="SI" value="SI">
-			<h2>Share</h2>
-			<input type="button" name="PDF" id="PDF" value="Save as PDF">
-			<input type="button" name="URL" id="URL" value="Copy URL Link">
+			<div id="units">
+				<h2>Units</h2>
+				<input type="button" name="IP" id="IP" value="IP" class="optionButton">
+				<input type="button" name="SI" id="SI" value="SI" class="optionButton">
+				<div style="clear:both;"></div>
+			</div>
+			<div id="share">
+				<h2>Share</h2>
+				<input type="button" name="PDF" id="PDF" value="Save as PDF" class="optionButton">
+				<input type="button" name="URL" id="URL" value="Copy URL Link" class="optionButton">
+				<div style="clear:both;"></div>
+
+			</div>
 		</div>
 
 		
