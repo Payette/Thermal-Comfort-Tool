@@ -153,37 +153,55 @@ render.makeGraph = function () {
 	var graphPoints = graphSvg.selectAll(".dotCase1")
 		.data(dataset)
 		.enter()
-		.append("circle")
+		.append("path")
 		.attr("class","dotCase1")
-		.attr("r", 3.5)
-		.attr("cx", function(d) { return x(d.dist); })
-		.attr("cy", function(d) { return y(d.ppd); })
-		.attr("transform", function() {
-				return "translate(" + margin.left + "," + margin.top + ")";})
+		.attr("d", d3.svg.symbol()
+			.type(function(d) {
+				if (d.govfact == "dwn") {
+					return "triangle-up";
+				} else if (d.govfact == "mrt") {
+					return "circle";
+				}
+			})
+			.size("35"))
+		.attr("transform", function(d) {
+				return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
 		.style("fill", color1);
 
 	var graphCase2Points = graphSvg.selectAll(".dotCase2")
 		.data(dataset2)
 		.enter()
-		.append("circle")
+		.append("path")
 		.attr("class","dotCase2")
-		.attr("r", 3.5)
-		.attr("cx", function(d) { return x(d.dist); })
-		.attr("cy", function(d) { return y(d.ppd); })
-		.attr("transform", function() {
-				return "translate(" + margin.left + "," + margin.top + ")";})
+		.attr("d", d3.svg.symbol()
+			.type(function(d) {
+				if (d.govfact == "dwn") {
+					return "triangle-up";
+				} else if (d.govfact == "mrt") {
+					return "circle";
+				}
+			})
+			.size("35"))
+		.attr("transform", function(d) {
+				return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
 		.style("fill", color2);
 
 	var graphCase3Points = graphSvg.selectAll(".dotCase3")
 		.data(dataset3)
 		.enter()
-		.append("circle")
+		.append("path")
 		.attr("class","dotCase3")
-		.attr("r", 3.5)
-		.attr("cx", function(d) { return x(d.dist); })
-		.attr("cy", function(d) { return y(d.ppd); })
-		.attr("transform", function() {
-				return "translate(" + margin.left + "," + margin.top + ")";})
+		.attr("d", d3.svg.symbol()
+			.type(function(d) {
+				if (d.govfact == "dwn") {
+					return "triangle-up";
+				} else if (d.govfact == "mrt") {
+					return "circle";
+				}
+			})
+			.size("35"))
+		.attr("transform", function(d) {
+				return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
 		.style("fill", color3);
 
 	// Add point at occupant location
@@ -1809,7 +1827,7 @@ render.makeGraph = function () {
 
 			checkCondensation(newCondensation, allData2.condensation, allData3.condensation);
 
-			updateGraphData(newDataset, newOccLocData, graphPoints, ".connectLine", "circle.occdot1", color1);
+			updateGraphData(newDataset, newOccLocData, graphPoints, ".connectLine", "circle.occdot1");
 
 			occPointData = newOccLocData;
 
@@ -1828,7 +1846,7 @@ render.makeGraph = function () {
 
 			checkCondensation(allData.condensation, newCondensation, allData3.condensation);
 
-			updateGraphData(newDataset, newOccLocData, graphCase2Points, ".connectLine2", "circle.occdot2", color2);
+			updateGraphData(newDataset, newOccLocData, graphCase2Points, ".connectLine2", "circle.occdot2");
 
 			occPointData2 = newOccLocData;
 		}
@@ -1846,7 +1864,7 @@ render.makeGraph = function () {
 
 			checkCondensation(allData.condensation, allData2.condensation, newCondensation);
 
-			updateGraphData(newDataset, newOccLocData, graphCase3Points, ".connectLine3", "circle.occdot3", color3);
+			updateGraphData(newDataset, newOccLocData, graphCase3Points, ".connectLine3", "circle.occdot3");
 
 			occPointData3 = newOccLocData;
 		}
@@ -1887,13 +1905,13 @@ render.makeGraph = function () {
 
 
 		// Update the PPD graph and facade SVG.
-		updateGraphData(fullDataCase1.dataSet, fullDataCase1.occPtInfo, graphPoints, ".connectLine", "circle.occdot1", color1);
+		updateGraphData(fullDataCase1.dataSet, fullDataCase1.occPtInfo, graphPoints, ".connectLine", "circle.occdot1");
 		updateFacade(case1Data, fullDataCase1.glzCoords, fullDataCase1.windowWidth, fullDataCase1.windowHeight);
 
-		updateGraphData(fullDataCase2.dataSet, fullDataCase2.occPtInfo, graphCase2Points, ".connectLine2", "circle.occdot2", color2);
+		updateGraphData(fullDataCase2.dataSet, fullDataCase2.occPtInfo, graphCase2Points, ".connectLine2", "circle.occdot2");
 		updateFacade(case2Data, fullDataCase2.glzCoords, fullDataCase2.windowWidth, fullDataCase2.windowHeight);
 
-		updateGraphData(fullDataCase3.dataSet, fullDataCase3.occPtInfo, graphCase3Points, ".connectLine3", "circle.occdot3", color3);
+		updateGraphData(fullDataCase3.dataSet, fullDataCase3.occPtInfo, graphCase3Points, ".connectLine3", "circle.occdot3");
 		updateFacade(case3Data, fullDataCase3.glzCoords, fullDataCase3.windowWidth, fullDataCase3.windowHeight);
 
 		checkUValue(case1Data.uvalueValue, case2Data.uvalueValue, case3Data.uvalueValue);
@@ -1914,13 +1932,21 @@ render.makeGraph = function () {
 
 	/* ------ FUNCTIONS TO UPDATE VISUALS ------ */
 
-	function updateGraphData(upDataset, upOccupantPoint, dotSelector, lineSelector, occSelector, color) {
+	function updateGraphData(upDataset, upOccupantPoint, dotSelector, lineSelector, occSelector) {
 
 		//update graph with revised data
 		dotSelector.data(upDataset)
-			.attr("cx", function(d) { return x(d.dist); })
-			.attr("cy", function(d) { return y(d.ppd); })
-			.style("fill", color)
+			.attr("d", d3.svg.symbol()
+				.type(function(d) {
+					if (d.govfact == "dwn") {
+						return "triangle-up";
+					} else if (d.govfact == "mrt") {
+						return "circle";
+					}
+				})
+				.size("35"))
+			.attr("transform", function(d) {
+					return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
 			.transition()
 			.duration(500);
 
@@ -1935,7 +1961,6 @@ render.makeGraph = function () {
 		d3.selectAll(occSelector)
 			.attr("cx", function(d) { return x(upOccupantPoint.dist); })
 			.attr("cy", function(d) { return y(upOccupantPoint.ppd); })
-			.style("stroke", color)
 			.transition()
 			.duration(1000);
 
