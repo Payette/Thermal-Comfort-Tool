@@ -156,6 +156,8 @@ body {
 	font-weight: 500;
 	font-size: 10px;
 	margin: 0;
+	display: inline-block;
+	float: left;
 }
 
 .greyText {
@@ -243,8 +245,9 @@ rect.blue {
 
 
 #sliderWrapper, #sliderWrapper2, #sliderWrapper3 {
-	width: 86px;
 	height: 10px;
+	float: left;
+	position: relative;
 }
 
 .occSlider {
@@ -281,30 +284,19 @@ rect.blue {
 	background-size: 180px 250px;
 	display: inline-block;
 	bottom: 510px; /* imageHeight + facMargin.bottom*2*/
-	left: 0; /* = slidderWidth - imageWidth/2 */
+	left: -15px; /* - imageWidth/2 */
 	opacity: .8;
 }
 
 
-#occDistLabel, #occDistLabel2, #occDistLabel3 {
-	font-family: "museo-sans", sans-serif;
-	font-size: 12px;
-	font-weight: 300;
-	background-color: #fff;
-	display: inline;
-	float: right;
-	margin-right: 10px;
-	position: relative;
-}
-
 
 #occupantDist, #occupantDist2, #occupantDist3 {
-	width: 250px;
 	margin: 0;
 	padding: 0;
 	border: 0;
-	float: right;
-	position: relative;
+	position: absolute;
+	width: 100%;
+	top: -3px;
 }
 
 
@@ -313,14 +305,12 @@ rect.blue {
 	height: 2px;
 	background-color: #d5d5d5;
 	margin-right: 3px;
-	vertical-align:middle;
 }
 #occupantDist::-webkit-slider-runnable-track, #occupantDist2::-webkit-slider-runnable-track, #occupantDist3::-webkit-slider-runnable-track, #ppd::-webkit-slider-runnable-track, #distFromFacade::-webkit-slider-runnable-track {
 	-webkit-appearance: none;
 	height: 2px;
 	background-color: #d5d5d5;
 	margin-right: 3px;
-	vertical-align:middle;
 }
 
 #occupantDist::-moz-range-thumb, #occupantDist2::-moz-range-thumb, #occupantDist3::-moz-range-thumb, #ppd::-moz-range-thumb, #distFromFacade::-moz-range-thumb {
@@ -330,7 +320,6 @@ rect.blue {
     border-radius: 5px;
     height: 5px;
     width: 5px;
-    vertical-align:middle;
 }
 
 #occupantDist::-webkit-slider-thumb, #occupantDist2::-webkit-slider-thumb, #occupantDist3::-webkit-slider-thumb, #ppd::-webkit-slider-thumb, #distFromFacade::-webkit-slider-thumb {
@@ -340,7 +329,6 @@ rect.blue {
     border-radius: 5px;
     height: 5px;
     width: 5px;
-    vertical-align:middle;
 }
 
 
@@ -353,6 +341,12 @@ rect.blue {
 	padding: 10px 0px 15px 0px;
 }
 
+div#units, div#share {
+	margin-right: 30px;
+	float: left;
+}
+
+
 
 #options h2 {
 	color: #000;
@@ -361,9 +355,46 @@ rect.blue {
 	text-transform: uppercase;
 	padding: 0;
 	margin: 0;
-
+	display: inline-block;
 	float: left;
 }
+
+
+#options input[type=button].optionButton {
+	padding: 1px 2px;
+	height: 16px;
+	margin: 0 5px;
+	border-radius: 10px;
+	border: 1px solid #777;
+	cursor: pointer;
+	text-align: center;
+	display: inline-block;
+	float: left;
+}
+
+#options input[type=button].optionButton.unselected {
+	color: #777;
+	background-color: #fff;
+}
+
+#options input[type=button].optionButton.selected {
+	color: #fff;
+	background-color: #777;
+}
+
+
+
+#options input[type=button].optionButton#PDF,  #inputs input[type=button].optionButton#URL{
+	width: 75px;
+}
+
+#options input[type=button].optionButton:hover {
+	color: #fff;
+	background-color: #777;
+}
+
+
+
 
 
 #caseWrapper {
@@ -428,7 +459,6 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 	background: url(../../static/images/expand-unselected.png) 0 0 no-repeat;
 	background-size: 11px 11px;
 }
-
 
 
 
@@ -622,6 +652,14 @@ div.inputWrapperRight span {
 	cursor: pointer;
 	text-align: center;
 }
+
+#inputs input[type=button]#calcUValue:hover {
+	color: #fff;
+	background-color: #777;
+}
+
+
+
 
 #inputs p {
 	font-size: 10px;
@@ -887,6 +925,44 @@ input[type=checkbox] {
 	display: inline-block;
 	width: 100%;
 }
+
+
+.keepTogether span.discomfortIcon {
+	display: block;
+	float: left;
+	width: 12px;
+	height: 12px;
+	margin: 0px 5px 0 0;
+	background-size: 10px 10px;
+	background-position: left bottom;
+	background-repeat: no-repeat;
+}
+
+.blackTri {
+	background-image: url(../../static/images/triangle-black.png);
+}
+
+.blackCirc {
+	background-image: url(../../static/images/circle-black.png);
+}
+
+.redTri {
+	background-image: url(../../static/images/triangle-red.png);
+}
+
+.redCirc {
+	background-image: url(../../static/images/circle-red.png);
+}
+
+.greyTri {
+	background-image: url(../../static/images/triangle-grey.png);
+}
+
+.greyCirc {
+	background-image: url(../../static/images/circle-grey.png);
+}
+
+
 
 
 
