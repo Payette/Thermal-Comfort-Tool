@@ -42,18 +42,17 @@ uVal.uValMRT = function(opaqueViewFac, winViewFac, airTemp, outdoorTemp, opaqueR
 
 
 // FUNCTIONS FOR CALCULATING THE MAX U-VALUE WITH DOWNDRAFT
-uVal.uValDownD = function(PPDAccept, distToFacade, windowHgt, filmCoeff, airTemp, outdoorTemp){
+uVal.uValDownD = function(PPDAccept, distToFacade, windowHgt, filmCoeff, airTemp, outdoorTemp, dwnPPDFac){
 	function uvalclos(target) {
 		return function(uValGuess) {
-			return comf.calcFulldonwDppd(distToFacade, windowHgt, filmCoeff, airTemp, outdoorTemp, uValGuess) - target
+			return comf.calcFulldonwDppd(distToFacade, windowHgt, filmCoeff, airTemp, outdoorTemp, uValGuess, dwnPPDFac) - target
 		}
 	}
-
 	function solve(target) {
 
 		var epsilon = 0.01 // PPD precision
-		var a = 0.001 // Start Lower Guess for U-Value
-		var b = 30 // Start Upper Guess for U-Value
+		var a = 0.01 // Start Lower Guess for U-Value
+		var b = 20 // Start Upper Guess for U-Value
 		var fn = uvalclos(target)
 		var t = util.secant(a, b, fn, epsilon)
 		if (isNaN(t)) {
@@ -67,7 +66,7 @@ uVal.uValDownD = function(PPDAccept, distToFacade, windowHgt, filmCoeff, airTemp
 
 
 // FUNCTION THAT RETURNS THE LOWEST U-VALUE GIVEN COMFORT CRITERIA
-uVal.uValFinal = function(opaqueViewFac, winViewFac, distToFacade, runDownCalc, windowHgt, indoorTemp, outTemp, wallRVal, intLowE, lowEmissivity, airSpeed, relHumid, metRate, cloLevel, targetPPD){
+uVal.uValFinal = function(opaqueViewFac, winViewFac, distToFacade, dwnPPDFac, windowHgt, indoorTemp, outTemp, wallRVal, intLowE, lowEmissivity, airSpeed, relHumid, metRate, cloLevel, targetPPD){
 	// Convert values to SI if we have to
 	if (unitSys == "IP") {
   	var windowHgtSI = units.Ft2M(windowHgt);
@@ -96,10 +95,10 @@ uVal.uValFinal = function(opaqueViewFac, winViewFac, distToFacade, runDownCalc, 
 	//Compute the required U-Value for PMV model.
 	var uValMRT = uVal.uValMRT(opaqueViewFac, winViewFac, airTemp, outdoorTemp, opaqueRVal, filmCoeff, intLowE, lowEmissivity, vel, parseFloat(relHumid), parseFloat(metRate), parseFloat(cloLevel), parseFloat(targetPPD))
 
-	if (runDownCalc== true) {
-		var uValDownD = uVal.uValDownD(targetPPD, facadeDist, windowHgtSI, filmCoeff, airTemp, outdoorTemp)
+	if (dwnPPDFac > 0) {
+		var uValDownD = uVal.uValDownD(targetPPD, facadeDist, windowHgtSI, filmCoeff, airTemp, outdoorTemp, dwnPPDFac)
 	} else {
-		var uValDownD = 10
+		var uValDownD = 50
 	}
 
 	if (uValDownD < uValMRT){

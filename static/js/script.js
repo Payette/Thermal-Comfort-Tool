@@ -126,7 +126,7 @@ script.computeData = function(object) {
 	r.condensation = comfortResult.condensation; // Text string value that is either: "certain", "risky", "none".
 	r.dataSet = comfortResult.myDataset; // Data to construct the graph.
 	r.occPtInfo = comfortResult.occPtInfo;  // The status of the occupant at the input location.
-	r.runDownCalc = comfortResult.runDownCalc;  // Boolean value for whether the occupant is in front of the window or not.
+	r.dwnPPDFac = comfortResult.dwnPPDFac;  // Boolean value for whether the occupant is in front of the window or not.
 
 
 	return r
