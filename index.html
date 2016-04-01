@@ -106,10 +106,10 @@
 					<!-- <legend>Occupancy Thresholds</legend>
 					<hr> -->
 
-					<label for="distFromFacade">Occupant Distance From Fa&ccedil;ade (<span class="units IP">ft</span>)<sup id="fnref:13"><a href="#fn:13" rel="footnote">?</a></sup></label>
+					<label for="distFromFacade">Occupant Distance From Fa&ccedil;ade (<span class="units IP">ft</span>)<sup id="fnref:11"><a href="#fn:11" rel="footnote">?</a></sup></label>
 					<div class="occSlider"><input type="range" name="distFromFacade" id="distFromFacade" value="3" min="1" max="12" step="0.25" class="case1"><output id="distOutput" for="distFromFacade">3 <span class="units IP">ft</span></output></div>
 
-					<label for="ppd">Acceptable Percentage of People Dissatisfied from Cold (PPD)<br><p>The Predicted Percentage of Dissatisfied (PPD) is a common metric to define occupant’s predicted satisfactions with their environment. The industry standard is typically 10%, which means that 90% of occupants are thermally comfortable. It is not possible to get a PPD lower than 5%. This tool only estimates occupant dissatisfaction from cold conditions.</p></label>
+					<label for="ppd">Acceptable Percentage of People Dissatisfied from Cold (%)<br><p>The Predicted Percentage of Dissatisfied (PPD) is a common metric to define occupants’ predicted satisfactions with their environment. The industry standard is typically 10%, which means that 90% of occupants are thermally comfortable. It is not possible to get a PPD lower than 5%. Note: This tool only estimates occupant dissatisfaction from cold conditions.</p></label>
 					<div class="occSlider"><input type="range" name="ppd" id="ppd" value="10" min="5" max="30" class="case1"><output id="ppdOutput" for="ppd">10%</output></div><br>
 
 				</fieldset>
@@ -122,14 +122,14 @@
 			<div id="col">
 				<div class="keepTogether">
 				<h2><span class="discomfortIcon blackTri"></span>Downdraft Discomfort</h2>
-				<p>Cold interior glass surfaces affect the mean radiant temperature of occupants, and in turn makes them feel cold. This discomfort depends on how much the occupant “sees” of the glass, how cold the interior glass surface is, and the emissivity of the glass. If the glass has a room-side low-e coating the radiant discomfort will be greatly reduced.</p>
-				<p>To minimize radiant discomfort, try decreasing the total amount of glass, increasing the sill height, decreasing the window U-Value, or using a glass assembly with a room-side low-e coating.</p>
+				<p>Cold convective air currents, formed by warm room air hitting the cold window surface, create discomfort at the occupant’s feet and ankles. The strength of these currents depends on the height of the window pane, as well as the interior temperature of the glass.</p>
+				<p>To minimize downdraft discomfort, try decreasing window height, decreasing the window U-Value or using a glass assembly without a room-side low-e coating.</p>
 				</div>
 
 				<div class="keepTogether">
 				<h2><span class="discomfortIcon blackCirc"></span>Radiant Discomfort</h2>
-				<p>Cold convective air currents, formed by warm room air hitting the cold window surface, create discomfort at the occupant’s feet and ankles. The strength of these currents depends on the height of the window pane, as well as the interior temperature of the glass.</p>
-				<p>To minimize downdraft discomfort, try decreasing window height, decreasing the window U-Value, or using a glass assembly without a room-side low-e coating.</p>
+				<p>Cold interior glass surfaces affect the mean radiant temperature of occupants, and in turn make them feel cold. This discomfort depends on how much the occupant “sees” of the glass, how cold the interior glass surface is and the emissivity of the glass. If the glass has a room-side low-e coating the radiant discomfort will be greatly reduced.</p>
+				<p>To minimize radiant discomfort, try decreasing the total amount of glass, increasing the sill height, decreasing the window U-Value, or using a glass assembly with a room-side low-e coating.</p>
 				</div>
 			</div>
 		</div>
@@ -205,7 +205,7 @@
 			<div class="inputWrapperCenter"><input type="text" name="width2" id="windowWidth2" value="4.5" step="0.5" class="case2"></div>
 			<div class="inputWrapperRight"><input type="text" name="width3" id="windowWidth3" value="4.5" step="0.5" class="case3"></div><br>
 			
-			<label for="glazing" class="inactive" id="glazingLabel"><div class="customCheckStyle"><input type="checkbox" name="glazingRatioCheck" class="customCheck" id="glazingRatioCheck"><label for="glazingRatioCheck" id="checkGlzRatio" class="unselected"></label></div>Window-to-Wall Ratio (%)</label>
+			<label for="glazing" class="inactive" id="glazingLabel"><div class="customCheckStyle"><input type="checkbox" name="glazingRatioCheck" class="customCheck" id="glazingRatioCheck"><label for="glazingRatioCheck" id="checkGlzRatio" class="unselected"></label></div>Window-to-Wall Ratio (%)<sup id="fnref:12"><a href="#fn:12" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="glazing" class="inactive case1" id="glazing" value="50" step="1"></div>
 			<div class="inputWrapperCenter"><input type="text" name="glazing2" class="inactive case2" id="glazing2" value="50" step="1"></div>
 			<div class="inputWrapperRight"><input type="text" name="glazing3" class="inactive case3" id="glazing3" value="50" step="1"></div><br>
@@ -234,7 +234,7 @@
 
 			<div id="uValButton"><input type="button" name="calcUValue" id="calcUValue" value="calculate"></div>
 
-			<label for="lowECheck">Room-side Low-E Coating<sup id="fnref:3"><a href="#fn:3" rel="footnote">?</a></sup></label>
+			<label for="lowECheck">Room-side Low-E Coating<sup id="fnref:2"><a href="#fn:2" rel="footnote">?</a></sup></label>
 
 			<div class="inputWrapperLeft"><div class="customCheckStyleCentered case1"><input type="checkbox" name="lowECheckThis" id="lowECheck" class="checkbox customCheck"><label for="lowECheck" id="checkLowE1" class="unselected"></label></div></div>
 
@@ -242,7 +242,7 @@
 
 			<div class="inputWrapperRight"><div class="customCheckStyleCentered case3" id="offsetLeft"><input type="checkbox" name="lowECheck3" id="lowECheck3" class="checkbox customCheck"><label for="lowECheck3" id="checkLowE3" class="unselected"></label></div></div><br>
 
-			<label for="lowE" class="inactive indent" id="lowELabel">Emissivity<sup id="fnref:4"><a href="#fn:4" rel="footnote">?</a></sup></label>
+			<label for="lowE" class="inactive indent" id="lowELabel">Emissivity<sup id="fnref:3"><a href="#fn:3" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="lowE" id="lowE" value="" class="inactive case1" step="0.1"></div>
 			<div class="inputWrapperCenter"><input type="text" name="lowE2" id="lowE2" value="" class="inactive case2" step="0.1"></div>
 			<div class="inputWrapperRight"><input type="text" name="lowE3" id="lowE3" value="" class="inactive case3" step="0.1"></div><br>
@@ -252,15 +252,15 @@
 
 
 		<fieldset class="inputgroup">
-			<legend class="heading">Other</legend>
+			<legend class="heading">Environmental Conditions</legend>
 			<hr>
 
-			<label for="outdoortemp">Outdoor Temperature (<span class="unitsTemp IP">&deg;F</span>)</label>
+			<label for="outdoortemp">Outdoor Temperature (<span class="unitsTemp IP">&deg;F</span>)<sup id="fnref:4"><a href="#fn:4" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="outdoortemp" id="outdoortemp" value="25" class="case1"></div>
 			<div class="inputWrapperCenter"><input type="text" name="outdoortemp2" id="outdoortemp2" value="25" class="case2"></div>
 			<div class="inputWrapperRight"><input type="text" name="outdoortemp3" id="outdoortemp3" value="25" class="case3"></div><br>
 
-			<label for="airtemp">Indoor Temperature (<span class="unitsTemp IP">&deg;F</span>)<sup id="fnref:7"><a href="#fn:7" rel="footnote">?</a></sup></label>
+			<label for="airtemp">Indoor Temperature (<span class="unitsTemp IP">&deg;F</span>)<sup id="fnref:5"><a href="#fn:5" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="airtemp" id="airtemp" value="72" class="case1"></div>
 			<div class="inputWrapperCenter"><input type="text" name="airtemp2" id="airtemp2" value="72" class="case2"></div>
 			<div class="inputWrapperRight"><input type="text" name="airtemp3" id="airtemp3" value="72" class="case3"></div><br>
@@ -270,7 +270,7 @@
 				<p>Warning! The current glazing selection has the potential of causing condensation. The interior window surface temperature is within 5&deg;F of the space’s dew point temperature.</p>
 			</div>
 
-			<label for="humidity">Relative Humidity (%)<sup id="fnref:8"><a href="#fn:8" rel="footnote">?</a></sup></label>
+			<label for="humidity">Relative Humidity (%)<sup id="fnref:6"><a href="#fn:6" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="humidity" id="humidity" value="20" class="case1"></div>
 			<div class="inputWrapperCenter"><input type="text" name="humidity2" id="humidity2" value="20" class="case2"></div>
 			<div class="inputWrapperRight"><input type="text" name="humidity3" id="humidity3" value="20" class="case3"></div><br>
@@ -287,24 +287,23 @@
 			<div class="inputWrapperCenter"><div class="customCheckStyleCentered case2" id="offsetMiddle"><input type="checkbox" name="radiant2" id="radiant2" class="checkbox customCheck"><label for="radiant2" id="radiantCheck2" class="unselected"></label></div></div>
 			<div class="inputWrapperRight"><div class="customCheckStyleCentered case3" id="offsetLeft"><input type="checkbox" name="radiant3" id="radiant3" class="checkbox customCheck"><label for="radiant3" id="radiantCheck3" class="unselected"></label></div></div><br> -->
 
-			<label for="rvalue">Wall R-Value (<span class="unitsUVal IP">Btu/hr*ft&sup2;*&deg;F</span>)<sup id="fnref:5"><a href="#fn:5" rel="footnote">?</a></sup></label>
+			<label for="rvalue">Wall R-Value (<span class="unitsUVal IP">Btu/hr*ft&sup2;*&deg;F</span>)<sup id="fnref:7"><a href="#fn:7" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="rvalue" id="rvalue" value="20" class="case1"></div>
 			<div class="inputWrapperCenter"><hr class="case2"></div>
 			<div class="inputWrapperRight"><hr class="case3"></div><br>
 
 
-
-			<label for="airspeed">Air Speed (fpm)<sup id="fnref:10"><a href="#fn:10" rel="footnote">?</a></sup></label>
+			<label for="airspeed">Air Speed (fpm)<sup id="fnref:8"><a href="#fn:8" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="airspeed" id="airspeed" value="10" class="case1"></div>
 			<div class="inputWrapperCenter"><hr class="case2"></div>
 			<div class="inputWrapperRight"><hr class="case3"></div><br>
 			
-			<label for="clothing">Clothing (clo)<sup id="fnref:11"><a href="#fn:11" rel="footnote">?</a></sup></label>
+			<label for="clothing">Clothing (clo)<sup id="fnref:9"><a href="#fn:9" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="clothing" id="clothing" value="0.8" step="0.1" class="case1"></div>
 			<div class="inputWrapperCenter"><hr class="case2"></div>
 			<div class="inputWrapperRight"><hr class="case3"></div><br>
 
-			<label for="metabolic">Metabolic Rate (met)<sup id="fnref:12"><a href="#fn:12" rel="footnote">?</a></sup></label>
+			<label for="metabolic">Metabolic Rate (met)<sup id="fnref:10"><a href="#fn:10" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="metabolic" id="metabolic" value="1.2" step="0.1" class="case1"></div>
 			<div class="inputWrapperCenter"><hr class="case2"></div>
 			<div class="inputWrapperRight"><hr class="case3"></div><br>
@@ -318,37 +317,40 @@
 	<div class="footnotes">
 	<ol>
 	    <li class="footnote" id="fn:1"> <!-- u value -->
-	        <p>U-Value of the window assembly - including frame and edge<a href="#fnref:1" title="return to article"> ↩</a></p>
+	        <p>Measure of the window’s thermal performance. If the window panes are large (small impact of the frame) use the center of glass U-value. With assemblies where frame elements are prominent, it is recommended to use the assembly U-value.<a href="#fnref:1" title="return to article"> ↩</a></p>
 	    </li>
-	    <li class="footnote" id="fn:3"> <!-- room side low e -->
-	        <p>Check to accont for a room-side Low-E coating<a href="#fnref:3" title="return to article"> ↩</a></p>
+	    <li class="footnote" id="fn:2"> <!-- room side low e -->
+	        <p>Select if the U-value entered is achieved by adding a low-e coating on the interior side of the window. Room-side low-e coatings increase the thermal performance of a window, and reduce the potential for radiant discomfort. However, they also increase the potential for downdraft discomfort and condensation.<a href="#fnref:2" title="return to article"> ↩</a></p>
 	     </li>
-	     <li class="footnote" id="fn:4"><!-- emissivity -->
-	        <p>Emissivity of the room-side Low-E coating<a href="#fnref:4" title="return to article"> ↩</a></p>
+	     <li class="footnote" id="fn:3"><!-- emissivity -->
+	        <p>Emissivity of the room-side low-e coating. Typically around 0.2.<a href="#fnref:3" title="return to article"> ↩</a></p>
 	    </li>
-	    <li class="footnote" id="fn:5"><!-- r value -->
-	        <p>R-Value of the wall assembly, including thermal bridges<a href="#fnref:5" title="return to article"> ↩</a></p>
+	    <li class="footnote" id="fn:4"> <!-- outdoor temp -->
+	        <p>Coldest expected outdoor temperature under which occupant thermal comfort is being evaluated. This varies with the climate of the project and the time of day that the space is expected to be occupied.<a href="#fnref:4" title="return to article"> ↩</a></p>
 	    </li>
-	    <li class="footnote" id="fn:7"> <!-- indoor ambient temp -->
-	        <p>Temperature of the indoor air and interior surfaces<a href="#fnref:7" title="return to article"> ↩</a></p>
+	    <li class="footnote" id="fn:5"> <!-- indoor ambient temp -->
+	        <p>Temperature of the indoor air. For radiant discomfort calculations it is assumed that this also represents the temperature of the indoor surfaces. Low indoor air temperatures may lead to occupant discomfort regardless of the glazing configuration.<a href="#fnref:5" title="return to article"> ↩</a></p>
 	    </li>
-	    <li class="footnote" id="fn:8"> <!-- relative humidity -->
-	        <p>Relative humidity indoors<a href="#fnref:8" title="return to article"> ↩</a></p>
+	    <li class="footnote" id="fn:6"> <!-- relative humidity -->
+	        <p>Relative humidity indoors. This factors into to the thermal comfort calculations as well as the potential for condensation. During winter, this is usually around 20% unless the space is humidified.<a href="#fnref:6" title="return to article"> ↩</a></p>
 	    </li>
-<!-- 	    <li class="footnote" id="fn:9"> 
-	        <p>Check to account for the presence of a radiant floor<a href="#fnref:9" title="return to article"> ↩</a></p>
-	    </li> -->
-	    <li class="footnote" id="fn:10"> <!-- air speed -->
-	        <p>Average indoor air speed induced by the mechanical system<a href="#fnref:10" title="return to article"> ↩</a></p>
+	    <li class="footnote" id="fn:7"><!-- r value -->
+	        <p>R-Value of the wall assembly, including thermal bridges.<a href="#fnref:7" title="return to article"> ↩</a></p>
 	    </li>
-	    <li class="footnote" id="fn:11"> <!-- clothing -->
-	        <p>Clothing of the occupants in clo.  1 clo = a three-piece suit.<a href="#fnref:11" title="return to article"> ↩</a></p>
+	    <li class="footnote" id="fn:8"> <!-- air speed -->
+	        <p>Average indoor air speed induced by the mechanical system. Typically ranges from 10-30 fpm.<a href="#fnref:8" title="return to article"> ↩</a></p>
 	    </li>
-	    <li class="footnote" id="fn:12"> <!-- metabolic rate -->
-	        <p>Metabolic rate of the occupants in met.  1 met = seated resting.  1.2 met = typing.<a href="#fnref:12" title="return to article"> ↩</a></p>
+	    <li class="footnote" id="fn:9"> <!-- clothing -->
+	        <p>Insulating value of clothing.<i><br>0.6 clo = trousers/knee-length skirt + long sleeved shirt<br>0.8 clo = trousers/knee-length skirt + undershirt + long sleeved shirt<br>1 clo = trousers/knee-length skirt + undershirt + long sleeved shirt + long sleeve sweater</i><a href="#fnref:9" title="return to article"> ↩</a></p>
 	    </li>
-		<li class="footnote" id="fn:13"> <!-- distance from facade -->
-	        <p>Distance from the facade at which you would like occupants to be comfortable.<a href="#fnref:13" title="return to article"> ↩</a></p>
+	    <li class="footnote" id="fn:10"> <!-- metabolic rate -->
+	        <p>Metabolic rate of the occupants. 1 met = seated resting. 1.2 met = typing or standing.<a href="#fnref:10" title="return to article"> ↩</a></p>
+	    </li>
+		<li class="footnote" id="fn:11"> <!-- distance from facade -->
+	        <p>Expected location of the occupant perpendicular to the fa&ccedil;ade.<a href="#fnref:11" title="return to article"> ↩</a></p>
+	    </li>
+	    <li class="footnote" id="fn:12"> <!-- window-to-wall ratio -->
+	        <p>The percentage of the exterior elevation that is glazed.<a href="#fnref:12" title="return to article"> ↩</a></p>
 	    </li>
 	</ol>
 	</div>

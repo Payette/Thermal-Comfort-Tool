@@ -701,15 +701,23 @@ render.makeGraph = function () {
 
     /* ------ HIDE/SHOW CASES / ALERTS ------ */
 
-/*    $("#caseSelection #case2Label").on("mouseover", function() {
+   	$("#caseSelection #case2Label").on("mouseover", function() {
 
     	if ($(this).hasClass("unselected") == true) {
-
-    		$("#case2Heading").removeClass("greyText")
-    		$("#case2Heading").addClass("case2Text");
+    		$(this).removeClass("unselected");
     	}
+    })
 
-    })*/
+   	$("#caseSelection #case2Label").on("mouseout", function() {
+
+    	if ($(this).hasClass("unselected") == false) {
+    		$(this).addClass("unselected");
+    	}
+    })
+
+
+
+
 
     $("#caseSelection #case2Label").on("click", function() {
 
@@ -2556,15 +2564,14 @@ render.makeGraph = function () {
 
 		var xPosition = x(occPointData.dist);
 		var yPosition = d3.max(compareOccupantArray);
-		var padding = 8;
 
 		// add line
 		graphSvg.append("line")
 			.attr("class","occupantLine")
 			.attr("x1", xPosition)
 			.attr("x2", xPosition)
-			.attr("y1", height - padding/2)
-			.attr("y2", yPosition + padding)
+			.attr("y1", height)
+			.attr("y2", yPosition + 8)
 			.attr("transform", function() {
 				return "translate(" + margin.left + "," + margin.top + ")";
 			});
