@@ -334,64 +334,7 @@ rect.blue {
 
 
 
-#options {	
-	overflow: auto;
-	width: 100%;
 
-	padding: 10px 0px 15px 0px;
-}
-
-div#units, div#share {
-	margin-right: 30px;
-	float: left;
-}
-
-
-
-#options h2 {
-	color: #000;
-	font-weight: 700;
-	font-size: 12px;
-	text-transform: uppercase;
-	padding: 0;
-	margin: 0;
-	display: inline-block;
-	float: left;
-}
-
-
-#options input[type=button].optionButton {
-	padding: 1px 2px;
-	height: 16px;
-	margin: 0 5px;
-	border-radius: 10px;
-	border: 1px solid #777;
-	cursor: pointer;
-	text-align: center;
-	display: inline-block;
-	float: left;
-}
-
-#options input[type=button].optionButton.unselected {
-	color: #777;
-	background-color: #fff;
-}
-
-#options input[type=button].optionButton.selected {
-	color: #fff;
-	background-color: #777;
-}
-
-
-
-#options input[type=button].optionButton#PDF,  #inputs input[type=button].optionButton#URL{
-	width: 75px;
-}
-
-#options input[type=button].optionButton:hover {
-	color: #fff;
-	background-color: #777;
-}
 
 
 
@@ -861,12 +804,69 @@ input[type=checkbox] {
 
 
 
-.dimHover {
-	width: 12px;
-	height: 12px;
-	text-align: center;
-	line-height: 12px !important;
+
+
+
+#options {	
+	overflow: auto;
+	width: 100%;
+
+	padding: 10px 0px 15px 0px;
 }
+
+div#units, div#share {
+	margin-right: 30px;
+	float: left;
+}
+
+
+
+#options h2 {
+	color: #000;
+	font-weight: 700;
+	font-size: 12px;
+	text-transform: uppercase;
+	padding: 0;
+	margin: 0;
+	display: inline-block;
+	float: left;
+}
+
+
+#options input[type=button].optionButton {
+	padding: 1px 2px;
+	height: 16px;
+	margin: 0 5px;
+	border-radius: 10px;
+	border: 1px solid #777;
+	cursor: pointer;
+	text-align: center;
+	display: inline-block;
+	float: left;
+}
+
+#options input[type=button].optionButton.unselected {
+	color: #777;
+	background-color: #fff;
+}
+
+#options input[type=button].optionButton.selected {
+	color: #fff;
+	background-color: #777;
+}
+
+
+
+#options input[type=button].optionButton#PDF,  #inputs input[type=button].optionButton#URL{
+	width: 75px;
+}
+
+#options input[type=button].optionButton:hover {
+	color: #fff;
+	background-color: #777;
+}
+
+
 
 
 
