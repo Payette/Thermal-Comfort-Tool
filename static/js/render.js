@@ -695,7 +695,7 @@ render.makeGraph = function () {
 
     /* ------ HIDE/SHOW CASES / ALERTS ------ */
 
-    $("#caseSelection #case2Label").on("mouseover", function() {
+/*    $("#caseSelection #case2Label").on("mouseover", function() {
 
     	if ($(this).hasClass("unselected") == true) {
 
@@ -703,7 +703,7 @@ render.makeGraph = function () {
     		$("#case2Heading").addClass("case2Text");
     	}
 
-    })
+    })*/
 
     $("#caseSelection #case2Label").on("click", function() {
 
@@ -813,15 +813,6 @@ render.makeGraph = function () {
 
 
 
-
-
-
-
-
-
-
-
-	
 
 
 
@@ -1799,7 +1790,7 @@ render.makeGraph = function () {
 			updateData(case3Data);
 		})
 
-		$("#wallWidth2").on("spin", function(event, ui) {
+		$("#wallWidth3").on("spin", function(event, ui) {
 			case3Data.wallLen = ui.value;
 
 
@@ -2134,6 +2125,8 @@ render.makeGraph = function () {
 			.attr("transform", function() {
 				return "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case2CeilingDiff)) + ")"
 			});
+
+
 
 
 		/* -- UPDATE CASE 3 FACADE REPRESENTATION -- */
