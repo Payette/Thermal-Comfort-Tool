@@ -8,43 +8,47 @@ var geo = geo || {}
 
 
 //Define some default global variables that we do not want to change or expose in the interface.
-var seatH = 2 // The average height above the ground that the occupan is located in feet.
 var numPts = 12 // The number of points to generate.  They will be generated at each foot.
 
 
 // Function that generates the geometry of the windows based on the input window parameters.
 // Originally developed by Chris Mackey (Chris@MackeyArchitecture.com) for Ladybug + Honeybee (https://github.com/mostaphaRoudsari/Honeybee)
-geo.createGlazingForRect = function(rectHeight, wallLength, glazingRatio, windowWidth, winHeight, silHeight, distBreakup, ratioOrWidth) {
+geo.createGlazingForRect = function(rectHeight, wallLength, glazingRatio, windowWidth, winHeight, silHeight, distBreakup, ratioOrWidth, changedVar) {
 	//Check to be sure that the user is not assiging crazy values and, if so, set limits on them.
 	if (glazingRatio > 0.95) {
 		glazingRatio = 0.95;
 	}
 
-    //Define wall coordinates for the given wall length.
-    var wallCoord = [[-wallLength/2,0,0],[wallLength/2,0,0],[wallLength/2,0,rectHeight],[-wallLength/2,0,rectHeight]]
+  //Define wall coordinates for the given wall length.
+  var wallCoord = [[-wallLength/2,0,0],[wallLength/2,0,0],[wallLength/2,0,rectHeight],[-wallLength/2,0,rectHeight]]
 
 	//Find the maximum acceptable area for setting the glazing at the sill height.
-    var maxWinHeightSill = rectHeight - silHeight
+  var maxWinHeightSill = rectHeight - silHeight
 
 	//If the window height given from the formulas above is greater than the height of the wall, set the window height to be just under that of the wall.
-    if (winHeight > (0.98 * rectHeight)) {
+  if (winHeight > (0.98 * rectHeight)) {
 		var winHeightFinal = (0.98 * rectHeight);
-    } else {
+  } else {
 		var winHeightFinal = winHeight;
 	}
 
-    //If the sill height given from the formulas above is less than 1% of the wall height, set the sill height to be 1% of the wall height.
-    if (silHeight < (0.01 * rectHeight)) {
-		var silHeightFinal = (0.01 * rectHeight);
+  //If the sill height given from the formulas above is less than 1% of the wall height, set the sill height to be 1% of the wall height.
+  if (silHeight < (0.01 * rectHeight)) {
+			var silHeightFinal = 0;
+	} else if (silHeight > rectHeight) {
+			var silHeightFinal = rectHeight;
 	} else {
-		var silHeightFinal = silHeight;
+			var silHeightFinal = silHeight;
 	}
 
-    //Check to be sure that window height and sill height do not exceed the rectandgly height.
-    if (winHeightFinal + silHeightFinal > rectHeight) {
-        var silHeightFinal = rectHeight - winHeightFinal;
+  //Check to be sure that window height and sill height do not exceed the ceiling height.
+  if (winHeightFinal + silHeightFinal > rectHeight) {
+		if (changedVar == "sillHeightValue") {
+			var winHeightFinal = rectHeight - silHeightFinal
+		} else{
+			var silHeightFinal = rectHeight - winHeightFinal;
+		}
 	}
-
 
 	if (ratioOrWidth == true) {
 		//Calculate the target area to make the glazing.
@@ -160,9 +164,11 @@ geo.createGlazingForRect = function(rectHeight, wallLength, glazingRatio, window
 		}
 
 		//Find the window geometry in the case that the target width is below that of the maximum width acceptable area for breaking up the window into smaller windows.
-		if (windowWidth < maxWidthBreakUp && numDivisions*windowWidth <= wallLength) {
+		if (windowWidth < maxWidthBreakUp && numDivisions*windowWidth <= wallLength && numDivisions != 1) {
 
-			if (((numDivisions*windowWidth)+ (numDivisions-1)*(distBreakup-windowWidth)) > wallLength){
+			if (numDivisions == 1) {
+				var divDist = wallLength/2
+			} else if (((numDivisions*windowWidth)+ (numDivisions-1)*(distBreakup-windowWidth)) > wallLength){
 				numDivisions = Math.floor(wallLength/distBreakup)
 				var divDist = distBreakup
 			} else{
@@ -366,6 +372,7 @@ geo.calcViewFacs = function(srfCoords, locPts) {
 
 //Calculate all viewFactors for the graph.
 geo.computeAllViewFac = function(wallCoords, glazingCoords, occDistToWall){
+	var seatH = 2 // The average height above the ground that the occupan is located in feet.
 	var facadeDist = []// The distance from the facade at which we are evaluating comfort.
 	var locationPts = [] // The pointlocations in relation to the facade where we are evaluating comfort.
 	for (var i = 0; i < numPts; i++) {

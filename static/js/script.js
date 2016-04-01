@@ -87,8 +87,7 @@ var case3Data = {
 	humidityValue: $("#humidity3").val()
 }
 
-
-
+var changedVar = "ceilingHeightValue"
 
 
 
@@ -100,7 +99,7 @@ $("#occupantDist").attr("max", case1Data.wallLen/2);
 // Main function to run the analysis.
 script.computeData = function(object) {
 	// Compute the window and wall geometry.
-	var geoResult = geo.createGlazingForRect(parseFloat(object.ceilingHeightValue), object.wallLen, object.glzRatioValue/100, parseFloat(object.windowWidthValue), parseFloat(object.windowHeightValue), parseFloat(object.sillHeightValue), parseFloat(object.distanceWindows), glzOrWidth);
+	var geoResult = geo.createGlazingForRect(parseFloat(object.ceilingHeightValue), object.wallLen, object.glzRatioValue/100, parseFloat(object.windowWidthValue), parseFloat(object.windowHeightValue), parseFloat(object.sillHeightValue), parseFloat(object.distanceWindows), glzOrWidth, changedVar);
 
 	// Compute the view factors to make the graph.
 	var viewResult = geo.computeAllViewFac(geoResult.wallCoords, geoResult.glzCoords, object.occDistToWallCenter)

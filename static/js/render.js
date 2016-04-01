@@ -269,7 +269,7 @@ render.makeGraph = function () {
 	var points = d3.selectAll(".dotCase1, .dotCase2, .dotCase3");
 	points.on("mouseover", function(d) {
 
-		
+
 
 		var hoverText = "";
 		var discomfortReason = "";
@@ -291,16 +291,16 @@ render.makeGraph = function () {
 			thisIcon = "cross";
 		}
 
-		
+
 		if (d3.select(this).attr("class") == "dotCase1") {
 			hoverText = "<h1 class='case1Text'><span id='icon' class='" + thisIcon + "'></span>CASE 1: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason;
 
 		} else if (d3.select(this).attr("class") == "dotCase2") {
 			hoverText = "<h1 class='case1Text'><span id='icon' class='" + thisIcon + "'></span>CASE 2: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason;
-			
+
 		} else if (d3.select(this).attr("class") == "dotCase3") {
 			hoverText = "<h1 class='case1Text'><span id='icon' class='" + thisIcon + "'></span>CASE 3: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason;
-			
+
 		}
 
 		$("#tooltip").append(hoverText);
@@ -345,7 +345,7 @@ render.makeGraph = function () {
 
 	checkCondensation(allData.condensation, allData2.condensation, allData3.condensation);
 
-	
+
 
 
 
@@ -384,7 +384,7 @@ render.makeGraph = function () {
 	var facWidthNoSpacing = maxAllowableFacWidth;
 	var facHeight; // determined when comparing proportions
 
-	
+
 
 	// define scales based on whether width or height governs
 	defineScales();
@@ -428,7 +428,7 @@ render.makeGraph = function () {
 			// make svg height proportionate to facade width
 			proportinateMult = maxLengthCase.ceilingHeightValue/maxLengthCase.wallLen;
 			wallSVGHeight = proportinateMult*wallSVGWidth;
-			
+
 		} else if (inputProportion < governingProportion) {
 
 			// ceiling height should be maximized
@@ -454,8 +454,8 @@ render.makeGraph = function () {
 	}
 
 
-	
-	
+
+
 
 
 
@@ -694,7 +694,7 @@ render.makeGraph = function () {
 
 
 
-    
+
 
 
 
@@ -1100,8 +1100,8 @@ render.makeGraph = function () {
 		var triggeredChange = event.target.id;
 
 		if(triggeredChange == "ceiling") {
-
 			case1Data.ceilingHeightValue = $(this).val();
+			changedVar = "ceilingHeightValue"
 
 			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
 				case2Data.ceilingHeightValue = case1Data.ceilingHeightValue;
@@ -1115,6 +1115,7 @@ render.makeGraph = function () {
 		}
 		else if(triggeredChange == "wallWidth") {
 			case1Data.wallLen = $(this).val();
+			changedVar = "wallLen"
 
 			$("#occupantDist").attr("max", case1Data.wallLen/2);
 
@@ -1130,6 +1131,7 @@ render.makeGraph = function () {
 		}
 		else if (triggeredChange == "windowHeight") {
 			case1Data.windowHeightValue = $(this).val();
+			changedVar = "windowHeight"
 
 			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
 				case2Data.windowHeightValue = case1Data.windowHeightValue;
@@ -1142,6 +1144,7 @@ render.makeGraph = function () {
 		}
 		else if (triggeredChange == "windowWidth") {
 			case1Data.windowWidthValue = $(this).val();
+			changedVar = "windowWidthValue"
 
 			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
 				case2Data.windowWidthValue = case1Data.windowWidthValue;
@@ -1155,6 +1158,7 @@ render.makeGraph = function () {
 		}
 		else if (triggeredChange == "glazing") {
 			case1Data.glzRatioValue = $(this).val();
+			changedVar = "glzRatioValue"
 
 			$("#occupantDist").attr("max", case1Data.wallLen/2);
 
@@ -1169,6 +1173,7 @@ render.makeGraph = function () {
 		}
 		else if (triggeredChange == "sill") {
 			case1Data.sillHeightValue = $(this).val();
+			changedVar = "sillHeightValue"
 
 			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
 				case2Data.sillHeightValue = case1Data.sillHeightValue;
@@ -1181,6 +1186,7 @@ render.makeGraph = function () {
 		}
 		else if (triggeredChange == "distWindow") {
 			case1Data.distanceWindows = $(this).val();
+			changedVar = "distanceWindows"
 
 			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
 				case2Data.distanceWindows = case1Data.distanceWindows;
@@ -1205,7 +1211,7 @@ render.makeGraph = function () {
 				$("#uvalue3").val(case3Data.uvalueValue);
 			}
 		}
-	
+
 		else if (triggeredChange == "lowE") {
 			case1Data.intLowEEmissivity = $(this).val();
 
@@ -1254,7 +1260,7 @@ render.makeGraph = function () {
 				$("#humidity3").val(case3Data.humidityValue);
 			}
 		}
-		
+
 		else {
 			alert("Don't know what changed!");
 		}
@@ -1340,6 +1346,7 @@ render.makeGraph = function () {
 	// Case 1 - Changes based on increment buttons
 		$("#ceiling").on("spin", function(event, ui) {
 			case1Data.ceilingHeightValue = ui.value;
+			changedVar = "ceilingHeightValue"
 
 			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
 				case2Data.ceilingHeightValue = case1Data.ceilingHeightValue;
@@ -1357,6 +1364,7 @@ render.makeGraph = function () {
 
 		$("#wallWidth").on("spin", function(event, ui) {
 			case1Data.wallLen = ui.value;
+			changedVar = "wallLen"
 
 			$("#occupantDist").attr("max", case1Data.wallLen/2);
 
@@ -1370,13 +1378,14 @@ render.makeGraph = function () {
 				$("#wallWidth3").val(case3Data.wallLen);
 				updateData(case3Data);
 			}
-			
+
 			updateData(case1Data);
-					
+
 		})
 
 		$("#windowHeight").on("spin", function(event, ui) {
 			case1Data.windowHeightValue = ui.value;
+			changedVar = "windowHeightValue"
 
 			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
 				case2Data.windowHeightValue = case1Data.windowHeightValue;
@@ -1395,6 +1404,7 @@ render.makeGraph = function () {
 
 		$("#windowWidth").on("spin", function(event, ui) {
 			case1Data.windowWidthValue = ui.value;
+			changedVar = "windowWidthValue"
 
 			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
 				case2Data.windowWidthValue = case1Data.windowWidthValue;
@@ -1412,6 +1422,7 @@ render.makeGraph = function () {
 
 		$("#glazing").on("spin", function(event, ui) {
 			case1Data.glzRatioValue = ui.value;
+			changedVar = "glzRatioValue"
 
 			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
 				case2Data.glzRatioValue = case1Data.glzRatioValue;
@@ -1429,6 +1440,7 @@ render.makeGraph = function () {
 
 		$("#sill").on("spin", function(event, ui) {
 			case1Data.sillHeightValue = ui.value;
+			changedVar = "sillHeightValue"
 
 			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
 				case2Data.sillHeightValue = case1Data.sillHeightValue;
@@ -1446,6 +1458,7 @@ render.makeGraph = function () {
 
 		$("#distWindow").on("spin", function(event, ui) {
 			case1Data.distanceWindows = ui.value;
+			changedVar = "distanceWindows"
 
 			if ($("#caseSelection #case2Label").hasClass("unselected") == true){
 				case2Data.distanceWindows = case1Data.distanceWindows;
@@ -1546,9 +1559,9 @@ render.makeGraph = function () {
 			updateData(case1Data);
 		})
 
-		
 
-		
+
+
 
 
 	// Case 2 - Changes based on typed inputs
@@ -1869,7 +1882,7 @@ render.makeGraph = function () {
 
 
 
-	
+
 	/* ------ FUNCTIONS TO UPDATE DATA ------ */
 	// Called after adjusting values based on change events
 	function updateData(object) {
@@ -2174,7 +2187,7 @@ render.makeGraph = function () {
 		// Update dimensions
 		$(".dimensions").remove();
 		addDimensions(glzCoords, glzWidth, glzHeight);
-		
+
 		checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist", "#case1Heading");
 		checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#case2Heading");
 		checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#case3Heading");
@@ -2388,7 +2401,7 @@ render.makeGraph = function () {
 		var case1Text = occupantPositionText(occPointData, "case1Text", "Case 1");
 		var case2Text = occupantPositionText(occPointData2, "case2Text", "Case 2");
 		var case3Text = occupantPositionText(occPointData3, "case3Text", "Case 3");
-	
+
 
 
 		//find min cy of visible occ points
@@ -2588,7 +2601,7 @@ render.makeGraph = function () {
 			.attr("id", "windowHeightDim")
 			.attr("transform", "translate(" + facMargin.left + "," + ( facMargin.top) + ")");
 		var windowHeightDimensions = facadeSvgCase1.selectAll("#windowHeightDim");
-		windowHeightDimensions.append("line") 
+		windowHeightDimensions.append("line")
 		    .attr("class", "dimline")
 		    .attr("x2", middleWidth)
 			.attr("x1", middleWidth)
@@ -2604,7 +2617,7 @@ render.makeGraph = function () {
 			.attr("id", "windowWidthDim")
 			.attr("transform", "translate(" + facMargin.left + "," + ( facMargin.top) + ")");
 		var windowWidthDimensions = facadeSvgCase1.selectAll("#windowWidthDim");
-		windowWidthDimensions.append("line") 
+		windowWidthDimensions.append("line")
 		    .attr("class", "dimline")
 		    .attr("x1", leftEdgeWindow)
 			.attr("x2", leftEdgeWindow + facadeScaleWidth(glazingWidth))
@@ -2648,7 +2661,7 @@ render.makeGraph = function () {
 			.attr("marker-start", "url(#arrowhead)")
 			.attr("marker-end", "url(#arrowhead)");
 		} else {
-			windowSepDimensions.append("line") 
+			windowSepDimensions.append("line")
 		    .attr("class", "dimline")
 		    .attr("x1", 0)
 			.attr("x2", function() {return facadeScaleWidth(case1Data.wallLen)})
@@ -2657,7 +2670,7 @@ render.makeGraph = function () {
 			.attr("marker-start", "url(#arrowhead)")
 			.attr("marker-end", "url(#arrowhead)");
 		}
-		
+
 
 		// ceiling height
 		facadeSvgCase1.append("g")
@@ -2680,7 +2693,7 @@ render.makeGraph = function () {
 			.attr("id", "facadeWidthDim")
 			.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top) + ")");
 		var facWidthDimensions = facadeSvgCase1.selectAll("#facadeWidthDim");
-		facWidthDimensions.append("line") 
+		facWidthDimensions.append("line")
 		    .attr("class", "dimline")
 		    .attr("x1", 0)
 			.attr("x2", function() {return facadeScaleWidth(case1Data.wallLen)})
