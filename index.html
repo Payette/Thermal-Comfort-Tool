@@ -228,7 +228,7 @@
 			</div>
 
 			<label for="uvalue">Window U-Value (<span class="unitsUVal IP">Btu/hr*ft&sup2;*&deg;F</span>)<sup id="fnref:1"><a href="#fn:1" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="uvalue" id="uvalue" value="0.25" step="0.01" class="case1"></div>
+			<div class="inputWrapperLeft"><input type="text" name="uvalue" id="uvalue" min="0" value="0.25" step="0.01" class="case1"></div>
 			<div class="inputWrapperCenter"><input type="text" name="uvalue2" id="uvalue2" value="0.25" step="0.01" class="case2"></div>
 			<div class="inputWrapperRight"><input type="text" name="uvalue3" id="uvalue3" value="0.25" step="0.01" class="case3"></div><br>
 
@@ -280,7 +280,7 @@
 		<fieldset class="inputgroup">
 			<legend class="heading">Advanced Options</legend>
 			<hr>
-			<p class="subtext">It is recommended to use the default values for these variables unless you have an atypical building program and are very familiar with their impact on the PMV model.</p>
+			<p class="subtext">It is recommended to use the default values for these variables unless you have an atypical building program and are very familiar with their impact on the PMV model. When comparing multiple cases, these values are consistent across all scenarios.</p>
 			
 	<!-- 		<label for="radiant">Radiant Floor<sup id="fnref:9"><a href="#fn:9" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><div class="customCheckStyleCentered case1"><input type="checkbox" name="radiant" id="radiant" class="checkbox customCheck"><label for="radiant" id="radiantCheck1" class="unselected"></label></div></div>
