@@ -26,8 +26,8 @@ geo.createGlazingForRect = function(rectHeight, wallLength, glazingRatio, window
   var maxWinHeightSill = rectHeight - silHeight
 
 	//If the window height given from the formulas above is greater than the height of the wall, set the window height to be just under that of the wall.
-  if (winHeight > (0.98 * rectHeight)) {
-		var winHeightFinal = (0.98 * rectHeight);
+  if (winHeight > rectHeight) {
+		var winHeightFinal = rectHeight;
   } else {
 		var winHeightFinal = winHeight;
 	}
