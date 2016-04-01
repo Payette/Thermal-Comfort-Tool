@@ -15,7 +15,7 @@ util.bisect = function(a, b, fn, epsilon, target) {
         midpoint_T = fn(midpoint);
         if ((a_T - target) * (midpoint_T - target) < 0) b = midpoint;
         else if ((b_T - target) * (midpoint_T - target) < 0) a = midpoint;
-        else return -999;
+        else return 0;
     }
     return midpoint;
 }
