@@ -786,6 +786,61 @@ render.makeGraph = function () {
 
 
 
+
+
+
+
+
+
+
+
+
+	
+
+
+
+	/* ----- DETECT FORM BUTTONS ----- */
+	$(".optionButton#IP").click(function(event) {
+		if ($(".optionButton#IP").hasClass("selected") == false) {
+			//change to IP
+			$(".optionButton#IP").addClass("selected");
+			$(".optionButton#SI").removeClass("selected");
+			$(".optionButton#SI").addClass("unselected");
+
+			// change labels to have ft
+			$(".units, .unitsTemp, .unitsUVal").removeClass("SI");
+			$(".units, .unitsTemp, .unitsUVal").addClass("IP");
+			$(".units, .unitsTemp, .unitsUVal").empty();
+			$(".units").append("ft");
+			$(".unitsTemp").append("&deg;F");
+			$(".unitsUVal").append("Btu/hr*ft&sup2;*&deg;F");
+		}
+	})
+
+	$(".optionButton#SI").click(function(event) {
+
+		if ($(".optionButton#SI").hasClass("selected") == false) {
+			//change to SI
+			$(".optionButton#SI").addClass("selected");
+			$(".optionButton#IP").removeClass("selected");
+			$(".optionButton#IP").addClass("unselected");
+
+			// change labels to have metres
+			$(".units, .unitsTemp, .unitsUVal").removeClass("IP");
+			$(".units, .unitsTemp, .unitsUVal").addClass("SI");
+			$(".units, .unitsTemp, .unitsUVal").empty();
+			$(".units").append("m");
+			$(".unitsTemp").append("&deg;C");
+			$(".unitsUVal").append("W/hr*m&sup2;*K");
+		}
+	})
+
+	$("#calcUValue").click(function(event) {
+		autocalcUValues();
+	});
+
+
+
 	/* ------ DETECT CHANGES TO INPUT VALUES ------ */
 	// universal changes
 	$("#distFromFacade").change(function(event) {
@@ -876,14 +931,6 @@ render.makeGraph = function () {
 			$("#windowWidthCheck").attr("checked", "checked");
 		}
 	})
-
-	$("#calcUValue").click(function(event) {
-		autocalcUValues();
-	});
-
-
-
-
 
 
 	/*$("#radiant, #radiant2, #radiant3").change(function(event) {
@@ -1016,7 +1063,6 @@ render.makeGraph = function () {
 		}
 
 	});
-
 
 
 
@@ -1199,8 +1245,6 @@ render.makeGraph = function () {
 			updateData(case3Data);
 		}
 
-		
-		
 	})
 	$("#lowECheck").change(function(event) {
 
@@ -1802,7 +1846,8 @@ render.makeGraph = function () {
 
 
 
-
+	
+	/* ------ FUNCTIONS TO UPDATE DATA ------ */
 	// Called after adjusting values based on change events
 	function updateData(object) {
 		// Re-run the functions with the new inputs.
@@ -1900,7 +1945,6 @@ render.makeGraph = function () {
 	}
 
 
-
 	function autocalcUValues() {
 
 		// Re-run the functions with the new inputs.
@@ -1951,10 +1995,7 @@ render.makeGraph = function () {
 
 
 
-
-
 	/* ------ FUNCTIONS TO UPDATE VISUALS ------ */
-
 	function updateGraphData(upDataset, upOccupantPoint, dotSelector, lineSelector, occSelector) {
 
 		//update graph with revised data
@@ -2153,8 +2194,6 @@ render.makeGraph = function () {
 		$(sliderID).css({
 			width: facadeScaleWidth(caseName.wallLen)/2,
 		})
-
-		
 
 	}
 
