@@ -810,12 +810,11 @@ render.makeGraph = function () {
 
 
 
-
-
 	/* ----- DETECT FORM BUTTONS ----- */
 	$(".optionButton#IP").click(function(event) {
 		if ($(".optionButton#IP").hasClass("selected") == false) {
 			//change to IP
+			unitSys = "IP"
 			$(".optionButton#IP").addClass("selected");
 			$(".optionButton#SI").removeClass("selected");
 			$(".optionButton#SI").addClass("unselected");
@@ -834,17 +833,105 @@ render.makeGraph = function () {
 
 		if ($(".optionButton#SI").hasClass("selected") == false) {
 			//change to SI
+			unitSys = "SI"
 			$(".optionButton#SI").addClass("selected");
 			$(".optionButton#IP").removeClass("selected");
 			$(".optionButton#IP").addClass("unselected");
 
-			// change labels to have metres
+			// change units labels to be in SI
 			$(".units, .unitsTemp, .unitsUVal").removeClass("IP");
 			$(".units, .unitsTemp, .unitsUVal").addClass("SI");
 			$(".units, .unitsTemp, .unitsUVal").empty();
 			$(".units").append("m");
 			$(".unitsTemp").append("&deg;C");
-			$(".unitsUVal").append("W/hr*m&sup2;*K");
+			$(".unitsUVal").append("W/m&sup2;*K");
+
+			// change values in form.
+			case1Data.occDistToWallCenter = units.Ft2M(case1Data.occDistToWallCenter);
+			$("#occupantDist").attr("value", case1Data.occDistToWallCenter);
+			updateOccupantImageLocation("#occupantImage", "#occupantDist", case1Data);
+			case2Data.occDistToWallCenter = units.Ft2M(case2Data.occDistToWallCenter);
+			updateOccupantImageLocation("#occupantImage2", "#occupantDist2", case2Data);
+			case3Data.occDistToWallCenter = units.Ft2M(case3Data.occDistToWallCenter);
+			updateOccupantImageLocation("#occupantImage3", "#occupantDist3", case3Data);
+
+			case1Data.ceilingHeightValue = units.Ft2M(case1Data.ceilingHeightValue);
+			$("#ceiling").val(case1Data.ceilingHeightValue);
+			case2Data.ceilingHeightValue = units.Ft2M(case2Data.ceilingHeightValue);
+			$("#ceiling2").val(case2Data.ceilingHeightValue);
+			case3Data.ceilingHeightValue = units.Ft2M(case3Data.ceilingHeightValue);
+			$("#ceiling3").val(case3Data.ceilingHeightValue);
+
+			case1Data.wallLen = units.Ft2M(case1Data.wallLen);
+			$("#wallWidth").val(case1Data.wallLen);
+			case2Data.wallLen = units.Ft2M(case2Data.wallLen);
+			$("#wallWidth2").val(case2Data.wallLen);
+			case3Data.wallLen = units.Ft2M(case3Data.wallLen);
+			$("#wallWidth3").val(case3Data.wallLen);
+
+			case1Data.windowHeightValue = units.Ft2M(case1Data.windowHeightValue);
+			$("#windowHeight").val(case1Data.windowHeightValue);
+			case2Data.windowHeightValue = units.Ft2M(case2Data.windowHeightValue);
+			$("#windowHeight2").val(case2Data.windowHeightValue);
+			case3Data.windowHeightValue = units.Ft2M(case3Data.windowHeightValue);
+			$("#windowHeight3").val(case3Data.windowHeightValue);
+
+			case1Data.windowWidthValue = units.Ft2M(case1Data.windowWidthValue);
+			$("#windowWidth").val(case1Data.windowWidthValue);
+			case2Data.windowWidthValue = units.Ft2M(case2Data.windowWidthValue);
+			$("#windowWidth2").val(case2Data.windowWidthValue);
+			case3Data.windowWidthValue = units.Ft2M(case3Data.windowWidthValue);
+			$("#windowWidth3").val(case3Data.windowWidthValue);
+
+			case1Data.sillHeightValue = units.Ft2M(case1Data.sillHeightValue);
+			$("#sill").val(case1Data.sillHeightValue);
+			case2Data.sillHeightValue = units.Ft2M(case2Data.sillHeightValue);
+			$("#sill2").val(case2Data.sillHeightValue);
+			case3Data.sillHeightValue = units.Ft2M(case3Data.sillHeightValue);
+			$("#sill3").val(case3Data.sillHeightValue);
+
+			case1Data.distanceWindows = units.Ft2M(case1Data.distanceWindows);
+			$("#distWindow").val(case1Data.distanceWindows);
+			case2Data.distanceWindows = units.Ft2M(case2Data.distanceWindows);
+			$("#distWindow2").val(case2Data.distanceWindows);
+			case3Data.distanceWindows = units.Ft2M(case3Data.distanceWindows);
+			$("#distWindow3").val(case3Data.distanceWindows);
+
+			case1Data.uvalueValue = units.uIP2uSI(case1Data.uvalueValue);
+			$("#uvalue").val(case1Data.uvalueValue);
+			case2Data.uvalueValue = units.uIP2uSI(case2Data.uvalueValue);
+			$("#uvalue2").val(case2Data.uvalueValue);
+			case3Data.uvalueValue = units.uIP2uSI(case3Data.uvalueValue);
+			$("#uvalue3").val(case3Data.uvalueValue);
+
+			case1Data.outdoorTempValue = units.F2C(case1Data.outdoorTempValue);
+			$("#outdoortemp").val(case1Data.outdoorTempValue);
+			case2Data.outdoorTempValue = units.F2C(case2Data.outdoorTempValue);
+			$("#outdoortemp2").val(case2Data.outdoorTempValue);
+			case3Data.outdoorTempValue = units.F2C(case3Data.outdoorTempValue);
+			$("#outdoortemp3").val(case3Data.outdoorTempValue);
+
+			case1Data.airtempValue = units.F2C(case1Data.airtempValue);
+			$("#airtemp").val(case1Data.airtempValue);
+			case2Data.airtempValue = units.F2C(case2Data.airtempValue);
+			$("#airtemp2").val(case2Data.airtempValue);
+			case3Data.airtempValue = units.F2C(case3Data.airtempValue);
+			$("#airtemp3").val(case3Data.airtempValue);
+
+			rvalueValue = units.rIP2rSI(rvalueValue);
+			$("#rvalue").val(rvalueValue);
+
+			airspeedValue = units.fpm2mps(airspeedValue);
+			$("#airspeed").val(airspeedValue);
+
+			occDistFromFacade = units.Ft2M(occDistFromFacade);
+			$("#distFromFacade").val(occDistFromFacade);
+			$("#distOutput").val(round(occDistFromFacade * 10)/10 + " m");
+
+			updateData(case1Data);
+			updateData(case2Data);
+			updateData(case3Data);
+
 		}
 	})
 
@@ -860,7 +947,11 @@ render.makeGraph = function () {
 		occDistFromFacade = $(this).val();
 
 		$("#distFromFacade").val(occDistFromFacade);
-		$("#distOutput").val(occDistFromFacade + " ft");
+		if (unitSystem == "IP") {
+			$("#distOutput").val(occDistFromFacade + " ft");
+		} else {
+			$("#distOutput").val(occDistFromFacade + " m");
+		}
 
 		updateData(case1Data);
 		updateData(case2Data);

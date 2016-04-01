@@ -486,7 +486,7 @@ comf.getDowndraftPPD = function(distToFacade, windowHgt, filmCoeff, airTemp, out
 // Constructs a dictionary of PPD and the limiting factors from a given set of interior conditions.
 comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, occDistToWallCenter, windowHgt, glzUVal, intLowE, lowEmissivity, wallRVal, indoorTemp, outTemp, radiantFloor, clo, met, airSpeed, rh){
   if (unitSys == "IP") {
-  	var windowHgtSI = windowHgt/3.28084
+  	var windowHgtSI = units.Ft2M(windowHgt)
   	var vel = units.fpm2mps(airSpeed)
   	var windowUVal = units.uIP2uSI(glzUVal)
   	var opaqueRVal = units.rIP2rSI(wallRVal)
@@ -549,13 +549,16 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, o
 	var myDataset = []
 	for (var i = 0; i < mrtPPD.length-1; i++) {
 		var ptInfo = {}
+    if (unitSys == "IP") {
+      ptInfo.dist = facadeDist[i]
+    } else {
+      ptInfo.dist = facadeDistSI[i];
+    }
 
 		if (mrtPPD[i] > downDPPD[i]) {
-			ptInfo.dist = i+1;
 			ptInfo.ppd = mrtPPD[i];
 			ptInfo.govfact = "mrt";
 		} else {
-			ptInfo.dist = i+1;
 			ptInfo.ppd = downDPPD[i];
 			ptInfo.govfact = "dwn";
 		}

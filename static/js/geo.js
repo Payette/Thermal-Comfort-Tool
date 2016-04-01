@@ -384,12 +384,12 @@ geo.computeAllViewFac = function(wallCoords, glazingCoords, occDistToWall){
 
 	for (var i = 0; i < numPts; i++) {
 		if (unitSys == "IP"){
-			var dist = i
+			var dist = i+1
 		} else {
-			var dist = units.Ft2M(i)
+			var dist = units.Ft2M(i+1)
 		}
-		facadeDist.push(dist+1)
-		locationPts.push([parseFloat(occDistToWall),dist+1,seatH])
+		facadeDist.push(dist)
+		locationPts.push([parseFloat(occDistToWall),dist,seatH])
 	}
 	// Add a point for the occupant distance from facade.
 	facadeDist.push(parseFloat(occDistFromFacade))
