@@ -568,21 +568,27 @@ render.makeGraph = function () {
 
 
 
-	//Initialize the windows
-/*
-
-
-	//Add facade dimensions
-	drawHorziontalDimensions(wallPoints[0].wallWidth);
-	drawVerticalDimensions(wallPoints[0].wallHeight);*/
 
 
 
+	//Add dimensions to Case 1 facade
+	addDimensions(glzCoords, glzWidth, glzHeight);
 
-	//Add window dimensions to Case 1 facade
-	windowDimensions(glzCoords, glzWidth, glzHeight);
 
 
+	$("#ceilingHeightButt").on("mouseover", function() {
+		$("#facadeHeightDim").fadeIn("fast");
+	})
+	$("#ceilingHeightButt").on("mouseout", function() {
+		$("#facadeHeightDim").fadeOut("fast");
+	})
+
+	$("#roomLengthButt").on("mouseover", function() {
+		$("#facadeWidthDim").fadeIn("fast");
+	})
+	$("#roomLengthButt").on("mouseout", function() {
+		$("#facadeWidthDim").fadeOut("fast");
+	})
 
 
 	$("#windHeightButt").on("mouseover", function() {
@@ -2163,14 +2169,11 @@ render.makeGraph = function () {
 			});
 
 
-		/*"#facadeWidth, #facadeHeightDim, #facadeHeightDimLabel, #windowHeightDimLabel, 
-		
-		drawHorziontalDimensions(wallPoints[0].wallWidth);
-		drawVerticalDimensions(wallPoints[0].wallHeight);*/
+
 
 		// Update dimensions
-		$("#windowHeightDimLabel, #sillHeightDimLabelTop, #sillHeightDimLabelBottom, .dimensions").remove();
-		windowDimensions(glzCoords, glzWidth, glzHeight);
+		$(".dimensions").remove();
+		addDimensions(glzCoords, glzWidth, glzHeight);
 		
 		checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist", "#case1Heading");
 		checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#case2Heading");
@@ -2555,77 +2558,10 @@ render.makeGraph = function () {
 	}
 
 
-	function drawHorziontalDimensions(length) {
-
-		facadeSvg.append("g")
-			.attr("class", "dimensions")
-			.attr("id", "facadeWidth")
-			.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top*0.7) + ")");
-
-		var facWidthDimensions = facadeSvg.selectAll("#facadeWidth");
-
-		facWidthDimensions.append("text") // add width label
-			.attr("class", "facadelabel")
-			.attr("text-anchor", "middle")
-		    .attr("x", function() {return facadeScaleWidth(length/2)})
-		    .attr("y", 0)
-		    .text("Wall Length: " + length + " ft");
-
-		facWidthDimensions.append("line") // add line on left side of text
-		    .attr("class", "dimline")
-		    .attr("x2", 0)
-			.attr("x1", function() {return facadeScaleWidth(length/2) - 60})
-			.attr("y1", -4)
-			.attr("y2", -4)
-			.attr("marker-end", "url(#arrowhead)");
-
-		facWidthDimensions.append("line") // add line on right side of text
-		    .attr("class", "dimline")
-		    .attr("x1", function() {return facadeScaleWidth(length/2) + 60})
-			.attr("x2", function() {return facadeScaleWidth(length)})
-			.attr("y1", -4)
-			.attr("y2", -4)
-			.attr("marker-end", "url(#arrowhead)");
-	}
 
 
-	function drawVerticalDimensions(height) {
 
-		facadeSvg.append("g")
-			.attr("id", "facadeHeightDimLabel")
-			.attr("transform", "translate(" + facMargin.left*0.75 + "," + (facHeight/2 + facMargin.top) + ")")
-			.append("text")
-		    .attr("class", "facadelabel")
-		    .attr("text-anchor", "middle")
-		    .attr("transform", "rotate(-90)")
-		    .text("Ceiling Height: " + height + " ft");
-
-		facadeSvg.append("g")
-			.attr("class", "dimensions")
-			.attr("id", "facadeHeightDim")
-			.attr("transform", "translate(" + facMargin.left*0.75 + "," + ( facMargin.top) + ")");
-
-		var facHeightDimensions = facadeSvg.selectAll("#facadeHeightDim");
-
-		facHeightDimensions.append("line") // add line on left side of text
-		    .attr("class", "dimline")
-		    .attr("x2", 0)
-			.attr("x1", 0)
-			.attr("y2", 0)
-			.attr("y1", function() {return facadeScaleHeight(height/2) - 65})
-			.attr("marker-end", "url(#arrowhead)");
-
-		facHeightDimensions.append("line") // add line on right side of text
-		    .attr("class", "dimline")
-		    .attr("x1", 0)
-			.attr("x2", 0)
-		    .attr("y1", function() {return facadeScaleHeight(height/2) + 65})
-			.attr("y2", function() {return facadeScaleHeight(height)})
-			.attr("marker-end", "url(#arrowhead)");
-	}
-
-
-	function windowDimensions(glazingData, glazingWidth, glazingHeight) {
+	function addDimensions(glazingData, glazingWidth, glazingHeight) {
 
 		//get position of left-most window
 		var firstWindow = $(".window1:last");
@@ -2651,9 +2587,7 @@ render.makeGraph = function () {
 			.attr("class", "dimensions")
 			.attr("id", "windowHeightDim")
 			.attr("transform", "translate(" + facMargin.left + "," + ( facMargin.top) + ")");
-
 		var windowHeightDimensions = facadeSvgCase1.selectAll("#windowHeightDim");
-
 		windowHeightDimensions.append("line") 
 		    .attr("class", "dimline")
 		    .attr("x2", middleWidth)
@@ -2664,16 +2598,12 @@ render.makeGraph = function () {
 			.attr("marker-start", "url(#arrowhead)");
 
 
-
-
 		//window width
 		facadeSvgCase1.append("g")
 			.attr("class", "dimensions")
 			.attr("id", "windowWidthDim")
 			.attr("transform", "translate(" + facMargin.left + "," + ( facMargin.top) + ")");
-
 		var windowWidthDimensions = facadeSvgCase1.selectAll("#windowWidthDim");
-
 		windowWidthDimensions.append("line") 
 		    .attr("class", "dimline")
 		    .attr("x1", leftEdgeWindow)
@@ -2684,16 +2614,12 @@ render.makeGraph = function () {
 			.attr("marker-end", "url(#arrowhead)");
 
 
-
 		//sill height
-
 		facadeSvgCase1.append("g")
 			.attr("class", "dimensions")
 			.attr("id", "sillHeightDim")
 			.attr("transform", "translate(" + facMargin.left + "," + ( facMargin.top) + ")");
-
 		var sillHeightDimensions = facadeSvgCase1.selectAll("#sillHeightDim");
-
 		sillHeightDimensions.append("line")
 		    .attr("class", "dimline")
 		    .attr("x2", middleWidth)
@@ -2704,18 +2630,16 @@ render.makeGraph = function () {
 			.attr("marker-start", "url(#arrowhead)");
 
 
-
-
 		//window separation
+
 		facadeSvgCase1.append("g")
 			.attr("class", "dimensions")
 			.attr("id", "windowSepDim")
 			.attr("transform", "translate(" + facMargin.left + "," + ( facMargin.top) + ")");
-
 		var windowSepDimensions = facadeSvgCase1.selectAll("#windowSepDim");
 
-
-		windowSepDimensions.append("line")
+		if (case1Data.distanceWindows != case1Data.wallLen) {
+			windowSepDimensions.append("line")
 		    .attr("class", "dimline")
 		    .attr("x1", middleWidth)
 			.attr("x2", middleWidth + windowSeparationPixels)
@@ -2723,8 +2647,47 @@ render.makeGraph = function () {
 			.attr("y2", verticalWindowMidpoint)
 			.attr("marker-start", "url(#arrowhead)")
 			.attr("marker-end", "url(#arrowhead)");
+		} else {
+			windowSepDimensions.append("line") 
+		    .attr("class", "dimline")
+		    .attr("x1", 0)
+			.attr("x2", function() {return facadeScaleWidth(case1Data.wallLen)})
+			.attr("y1", function() {return facadeScaleHeight(case1Data.ceilingHeightValue/2)})
+			.attr("y2", function() {return facadeScaleHeight(case1Data.ceilingHeightValue/2)})
+			.attr("marker-start", "url(#arrowhead)")
+			.attr("marker-end", "url(#arrowhead)");
+		}
+		
 
+		// ceiling height
+		facadeSvgCase1.append("g")
+			.attr("class", "dimensions")
+			.attr("id", "facadeHeightDim")
+			.attr("transform", "translate(" + facMargin.left + "," + ( facMargin.top) + ")");
+		var facHeightDimensions = facadeSvgCase1.selectAll("#facadeHeightDim");
+		facHeightDimensions.append("line")
+		    .attr("class", "dimline")
+		    .attr("x1", function() {return facadeScaleWidth(case1Data.wallLen/4)})
+			.attr("x2", function() {return facadeScaleWidth(case1Data.wallLen/4)})
+			.attr("y2", 0)
+			.attr("y1", function() {return facadeScaleHeight(case1Data.ceilingHeightValue)})
+			.attr("marker-end", "url(#arrowhead)")
+			.attr("marker-start", "url(#arrowhead)");
 
+		// room length
+		facadeSvgCase1.append("g")
+			.attr("class", "dimensions")
+			.attr("id", "facadeWidthDim")
+			.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top) + ")");
+		var facWidthDimensions = facadeSvgCase1.selectAll("#facadeWidthDim");
+		facWidthDimensions.append("line") 
+		    .attr("class", "dimline")
+		    .attr("x1", 0)
+			.attr("x2", function() {return facadeScaleWidth(case1Data.wallLen)})
+			.attr("y1", function() {return facadeScaleHeight(case1Data.ceilingHeightValue/2)})
+			.attr("y2", function() {return facadeScaleHeight(case1Data.ceilingHeightValue/2)})
+			.attr("marker-start", "url(#arrowhead)")
+			.attr("marker-end", "url(#arrowhead)");
 	}
 
 

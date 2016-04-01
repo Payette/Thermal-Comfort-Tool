@@ -196,7 +196,7 @@ body {
 }
 
 
-#windowHeightDimLabel, #windowHeightDim, #windowWidthDim, #sillHeightDim, #sillHeightDimLabelTop, #sillHeightDimLabelBottom, #windowSepDim {
+#windowHeightDim, #windowWidthDim, #sillHeightDim, #windowSepDim, #facadeWidthDim, #facadeHeightDim {
 	display: none;
 }
 
@@ -438,6 +438,10 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 	font-weight: 100;
 }
 
+#inputs p.subtext {
+	color: #777;
+}
+
 
 #inputs .inputgroup, #occupantSliders .inputgroup {
 	border: none;
@@ -605,15 +609,7 @@ div.inputWrapperRight span {
 
 
 
-#inputs p {
-	font-size: 11px;
-	line-height: 15px;
-	font-weight: 100;
-}
 
-#inputs p.subtext {
-	color: #777;
-}
 
 
 
@@ -644,8 +640,7 @@ div.inputWrapperRight span {
 }
 
 #occupantSliders label p {
-	font-size: 10px;
-	line-height: 15px;
+	font-size: 12px;
 	color: #777;
 	font-weight: 100;
 	margin: 3px 0 0 0;
