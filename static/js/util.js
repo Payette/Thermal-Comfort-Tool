@@ -39,12 +39,3 @@ util.secant = function(a, b, fn, epsilon) {
   }
   return NaN
 }
-
-
-util.CtoF = function(x){
-    return x * 9 / 5 + 32;
-}
-
-util.FtoC = function(x) {
-    return (x - 32) * 5 / 9;
-}

@@ -88,7 +88,7 @@ var case3Data = {
 }
 
 var changedVar = "ceilingHeightValue"
-
+var unitSys = "IP"
 
 
 //ensure slider has correct max value

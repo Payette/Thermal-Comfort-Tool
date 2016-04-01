@@ -372,12 +372,24 @@ geo.calcViewFacs = function(srfCoords, locPts) {
 
 //Calculate all viewFactors for the graph.
 geo.computeAllViewFac = function(wallCoords, glazingCoords, occDistToWall){
-	var seatH = 2 // The average height above the ground that the occupan is located in feet.
 	var facadeDist = []// The distance from the facade at which we are evaluating comfort.
 	var locationPts = [] // The pointlocations in relation to the facade where we are evaluating comfort.
+
+	if (unitSys == "IP"){
+		var seatH = 2 // The average height above the ground that the occupan is located in feet.
+	} else {
+		var seatH = 0.6096 // The average height above the ground that the occupan is located in meters.
+	}
+
+
 	for (var i = 0; i < numPts; i++) {
-		facadeDist.push(i+1)
-		locationPts.push([parseFloat(occDistToWall),i+1,seatH])
+		if (unitSys == "IP"){
+			var dist = i
+		} else {
+			var dist = units.Ft2M(i)
+		}
+		facadeDist.push(dist+1)
+		locationPts.push([parseFloat(occDistToWall),dist+1,seatH])
 	}
 	// Add a point for the occupant distance from facade.
 	facadeDist.push(parseFloat(occDistFromFacade))

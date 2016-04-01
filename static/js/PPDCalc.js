@@ -473,9 +473,7 @@ comf.getDowndraftPPD = function(distToFacade, windowHgt, filmCoeff, airTemp, out
 	// Calculate the PPD at each point.
 	var PPD = []
 	for (var i = 0; i < distToFacade.length; i++) {
-		var dist = distToFacade[i]
-		var distSI = dist/3.28084
-		var ddPPD = comf.calcFulldonwDppd(distSI, windowHgt, filmCoeff, airTemp, outdoorTemp, windowUVal)
+		var ddPPD = comf.calcFulldonwDppd(distToFacade[i], windowHgt, filmCoeff, airTemp, outdoorTemp, windowUVal)
 		PPD.push(ddPPD)
 	}
 	return PPD
@@ -487,19 +485,27 @@ comf.getDowndraftPPD = function(distToFacade, windowHgt, filmCoeff, airTemp, out
 /// ***FUNCTION THAT COMPUTE FINAL RESULTS THE INTERFACE.***
 // Constructs a dictionary of PPD and the limiting factors from a given set of interior conditions.
 comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, occDistToWallCenter, windowHgt, glzUVal, intLowE, lowEmissivity, wallRVal, indoorTemp, outTemp, radiantFloor, clo, met, airSpeed, rh){
-	// Convert window height to meters (yay for SI!!)
-	var windowHgtSI = windowHgt/3.28084
-
-	// Convert air velocity to m/s.
-	var vel = airSpeed*0.00508
-
-	// Convert U-Vals and R-Vals to SI.
-	var windowUVal = glzUVal*5.678263337
-	var opaqueRVal = wallRVal/5.678263337
-
-	// Convert all Tempreatures ot Celcius.
-	var airTemp = (indoorTemp-32) * 5 / 9
-	var outdoorTemp = (outTemp-32) * 5 / 9
+  if (unitSys == "IP") {
+  	var windowHgtSI = windowHgt/3.28084
+  	var vel = units.fpm2mps(airSpeed)
+  	var windowUVal = units.uIP2uSI(glzUVal)
+  	var opaqueRVal = units.rIP2rSI(wallRVal)
+  	var airTemp = units.F2C(indoorTemp)
+  	var outdoorTemp = units.F2C(outTemp)
+    var facadeDistSI = []
+    for (var i = 0; i < facadeDist.length; i++) {
+  		var distSI = units.Ft2M(facadeDist[i])
+      facadeDistSI.push(distSI)
+    }
+  } else {
+    var windowHgtSI = windowHgt
+  	var vel = airSpeed
+  	var windowUVal = glzUVal
+  	var opaqueRVal = wallRVal
+  	var airTemp = indoorTemp
+  	var outdoorTemp = outTemp
+    var facadeDistSI = facadeDist
+  }
 
 	// Assign variable for average indoor surface temperature based on specification of radiant floor vs. air system.
 	if (radiantFloor == true) {
@@ -532,7 +538,7 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, o
 	// Get the Downdraft PPD results.
 	var downDPPD = []
 	if (runDownCalc == true){
-		downDPPD = comf.getDowndraftPPD(facadeDist, windowHgtSI, winFilmCoeff, airTemp, outdoorTemp, windowUVal)
+		downDPPD = comf.getDowndraftPPD(facadeDistSI, windowHgtSI, winFilmCoeff, airTemp, outdoorTemp, windowUVal)
 	} else {
 		for (var i = 0; i < mrtPPD.length; i++) {
 			downDPPD.push(0)
