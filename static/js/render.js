@@ -12,7 +12,7 @@ render.makeGraph = function () {
 	var color3 = "rgb(0,108,131)";
 	var grey = "rgb(190,190,190)";
 	var lightblue = "rgb(194,224,255)";
-	var lightgrey = "rgb(245,245,245)";
+	var lightgrey = "rgb(235,235,235)";
 
 
 	// Case 1 Data
@@ -393,17 +393,31 @@ render.makeGraph = function () {
 	// this function in turn, assigns the wall SVG extents
 	var wallSVGHeight;
 	var wallSVGWidth;
+	var proportionData;
+
+	// values for height difference between cases - used to offset SVG down if ceiling heights are not the same across all cases
+	var case1CeilingDiff;
+	var case2CeilingDiff;
+	var case3CeilingDiff;
 
 
 	function defineScales() {
 
 		var proportinateMult;
 
-		var proportionData = determineInputProportion();
+		proportionData = determineInputProportion();
 
 		var inputProportion = proportionData.maxProportion;
 		var maxCeilingCase = proportionData.maxCeilingCase;
 		var maxLengthCase = proportionData.maxLengthCase;
+
+
+		// set height difference between cases
+		case1CeilingDiff =  maxCeilingCase.ceilingHeightValue-case1Data.ceilingHeightValue;
+		case2CeilingDiff =  maxCeilingCase.ceilingHeightValue-case2Data.ceilingHeightValue;
+		case3CeilingDiff =  maxCeilingCase.ceilingHeightValue-case3Data.ceilingHeightValue;
+
+
 
 		// determine whether to use max ceiling height or max wall length for setting scales
 
@@ -449,6 +463,8 @@ render.makeGraph = function () {
 
 /* ------ MAKE THE FACADE ------ */
 
+
+
 // Case 1 Facade
 	var facadeSvgCase1 = d3.select("#case1Chart")
 				.append("svg")
@@ -463,7 +479,7 @@ render.makeGraph = function () {
 		.attr("width", function() {return facadeScaleWidth(case1Data.wallLen)})
 		.attr("height", function() {return facadeScaleHeight(case1Data.ceilingHeightValue)})
 		.attr("transform", function() {
-			return "translate(" + facMargin.left + "," + facMargin.top + ")"
+			return "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case1CeilingDiff)) + ")"
 		});
 
 	facadeSvgCase1.selectAll(".window1")
@@ -476,7 +492,7 @@ render.makeGraph = function () {
 		.attr("width", facadeScaleWidth(glzWidth))
 		.attr("height", facadeScaleHeight(glzHeight))
 		.attr("transform", function() {
-			return "translate(" + facMargin.left + "," + facMargin.top + ")";
+			return "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case1CeilingDiff)) + ")";
 		});
 
 
@@ -495,7 +511,7 @@ render.makeGraph = function () {
 		.attr("width", function(d) {return facadeScaleWidth(case2Data.wallLen)})
 		.attr("height", function(d) {return facadeScaleHeight(case2Data.ceilingHeightValue)})
 		.attr("transform", function() {
-				return "translate(" + facMargin.left + "," + facMargin.top + ")"});
+				return "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case2CeilingDiff)) + ")"});
 
 	facadeSvgCase2.selectAll(".window2")
 		.data(glzCoordsCase2)
@@ -507,7 +523,7 @@ render.makeGraph = function () {
 		.attr("width", facadeScaleWidth(glzWidthCase2))
 		.attr("height", facadeScaleHeight(glzHeightCase2))
 		.attr("transform", function() {
-			return "translate(" + facMargin.left + "," + facMargin.top + ")";
+			return "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case2CeilingDiff)) + ")";
 		});
 
 
@@ -525,7 +541,7 @@ render.makeGraph = function () {
 		.attr("width", function(d) {return facadeScaleWidth(case3Data.wallLen)})
 		.attr("height", function(d) {return facadeScaleHeight(case3Data.ceilingHeightValue)})
 		.attr("transform", function() {
-				return "translate(" + facMargin.left + "," + facMargin.top + ")"});
+				return "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case3CeilingDiff)) + ")"});
 
 	facadeSvgCase3.selectAll(".window3")
 		.data(glzCoordsCase3)
@@ -537,7 +553,7 @@ render.makeGraph = function () {
 		.attr("width", facadeScaleWidth(glzWidthCase3))
 		.attr("height", facadeScaleHeight(glzHeightCase3))
 		.attr("transform", function() {
-			return "translate(" + facMargin.left + "," + facMargin.top + ")";
+			return "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case3CeilingDiff)) + ")";
 		});
 
 
@@ -679,6 +695,16 @@ render.makeGraph = function () {
 
     /* ------ HIDE/SHOW CASES / ALERTS ------ */
 
+/*    $("#caseSelection #case2Label").on("mouseover", function() {
+
+    	if ($(this).hasClass("unselected") == true) {
+
+    		$("#case2Heading").removeClass("greyText")
+    		$("#case2Heading").addClass("case2Text");
+    	}
+
+    })*/
+
     $("#caseSelection #case2Label").on("click", function() {
 
     	$("#case2Heading").toggleClass("greyText").toggleClass("case2Text");
@@ -771,13 +797,13 @@ render.makeGraph = function () {
     });
 
     // remove condensation alert on click
-    $("#condensation").on("click", function() {
+    $("#condensation img.close").on("click", function() {
     	$("#condensation").css("display","none");
     	$("#humidity, #humidity2, #humidity3").css("color", "black");
     })
 
 	// remove uvalue alert on click
-    $("#uvaluePop").on("click", function() {
+    $("#uvaluePop img.close").on("click", function() {
     	$("#uvaluePop").css("display","none");
     	$("#uvalue, #uvalue2, #uvalue3, #airtemp, #airtemp2, #airtemp3, #clothing").css("color", "black");
     })
@@ -787,15 +813,6 @@ render.makeGraph = function () {
 
 
 
-
-
-
-
-
-
-
-
-	
 
 
 
@@ -1773,7 +1790,7 @@ render.makeGraph = function () {
 			updateData(case3Data);
 		})
 
-		$("#wallWidth2").on("spin", function(event, ui) {
+		$("#wallWidth3").on("spin", function(event, ui) {
 			case3Data.wallLen = ui.value;
 
 
@@ -2054,9 +2071,10 @@ render.makeGraph = function () {
 			.attr("height", facHeight + facMargin.top + facMargin.bottom)
 			.transition()
 			.duration(500);
-		wallCase1
-		.attr("width", function(d) {return facadeScaleWidth(case1Data.wallLen)})
-			.attr("height", function(d) {return facadeScaleHeight(case1Data.ceilingHeightValue)})
+		wallCase1.attr("width", function(d) {return facadeScaleWidth(case1Data.wallLen)})
+			.attr("transform", function() {
+				return "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case1CeilingDiff)) + ")"
+			})
 			.transition()
 			.duration(500);
 		//update windows
@@ -2071,7 +2089,7 @@ render.makeGraph = function () {
 			.attr("width", facadeScaleWidth(glzWidth))
 			.attr("height", facadeScaleHeight(glzHeight))
 			.attr("transform", function() {
-				return "translate(" + facMargin.left + "," + facMargin.top + ")";
+				return "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case1CeilingDiff)) + ")"
 			});
 
 
@@ -2082,6 +2100,9 @@ render.makeGraph = function () {
 			.duration(500);
 		wallCase2.attr("width", function(d) {return facadeScaleWidth(case2Data.wallLen)})
 			.attr("height", function(d) {return facadeScaleHeight(case2Data.ceilingHeightValue)})
+			.attr("transform", function() {
+				return "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case2CeilingDiff)) + ")"
+			})
 			.transition()
 			.duration(500);
 		//update windows
@@ -2102,8 +2123,10 @@ render.makeGraph = function () {
 			.attr("width", facadeScaleWidth(glzWidthCase2))
 			.attr("height", facadeScaleHeight(glzHeightCase2))
 			.attr("transform", function() {
-				return "translate(" + facMargin.left + "," + facMargin.top + ")";
+				return "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case2CeilingDiff)) + ")"
 			});
+
+
 
 
 		/* -- UPDATE CASE 3 FACADE REPRESENTATION -- */
@@ -2113,6 +2136,9 @@ render.makeGraph = function () {
 			.duration(500);
 		wallCase3.attr("width", function(d) {return facadeScaleWidth(case3Data.wallLen)})
 			.attr("height", function(d) {return facadeScaleHeight(case3Data.ceilingHeightValue)})
+			.attr("transform", function() {
+				return "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case3CeilingDiff)) + ")"
+			})
 			.transition()
 			.duration(500);
 		//update windows
@@ -2133,7 +2159,7 @@ render.makeGraph = function () {
 			.attr("width", facadeScaleWidth(glzWidthCase3))
 			.attr("height", facadeScaleHeight(glzHeightCase3))
 			.attr("transform", function() {
-				return "translate(" + facMargin.left + "," + facMargin.top + ")";
+				return "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case3CeilingDiff)) + ")"
 			});
 
 
@@ -2293,7 +2319,7 @@ render.makeGraph = function () {
 	function determineInputProportion() {
 
 		var svgProportionData = {};
-
+		// maxCeilingCase, maxLengthCase, maxProportion
 
 		// find the max ceiling height and wall length out of the 3 cases
 		var ceilingHeightArray = [case1Data.ceilingHeightValue, case2Data.ceilingHeightValue, case3Data.ceilingHeightValue];
