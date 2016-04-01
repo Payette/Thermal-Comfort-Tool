@@ -701,24 +701,6 @@ render.makeGraph = function () {
 
     /* ------ HIDE/SHOW CASES / ALERTS ------ */
 
-   	$("#caseSelection #case2Label").on("mouseover", function() {
-
-    	if ($(this).hasClass("unselected") == true) {
-    		$(this).removeClass("unselected");
-    	}
-    })
-
-   	$("#caseSelection #case2Label").on("mouseout", function() {
-
-    	if ($(this).hasClass("unselected") == false) {
-    		$(this).addClass("unselected");
-    	}
-    })
-
-
-
-
-
     $("#caseSelection #case2Label").on("click", function() {
 
     	$("#case2Heading").toggleClass("greyText").toggleClass("case2Text");
@@ -2042,6 +2024,8 @@ render.makeGraph = function () {
 	/* ------ FUNCTIONS TO UPDATE VISUALS ------ */
 	function updateGraphData(upDataset, upOccupantPoint, dotSelector, lineSelector, occSelector) {
 
+		defineScales();
+
 		//update graph with revised data
 		dotSelector.data(upDataset)
 			.attr("d", d3.svg.symbol()
@@ -2098,7 +2082,9 @@ render.makeGraph = function () {
 			.attr("height", facHeight + facMargin.top + facMargin.bottom)
 			.transition()
 			.duration(500);
-		wallCase1.attr("width", function(d) {return facadeScaleWidth(case1Data.wallLen)})
+		wallCase1
+			.attr("width", function(d) {return facadeScaleWidth(case1Data.wallLen)})
+			.attr("height", function(d) {return facadeScaleHeight(case1Data.ceilingHeightValue)})
 			.attr("transform", function() {
 				return "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case1CeilingDiff)) + ")"
 			})
@@ -2606,7 +2592,7 @@ render.makeGraph = function () {
 		facadeSvgCase1.append("g")
 			.attr("class", "dimensions")
 			.attr("id", "windowHeightDim")
-			.attr("transform", "translate(" + facMargin.left + "," + ( facMargin.top) + ")");
+			.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case1CeilingDiff)) + ")");
 		var windowHeightDimensions = facadeSvgCase1.selectAll("#windowHeightDim");
 		windowHeightDimensions.append("line")
 		    .attr("class", "dimline")
@@ -2622,7 +2608,7 @@ render.makeGraph = function () {
 		facadeSvgCase1.append("g")
 			.attr("class", "dimensions")
 			.attr("id", "windowWidthDim")
-			.attr("transform", "translate(" + facMargin.left + "," + ( facMargin.top) + ")");
+			.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case1CeilingDiff)) + ")");
 		var windowWidthDimensions = facadeSvgCase1.selectAll("#windowWidthDim");
 		windowWidthDimensions.append("line")
 		    .attr("class", "dimline")
@@ -2638,7 +2624,7 @@ render.makeGraph = function () {
 		facadeSvgCase1.append("g")
 			.attr("class", "dimensions")
 			.attr("id", "sillHeightDim")
-			.attr("transform", "translate(" + facMargin.left + "," + ( facMargin.top) + ")");
+			.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case1CeilingDiff)) + ")");
 		var sillHeightDimensions = facadeSvgCase1.selectAll("#sillHeightDim");
 		sillHeightDimensions.append("line")
 		    .attr("class", "dimline")
@@ -2655,7 +2641,7 @@ render.makeGraph = function () {
 		facadeSvgCase1.append("g")
 			.attr("class", "dimensions")
 			.attr("id", "windowSepDim")
-			.attr("transform", "translate(" + facMargin.left + "," + ( facMargin.top) + ")");
+			.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case1CeilingDiff)) + ")");
 		var windowSepDimensions = facadeSvgCase1.selectAll("#windowSepDim");
 
 		if (case1Data.distanceWindows != case1Data.wallLen) {
@@ -2683,7 +2669,7 @@ render.makeGraph = function () {
 		facadeSvgCase1.append("g")
 			.attr("class", "dimensions")
 			.attr("id", "facadeHeightDim")
-			.attr("transform", "translate(" + facMargin.left + "," + ( facMargin.top) + ")");
+			.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case1CeilingDiff)) + ")");
 		var facHeightDimensions = facadeSvgCase1.selectAll("#facadeHeightDim");
 		facHeightDimensions.append("line")
 		    .attr("class", "dimline")
@@ -2698,7 +2684,7 @@ render.makeGraph = function () {
 		facadeSvgCase1.append("g")
 			.attr("class", "dimensions")
 			.attr("id", "facadeWidthDim")
-			.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top) + ")");
+			.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case1CeilingDiff)) + ")");
 		var facWidthDimensions = facadeSvgCase1.selectAll("#facadeWidthDim");
 		facWidthDimensions.append("line")
 		    .attr("class", "dimline")
