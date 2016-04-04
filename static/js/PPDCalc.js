@@ -561,7 +561,7 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, o
     } else {
       var dwnPPDFac = 0
     }
-    var dwnPPDFac = 0
+    //var dwnPPDFac = 0
   } else {
     var dwnPPDFac = 1
   }
