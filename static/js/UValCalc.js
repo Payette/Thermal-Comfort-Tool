@@ -52,7 +52,7 @@ uVal.uValDownD = function(PPDAccept, distToFacade, windowHgt, filmCoeff, airTemp
 
 		var epsilon = 0.01 // PPD precision
 		var a = 0.01 // Start Lower Guess for U-Value
-		var b = 20 // Start Upper Guess for U-Value
+		var b = 30 // Start Upper Guess for U-Value
 		var fn = uvalclos(target)
 		var t = util.secant(a, b, fn, epsilon)
 		if (isNaN(t)) {
