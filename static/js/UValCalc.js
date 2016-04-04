@@ -98,13 +98,21 @@ uVal.uValFinal = function(opaqueViewFac, winViewFac, distToFacade, dwnPPDFac, wi
 	if (dwnPPDFac > 0) {
 		var uValDownD = uVal.uValDownD(targetPPD, facadeDist, windowHgtSI, filmCoeff, airTemp, outdoorTemp, dwnPPDFac)
 	} else {
-		var uValDownD = 50
+		if (unitSys == "IP") {
+			var uValDownD = 567.8263337
+		} else {
+			var uValDownD = 100
+		}
 	}
 
 	if (uValDownD < uValMRT){
-		var uValFinal = uValDownD/5.678263337
+		var uValFinal = uValDownD
 	} else{
-		var uValFinal = uValMRT/5.678263337
+		var uValFinal = uValMRT
+	}
+
+	if (unitSys == "IP") {
+		uValFinal = uValFinal/5.678263337
 	}
 
 	return uValFinal
