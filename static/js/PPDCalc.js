@@ -74,9 +74,13 @@ comf.calcPPDFromAssym = function(interiorTemp, avgWallTemp){
 
 // Function that computes PPD given a certain downdraft velocity.
 // This function is taken from this paper:
-// Fanger, PO and Christensen, NK. (1986). Perception of Draught in Ventilated Spaces. rgonomics, 29:2, 215-235.
+// Fanger, PO and Christensen, NK. (1986). Perception of Draught in Ventilated Spaces. Ergonomics, 29:2, 215-235.
 comf.calcPPDFromDowndraft = function(windSpd, airTemp){
-    return (13800*(pow((((windSpd*0.8)-0.04)/(airTemp-13.7))+0.0293, 2) - 0.000857))
+    if (windSpd > 0.7 || airTemp < 15) {
+      return 9999
+    } else {
+      return (13800*(pow((((windSpd*0.8)-0.04)/(airTemp-13.7))+0.0293, 2) - 0.000857))
+    }
 }
 
 // The following 3 functions compute PPD given the 6 factors of PMV comfort.
