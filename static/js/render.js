@@ -107,7 +107,7 @@ render.makeGraph = function () {
     .attr("class", "axislabel")
     .attr("text-anchor", "middle")
     .attr("transform", "rotate(-90)")
-    .text("Percentage of People Dissatisfied (PPD)");
+    .text("Percentage of People Dissatisfied from Cold (PPD)");
 
 
 
@@ -2585,23 +2585,17 @@ render.makeGraph = function () {
 
 		if ($("#caseSelection #case1Label").hasClass("unselected") == false ) {
 			totalText = case1Text;
-
-			var case1Position = occPointData.ppd;
-			compareOccupantArray.push(case1Position);
+			compareOccupantArray.push(occPointData.ppd);
 		}
 
 		if ($("#caseSelection #case2Label").hasClass("unselected") == false ) {
 			totalText = totalText + case2Text;
-
-			var case2Position = occPointData2.ppd;
-			compareOccupantArray.push(case2Position);
+			compareOccupantArray.push(occPointData2.ppd);
 		}
 
 		if ($("#caseSelection #case3Label").hasClass("unselected") == false ) {
 			totalText = totalText + case3Text;
-
-			var case3Position = occPointData3.ppd;
-			compareOccupantArray.push(case3Position);
+			compareOccupantArray.push(occPointData3.ppd);
 		}
 
 
@@ -2609,18 +2603,23 @@ render.makeGraph = function () {
 
 		var divHeight = $("div#thresholdTooltip").height() - 10; //10 = padding
 
-		var xPosition = x(occPointData.dist) + margin.left; // same for all cases
+		var xPosition = x(occPointData.dist) + margin.left + 15;
 		var yPosition;
 		if (d3.max(compareOccupantArray) < 25) {
 			// all ppd values are less than 25
 			yPosition = y(d3.max(compareOccupantArray)) - divHeight;
-		} else if (($("#caseSelection #case2Label").hasClass("unselected") == true) && ($("#caseSelection #case3Label").hasClass("unselected") == true) && occPointData.ppd > 25) {
-			// only case 1 is shown, and it's ppd is more than 25
-			yPosition = y(occPointData.ppd) - divHeight;
-		} else {
-			// multiple cases are shown, and one of them has a ppd more than 25
-			yPosition = y(d3.min(compareOccupantArray)) + divHeight + margin.top;
+		} else if (d3.max(compareOccupantArray) > 25) {
+			// at least one case is above 25
+			if (d3.min(compareOccupantArray) <= 23) {
+				// but at least 1 case below 23
+				// locate text box next to lowest point
+				yPosition = y(d3.min(compareOccupantArray)) - divHeight;
+			} else { // all are above 25
+				// locate text box at top of chart
+				yPosition = 0 + margin.top;
+			}
 		}
+
 
 		d3.select("#thresholdTooltip")
 		.style("left", xPosition + "px")
@@ -2713,24 +2712,21 @@ render.makeGraph = function () {
 		var compareOccupantArray = [];
 
 		if ($("#caseSelection #case1Label").hasClass("unselected") == false ) {
-			var case1YPosition = y(occPointData.ppd);
-			compareOccupantArray.push(case1YPosition);
+			compareOccupantArray.push(occPointData.ppd);
 		}
 
 		if ($("#caseSelection #case2Label").hasClass("unselected") == false ) {
-			var case2YPosition = y(occPointData2.ppd);
-			compareOccupantArray.push(case2YPosition);
+			compareOccupantArray.push(occPointData2.ppd);
 		}
 
 		if ($("#caseSelection #case3Label").hasClass("unselected") == false ) {
-			var case3YPosition = y(occPointData3.ppd);
-			compareOccupantArray.push(case3YPosition);
+			compareOccupantArray.push(occPointData3.ppd);
 		}
 
 
 
 		var xPosition = x(occPointData.dist);
-		var yPosition = d3.max(compareOccupantArray);
+		var yPosition = y(d3.min(compareOccupantArray));
 
 		// add line
 		graphSvg.append("line")

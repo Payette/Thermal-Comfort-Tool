@@ -78,7 +78,7 @@ body {
 
 #tooltip, #thresholdTooltip {
 	position: absolute;
-	width: 250px;
+	width: 260px;
 	padding: 10px;
 	pointer-events: none;
 	background-color: rgba(255,255,255,.8);
@@ -940,6 +940,13 @@ div#units, div#share {
 	background-size: 10px 10px;
 	background-position: left bottom;
 	background-repeat: no-repeat;
+}
+
+.keepTogether ul {
+	margin: 0;
+	padding: 0;
+	font-family: "museo-sans", sans-serif;
+	font-size: 12px;
 }
 
 .blackTri {

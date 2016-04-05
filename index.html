@@ -124,7 +124,13 @@
 				<div class="keepTogether">
 				<h2><span class="discomfortIcon blackTri"></span>Downdraft Discomfort</h2>
 				<p>Cold convective air currents, formed by warm room air hitting the cold window surface, create discomfort at the occupant’s feet and ankles. The strength of these currents depends on the height of the window pane, as well as the interior temperature of the glass.</p>
-				<p>To minimize downdraft discomfort, try decreasing window height, decreasing the window U-Value or using a glass assembly without a room-side low-e coating.</p>
+				<p>To minimize downdraft discomfort
+				<ul>
+					<li>try decreasing window height</li>
+					<li>decreasing the window U-Value</li>
+					<li>using a glass assembly without a room-side low-e coating</li>
+				</ul>
+				</p>
 				</div>
 
 				<div class="keepTogether">
@@ -188,7 +194,7 @@
 			<div class="inputWrapperCenter"><input type="text" name="wallWidth2" id="wallWidth2" value="18" step="1" class="case2"></div>
 			<div class="inputWrapperRight"><input type="text" name="wallWidth3" id="wallWidth3" value="18" step="1" class="case3"></div><br>
 
-			<label for="windowHeight">Window Height (<span class="units IP">ft</span>)<sup class="dimHover" id="windHeightButt">?</sup></label>
+			<label for="windowHeight">Window Height From Sill (<span class="units IP">ft</span>)<sup class="dimHover" id="windHeightButt">?</sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="windowHeight" id="windowHeight" value="8" step="0.5" class="case1"></div>
 			<div class="inputWrapperCenter"><input type="text" name="windowHeight2" id="windowHeight2" value="8" step="0.5" class="case2"></div>
 			<div class="inputWrapperRight"><input type="text" name="windowHeight3" id="windowHeight3" value="8" step="0.5" class="case3"></div><br>
@@ -235,18 +241,7 @@
 
 			<div id="uValButton"><input type="button" name="calcUValue" id="calcUValue" value="calculate"></div>
 
-			<label for="lowECheck">Room-side Low-E Coating<sup id="fnref:2"><a href="#fn:2" rel="footnote">?</a></sup></label>
-
-			<div class="inputWrapperLeft"><div class="customCheckStyleCentered case1"><input type="checkbox" name="lowECheckThis" id="lowECheck" class="checkbox customCheck"><label for="lowECheck" id="checkLowE1" class="unselected"></label></div></div>
-
-			<div class="inputWrapperCenter"><div class="customCheckStyleCentered case2" id="offsetMiddle"><input type="checkbox" name="lowECheck2" id="lowECheck2" class="checkbox customCheck"><label for="lowECheck2" id="checkLowE2" class="unselected"></label></div></div>
-
-			<div class="inputWrapperRight"><div class="customCheckStyleCentered case3" id="offsetLeft"><input type="checkbox" name="lowECheck3" id="lowECheck3" class="checkbox customCheck"><label for="lowECheck3" id="checkLowE3" class="unselected"></label></div></div><br>
-
-			<label for="lowE" class="inactive indent" id="lowELabel">Emissivity<sup id="fnref:3"><a href="#fn:3" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="lowE" id="lowE" value="" class="inactive case1" step="0.1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="lowE2" id="lowE2" value="" class="inactive case2" step="0.1"></div>
-			<div class="inputWrapperRight"><input type="text" name="lowE3" id="lowE3" value="" class="inactive case3" step="0.1"></div><br>
+			
 
 		</fieldset>
 
@@ -288,6 +283,20 @@
 			<div class="inputWrapperCenter"><div class="customCheckStyleCentered case2" id="offsetMiddle"><input type="checkbox" name="radiant2" id="radiant2" class="checkbox customCheck"><label for="radiant2" id="radiantCheck2" class="unselected"></label></div></div>
 			<div class="inputWrapperRight"><div class="customCheckStyleCentered case3" id="offsetLeft"><input type="checkbox" name="radiant3" id="radiant3" class="checkbox customCheck"><label for="radiant3" id="radiantCheck3" class="unselected"></label></div></div><br> -->
 
+			<label for="lowECheck">Room-side Low-E Coating<sup id="fnref:2"><a href="#fn:2" rel="footnote">?</a></sup></label>
+
+			<div class="inputWrapperLeft"><div class="customCheckStyleCentered case1"><input type="checkbox" name="lowECheckThis" id="lowECheck" class="checkbox customCheck"><label for="lowECheck" id="checkLowE1" class="unselected"></label></div></div>
+
+			<div class="inputWrapperCenter"><div class="customCheckStyleCentered case2" id="offsetMiddle"><input type="checkbox" name="lowECheck2" id="lowECheck2" class="checkbox customCheck"><label for="lowECheck2" id="checkLowE2" class="unselected"></label></div></div>
+
+			<div class="inputWrapperRight"><div class="customCheckStyleCentered case3" id="offsetLeft"><input type="checkbox" name="lowECheck3" id="lowECheck3" class="checkbox customCheck"><label for="lowECheck3" id="checkLowE3" class="unselected"></label></div></div><br>
+
+			<label for="lowE" class="inactive indent" id="lowELabel">Emissivity<sup id="fnref:3"><a href="#fn:3" rel="footnote">?</a></sup></label>
+			<div class="inputWrapperLeft"><input type="text" name="lowE" id="lowE" value="" class="inactive case1" step="0.1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="lowE2" id="lowE2" value="" class="inactive case2" step="0.1"></div>
+			<div class="inputWrapperRight"><input type="text" name="lowE3" id="lowE3" value="" class="inactive case3" step="0.1"></div><br>
+
+
 			<label for="rvalue">Wall R-Value (<span class="unitsRVal IP">hr*ft&sup2;*&deg;F/Btu</span>)<sup id="fnref:7"><a href="#fn:7" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="rvalue" id="rvalue" value="20" class="case1"></div>
 			<div class="inputWrapperCenter"><hr class="case2"></div>
@@ -318,7 +327,7 @@
 	<div class="footnotes">
 	<ol>
 	    <li class="footnote" id="fn:1"> <!-- u value -->
-	        <p>Measure of the window’s thermal performance. If the window panes are large (small impact of the frame) use the center of glass U-value. With assemblies where frame elements are prominent, it is recommended to use the assembly U-value.<a href="#fnref:1" title="return to article"> ↩</a></p>
+	        <p>Measure of the window’s thermal performance. If the window panes are large (small impact of the frame) use the center of glass U-value. With assemblies where frame elements are prominent, it is recommended to use the assembly U-value. If using a room-side low-e coating, it can be selected under advanced options.<a href="#fnref:1" title="return to article"> ↩</a></p>
 	    </li>
 	    <li class="footnote" id="fn:2"> <!-- room side low e -->
 	        <p>Select if the U-value entered is achieved by adding a low-e coating on the interior side of the window. Room-side low-e coatings increase the thermal performance of a window, and reduce the potential for radiant discomfort. However, they also increase the potential for downdraft discomfort and condensation.<a href="#fnref:2" title="return to article"> ↩</a></p>
