@@ -1037,7 +1037,7 @@ render.makeGraph = function () {
 		occDistFromFacade = $(this).val();
 
 		$("#distFromFacade").val(occDistFromFacade);
-		if (unitSystem == "IP") {
+		if (unitSys == "IP") {
 			$("#distOutput").val(occDistFromFacade + " ft");
 		} else {
 			$("#distOutput").val(occDistFromFacade + " m");
