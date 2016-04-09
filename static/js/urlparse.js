@@ -134,6 +134,8 @@ if (typeof urlParameters.case1 == 'true' && typeof urlParameters.case2 == 'false
 // show case 1 and 2
 else if (typeof urlParameters.case1 == 'true' && typeof urlParameters.case2 == 'true' && typeof urlParameters.case3 == 'false') {
 
+	console.log("case2 show");
+
 	$("#case2Heading").removeClass("greyText").addClass("case2Text");
     $("#case2Button").removeClass("unselected");
 
