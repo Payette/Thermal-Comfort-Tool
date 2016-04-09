@@ -1,3 +1,7 @@
+$("#URL").on("click", function() {
+	console.log(createURL());
+})
+
 function createURL() {
 
 	// case visibility
