@@ -213,6 +213,13 @@ render.makeGraph = function () {
 				return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
 		.style("fill", color2);
 
+	if ($("#caseSelection #case2Label").hasClass("unselected") == true) {
+		$(".dotCase2").css("display","none");
+	}
+	else {
+		$(".dotCase2").css("display","inline-block");
+	}
+
 	var graphCase3Points = graphSvg.selectAll(".dotCase3")
 		.data(dataset3)
 		.enter()
