@@ -16,9 +16,10 @@ body {
 .left {
 	position: relative;
 	float: left;
-	width: 56%;
+	width: 58%;
 	padding: 0;
-	margin: 0 4% 0 0;
+	margin: 0 2% 0 0;
+	border: 1px solid blue;
 }
 
 
@@ -139,55 +140,123 @@ body {
 
 
 
-/*#inputs label {
-	float: left;
-	font-weight: 300;
-	font-size: 16px;
-	color: black;
-	border: 1px solid red;
-	width: 44%;
-	display: inline-block;
-	padding: 0;
-	margin: 0;
+
+
+
+/* ------ FACADE STYLING ----- */
+
+#facadeWrapper {
+	width: 100%
+	overflow: auto;
 }
 
-#inputs div.inputWrapperLeft, #inputs div.inputWrapperCenter, #inputs div.inputWrapperRight {
-	display: inline-block;
+#case1FacadeWrapper, #case2FacadeWrapper, #case3FacadeWrapper {
 	float: left;
-	vertical-align: middle;
+	display: inline-block;
+	width: 33%;
 	border: 1px solid red;
+/*	transform: scale(1.5); 
+	-webkit-transform: scale(1.5); 
+	-moz-transform: scale(1.5); 
+	-ms-transform: scale(1.5); 
+	-o-transform: scale(1.5)*/
+}
 
-	width: 20%;
-	height: 16px;
+#case1FacadeWrapper svg, #case2FacadeWrapper svg, #case3FacadeWrapper svg {
+	transform: scale(1.5); 
+	-webkit-transform: scale(1.5); 
+	-moz-transform: scale(1.5); 
+	-ms-transform: scale(1.5); 
+	-o-transform: scale(1.5)
 }
 
 
-#inputs input {
+
+svg.facadeCase1, svg.facadeCase2, svg.facadeCase3 {
+/*	transform: scale(1.5); 
+	-webkit-transform: scale(1.5); 
+	-moz-transform: scale(1.5); 
+	-ms-transform: scale(1.5); 
+	-o-transform: scale(1.5)*/
+}
+
+
+
+.facadeHeading {
+	font-family: "museo-sans", sans-serif;
+	font-weight: 500;
+	font-size: 11px;
 	margin: 0;
-	padding: 0;
+	display: inline-block;
+	float: left;
+}
+
+.greyText {
+	color: #b9b9b9;
+}
+
+.case1Text {
+	color: rgb(108,28,131);
+}
+
+.case2Text {
+	color: rgb(18,124,173);
+}
+
+.case3Text {
+	color: rgb(21,222,154);
+}
+
+rect.filled {
+	fill: rgb(190,190,190);
+	stroke: rgb(190,190,190);
+	stroke-width: 1px;
+	stroke-dasharray: 0;
+}
+
+rect.outlined {
+	fill: #fff;
+	stroke: rgb(190,190,190);
+	stroke-width: 1px;
+	stroke-dasharray: 4, 3;
+}
+
+rect.white {
+	fill: #fff;
+}
+
+rect.blue {
+	fill: #E1F0FF;
+}
+
+
+
+
+/* ------ CHART STYLING ----- */
+
+#graph {
+	position: relative;
+}
+
+#thresholdTooltip {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 260px;
+	padding: 10px;
+}
+
+#thresholdTooltip.hidden {
+	display: block;
+}
+
+#thresholdTooltip h1 {
 	font-family: "museo-sans", sans-serif;
 	font-weight: 300;
-	font-size: 16px;
-	text-align: center;
-	color: black;
-
-	display: inline-block;
-	float: left;
-
-	width: 18%;
+	font-size: 14px;
+	padding: 0 0 3px 0;
+	margin: 0;
 }
-
-#inputs input.inactive {
-	border-color: rgb(235, 235, 235);
-	border-style: solid;
-	border-width: 1px;
-	color: #d5d5d5;
-	font-style: italic;
-	cursor: default;
-	padding: 1px 2px 0px 0px;
-}
-*/
-
 
 
 
