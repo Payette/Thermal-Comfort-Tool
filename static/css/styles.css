@@ -170,7 +170,7 @@ body {
 }
 
 .case2Text {
-	color: rgb(46,93,139);
+	color: rgb(18,124,173);
 }
 
 .case3Text {
@@ -215,7 +215,6 @@ body {
 
 rect.filled {
 	fill: rgb(190,190,190);
-	stroke: none;
 	stroke: rgb(190,190,190);
 	stroke-width: 1px;
 	stroke-dasharray: 0;
@@ -258,7 +257,7 @@ rect.blue {
 
 #ppd, #distFromFacade {
 	display: inline-block;
-	width: 80%;
+	width: 75%;
 	float: left;
 	margin: 0;
 }
@@ -582,20 +581,21 @@ div.inputWrapperRight span {
 }
 
 
+
+
 #uValButton {
 	width: 100%;
-	overflow: auto;
-	margin: 4px 0 4px 215px;
+	margin: 4px 0 4px 0px;
 }
 
 #inputs input[type=button]#calcUValue {
-	color: #777;
+	color: #ADADAD;
 	width: 48px;
 	padding: 3px 2px;
 	height: 20px;
 	margin: 0;
 	border-radius: 10px;
-	border: 1px solid #777;
+	border: 1px solid #ADADAD;
 	background-color: #fff;
 	cursor: pointer;
 	text-align: center;
@@ -604,6 +604,11 @@ div.inputWrapperRight span {
 #inputs input[type=button]#calcUValue:hover {
 	color: #fff;
 	background-color: #777;
+	border-color: #777;
+}
+
+#inputs input[type=button]#calcUValue:hover #inputs label.grey {
+	color: #777;
 }
 
 
@@ -632,6 +637,10 @@ div.inputWrapperRight span {
 #inputs label {
 	color: #777;
 	width: 212px;
+}
+
+#inputs label.grey {
+	color: #ADADAD;
 }
 
 #occupantSliders label {
@@ -907,7 +916,7 @@ div#units, div#share {
 
 #col h2 {
 	margin: 0 0 5px 0;
-	font-weight: 300;
+	font-weight: 700;
 	font-size: 12px;
 
 	font-family: "museo-sans", sans-serif;
@@ -944,7 +953,7 @@ div#units, div#share {
 
 .keepTogether ul {
 	margin: 0;
-	padding: 0;
+	padding: 0 0 0 10px;
 	font-family: "museo-sans", sans-serif;
 	font-size: 12px;
 }

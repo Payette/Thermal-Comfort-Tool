@@ -51,6 +51,9 @@ render.makeGraph = function () {
 			.domain([0, 30]);
 
 
+
+
+
 	// Define axes
 	var xAxis = d3.svg.axis().scale(x).orient("bottom");
 	var yAxis = d3.svg.axis().scale(y).orient("left");
@@ -96,6 +99,7 @@ render.makeGraph = function () {
     // add axes labels
    	graphSvg.append("text")
 	    .attr("class", "axislabel")
+	    .attr("id", "XAxisLabel")
 	    .attr("text-anchor", "middle")
 	    .attr("x", width/2 + margin.left)
 	    .attr("y", height + margin.top + margin.bottom - 6)
@@ -269,8 +273,6 @@ render.makeGraph = function () {
 	var points = d3.selectAll(".dotCase1, .dotCase2, .dotCase3");
 	points.on("mouseover", function(d) {
 
-
-
 		var hoverText = "";
 		var discomfortReason = "";
 		var thisIcon = "";
@@ -342,7 +344,6 @@ render.makeGraph = function () {
 
 
 	// check for condensation
-
 	checkCondensation(allData.condensation, allData2.condensation, allData3.condensation);
 
 
@@ -571,8 +572,7 @@ render.makeGraph = function () {
 
 
 
-	//Add dimensions to Case 1 facade
-	addDimensions(glzCoords, glzWidth, glzHeight);
+
 
 
 
@@ -819,6 +819,8 @@ render.makeGraph = function () {
 			$(".optionButton#SI").removeClass("selected");
 			$(".optionButton#SI").addClass("unselected");
 
+
+					
 			// change labels to have ft
 			$(".units, .unitsTemp, .unitsUVal, .unitsRVal, .unitsAirSpeed").removeClass("SI");
 			$(".units, .unitsTemp, .unitsUVal, .unitsRVal, .unitsAirSpeed").addClass("IP");
@@ -911,6 +913,31 @@ render.makeGraph = function () {
 			$("#distFromFacade").val(occDistFromFacade);
 			$("#distOutput").val(round(occDistFromFacade * 10)/10 + " ft");
 
+
+
+			// update graph axis / scales
+			x = d3.scale.linear()
+			.range([0, width]) // value -> display
+			.domain([0, 13]);
+
+
+			xAxis = d3.svg.axis().scale(x).orient("bottom");
+
+			graphSvg.select("#graphXAxis")
+    		.call(xAxis.ticks(6).tickValues([2, 4, 6, 8, 10, 12]));
+
+    		graphSvg.select("#XAxisLabel")
+	    	.text("Occupant Distance from Façade (ft)");
+
+    		// update occupant dist from facade slider
+    		$("#distFromFacade").attr("max", 12);
+    		$("#distFromFacade").attr("min", 1);
+
+			
+
+
+
+
 			updateData(case1Data);
 			updateData(case2Data);
 			updateData(case3Data);
@@ -925,6 +952,8 @@ render.makeGraph = function () {
 			$(".optionButton#SI").addClass("selected");
 			$(".optionButton#IP").removeClass("selected");
 			$(".optionButton#IP").addClass("unselected");
+
+
 
 			// change units labels to be in SI
 			$(".units, .unitsTemp, .unitsUVal, .unitsRVal, .unitsAirSpeed").removeClass("IP");
@@ -1018,9 +1047,30 @@ render.makeGraph = function () {
 			$("#distFromFacade").val(occDistFromFacade);
 			$("#distOutput").val(round(occDistFromFacade * 10)/10 + " m");
 
+
+
+			// update graph axis / scales
+			x = d3.scale.linear()
+			.range([0, width]) // value -> display
+			.domain([0, 4]);
+
+			xAxis = d3.svg.axis().scale(x).orient("bottom");
+
+			graphSvg.select("#graphXAxis")
+    		.call(xAxis.ticks(7).tickValues([0.5, 1, 1.5, 2, 2.5, 3, 3.5]));
+
+    		graphSvg.select("#XAxisLabel")
+	    	.text("Occupant Distance from Façade (m)");
+
+    		// update occupant dist from facade slider
+    		$("#distFromFacade").attr("max", 4);
+    		$("#distFromFacade").attr("min", .25);
+
+
 			updateData(case1Data);
 			updateData(case2Data);
 			updateData(case3Data);
+
 
 		}
 	})
@@ -2356,9 +2406,6 @@ render.makeGraph = function () {
 
 
 
-		// Update dimensions
-		$(".dimensions").remove();
-		addDimensions(glzCoords, glzWidth, glzHeight);
 
 		checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist", "#case1Heading");
 		checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#case2Heading");
@@ -2378,8 +2425,16 @@ render.makeGraph = function () {
 		var originalHeight = 500;
 		var originalWidth = 360;
 
-		//assume 4.25ft sitting height
-		var resizeHeight = resizeHeight = Math.round(facadeScaleHeight(4.25));
+
+		var resizeHeight;
+		//assume 4.35ft/1.32m sitting height
+		if (unitSys == "IP") {
+			resizeHeight = Math.round(facadeScaleHeight(4.35));
+		} else {
+			resizeHeight = Math.round(facadeScaleHeight(1.32588));
+		}
+
+		
 
 
 		var resizeWidth = Math.round((resizeHeight/originalHeight)*originalWidth);
@@ -2552,7 +2607,7 @@ render.makeGraph = function () {
 		}
 
 
-		if (occdata.ppd <= ppdValue) {
+		if (Math.round(occdata.ppd) <= ppdValue) {
 			text = "<h1 class=" + className + "><span id='icon' class='check'></span>" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1>";
 		} else {
 			text = "<h1 class=" + className + "><span id='icon' class='cross'></span>" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1>";
@@ -2631,7 +2686,7 @@ render.makeGraph = function () {
 				totalText = case1Text;
 
 				// find out what's next 
-				if (occPointData2.ppd > occPointData3.ppd) {
+				if (occPointData2.ppd >= occPointData3.ppd) {
 					// case 2 is second
 					totalText = totalText + case2Text + case3Text;
 				} else {
@@ -2646,7 +2701,7 @@ render.makeGraph = function () {
 				totalText = case2Text;
 
 				// find out what's next 
-				if (occPointData.ppd > occPointData3.ppd) {
+				if (occPointData.ppd >= occPointData3.ppd) {
 					// case 1 is second
 					totalText = totalText + case1Text + case3Text;
 				} else {
@@ -2661,7 +2716,7 @@ render.makeGraph = function () {
 				totalText = case3Text;
 
 				// find out what's next 
-				if (occPointData.ppd > occPointData2.ppd) {
+				if (occPointData.ppd >= occPointData2.ppd) {
 					// case 1 is second
 					totalText = totalText + case1Text + case2Text;
 				} else {
