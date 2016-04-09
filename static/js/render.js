@@ -529,9 +529,7 @@ render.makeGraph = function () {
 				.attr("height", facHeight + facMargin.top + facMargin.bottom);
 
 	var wallCase2 = facadeSvgCase2.append("rect")
-		.attr("class", function() {
-				return "wall2 outlined";
-		})
+		.attr("class", "wall2")
 		.attr("x", 0)
 		.attr("y", 0)
 		.attr("width", function(d) {return facadeScaleWidth(case2Data.wallLen)})
