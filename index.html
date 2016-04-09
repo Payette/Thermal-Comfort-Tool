@@ -3,12 +3,13 @@
 
 <head>
 	<link rel="stylesheet" type="text/css" href="static/css/styles.css" media="screen"/>
-	<link rel="stylesheet" type="text/css" href="static/css/bigfoot-default.css" media="screen"/>
-	<link rel="stylesheet" type="text/css" href="static/css/jquery-ui-1.10.4.custom.css" media="screen"/>
+	<link rel="stylesheet" type="text/css" href="static/css/bigfoot-default.css"/>
+	<link rel="stylesheet" type="text/css" href="static/css/jquery-ui-1.10.4.custom.css"/>
+	<link rel="stylesheet" type="text/css" href="static/css/print.css" type="text/css" media="print" />
 
 	<meta charset = "UTF-8" />
 
-	<title>Evaluating Thermal Discomfort</title>
+	<title>Glazing and Comfort Analysis Tool</title>
 	<meta name="description" content="Some words.">
 
 	<!-- CDN Jquery -->
@@ -171,8 +172,6 @@
 		<textarea>the link</textarea>
 	</div>
 
-
-
 	<div id="inputs">
 
 		<h1>Glazing and Comfort Analysis Tool</h1>
@@ -265,7 +264,7 @@
 			<div class="inputWrapperCenter"><input type="text" name="uvalue2" id="uvalue2" value="0.25" step="0.01" class="case2"></div>
 			<div class="inputWrapperRight"><input type="text" name="uvalue3" id="uvalue3" value="0.25" step="0.01" class="case3"></div><br>
 
-			<label class="grey">What U-Value will meet the target PPD?<sup id="fnref:9"><a href="#fn:9" rel="footnote">?</a></sup></label>
+			<label class="grey" id="calcUValQuestion">What U-Value will meet the target PPD?<sup id="fnref:9"><a href="#fn:9" rel="footnote">?</a></sup></label>
 			<div id="uValButton"><input type="button" name="calcUValue" id="calcUValue" value="calculate"></div>
 
 			

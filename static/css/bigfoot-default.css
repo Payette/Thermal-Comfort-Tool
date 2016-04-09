@@ -80,6 +80,11 @@
   .bigfoot-footnote__button {
     display: none !important;
   }
+
+  .footnote-print-only {
+    display: none !important;
+  }
+
 }
 .bigfoot-footnote {
   position: absolute;
