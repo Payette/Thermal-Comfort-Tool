@@ -36,8 +36,8 @@ if (typeof urlParameters.units != 'undefined') {
 
 	unitSys = urlParameters.units;
 
-	if (unitSys = "IP") {
 
+	if (unitSys == "IP") {
 		$(".optionButton#IP").addClass("selected");
 		$(".optionButton#SI").removeClass("selected");
 		$(".optionButton#SI").addClass("unselected");
@@ -53,11 +53,8 @@ if (typeof urlParameters.units != 'undefined') {
 		$(".unitsAirSpeed").append("fpm");
 	}
 
-	if (unitSys = "SI") {
 
-		console.log("SI noticed");
-		//change to SI
-		unitSys = "SI"
+	if (unitSys == "SI") {
 		$(".optionButton#SI").addClass("selected");
 		$(".optionButton#IP").removeClass("selected");
 		$(".optionButton#IP").addClass("unselected");
