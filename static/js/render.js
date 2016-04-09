@@ -231,6 +231,8 @@ render.makeGraph = function () {
 				return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
 		.style("fill", color3);
 
+	
+
 	// Add point at occupant location
 	var occupantPoint = graphSvg.append("path")
 		.attr("class","occdot1")
@@ -282,6 +284,22 @@ render.makeGraph = function () {
 		.style("fill", "#FFF")
 		.style("stroke-width", 2)
 		.style("stroke", color3);
+
+
+	// hide or show different cases on the chart
+	if ($("#caseSelection #case2Label").hasClass("unselected") == true) {
+		$(".connectLine2, .dotCase2, .occdot2").css("display","none");
+	} else {
+		$(".connectLine2, .dotCase2, .occdot2").css("display","inline-block");
+	}
+
+	if ($("#caseSelection #case3Label").hasClass("unselected") == true) {
+		$(".connectLine3, .dotCase3, .occdot3").css("display","none");
+	} else {
+		$(".connectLine3, .dotCase3, .occdot3").css("display","inline-block");
+	}
+
+
 
 	// Add line at occupant location
 	occupantDistanceRefLine();
@@ -812,6 +830,7 @@ render.makeGraph = function () {
     })
 
 
+    // show URL in modal alert
     $(".optionButton#URL").click(function(event) {
 		var urlresult = createURL();
 

@@ -82,7 +82,7 @@ function createURL() {
 	// build the URL
 
 	
-	var startURL = location.href + "/?units=" + units + "&case1=" + case1Vis + "&case2=" + case2Vis + "&case3=" + case3Vis + "&ppd=" + thisPpd + "&distFromFacade=" + thisDistFromFacade;
+	var startURL = location.href + "?units=" + units + "&case1=" + case1Vis + "&case2=" + case2Vis + "&case3=" + case3Vis + "&ppd=" + thisPpd + "&distFromFacade=" + thisDistFromFacade;
 
 	var endURL = "&rValue=" + thisRvalue + "&airspeed=" + thisAirspeed + "&clothing=" + thisClothing + "&metabolic=" + thisMet;
 
@@ -93,19 +93,28 @@ function createURL() {
 	var case3URL = "&ceiling3=" + ceiling3 + "&wallWidth3=" + length3 + "&windowHeight3=" + windowHeight3 + "&sillHeight3=" + sillHeight3 + "&windowWidth3=" + windowWidth3 + "&glazingRatio3=" + glzRatio3 + "&windowSeparation3=" + windowSep3 + "&uValue3=" + uvalue3 + "&outdoorTemp3=" + outdoorTemp3 + "&indoortemp3=" + indoorTemp3 + "&humidity3=" + humid3 + "&lowE3=" + LowEEmis3 + "&occPosition3=" + occToWallCenter3;
 
 
-	var caseURL = case1URL;
 
-	if ($("#caseSelection #case2Label").hasClass("unselected") == false) {
-		caseURL = caseURL + case2URL;
+	// if only case 1
+	if ($("#caseSelection #case2Label").hasClass("unselected") == true && $("#caseSelection #case3Label").hasClass("unselected") == true) {
+		var completeURL = startURL + case1URL + endURL;
 	} 
 
-	if ($("#caseSelection #case3Label").hasClass("unselected") == false) {
-		caseURL = caseURL + case3URL;
+	// only case 1 and case 2
+	if ($("#caseSelection #case2Label").hasClass("unselected") == false && $("#caseSelection #case3Label").hasClass("unselected") == true) {
+		var completeURL = startURL + case1URL + case2URL + endURL;
+	} 
+
+	// only case 1 and case 3
+	if ($("#caseSelection #case2Label").hasClass("unselected") == true && $("#caseSelection #case3Label").hasClass("unselected") == false) {
+		var completeURL = startURL + case1URL + case3URL + endURL;
+	}
+
+	// only all cases
+	if ($("#caseSelection #case2Label").hasClass("unselected") == false && $("#caseSelection #case3Label").hasClass("unselected") == false) {
+		var completeURL = startURL + case1URL + case3URL + case3URL + endURL;
 	}
 	
 
-
-	var completeURL = startURL + caseURL + endURL;
 
 	return completeURL;
 
