@@ -32,7 +32,7 @@ var case1Data = {
 	sillHeightValue: $("#sill").val(),
 	distanceWindows: $('#distWindow').val(),
 
-	occDistToWallCenter: 0,
+	occDistToWallCenter: $("#occupantDist").val(),
 
 	uvalueValue: $("#uvalue").val(),
 	intLowEChecked: $("#lowECheck").is(":checked"), //provides a true/false
@@ -54,7 +54,7 @@ var case2Data = {
 	sillHeightValue: $("#sill2").val(),
 	distanceWindows: $('#distWindow2').val(),
 
-	occDistToWallCenter: 0,
+	occDistToWallCenter: $("#occupantDist2").val(),
 
 	uvalueValue: $("#uvalue2").val(),
 	intLowEChecked: $("#lowECheck2").is(":checked"), //provides a true/false
@@ -76,7 +76,7 @@ var case3Data = {
 	sillHeightValue: $("#sill3").val(),
 	distanceWindows: $('#distWindow3').val(),
 
-	occDistToWallCenter: 0,
+	occDistToWallCenter: $("#occupantDist3").val(),
 
 	uvalueValue: $("#uvalue3").val(),
 	intLowEChecked: $("#lowECheck3").is(":checked"), //provides a true/false

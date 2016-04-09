@@ -44,6 +44,16 @@ if (typeof urlParameters.units != 'undefined') {
 	}
 }
 
+
+//fill form with parameters, but only if values are provided in URL
+if (typeof urlParameters.ppd != 'undefined') {
+	$("#ppd").val(urlParameters.ppd);
+}
+if (typeof urlParameters.distFromFacade != 'undefined') {
+	$("#distFromFacade").val(urlParameters.distFromFacade);
+}
+
+
 // inputs applied to all cases
 if (typeof urlParameters.rValue != 'undefined') {
 	$("#rvalue").val(urlParameters.rValue);
@@ -89,21 +99,10 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' && urlParamet
 
 	if (typeof urlParameters.windowWidth != 'undefined') {
 		$("#windowWidth, #windowWidth2, #windowWidth3").val(urlParameters.windowWidth);
-		$("#windowWidth").removeClass("inactive");
-		$("#windowWidthLabel").removeClass("inactive");
-		$("#glazing").addClass("inactive");
-		$("#glazingLabel").addClass("inactive");
-		$("#glazingRatioCheck").removeAttr("checked");
 	}
 
 	if (typeof urlParameters.glazingRatio != 'undefined') {
 		$("#glazing, #glazing2, #glazing3").val(urlParameters.glazingRatio);
-		$("#windowWidth").addClass("inactive");
-		$("#windowWidthLabel").addClass("inactive");
-		$("#glazing").removeClass("inactive");
-		$("#glazingLabel").removeClass("inactive");
-
-		$("#glazingRatioCheck").attr("checked", "checked");
 	}
 
 	if (typeof urlParameters.windowSeparation != 'undefined') {
@@ -130,6 +129,10 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' && urlParamet
 		$("#lowE, #lowE2, #lowE3").val(urlParameters.lowE);
 		$("#lowE").removeClass("inactive");
 		$("#lowELabel").removeClass("inactive");
+	}
+	
+	if (typeof urlParameters.occPosition != 'undefined') {
+		$("#occupantDist, #occupantDist2, #occupantDist3").val(urlParameters.occPosition);
 	}
 }
 
@@ -252,13 +255,7 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 
 
 
-//fill form with parameters, but only if values are provided in URL
-if (typeof urlParameters.ppd != 'undefined') {
-	$("#ppd").val(urlParameters.ppd);
-}
-if (typeof urlParameters.distFromFacade != 'undefined') {
-	$("#distFromFacade").val(urlParameters.distFromFacade);
-}
+
 
 
 
