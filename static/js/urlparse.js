@@ -137,13 +137,16 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' && urlParamet
 if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParameters.case3 == 'hide') {
 
 	
-
 	$("#caseSelection #case2Label").removeClass("unselected");
 	$("#case2Heading").removeClass("greyText").addClass("case2Text");
     $("#case2Button").removeClass("unselected");
 
     $("#inputs input.case2, div.case2, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").css("display","inline-block");
 	$("hr.case2").css("display","block");
+
+
+	$("rect.wall2").removeClass("outlined").addClass("filled");
+
 
 	sizeButton();
 
