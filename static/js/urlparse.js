@@ -127,8 +127,9 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' && urlParamet
 
 	if (typeof urlParameters.lowE != 'undefined') {
 		$("#lowE, #lowE2, #lowE3").val(urlParameters.lowE);
-		$("#lowE").removeClass("inactive");
-		$("#lowELabel").removeClass("inactive");
+		$("#lowE, #lowE2, #lowE3").removeClass("inactive");
+		$("#lowELabel, #lowELabel2, #lowELabel3").removeClass("inactive");
+		$("#checkLowE, #checkLowE2, #checkLowE3").removeClass("unselected");
 	}
 	
 	if (typeof urlParameters.occPosition != 'undefined') {
@@ -169,17 +170,12 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 	if (typeof urlParameters.sillHeight != 'undefined') {
 		$("#sill, #sill3").val(urlParameters.sillHeight);
 	}
-	if (typeof urlParameters.sillHeight != 'undefined') {
+	if (typeof urlParameters.sillHeight2 != 'undefined') {
 		$("#sill2").val(urlParameters.sillHeight2);
 	}
 
 	if (typeof urlParameters.windowWidth != 'undefined') {
 		$("#windowWidth, #windowWidth3").val(urlParameters.windowWidth);
-		$("#windowWidth").removeClass("inactive");
-		$("#windowWidthLabel").removeClass("inactive");
-		$("#glazing").addClass("inactive");
-		$("#glazingLabel").addClass("inactive");
-		$("#glazingRatioCheck").removeAttr("checked");
 	}
 	if (typeof urlParameters.windowWidth2 != 'undefined') {
 		$("#windowWidth2").val(urlParameters.windowWidth2);
@@ -187,12 +183,6 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 
 	if (typeof urlParameters.glazingRatio != 'undefined') {
 		$("#glazing, #glazing3").val(urlParameters.glazingRatio);
-		$("#windowWidth").addClass("inactive");
-		$("#windowWidthLabel").addClass("inactive");
-		$("#glazing").removeClass("inactive");
-		$("#glazingLabel").removeClass("inactive");
-
-		$("#glazingRatioCheck").attr("checked", "checked");
 	}
 	if (typeof urlParameters.glazingRatio2 != 'undefined') {
 		$("#glazing2").val(urlParameters.glazingRatio2);
@@ -234,15 +224,133 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 	}
 
 	if (typeof urlParameters.lowE != 'undefined') {
-		$("#lowE,#lowE3").val(urlParameters.lowE);
-		$("#lowE").removeClass("inactive");
-		$("#lowELabel").removeClass("inactive");
+		$("#lowE, #lowE3").val(urlParameters.lowE);
+		$("#lowE, #lowE3").removeClass("inactive");
+		$("#lowELabel, #lowELabel3").removeClass("inactive");
+		$("#checkLowE, #checkLowE3").removeClass("unselected");
 	}
 	if (typeof urlParameters.lowE2 != 'undefined') {
 		$("#lowE2").val(urlParameters.lowE2);
+		$("#lowE2").removeClass("inactive");
+		$("#lowELabel2").removeClass("inactive");
+		$("#checkLowE2").removeClass("unselected");
+	}
+	
+	if (typeof urlParameters.occPosition != 'undefined') {
+		$("#occupantDist, #occupantDist3").val(urlParameters.occPosition);
+	}
+	if (typeof urlParameters.occPosition2 != 'undefined') {
+		$("#occupantDist2").val(urlParameters.occPosition2);
+	}
+}
+
+// show only case 1 and 3
+// case 2 to match case 1
+if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' &&  urlParameters.case3 == 'show') {
+
+	showCase3();
+	sizeButton();
+
+
+	if (typeof urlParameters.ceiling != 'undefined') {
+		$("#ceiling, #ceiling2").val(urlParameters.ceiling);
+	}
+	if (typeof urlParameters.ceiling3 != 'undefined') {
+		$("#ceiling3").val(urlParameters.ceiling3);
 	}
 
+
+	if (typeof urlParameters.wallWidth != 'undefined') {
+		$("#wallWidth, #wallWidth2").val(urlParameters.wallWidth);
+	}
+	if (typeof urlParameters.wallWidth3 != 'undefined') {
+		$("#wallWidth3").val(urlParameters.wallWidth3);
+	}
+
+	if (typeof urlParameters.windowHeight != 'undefined') {
+		$("#windowHeight, #windowHeight2").val(urlParameters.windowHeight);
+	}
+	if (typeof urlParameters.windowHeight3 != 'undefined') {
+		$("#windowHeight3").val(urlParameters.windowHeight3);
+	}
+
+	if (typeof urlParameters.sillHeight != 'undefined') {
+		$("#sill, #sill2").val(urlParameters.sillHeight);
+	}
+	if (typeof urlParameters.sillHeight3 != 'undefined') {
+		$("#sill3").val(urlParameters.sillHeight3);
+	}
+
+	if (typeof urlParameters.windowWidth != 'undefined') {
+		$("#windowWidth, #windowWidth2").val(urlParameters.windowWidth);
+	}
+	if (typeof urlParameters.windowWidth3 != 'undefined') {
+		$("#windowWidth3").val(urlParameters.windowWidth3);
+	}
+
+	if (typeof urlParameters.glazingRatio != 'undefined') {
+		$("#glazing, #glazing2").val(urlParameters.glazingRatio);
+	}
+	if (typeof urlParameters.glazingRatio3 != 'undefined') {
+		$("#glazing3").val(urlParameters.glazingRatio3);
+	}
+
+	if (typeof urlParameters.windowSeparation != 'undefined') {
+		$("#distWindow, #distWindow2").val(urlParameters.windowSeparation);
+	}
+	if (typeof urlParameters.windowSeparation3 != 'undefined') {
+		$("#distWindow3").val(urlParameters.windowSeparation3);
+	}
+
+	if (typeof urlParameters.uValue != 'undefined') {
+		$("#uvalue, #uvalue2").val(urlParameters.uValue);
+	}
+	if (typeof urlParameters.uValue3 != 'undefined') {
+		$("#uvalue3").val(urlParameters.uValue3);
+	}
+
+	if (typeof urlParameters.outdoorTemp != 'undefined') {
+		$("#outdoortemp, #outdoortemp2").val(urlParameters.outdoorTemp);
+	}
+	if (typeof urlParameters.outdoorTemp3 != 'undefined') {
+		$("#outdoortemp3").val(urlParameters.outdoorTemp3);
+	}
+
+	if (typeof urlParameters.indoortemp != 'undefined') {
+		$("#airtemp, #airtemp2").val(urlParameters.indoortemp);
+	}
+	if (typeof urlParameters.indoortemp3 != 'undefined') {
+		$("#airtemp3").val(urlParameters.indoortemp3);
+	}
+
+	if (typeof urlParameters.humidity != 'undefined') {
+		$("#humidity, #humidity2").val(urlParameters.humidity);
+	}
+	if (typeof urlParameters.humidity3 != 'undefined') {
+		$("#humidity3").val(urlParameters.humidity3);
+	}
+
+	if (typeof urlParameters.lowE != 'undefined') {
+		$("#lowE, #lowE2").val(urlParameters.lowE);
+		$("#lowE, #lowE2").removeClass("inactive");
+		$("#lowELabel, #lowELabel2").removeClass("inactive");
+		$("#checkLowE, #checkLowE2").removeClass("unselected");
+	}
+	if (typeof urlParameters.lowE3 != 'undefined') {
+		$("#lowE3").val(urlParameters.lowE3);
+		$("#lowE3").removeClass("inactive");
+		$("#lowELabel3").removeClass("inactive");
+		$("#checkLowE3").removeClass("unselected");
+	}
+	
+	if (typeof urlParameters.occPosition != 'undefined') {
+		$("#occupantDist, #occupantDist2").val(urlParameters.occPosition);
+	}
+	if (typeof urlParameters.occPosition3 != 'undefined') {
+		$("#occupantDist3").val(urlParameters.occPosition3);
+	}
 }
+
 
 
 

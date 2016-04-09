@@ -415,6 +415,8 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 	width: 390px;
 
 	font-family: "museo-sans", sans-serif;
+	position: relative;
+	z-index: 0;
 }
 
 #occupantSliders {
@@ -763,14 +765,19 @@ input[type=checkbox] {
 
 
 #inputs div#condensation {
+	width: 142px;
 	bottom: 40px;
 	left: 218px;
 }
 
 #inputs div#uvaluePop {
+	width: 142px;
 	bottom: 110px;
 	left: 218px;
+	z-index: 1000;
 }
+
+
 
 #inputs div.alert img.close {
 	position: absolute;
@@ -789,7 +796,6 @@ input[type=checkbox] {
 	padding: 10px;
 	border-radius: 10px;
 	
-	width: 142px;
 	display: none;
 }
 
@@ -800,6 +806,11 @@ input[type=checkbox] {
 
 
 
+#inputs div#URLpop a:visited, #inputs div#URLpop a:hover, #inputs div#URLpop a:active {
+	color: #777;
+}
+
+
 
 
 
@@ -808,8 +819,6 @@ input[type=checkbox] {
 #sliderWrapper2, .connectLine2, .dotCase2, .occdot2, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3 {
 	display: none;
 }
-
-
 
 
 
@@ -875,6 +884,22 @@ div#units, div#share {
 	background-color: #777;
 }
 
+
+
+
+div#URLpop {
+	
+}
+
+div#URLpop textarea {
+	font-family: "museo-sans", sans-serif;
+	text-align: center;
+	font-size: 12px;
+	font-weight: 100;
+	color: #000;
+	width: 418px;
+	height: 220px;
+}
 
 
 

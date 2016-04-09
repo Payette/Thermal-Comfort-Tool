@@ -812,6 +812,29 @@ render.makeGraph = function () {
     })
 
 
+    $(".optionButton#URL").click(function(event) {
+		var urlresult = createURL();
+
+		$("#URLpop textarea").empty();
+		$("#URLpop textarea").append(urlresult);
+
+		$("#URLpop textarea").focus(function() {
+			$("#URLpop textarea").select();
+		});
+
+		$("#URLpop").dialog("open");
+		
+	})
+
+
+	// remove URL alert on click
+	$("#URLpop img.close").on("click", function() {
+		$("#URLpop").css("display","none");
+	})
+
+
+
+
 
 
 
@@ -1080,12 +1103,7 @@ render.makeGraph = function () {
 		autocalcUValues();
 	});
 
-	$(".optionButton#URL").click(function(event) {
-		console.log("clicked");
-
-		var urlresult = createURL();
-		console.log(urlresult);
-	})
+	
 
 
 
