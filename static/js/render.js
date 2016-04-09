@@ -1080,6 +1080,13 @@ render.makeGraph = function () {
 		autocalcUValues();
 	});
 
+	$(".optionButton#URL").click(function(event) {
+		console.log("clicked");
+
+		var urlresult = createURL;
+		console.log(urlresult + " hello");
+	})
+
 
 
 	/* ------ DETECT CHANGES TO INPUT VALUES ------ */
