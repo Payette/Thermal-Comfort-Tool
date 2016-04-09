@@ -144,7 +144,6 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
     $("#inputs input.case2, div.case2, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").css("display","inline-block");
 	$("hr.case2").css("display","block");
 
-
 	$("rect.wall2").removeClass("outlined").addClass("filled");
 
 
