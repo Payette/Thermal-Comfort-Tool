@@ -535,6 +535,7 @@ render.makeGraph = function () {
 			} else {
 				return "wall2 filled"
 			}
+		})
 		.attr("x", 0)
 		.attr("y", 0)
 		.attr("width", function(d) {return facadeScaleWidth(case2Data.wallLen)})
