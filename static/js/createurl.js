@@ -36,9 +36,9 @@ function createURL() {
 	var met = $("#metabolic").val();
 
 
-	var URL = location.href + "/?units=" + units + "case1=" + case1Vis + "&case2=" + case2Vis + "&case3=" + case3Vis;
+	var generatedURL = location.href + "/?units=" + units + "case1=" + case1Vis + "&case2=" + case2Vis + "&case3=" + case3Vis;
 
-	return URL;
+	return generatedURL;
 
 }
 
