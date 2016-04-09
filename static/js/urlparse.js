@@ -62,13 +62,15 @@ if (typeof urlParameters.metabolic != 'undefined') {
 }
 
 
-
+var case1visability = urlParameters.case1;
+var case2visability = urlParameters.case2;
+var case3visability = urlParameters.case3;
 
 
 // first check should be which cases are shown - therefore if only case 1, dont need values for other cases, just fill with the same...
 
 //only case 1 is shown, apply given values to all cases
-if (typeof urlParameters.case1 == 'show' && typeof urlParameters.case2 == 'hide' && typeof urlParameters.case3 == 'hide') {
+if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' && urlParameters.case3 == 'hide') {
 
 	if (typeof urlParameters.ceiling != 'undefined') {
 		$("#ceiling, #ceiling2, #ceiling3").val(urlParameters.ceiling);
@@ -132,7 +134,7 @@ if (typeof urlParameters.case1 == 'show' && typeof urlParameters.case2 == 'hide'
 }
 
 // show case 1 and 2
-else if (typeof urlParameters.case1 == 'show' && typeof urlParameters.case2 == 'show' && typeof urlParameters.case3 == 'hide') {
+if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParameters.case3 == 'hide') {
 
 	console.log("case2 show");
 
