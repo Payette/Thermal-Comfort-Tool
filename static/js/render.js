@@ -541,7 +541,7 @@ render.makeGraph = function () {
 		.data(glzCoordsCase2)
 		.enter()
 		.append("rect")
-		.attr("class", "window2 white")
+		.attr("class", "window2")
 		.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facadeScaleWidth(case2Data.wallLen)/2)})
 		.attr("y", function(d) {return (facadeScaleHeight(case2Data.ceilingHeightValue - d[3][2]))})
 		.attr("width", facadeScaleWidth(glzWidthCase2))
@@ -553,10 +553,14 @@ render.makeGraph = function () {
 	if ($("#caseSelection #case2Label").hasClass("unselected") == true) {
 		d3.selectAll("rect.wall2").classed("outlined", true);
 		d3.selectAll("rect.wall2").classed("filled", false);
+		d3.selectAll("rect.window2").classed("white", true);
+		d3.selectAll("rect.window2").classed("blue", false);
 	}
 	else {
 		d3.selectAll("rect.wall2").classed("outlined", false);
 		d3.selectAll("rect.wall2").classed("filled", true);
+		d3.selectAll("rect.window2").classed("white", false);
+		d3.selectAll("rect.window2").classed("blue", true);
 	}
 
 
@@ -568,7 +572,7 @@ render.makeGraph = function () {
 				.attr("height", facHeight + facMargin.top + facMargin.bottom);
 
 	var wallCase3 = facadeSvgCase3.append("rect")
-		.attr("class","wall3 outlined")
+		.attr("class","wall3")
 		.attr("x", 0)
 		.attr("y", 0)
 		.attr("width", function(d) {return facadeScaleWidth(case3Data.wallLen)})
@@ -580,7 +584,7 @@ render.makeGraph = function () {
 		.data(glzCoordsCase3)
 		.enter()
 		.append("rect")
-		.attr("class", "window3 white")
+		.attr("class", "window3")
 		.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facadeScaleWidth(case3Data.wallLen)/2)})
 		.attr("y", function(d) {return (facadeScaleHeight(case3Data.ceilingHeightValue - d[3][2]))})
 		.attr("width", facadeScaleWidth(glzWidthCase3))
@@ -588,6 +592,19 @@ render.makeGraph = function () {
 		.attr("transform", function() {
 			return "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case3CeilingDiff)) + ")";
 		});
+
+	if ($("#caseSelection #case3Label").hasClass("unselected") == true) {
+		d3.selectAll("rect.wall3").classed("outlined", true);
+		d3.selectAll("rect.wall3").classed("filled", false);
+		d3.selectAll("rect.window3").classed("white", true);
+		d3.selectAll("rect.window3").classed("blue", false);
+	}
+	else {
+		d3.selectAll("rect.wall3").classed("outlined", false);
+		d3.selectAll("rect.wall3").classed("filled", true);
+		d3.selectAll("rect.window3").classed("white", false);
+		d3.selectAll("rect.window3").classed("blue", true);
+	}
 
 
 
