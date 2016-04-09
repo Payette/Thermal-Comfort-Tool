@@ -529,12 +529,12 @@ render.makeGraph = function () {
 				.attr("height", facHeight + facMargin.top + facMargin.bottom);
 
 	var wallCase2 = facadeSvgCase2.append("rect")
-		.attr("class", function() {
+/*		.attr("class", function() {
 			if ($("#caseSelection #case2Label".hasClass("unselected") == true) {
 				return "wall2 outlined"
 			} else {
 				return "wall2 filled"
-			}
+			}*/
 		.attr("x", 0)
 		.attr("y", 0)
 		.attr("width", function(d) {return facadeScaleWidth(case2Data.wallLen)})
@@ -669,48 +669,6 @@ render.makeGraph = function () {
         .attr("y1", "0")
         .attr("y2", "6");
 
-
-
-
-    //gradient fill
-    var blueGradient = defs.append("linearGradient")
-    	.attr("id", "blueGradient")
-    	.attr( 'x1', '0' )
-        .attr( 'x2', '0' )
-        .attr( 'y1', '0' )
-        .attr( 'y2', '1' ); // makes vertical gradient
-    blueGradient.append("stop")
-    	.attr("class", "blueGradientStop1")
-    	.attr("offset", "60%");
-    blueGradient.append("stop")
-    	.attr("class", "blueGradientStop2")
-    	.attr("offset", "100%");
-
-    var blueGradient2 = defs2.append("linearGradient")
-    	.attr("id", "blueGradient2")
-    	.attr( 'x1', '0' )
-        .attr( 'x2', '0' )
-        .attr( 'y1', '0' )
-        .attr( 'y2', '1' ); // makes vertical gradient
-    blueGradient.append("stop")
-    	.attr("class", "blueGradientStop1")
-    	.attr("offset", "60%");
-    blueGradient.append("stop")
-    	.attr("class", "blueGradientStop2")
-    	.attr("offset", "100%")
-
-    var blueGradient3 = defs3.append("linearGradient")
-    	.attr("id", "blueGradient3")
-    	.attr( 'x1', '0' )
-        .attr( 'x2', '0' )
-        .attr( 'y1', '0' )
-        .attr( 'y2', '1' ); // makes vertical gradient
-    blueGradient.append("stop")
-    	.attr("class", "blueGradientStop1")
-    	.attr("offset", "60%");
-    blueGradient.append("stop")
-    	.attr("class", "blueGradientStop2")
-    	.attr("offset", "100%")
 
 
 
