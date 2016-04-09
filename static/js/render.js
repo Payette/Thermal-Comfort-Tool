@@ -949,6 +949,11 @@ render.makeGraph = function () {
 
 	$(".optionButton#SI").click(function(event) {
 
+		console.log("clicked");
+
+		var urlresult = createURL;
+		console.log(urlresult + " hello");
+
 		if ($(".optionButton#SI").hasClass("selected") == false) {
 			//change to SI
 			unitSys = "SI"
