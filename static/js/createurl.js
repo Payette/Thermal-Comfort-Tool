@@ -1,5 +1,7 @@
-$("#URL").on("click", function() {
-	console.log(createURL());
+$("#URL").click(function(event) {
+
+	var urlresult = createURL;
+	console.log(urlresult + " hello");
 })
 
 function createURL() {

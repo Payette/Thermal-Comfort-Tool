@@ -10,6 +10,3 @@ function sizeButton() {
 	}
 }
 
-$("#URL").on("click", function() {
-	console.log(createURL());
-})
