@@ -5,37 +5,10 @@ var thisURL = location.href;
 var urlParameters = urlObject({'url':thisURL}).parameters;
 
 
-// first check should be which cases are shown - therefore if only case 1, dont need values for other cases, just fill with the same...
-
-var selectedCases = {
-	case1: false,
-	case2: false,
-	case3: false
-}
-
-// determine which cases are shown
-if ($("#caseSelection #case1Label").hasClass("unselected") == false) {
-	selectedCases.case1 = true
-}
-
-if ($("#caseSelection #case2Label").hasClass("unselected") == false) {
-	selectedCases.case2 = true
-}
-
-if ($("#caseSelection #case3Label").hasClass("unselected") == false) {
-	selectedCases.case3 = true
-}
-
-
-
-
 // determine units
 if (typeof urlParameters.units != 'undefined') {
 
-	console.log(urlParameters.units);
-
 	unitSys = urlParameters.units;
-
 
 	if (unitSys == "IP") {
 		$(".optionButton#IP").addClass("selected");
@@ -92,6 +65,157 @@ if (typeof urlParameters.metabolic != 'undefined') {
 
 
 
+// first check should be which cases are shown - therefore if only case 1, dont need values for other cases, just fill with the same...
+
+//only case 1 is shown, apply given values to all cases
+if (typeof urlParameters.case1 == 'true' && typeof urlParameters.case2 == 'false' && typeof urlParameters.case3 == 'false') {
+
+	if (typeof urlParameters.ceiling != 'undefined') {
+		$("#ceiling, #ceiling2, #ceiling3").val(urlParameters.ceiling);
+	}
+	if (typeof urlParameters.wallWidth != 'undefined') {
+		$("#wallWidth, #wallWidth2, #wallWidth3").val(urlParameters.wallWidth);
+	}
+
+	if (typeof urlParameters.windowHeight != 'undefined') {
+		$("#windowHeight, #windowHeight2, #windowHeight3").val(urlParameters.windowHeight);
+	}
+
+	if (typeof urlParameters.sillHeight != 'undefined') {
+		$("#sill, #sill2, #sill3").val(urlParameters.sillHeight);
+	}
+
+	if (typeof urlParameters.windowWidth != 'undefined') {
+		$("#windowWidth, #windowWidth2, #windowWidth3").val(urlParameters.windowWidth);
+		$("#windowWidth").removeClass("inactive");
+		$("#windowWidthLabel").removeClass("inactive");
+		$("#glazing").addClass("inactive");
+		$("#glazingLabel").addClass("inactive");
+		$("#glazingRatioCheck").removeAttr("checked");
+	}
+
+	if (typeof urlParameters.glazingRatio != 'undefined') {
+		$("#glazing, #glazing2, #glazing3").val(urlParameters.glazingRatio);
+		$("#windowWidth").addClass("inactive");
+		$("#windowWidthLabel").addClass("inactive");
+		$("#glazing").removeClass("inactive");
+		$("#glazingLabel").removeClass("inactive");
+
+		$("#glazingRatioCheck").attr("checked", "checked");
+	}
+
+	if (typeof urlParameters.windowSeparation != 'undefined') {
+		$("#distWindow, #distWindow2, #distWindow3").val(urlParameters.windowSeparation);
+	}
+
+	if (typeof urlParameters.uValue != 'undefined') {
+		$("#uvalue, #uvalue2, #uvalue3").val(urlParameters.uValue);
+	}
+
+	if (typeof urlParameters.outdoorTemp != 'undefined') {
+		$("#outdoortemp, #outdoortemp2, #outdoortemp3").val(urlParameters.outdoorTemp);
+	}
+
+	if (typeof urlParameters.indoortemp != 'undefined') {
+		$("#airtemp, #airtemp2, #airtemp3").val(urlParameters.indoortemp);
+	}
+
+	if (typeof urlParameters.humidity != 'undefined') {
+		$("#humidity, #humidity2, #humidity3").val(urlParameters.humidity);
+	}
+
+	if (typeof urlParameters.lowE != 'undefined') {
+		$("#lowE, #lowE2, #lowE3").val(urlParameters.lowE);
+		$("#lowE").removeClass("inactive");
+		$("#lowELabel").removeClass("inactive");
+	}
+}
+
+// show case 1 and 2
+else if (typeof urlParameters.case1 == 'true' && typeof urlParameters.case2 == 'true' && typeof urlParameters.case3 == 'false') {
+
+	$("#case2Heading").removeClass("greyText").addClass("case2Text");
+    $("#case2Button").removeClass("unselected");
+
+    $("#inputs input.case2, div.case2, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").css("display","inline-block");
+	$("hr.case2").css("display","block");
+
+
+
+
+	if (typeof urlParameters.ceiling != 'undefined') {
+		$("#ceiling, #ceiling3").val(urlParameters.ceiling);
+	}
+	if (typeof urlParameters.wallWidth != 'undefined') {
+		$("#wallWidth, #wallWidth3").val(urlParameters.wallWidth);
+	}
+
+	if (typeof urlParameters.windowHeight != 'undefined') {
+		$("#windowHeight, #windowHeight3").val(urlParameters.windowHeight);
+	}
+
+	if (typeof urlParameters.sillHeight != 'undefined') {
+		$("#sill, #sill3").val(urlParameters.sillHeight);
+	}
+
+	if (typeof urlParameters.windowWidth != 'undefined') {
+		$("#windowWidth, #windowWidth3").val(urlParameters.windowWidth);
+		$("#windowWidth").removeClass("inactive");
+		$("#windowWidthLabel").removeClass("inactive");
+		$("#glazing").addClass("inactive");
+		$("#glazingLabel").addClass("inactive");
+		$("#glazingRatioCheck").removeAttr("checked");
+	}
+
+	if (typeof urlParameters.glazingRatio != 'undefined') {
+		$("#glazing, #glazing3").val(urlParameters.glazingRatio);
+		$("#windowWidth").addClass("inactive");
+		$("#windowWidthLabel").addClass("inactive");
+		$("#glazing").removeClass("inactive");
+		$("#glazingLabel").removeClass("inactive");
+
+		$("#glazingRatioCheck").attr("checked", "checked");
+	}
+
+	if (typeof urlParameters.windowSeparation != 'undefined') {
+		$("#distWindow, #distWindow3").val(urlParameters.windowSeparation);
+	}
+
+	if (typeof urlParameters.uValue != 'undefined') {
+		$("#uvalue, #uvalue3").val(urlParameters.uValue);
+	}
+
+	if (typeof urlParameters.outdoorTemp != 'undefined') {
+		$("#outdoortemp, #outdoortemp3").val(urlParameters.outdoorTemp);
+	}
+
+	if (typeof urlParameters.indoortemp != 'undefined') {
+		$("#airtemp, #airtemp3").val(urlParameters.indoortemp);
+	}
+
+	if (typeof urlParameters.humidity != 'undefined') {
+		$("#humidity, #humidity3").val(urlParameters.humidity);
+	}
+
+	if (typeof urlParameters.lowE != 'undefined') {
+		$("#lowE,#lowE3").val(urlParameters.lowE);
+		$("#lowE").removeClass("inactive");
+		$("#lowELabel").removeClass("inactive");
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 //fill form with parameters, but only if values are provided in URL
 if (typeof urlParameters.ppd != 'undefined') {
 	$("#ppd").val(urlParameters.ppd);
@@ -100,65 +224,6 @@ if (typeof urlParameters.distFromFacade != 'undefined') {
 	$("#distFromFacade").val(urlParameters.distFromFacade);
 }
 
-if (typeof urlParameters.ceiling != 'undefined') {
-	$("#ceiling").val(urlParameters.ceiling);
-}
-if (typeof urlParameters.wallWidth != 'undefined') {
-	$("#wallWidth").val(urlParameters.wallWidth);
-}
-
-if (typeof urlParameters.windowHeight != 'undefined') {
-	$("#windowHeight").val(urlParameters.windowHeight);
-}
-
-if (typeof urlParameters.sillHeight != 'undefined') {
-	$("#sill").val(urlParameters.sillHeight);
-}
-
-if (typeof urlParameters.windowWidth != 'undefined') {
-	$("#windowWidth").val(urlParameters.windowWidth);
-	$("#windowWidth").removeClass("inactive");
-	$("#windowWidthLabel").removeClass("inactive");
-	$("#glazing").addClass("inactive");
-	$("#glazingLabel").addClass("inactive");
-	$("#glazingRatioCheck").removeAttr("checked");
-}
-
-if (typeof urlParameters.glazingRatio != 'undefined') {
-	$("#glazing").val(urlParameters.glazingRatio);
-	$("#windowWidth").addClass("inactive");
-	$("#windowWidthLabel").addClass("inactive");
-	$("#glazing").removeClass("inactive");
-	$("#glazingLabel").removeClass("inactive");
-
-	$("#glazingRatioCheck").attr("checked", "checked");
-}
-
-if (typeof urlParameters.windowSeparation != 'undefined') {
-	$("#distWindow").val(urlParameters.windowSeparation);
-}
-
-if (typeof urlParameters.uValue != 'undefined') {
-	$("#uvalue").val(urlParameters.uValue);
-}
-
-if (typeof urlParameters.outdoorTemp != 'undefined') {
-	$("#outdoortemp").val(urlParameters.outdoorTemp);
-}
-
-if (typeof urlParameters.indoortemp != 'undefined') {
-	$("#airtemp").val(urlParameters.indoortemp);
-}
-
-if (typeof urlParameters.humidity != 'undefined') {
-	$("#humidity").val(urlParameters.humidity);
-}
-
-if (typeof urlParameters.lowE != 'undefined') {
-	$("#lowE").val(urlParameters.lowE);
-	$("#lowE").removeClass("inactive");
-	$("#lowELabel").removeClass("inactive");
-}
 
 
 
