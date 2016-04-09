@@ -68,7 +68,7 @@ if (typeof urlParameters.metabolic != 'undefined') {
 // first check should be which cases are shown - therefore if only case 1, dont need values for other cases, just fill with the same...
 
 //only case 1 is shown, apply given values to all cases
-if (typeof urlParameters.case1 == 'true' && typeof urlParameters.case2 == 'false' && typeof urlParameters.case3 == 'false') {
+if (typeof urlParameters.case1 == 'show' && typeof urlParameters.case2 == 'hide' && typeof urlParameters.case3 == 'hide') {
 
 	if (typeof urlParameters.ceiling != 'undefined') {
 		$("#ceiling, #ceiling2, #ceiling3").val(urlParameters.ceiling);
@@ -132,7 +132,7 @@ if (typeof urlParameters.case1 == 'true' && typeof urlParameters.case2 == 'false
 }
 
 // show case 1 and 2
-else if (typeof urlParameters.case1 == 'true' && typeof urlParameters.case2 == 'true' && typeof urlParameters.case3 == 'false') {
+else if (typeof urlParameters.case1 == 'show' && typeof urlParameters.case2 == 'show' && typeof urlParameters.case3 == 'hide') {
 
 	console.log("case2 show");
 
