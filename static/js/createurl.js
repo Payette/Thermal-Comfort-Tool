@@ -94,18 +94,23 @@ function createURL() {
 
 
 
+	// if only case 1
+	if ($("#caseSelection #case2Label").hasClass("unselected") == true && $("#caseSelection #case3Label").hasClass("unselected") == true) {
+		var completeURL = startURL + case1URL + endURL;
+	} 
+
 	// only case 1 and case 2
 	if ($("#caseSelection #case2Label").hasClass("unselected") == false && $("#caseSelection #case3Label").hasClass("unselected") == true) {
 		var completeURL = startURL + case1URL + case2URL + endURL;
 	} 
 
 	// only case 1 and case 3
-	if ($("#caseSelection #case3Label").hasClass("unselected") == true && $("#caseSelection #case3Label").hasClass("unselected") == false) {
+	if ($("#caseSelection #case2Label").hasClass("unselected") == true && $("#caseSelection #case3Label").hasClass("unselected") == false) {
 		var completeURL = startURL + case1URL + case3URL + endURL;
 	}
 
 	// only all cases
-	if ($("#caseSelection #case3Label").hasClass("unselected") == false && $("#caseSelection #case3Label").hasClass("unselected") == false) {
+	if ($("#caseSelection #case2Label").hasClass("unselected") == false && $("#caseSelection #case3Label").hasClass("unselected") == false) {
 		var completeURL = startURL + case1URL + case3URL + case3URL + endURL;
 	}
 	

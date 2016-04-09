@@ -812,6 +812,7 @@ render.makeGraph = function () {
     })
 
 
+    // show URL in modal alert
     $(".optionButton#URL").click(function(event) {
 		var urlresult = createURL();
 
