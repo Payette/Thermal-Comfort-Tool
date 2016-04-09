@@ -31,6 +31,9 @@ if ($("#caseSelection #case3Label").hasClass("unselected") == false) {
 
 // determine units
 if (typeof urlParameters.units != 'undefined') {
+
+	console.log("checking units");
+
 	if (urlParameters.units = "IP") {
 		unitSys = "IP";
 
@@ -50,7 +53,7 @@ if (typeof urlParameters.units != 'undefined') {
 
 	} else if (urlParameters.units = "SI") {
 
-		console.log("SI noticed")
+		console.log("SI noticed");
 		//change to SI
 		unitSys = "SI"
 		$(".optionButton#SI").addClass("selected");
@@ -99,6 +102,7 @@ if (typeof urlParameters.distFromFacade != 'undefined') {
 }
 
 if (typeof urlParameters.ceiling != 'undefined') {
+	console.log("checking ceiling");
 	$("#ceiling").val(urlParameters.ceiling);
 }
 if (typeof urlParameters.wallWidth != 'undefined') {
