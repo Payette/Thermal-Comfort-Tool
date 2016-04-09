@@ -87,9 +87,8 @@ var case3Data = {
 	humidityValue: $("#humidity3").val()
 }
 
-
-
-
+var changedVar = "ceilingHeightValue";
+var unitSys = "IP";
 
 
 //ensure slider has correct max value
@@ -100,7 +99,7 @@ $("#occupantDist").attr("max", case1Data.wallLen/2);
 // Main function to run the analysis.
 script.computeData = function(object) {
 	// Compute the window and wall geometry.
-	var geoResult = geo.createGlazingForRect(parseFloat(object.ceilingHeightValue), object.wallLen, object.glzRatioValue/100, parseFloat(object.windowWidthValue), parseFloat(object.windowHeightValue), parseFloat(object.sillHeightValue), parseFloat(object.distanceWindows), glzOrWidth);
+	var geoResult = geo.createGlazingForRect(parseFloat(object.ceilingHeightValue), object.wallLen, object.glzRatioValue/100, parseFloat(object.windowWidthValue), parseFloat(object.windowHeightValue), parseFloat(object.sillHeightValue), parseFloat(object.distanceWindows), glzOrWidth, changedVar);
 
 	// Compute the view factors to make the graph.
 	var viewResult = geo.computeAllViewFac(geoResult.wallCoords, geoResult.glzCoords, object.occDistToWallCenter)
@@ -127,7 +126,7 @@ script.computeData = function(object) {
 	r.condensation = comfortResult.condensation; // Text string value that is either: "certain", "risky", "none".
 	r.dataSet = comfortResult.myDataset; // Data to construct the graph.
 	r.occPtInfo = comfortResult.occPtInfo;  // The status of the occupant at the input location.
-	r.runDownCalc = comfortResult.runDownCalc;  // Boolean value for whether the occupant is in front of the window or not.
+	r.dwnPPDFac = comfortResult.dwnPPDFac;  // Boolean value for whether the occupant is in front of the window or not.
 
 
 	return r

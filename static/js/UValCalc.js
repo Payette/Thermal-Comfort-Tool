@@ -42,21 +42,17 @@ uVal.uValMRT = function(opaqueViewFac, winViewFac, airTemp, outdoorTemp, opaqueR
 
 
 // FUNCTIONS FOR CALCULATING THE MAX U-VALUE WITH DOWNDRAFT
-uVal.uValDownD = function(PPDAccept, distToFacade, windowHgt, filmCoeff, airTemp, outdoorTemp){
-	var distSI = distToFacade/3.28084
-	//var uValGuess = 0.2
-
+uVal.uValDownD = function(PPDAccept, distToFacade, windowHgt, filmCoeff, airTemp, outdoorTemp, dwnPPDFac){
 	function uvalclos(target) {
 		return function(uValGuess) {
-			return comf.calcFulldonwDppd(distSI, windowHgt, filmCoeff, airTemp, outdoorTemp, uValGuess) - target
+			return comf.calcFulldonwDppd(distToFacade, windowHgt, filmCoeff, airTemp, outdoorTemp, uValGuess, dwnPPDFac) - target
 		}
 	}
-
 	function solve(target) {
 
 		var epsilon = 0.01 // PPD precision
-		var a = 0.001 // Start Lower Guess for U-Value
-		var b = 20 // Start Upper Guess for U-Value
+		var a = 0.01 // Start Lower Guess for U-Value
+		var b = 30 // Start Upper Guess for U-Value
 		var fn = uvalclos(target)
 		var t = util.secant(a, b, fn, epsilon)
 		if (isNaN(t)) {
@@ -70,19 +66,24 @@ uVal.uValDownD = function(PPDAccept, distToFacade, windowHgt, filmCoeff, airTemp
 
 
 // FUNCTION THAT RETURNS THE LOWEST U-VALUE GIVEN COMFORT CRITERIA
-uVal.uValFinal = function(opaqueViewFac, winViewFac, distToFacade, runDownCalc, windowHgt, indoorTemp, outTemp, wallRVal, intLowE, lowEmissivity, airSpeed, relHumid, metRate, cloLevel, targetPPD){
-	// Convert window height to meters (yay for SI!!)
-	var windowHgtSI = windowHgt/3.28084
+uVal.uValFinal = function(opaqueViewFac, winViewFac, distToFacade, dwnPPDFac, windowHgt, indoorTemp, outTemp, wallRVal, intLowE, lowEmissivity, airSpeed, relHumid, metRate, cloLevel, targetPPD){
+	// Convert values to SI if we have to
+	if (unitSys == "IP") {
+  	var windowHgtSI = units.Ft2M(windowHgt);
+  	var vel = units.fpm2mps(airSpeed);
+  	var opaqueRVal = units.rIP2rSI(wallRVal);
+  	var airTemp = units.F2C(indoorTemp);
+  	var outdoorTemp = units.F2C(outTemp);
+    var facadeDist = units.Ft2M(distToFacade);
+  } else {
+    var windowHgtSI = windowHgt;
+  	var vel = airSpeed;
+  	var opaqueRVal = wallRVal;
+  	var airTemp = indoorTemp;
+  	var outdoorTemp = outTemp;
+    var facadeDist = distToFacade;
+  }
 
-	// Convert air velocity to m/s.
-	var vel = airSpeed*0.00508
-
-	// Convert R-Vals to SI.
-	var opaqueRVal = wallRVal/5.678263337
-
-	// Convert all Tempreatures ot Celcius.
-	var airTemp = (indoorTemp-32) * 5 / 9
-	var outdoorTemp = (outTemp-32) * 5 / 9
 
 	//Assign variable for film coefficient and  based on interior Low-E coating.
 	if (intLowE == true){
@@ -91,21 +92,27 @@ uVal.uValFinal = function(opaqueViewFac, winViewFac, distToFacade, runDownCalc, 
 		var filmCoeff = 8.29
 	}
 
-
 	//Compute the required U-Value for PMV model.
 	var uValMRT = uVal.uValMRT(opaqueViewFac, winViewFac, airTemp, outdoorTemp, opaqueRVal, filmCoeff, intLowE, lowEmissivity, vel, parseFloat(relHumid), parseFloat(metRate), parseFloat(cloLevel), parseFloat(targetPPD))
 
-	//Compute the required U-Value for the Downdraft model.
-	if (runDownCalc== true) {
-		var uValDownD = uVal.uValDownD(targetPPD, distToFacade, windowHgtSI, filmCoeff, airTemp, outdoorTemp)
+	if (dwnPPDFac > 0) {
+		var uValDownD = uVal.uValDownD(targetPPD, facadeDist, windowHgtSI, filmCoeff, airTemp, outdoorTemp, dwnPPDFac)
 	} else {
-		var uValDownD = 10
+		if (unitSys == "IP") {
+			var uValDownD = 567.8263337
+		} else {
+			var uValDownD = 100
+		}
 	}
 
 	if (uValDownD < uValMRT){
-		var uValFinal = uValDownD/5.678263337
+		var uValFinal = uValDownD
 	} else{
-		var uValFinal = uValMRT/5.678263337
+		var uValFinal = uValMRT
+	}
+
+	if (unitSys == "IP") {
+		uValFinal = uValFinal/5.678263337
 	}
 
 	return uValFinal

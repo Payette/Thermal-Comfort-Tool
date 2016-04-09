@@ -74,9 +74,13 @@ comf.calcPPDFromAssym = function(interiorTemp, avgWallTemp){
 
 // Function that computes PPD given a certain downdraft velocity.
 // This function is taken from this paper:
-// Fanger, PO and Christensen, NK. (1986). Perception of Draught in Ventilated Spaces. rgonomics, 29:2, 215-235.
+// Fanger, PO and Christensen, NK. (1986). Perception of Draught in Ventilated Spaces. Ergonomics, 29:2, 215-235.
 comf.calcPPDFromDowndraft = function(windSpd, airTemp){
-    return (13800*(pow((((windSpd*0.8)-0.04)/(airTemp-13.7))+0.0293, 2) - 0.000857))
+    if (windSpd > 0.7 || airTemp < 15) {
+      return 9999
+    } else {
+      return (13800*(pow((((windSpd*0.8)-0.04)/(airTemp-13.7))+0.0293, 2) - 0.000857))
+    }
 }
 
 // The following 3 functions compute PPD given the 6 factors of PMV comfort.
@@ -424,7 +428,7 @@ comf.calcFullMRTppd = function(winView, opaView, winFilmCoeff, airTemp, outdoorT
 }
 
 // Function that computes downdraft PPD given window dimensions and properties.
-comf.calcFulldonwDppd = function(distSI, windowHgt, filmCoeff, airTemp, outdoorTemp, windowUVal){
+comf.calcFulldonwDppd = function(distSI, windowHgt, filmCoeff, airTemp, outdoorTemp, windowUVal, dwnPPDFac){
   // Get the difference between the surface temperature and the air
 	var glassAirDelta = airTemp - comf.calcInteriorTemp(airTemp, outdoorTemp, 1/windowUVal, filmCoeff)
   // Get the temperature of the downdraft.
@@ -436,7 +440,7 @@ comf.calcFulldonwDppd = function(distSI, windowHgt, filmCoeff, airTemp, outdoorT
   } else{
     var windSpd = comf.velMaxFar(glassAirDelta, windowHgt)
   }
-  var finalDDppd = comf.calcPPDFromDowndraft(windSpd, downDraftTemp)
+  var finalDDppd = comf.calcPPDFromDowndraft(windSpd, downDraftTemp) * dwnPPDFac
   return finalDDppd
 }
 
@@ -469,13 +473,11 @@ comf.getMRTPPD = function(winViewFacs, opaqueViewFacs, winFilmCoeff, airTemp, ou
 
 
 // Calculates the PPD from downdraft given a set of interior conditions.
-comf.getDowndraftPPD = function(distToFacade, windowHgt, filmCoeff, airTemp, outdoorTemp, windowUVal){
+comf.getDowndraftPPD = function(distToFacade, windowHgt, filmCoeff, airTemp, outdoorTemp, windowUVal, dwnPPDFac){
 	// Calculate the PPD at each point.
 	var PPD = []
 	for (var i = 0; i < distToFacade.length; i++) {
-		var dist = distToFacade[i]
-		var distSI = dist/3.28084
-		var ddPPD = comf.calcFulldonwDppd(distSI, windowHgt, filmCoeff, airTemp, outdoorTemp, windowUVal)
+		var ddPPD = comf.calcFulldonwDppd(distToFacade[i], windowHgt, filmCoeff, airTemp, outdoorTemp, windowUVal, dwnPPDFac)
 		PPD.push(ddPPD)
 	}
 	return PPD
@@ -487,19 +489,27 @@ comf.getDowndraftPPD = function(distToFacade, windowHgt, filmCoeff, airTemp, out
 /// ***FUNCTION THAT COMPUTE FINAL RESULTS THE INTERFACE.***
 // Constructs a dictionary of PPD and the limiting factors from a given set of interior conditions.
 comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, occDistToWallCenter, windowHgt, glzUVal, intLowE, lowEmissivity, wallRVal, indoorTemp, outTemp, radiantFloor, clo, met, airSpeed, rh){
-	// Convert window height to meters (yay for SI!!)
-	var windowHgtSI = windowHgt/3.28084
-
-	// Convert air velocity to m/s.
-	var vel = airSpeed*0.00508
-
-	// Convert U-Vals and R-Vals to SI.
-	var windowUVal = glzUVal*5.678263337
-	var opaqueRVal = wallRVal/5.678263337
-
-	// Convert all Tempreatures ot Celcius.
-	var airTemp = (indoorTemp-32) * 5 / 9
-	var outdoorTemp = (outTemp-32) * 5 / 9
+  if (unitSys == "IP") {
+  	var windowHgtSI = units.Ft2M(windowHgt)
+  	var vel = units.fpm2mps(airSpeed)
+  	var windowUVal = units.uIP2uSI(glzUVal)
+  	var opaqueRVal = units.rIP2rSI(wallRVal)
+  	var airTemp = units.F2C(indoorTemp)
+  	var outdoorTemp = units.F2C(outTemp)
+    var facadeDistSI = []
+    for (var i = 0; i < facadeDist.length; i++) {
+  		var distSI = units.Ft2M(facadeDist[i])
+      facadeDistSI.push(distSI)
+    }
+  } else {
+    var windowHgtSI = windowHgt
+  	var vel = airSpeed
+  	var windowUVal = glzUVal
+  	var opaqueRVal = wallRVal
+  	var airTemp = indoorTemp
+  	var outdoorTemp = outTemp
+    var facadeDistSI = facadeDist
+  }
 
 	// Assign variable for average indoor surface temperature based on specification of radiant floor vs. air system.
 	if (radiantFloor == true) {
@@ -529,27 +539,55 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, o
 		}
 	}
 
+  // If the occupant is not directly in front of the window, check to see if they are close to the window.
+  // In this case, multpily downdraft results by a factor based on proximity.
+  if (runDownCalc == false) {
+    var distOccToNearWind = []
+    //Find the distance to the closest window.
+    for (var i = 0; i < windIntervals[0].length; i++){
+      distOccToNearWind.push(abs(windIntervals[0][i] - occDistToWallCenter))
+    }
+    for (var i = 0; i < windIntervals[1].length; i++){
+      distOccToNearWind.push(abs(windIntervals[1][i] - occDistToWallCenter))
+    }
+    distOccToNearWind.sort()
+    var closestDist = distOccToNearWind[0]
+
+    // Convert this closest distance into a factor that will be multiplied by the downdraftPPD
+    if (unitSys == "IP") {
+      var rampDwnDist = 3
+    } else {
+      var rampDwnDist = 0.9144
+    }
+
+    if (closestDist < rampDwnDist){
+      var dwnPPDFac = (rampDwnDist - closestDist)/rampDwnDist
+    } else {
+      var dwnPPDFac = 0
+    }
+    //var dwnPPDFac = 0
+  } else {
+    var dwnPPDFac = 1
+  }
+
+
 	// Get the Downdraft PPD results.
-	var downDPPD = []
-	if (runDownCalc == true){
-		downDPPD = comf.getDowndraftPPD(facadeDist, windowHgtSI, winFilmCoeff, airTemp, outdoorTemp, windowUVal)
-	} else {
-		for (var i = 0; i < mrtPPD.length; i++) {
-			downDPPD.push(0)
-		}
-	}
+	downDPPD = comf.getDowndraftPPD(facadeDistSI, windowHgtSI, winFilmCoeff, airTemp, outdoorTemp, windowUVal, dwnPPDFac)
 
 	// Construct the dictionary of the PPD values with the governing factors for the graph.
 	var myDataset = []
 	for (var i = 0; i < mrtPPD.length-1; i++) {
 		var ptInfo = {}
+    if (unitSys == "IP") {
+      ptInfo.dist = facadeDist[i]
+    } else {
+      ptInfo.dist = facadeDistSI[i];
+    }
 
 		if (mrtPPD[i] > downDPPD[i]) {
-			ptInfo.dist = i+1;
 			ptInfo.ppd = mrtPPD[i];
 			ptInfo.govfact = "mrt";
 		} else {
-			ptInfo.dist = i+1;
 			ptInfo.ppd = downDPPD[i];
 			ptInfo.govfact = "dwn";
 		}
@@ -585,7 +623,7 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, o
 	r.myDataset = myDataset
 	r.condensation = condensation
 	r.occPtInfo = occPtInfo
-	r.runDownCalc = runDownCalc
+	r.dwnPPDFac = dwnPPDFac
 
 	return r
 }
