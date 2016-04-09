@@ -550,6 +550,12 @@ render.makeGraph = function () {
 			return "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case2CeilingDiff)) + ")";
 		});
 
+	if ($("#caseSelection #case2Label").hasClass("unselected") == true) {
+		$(".wall2").addClass("outlined");
+	} else {
+		$(".wall2").addClass("filled");
+	}
+
 
 // Case 3 Facade
 	var facadeSvgCase3 = d3.select("#case3Chart")
