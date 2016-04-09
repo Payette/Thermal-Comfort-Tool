@@ -551,9 +551,9 @@ render.makeGraph = function () {
 		});
 
 	if ($("#caseSelection #case2Label").hasClass("unselected") == true) {
-		$(".wall2").addClass("outlined");
+		$("rect.wall2").addClass("outlined");
 	} else {
-		$(".wall2").addClass("filled");
+		$("rect.wall2").addClass("filled");
 	}
 
 
