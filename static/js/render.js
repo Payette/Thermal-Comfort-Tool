@@ -551,6 +551,7 @@ render.makeGraph = function () {
 		});
 
 	if ($("#caseSelection #case2Label").hasClass("unselected") == true) {
+		console.log("this");
 		$("rect.wall2").addClass("outlined");
 	} else {
 		$("rect.wall2").addClass("filled");
