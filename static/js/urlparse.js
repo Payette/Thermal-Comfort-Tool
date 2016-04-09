@@ -50,8 +50,9 @@ if (typeof urlParameters.units != 'undefined') {
 		$(".unitsUVal").append("Btu/hr*ft&sup2;*&deg;F");
 		$(".unitsRVal").append("hr*ft&sup2;*&deg;F/Btu");
 		$(".unitsAirSpeed").append("fpm");
+	}
 
-	} else if (urlParameters.units = "SI") {
+	if (urlParameters.units = "SI") {
 
 		console.log("SI noticed");
 		//change to SI
@@ -102,7 +103,6 @@ if (typeof urlParameters.distFromFacade != 'undefined') {
 }
 
 if (typeof urlParameters.ceiling != 'undefined') {
-	console.log("checking ceiling");
 	$("#ceiling").val(urlParameters.ceiling);
 }
 if (typeof urlParameters.wallWidth != 'undefined') {
