@@ -529,12 +529,12 @@ render.makeGraph = function () {
 				.attr("height", facHeight + facMargin.top + facMargin.bottom);
 
 	var wallCase2 = facadeSvgCase2.append("rect")
-/*		.attr("class", function() {
+		.attr("class", function() {
 			if ($("#caseSelection #case2Label".hasClass("unselected") == true) {
-				return "wall2 outlined"
-			} else {
 				return "wall2 filled"
-			}*/
+			} else {
+				return "wall2 outlined"
+			}
 		.attr("x", 0)
 		.attr("y", 0)
 		.attr("width", function(d) {return facadeScaleWidth(case2Data.wallLen)})
