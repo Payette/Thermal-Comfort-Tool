@@ -1,4 +1,5 @@
-$("#URL").click(function(event) {
+$(".optionButton#URL").click(function(event) {
+	console.log("clicked");
 
 	var urlresult = createURL;
 	console.log(urlresult + " hello");
