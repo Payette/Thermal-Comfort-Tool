@@ -42,9 +42,17 @@ render.makeGraph = function () {
 
 	// Set up scale functions
 	// x-axis: distance from facade
-	var x = d3.scale.linear()
+	var x;
+	if (unitSys == "IP") {
+		x = d3.scale.linear()
 			.range([0, width]) // value -> display
 			.domain([0, 13]);
+	} else if (unitSts == "SI") {
+		x = d3.scale.linear()
+			.range([0, width]) // value -> display
+			.domain([0, 4]);
+	}
+	
 	// y-axis: U-Value
 	var y = d3.scale.linear()
 			.range([height, 0])
@@ -933,10 +941,6 @@ render.makeGraph = function () {
     		$("#distFromFacade").attr("max", 12);
     		$("#distFromFacade").attr("min", 1);
 
-			
-
-
-
 
 			updateData(case1Data);
 			updateData(case2Data);
@@ -952,8 +956,6 @@ render.makeGraph = function () {
 			$(".optionButton#SI").addClass("selected");
 			$(".optionButton#IP").removeClass("selected");
 			$(".optionButton#IP").addClass("unselected");
-
-
 
 			// change units labels to be in SI
 			$(".units, .unitsTemp, .unitsUVal, .unitsRVal, .unitsAirSpeed").removeClass("IP");

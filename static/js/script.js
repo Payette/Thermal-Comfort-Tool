@@ -88,7 +88,13 @@ var case3Data = {
 }
 
 var changedVar = "ceilingHeightValue";
-var unitSys = "IP";
+var unitSys;
+
+if ($(".optionButton#IP").hasClass("selected") == true) {
+	unitSys = "IP";
+} else {
+	unitSys = "SI";
+}
 
 
 //ensure slider has correct max value
