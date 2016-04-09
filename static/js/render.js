@@ -723,10 +723,10 @@ render.makeGraph = function () {
 			$("#inputs input.case2, div.case2, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").css("display","inline-block");
 			$("hr.case2").css("display","block");
 
-/*			d3.selectAll("rect.wall2").classed("outlined", false);
+			d3.selectAll("rect.wall2").classed("outlined", false);
 			d3.selectAll("rect.wall2").classed("filled", true);
 			d3.selectAll("rect.window2").classed("white", false);
-			d3.selectAll("rect.window2").classed("blue", true);*/
+			d3.selectAll("rect.window2").classed("blue", true);
 
 
 		}
@@ -740,10 +740,10 @@ render.makeGraph = function () {
 
 			$("#inputs input.case2, div.case2, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2, hr.case2").css("display","none");
 
-/*			d3.selectAll("rect.wall2").classed("outlined", true);
+			d3.selectAll("rect.wall2").classed("outlined", true);
 			d3.selectAll("rect.wall2").classed("filled", false);
 			d3.selectAll("rect.window2").classed("white", true);
-			d3.selectAll("rect.window2").classed("blue", false);*/
+			d3.selectAll("rect.window2").classed("blue", false);
 		}
 
 		// Update static tooltip text
