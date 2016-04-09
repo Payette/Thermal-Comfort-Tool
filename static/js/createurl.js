@@ -105,7 +105,8 @@ function createURL() {
 	
 
 
-	var completeURL = startURL + caseURL + endURL;
+	/*var completeURL = startURL + caseURL + endURL;*/
+	var completeURL = startURL;
 
 	return completeURL;
 
