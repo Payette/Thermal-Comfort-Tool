@@ -830,26 +830,10 @@ render.makeGraph = function () {
     })
 
 
-    // show URL in modal alert
-    $(".optionButton#URL").click(function(event) {
-		var urlresult = createURL();
-
-		$("#URLpop textarea").empty();
-		$("#URLpop textarea").append(urlresult);
-
-		$("#URLpop textarea").focus(function() {
-			$("#URLpop textarea").select();
-		});
-
-		$("#URLpop").dialog("open");
-		
-	})
+    
 
 
-	// remove URL alert on click
-	$("#URLpop img.close").on("click", function() {
-		$("#URLpop").css("display","none");
-	})
+
 
 
 
@@ -1116,6 +1100,26 @@ render.makeGraph = function () {
 
 
 		}
+	})
+
+	// show URL in modal alert
+    $(".optionButton#URL").click(function(event) {
+		var urlresult = createURL();
+
+		$("#URLpop textarea").empty();
+		$("#URLpop textarea").append(urlresult);
+
+		$("#URLpop textarea").focus(function() {
+			$("#URLpop textarea").select();
+		});
+
+		$("#URLpop").dialog("open");
+		
+	})
+
+	// print to PDF
+	$(".optionButton#PDF").click(function(event) {
+		window.print();
 	})
 
 	$("#calcUValue").click(function(event) {

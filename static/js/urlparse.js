@@ -125,7 +125,7 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' && urlParamet
 		$("#humidity, #humidity2, #humidity3").val(urlParameters.humidity);
 	}
 
-	if (typeof urlParameters.lowE != 'undefined') {
+	if (urlParameters.lowE != '') {
 		$("#lowE, #lowE2, #lowE3").val(urlParameters.lowE);
 		$("#lowE, #lowE2, #lowE3").removeClass("inactive");
 		$("#lowELabel, #lowELabel2, #lowELabel3").removeClass("inactive");
@@ -223,13 +223,13 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 		$("#humidity2").val(urlParameters.humidity2);
 	}
 
-	if (typeof urlParameters.lowE != 'undefined') {
+	if (urlParameters.lowE != '') {
 		$("#lowE, #lowE3").val(urlParameters.lowE);
 		$("#lowE, #lowE3").removeClass("inactive");
 		$("#lowELabel, #lowELabel3").removeClass("inactive");
 		$("#checkLowE, #checkLowE3").removeClass("unselected");
 	}
-	if (typeof urlParameters.lowE2 != 'undefined') {
+	if (urlParameters.lowE2 != '') {
 		$("#lowE2").val(urlParameters.lowE2);
 		$("#lowE2").removeClass("inactive");
 		$("#lowELabel2").removeClass("inactive");
@@ -330,13 +330,13 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' &&  urlParame
 		$("#humidity3").val(urlParameters.humidity3);
 	}
 
-	if (typeof urlParameters.lowE != 'undefined') {
+	if (urlParameters.lowE != '') {
 		$("#lowE, #lowE2").val(urlParameters.lowE);
 		$("#lowE, #lowE2").removeClass("inactive");
 		$("#lowELabel, #lowELabel2").removeClass("inactive");
 		$("#checkLowE, #checkLowE2").removeClass("unselected");
 	}
-	if (typeof urlParameters.lowE3 != 'undefined') {
+	if (urlParameters.lowE3 != '') {
 		$("#lowE3").val(urlParameters.lowE3);
 		$("#lowE3").removeClass("inactive");
 		$("#lowELabel3").removeClass("inactive");
@@ -345,6 +345,156 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' &&  urlParame
 	
 	if (typeof urlParameters.occPosition != 'undefined') {
 		$("#occupantDist, #occupantDist2").val(urlParameters.occPosition);
+	}
+	if (typeof urlParameters.occPosition3 != 'undefined') {
+		$("#occupantDist3").val(urlParameters.occPosition3);
+	}
+}
+
+
+// show all cases
+if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParameters.case3 == 'show') {
+
+	showCase2();
+	showCase3();
+	sizeButton();
+
+
+	if (typeof urlParameters.ceiling != 'undefined') {
+		$("#ceiling").val(urlParameters.ceiling);
+	}
+	if (typeof urlParameters.ceiling2 != 'undefined') {
+		$("#ceiling2").val(urlParameters.ceiling2);
+	}
+	if (typeof urlParameters.ceiling3 != 'undefined') {
+		$("#ceiling3").val(urlParameters.ceiling3);
+	}
+
+
+	if (typeof urlParameters.wallWidth != 'undefined') {
+		$("#wallWidth").val(urlParameters.wallWidth);
+	}
+	if (typeof urlParameters.wallWidth2 != 'undefined') {
+		$("#wallWidth2").val(urlParameters.wallWidth2);
+	}
+	if (typeof urlParameters.wallWidth3 != 'undefined') {
+		$("#wallWidth3").val(urlParameters.wallWidth3);
+	}
+
+	if (typeof urlParameters.windowHeight != 'undefined') {
+		$("#windowHeight").val(urlParameters.windowHeight);
+	}
+	if (typeof urlParameters.windowHeight2 != 'undefined') {
+		$("#windowHeight2").val(urlParameters.windowHeight2);
+	}
+	if (typeof urlParameters.windowHeight3 != 'undefined') {
+		$("#windowHeight3").val(urlParameters.windowHeight3);
+	}
+
+	if (typeof urlParameters.sillHeight != 'undefined') {
+		$("#sill").val(urlParameters.sillHeight);
+	}
+	if (typeof urlParameters.sillHeight2 != 'undefined') {
+		$("#sill2").val(urlParameters.sillHeight2);
+	}
+	if (typeof urlParameters.sillHeight3 != 'undefined') {
+		$("#sill3").val(urlParameters.sillHeight3);
+	}
+
+	if (typeof urlParameters.windowWidth != 'undefined') {
+		$("#windowWidth").val(urlParameters.windowWidth);
+	}
+	if (typeof urlParameters.windowWidth2 != 'undefined') {
+		$("#windowWidth2").val(urlParameters.windowWidth2);
+	}
+	if (typeof urlParameters.windowWidth3 != 'undefined') {
+		$("#windowWidth3").val(urlParameters.windowWidth3);
+	}
+
+	if (typeof urlParameters.glazingRatio != 'undefined') {
+		$("#glazing").val(urlParameters.glazingRatio);
+	}
+	if (typeof urlParameters.glazingRatio2 != 'undefined') {
+		$("#glazing2").val(urlParameters.glazingRatio2);
+	}
+	if (typeof urlParameters.glazingRatio3 != 'undefined') {
+		$("#glazing3").val(urlParameters.glazingRatio3);
+	}
+
+	if (typeof urlParameters.windowSeparation != 'undefined') {
+		$("#distWindow").val(urlParameters.windowSeparation);
+	}
+	if (typeof urlParameters.windowSeparation2 != 'undefined') {
+		$("#distWindow2").val(urlParameters.windowSeparation2);
+	}
+	if (typeof urlParameters.windowSeparation3 != 'undefined') {
+		$("#distWindow3").val(urlParameters.windowSeparation3);
+	}
+
+	if (typeof urlParameters.uValue != 'undefined') {
+		$("#uvalue").val(urlParameters.uValue);
+	}
+	if (typeof urlParameters.uValue2 != 'undefined') {
+		$("#uvalue2").val(urlParameters.uValue2);
+	}
+	if (typeof urlParameters.uValue3 != 'undefined') {
+		$("#uvalue3").val(urlParameters.uValue3);
+	}
+
+	if (typeof urlParameters.outdoorTemp != 'undefined') {
+		$("#outdoortemp").val(urlParameters.outdoorTemp);
+	}
+	if (typeof urlParameters.outdoorTemp2 != 'undefined') {
+		$("#outdoortemp2").val(urlParameters.outdoorTemp2);
+	}
+	if (typeof urlParameters.outdoorTemp3 != 'undefined') {
+		$("#outdoortemp3").val(urlParameters.outdoorTemp3);
+	}
+
+	if (typeof urlParameters.indoortemp != 'undefined') {
+		$("#airtemp").val(urlParameters.indoortemp);
+	}
+	if (typeof urlParameters.indoortemp2 != 'undefined') {
+		$("#airtemp2").val(urlParameters.indoortemp2);
+	}
+	if (typeof urlParameters.indoortemp3 != 'undefined') {
+		$("#airtemp3").val(urlParameters.indoortemp3);
+	}
+
+	if (typeof urlParameters.humidity != 'undefined') {
+		$("#humidity").val(urlParameters.humidity);
+	}
+	if (typeof urlParameters.humidity2 != 'undefined') {
+		$("#humidity2").val(urlParameters.humidity2);
+	}
+	if (typeof urlParameters.humidity3 != 'undefined') {
+		$("#humidity3").val(urlParameters.humidity3);
+	}
+
+	if (urlParameters.lowE != '') {
+		$("#lowE").val(urlParameters.lowE);
+		$("#lowE").removeClass("inactive");
+		$("#lowELabel").removeClass("inactive");
+		$("#checkLowE").removeClass("unselected");
+	}
+	if (urlParameters.lowE != '') {
+		$("#lowE2").val(urlParameters.lowE2);
+		$("#lowE2").removeClass("inactive");
+		$("#lowELabel2").removeClass("inactive");
+		$("#checkLowE2").removeClass("unselected");
+	}
+	if (urlParameters.lowE3 != '') {
+		$("#lowE3").val(urlParameters.lowE3);
+		$("#lowE3").removeClass("inactive");
+		$("#lowELabel3").removeClass("inactive");
+		$("#checkLowE3").removeClass("unselected");
+	}
+	
+	if (typeof urlParameters.occPosition != 'undefined') {
+		$("#occupantDist").val(urlParameters.occPosition);
+	}
+	if (typeof urlParameters.occPosition2 != 'undefined') {
+		$("#occupantDist2").val(urlParameters.occPosition2);
 	}
 	if (typeof urlParameters.occPosition3 != 'undefined') {
 		$("#occupantDist3").val(urlParameters.occPosition3);

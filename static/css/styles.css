@@ -99,18 +99,8 @@ body {
 	margin: 0;
 }
 
-#tooltip p, #thresholdTooltip p { 
-	margin: 0;
-	font-family: "museo-sans", sans-serif;
-	font-weight: 100;
-	font-size: 11px;
-	color: black;
-	padding-bottom: 6px;
-}
 
-.intolerable, .tolerable {
-	font-weight: 500;
-}
+
 
 
 
@@ -204,13 +194,6 @@ body {
 
 
 
-.blueGradientStop1 {
-	stop-color: #E1F0FF;
-}
-
-.blueGradientStop2 {
-	stop-color: #C2E0FF;
-}
 
 
 rect.filled {
@@ -576,12 +559,12 @@ div.inputWrapperRight span {
 	padding: 1px 2px 0px 0px;
 }
 
-#inputs input.noChange {
+/*#inputs input.noChange {
 	margin: 0px 1px 0px 0px;
 	width: 36px;
 	text-align: center;
 }
-
+*/
 
 
 
@@ -813,8 +796,6 @@ input[type=checkbox] {
 
 
 
-
-/*.connectLine2, .dotCase2, .occdot2, .connectLine3, .dotCase3, .occdot3 */
 
 #sliderWrapper2, #sliderWrapper3, {
 	display: none;

@@ -1,0 +1,269 @@
+body {
+	margin: 0 20px;
+	font-family: "museo-sans", sans-serif;
+}
+
+#header {
+	width: 100%;
+	margin: 0 auto;
+}
+
+#wrapper {
+	width: 100%;
+	margin: 0 auto;
+}
+
+.left {
+	position: relative;
+	float: left;
+	width: 58%;
+	padding: 0;
+	margin: 0 2% 0 0;
+	border: 1px solid blue;
+}
+
+
+
+#inputs {
+	float: left;
+	width: 38%;
+	border: 1px solid blue;
+}
+
+#inputs .inputgroup, #occupantSliders .inputgroup {
+	border: none;
+	padding: 0 0 15px 0;
+	position: relative;
+}
+
+
+#inputs #legend, #occupantSliders #legend {
+	border: none;
+	padding: 0 0 10px 0;
+	margin-bottom: 20px;
+}
+
+#inputs legend, #occupantSliders legend {
+	font-weight: 700;
+	font-size: 18px;
+	text-transform: uppercase;
+	padding: 0 0 5px 0;
+	margin: 0;
+	font-family: "museo-sans", sans-serif;
+}
+
+
+
+#inputs hr, #occupantSliders hr {
+	padding: 0;
+	margin: 0 0 5px 0;
+	background: black;
+	border: none;
+	color: black;
+	height: 2px;
+	/*width: 100%;*/
+}
+
+#inputs label {
+	color: black;
+	width: 55%;
+	float: left;
+	display: inline-block;
+	margin: 0 0 5px 0;
+	padding: 1px 0;
+	font-family: "museo-sans", sans-serif;
+	font-weight: 300;
+	font-size: 18px;
+}
+
+#inputs label.indent {
+	width: 30%;
+	padding-left: 0;
+}
+
+
+#inputs div.inputWrapperLeft, #inputs div.inputWrapperCenter, #inputs div.inputWrapperRight {
+	width: 14%;
+	display: inline-block;
+	vertical-align: middle;
+	margin: 0 0 5px 0;
+}
+
+/*div.inputWrapperLeft span, div.inputWrapperCenter span, div.inputWrapperRight span  {
+	display: none;
+}
+*/
+
+
+
+/*#inputs div.inputWrapperCenter hr, #inputs div.inputWrapperRight hr {
+	width: 20px;
+	margin: 7px auto;
+	height: 1px;
+	background-color: #b9b9b9;
+}
+
+#inputs div.inputWrapperRight hr {
+	margin: 7px 0 7px 25px;
+}*/
+
+
+
+
+#inputs input {
+	background-color: none;
+	padding: 1px 0;
+	margin: 0;
+	display: inline-block;
+	float: left;
+	border: none;
+
+	font-family: "museo-sans", sans-serif;
+	font-weight: 300;
+	font-size: 18px;
+	text-align: center;
+	color: black;
+
+	width: 100%;
+}
+
+#inputs input.inactive {
+/*	border-color: rgb(235, 235, 235);
+	border-style: solid;
+	border-width: 1px;*/
+	color: #d5d5d5;
+	font-style: italic;
+	cursor: default;
+	background-color: #fff;
+	padding: 1px 2px 0px 0px;
+}
+
+
+
+
+
+
+/* ------ FACADE STYLING ----- */
+
+#facadeWrapper {
+	width: 100%
+	overflow: auto;
+}
+
+#case1FacadeWrapper, #case2FacadeWrapper, #case3FacadeWrapper {
+	float: left;
+	display: inline-block;
+	width: 33%;
+	border: 1px solid red;
+/*	transform: scale(1.5); 
+	-webkit-transform: scale(1.5); 
+	-moz-transform: scale(1.5); 
+	-ms-transform: scale(1.5); 
+	-o-transform: scale(1.5)*/
+}
+
+#case1FacadeWrapper svg, #case2FacadeWrapper svg, #case3FacadeWrapper svg {
+	transform: scale(1.5); 
+	-webkit-transform: scale(1.5); 
+	-moz-transform: scale(1.5); 
+	-ms-transform: scale(1.5); 
+	-o-transform: scale(1.5)
+}
+
+
+
+svg.facadeCase1, svg.facadeCase2, svg.facadeCase3 {
+/*	transform: scale(1.5); 
+	-webkit-transform: scale(1.5); 
+	-moz-transform: scale(1.5); 
+	-ms-transform: scale(1.5); 
+	-o-transform: scale(1.5)*/
+}
+
+
+
+.facadeHeading {
+	font-family: "museo-sans", sans-serif;
+	font-weight: 500;
+	font-size: 11px;
+	margin: 0;
+	display: inline-block;
+	float: left;
+}
+
+.greyText {
+	color: #b9b9b9;
+}
+
+.case1Text {
+	color: rgb(108,28,131);
+}
+
+.case2Text {
+	color: rgb(18,124,173);
+}
+
+.case3Text {
+	color: rgb(21,222,154);
+}
+
+rect.filled {
+	fill: rgb(190,190,190);
+	stroke: rgb(190,190,190);
+	stroke-width: 1px;
+	stroke-dasharray: 0;
+}
+
+rect.outlined {
+	fill: #fff;
+	stroke: rgb(190,190,190);
+	stroke-width: 1px;
+	stroke-dasharray: 4, 3;
+}
+
+rect.white {
+	fill: #fff;
+}
+
+rect.blue {
+	fill: #E1F0FF;
+}
+
+
+
+
+/* ------ CHART STYLING ----- */
+
+#graph {
+	position: relative;
+}
+
+#thresholdTooltip {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 260px;
+	padding: 10px;
+}
+
+#thresholdTooltip.hidden {
+	display: block;
+}
+
+#thresholdTooltip h1 {
+	font-family: "museo-sans", sans-serif;
+	font-weight: 300;
+	font-size: 14px;
+	padding: 0 0 3px 0;
+	margin: 0;
+}
+
+
+
+
+
+
+#options, label#calcUValQuestion, #uValButton, .alert {
+	display: none;
+}
+
