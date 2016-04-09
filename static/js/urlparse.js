@@ -32,7 +32,7 @@ if ($("#caseSelection #case3Label").hasClass("unselected") == false) {
 // determine units
 if (typeof urlParameters.units != 'undefined') {
 
-	console.log("checking units");
+	console.log(urlParameters.units);
 
 	if (urlParameters.units = "IP") {
 		unitSys = "IP";
