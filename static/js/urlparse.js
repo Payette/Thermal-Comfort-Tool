@@ -49,6 +49,8 @@ if (typeof urlParameters.units != 'undefined') {
 		$(".unitsAirSpeed").append("fpm");
 
 	} else if (urlParameters.units = "SI") {
+
+		console.log("SI noticed")
 		//change to SI
 		unitSys = "SI"
 		$(".optionButton#SI").addClass("selected");
