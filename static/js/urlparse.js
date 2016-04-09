@@ -66,6 +66,7 @@ if (typeof urlParameters.units != 'undefined') {
 		$(".unitsUVal").append("W/m&sup2;*K");
 		$(".unitsRVal").append("m&sup2;*K/W");
 		$(".unitsAirSpeed").append("m/s");
+	}
 }
 
 // inputs applied to all cases
@@ -103,6 +104,7 @@ if (typeof urlParameters.ceiling != 'undefined') {
 if (typeof urlParameters.wallWidth != 'undefined') {
 	$("#wallWidth").val(urlParameters.wallWidth);
 }
+
 if (typeof urlParameters.windowHeight != 'undefined') {
 	$("#windowHeight").val(urlParameters.windowHeight);
 }
@@ -110,6 +112,7 @@ if (typeof urlParameters.windowHeight != 'undefined') {
 if (typeof urlParameters.sillHeight != 'undefined') {
 	$("#sill").val(urlParameters.sillHeight);
 }
+
 if (typeof urlParameters.windowWidth != 'undefined') {
 	$("#windowWidth").val(urlParameters.windowWidth);
 	$("#windowWidth").removeClass("inactive");
@@ -118,6 +121,7 @@ if (typeof urlParameters.windowWidth != 'undefined') {
 	$("#glazingLabel").addClass("inactive");
 	$("#glazingRatioCheck").removeAttr("checked");
 }
+
 if (typeof urlParameters.glazingRatio != 'undefined') {
 	$("#glazing").val(urlParameters.glazingRatio);
 	$("#windowWidth").addClass("inactive");
@@ -127,9 +131,11 @@ if (typeof urlParameters.glazingRatio != 'undefined') {
 
 	$("#glazingRatioCheck").attr("checked", "checked");
 }
+
 if (typeof urlParameters.windowSeparation != 'undefined') {
 	$("#distWindow").val(urlParameters.windowSeparation);
 }
+
 if (typeof urlParameters.uValue != 'undefined') {
 	$("#uvalue").val(urlParameters.uValue);
 }
@@ -137,9 +143,11 @@ if (typeof urlParameters.uValue != 'undefined') {
 if (typeof urlParameters.outdoorTemp != 'undefined') {
 	$("#outdoortemp").val(urlParameters.outdoorTemp);
 }
+
 if (typeof urlParameters.indoortemp != 'undefined') {
 	$("#airtemp").val(urlParameters.indoortemp);
 }
+
 if (typeof urlParameters.humidity != 'undefined') {
 	$("#humidity").val(urlParameters.humidity);
 }
