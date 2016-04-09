@@ -551,12 +551,12 @@ render.makeGraph = function () {
 		});
 
 	if ($("#caseSelection #case2Label").hasClass("unselected") == true) {
-		d3.selectAll("rect.wall3").classed("outlined", true);
-		d3.selectAll("rect.wall3").classed("filled", false);
+		d3.selectAll("rect.wall2").classed("outlined", true);
+		d3.selectAll("rect.wall2").classed("filled", false);
 	}
-	else if ($("#caseSelection #case2Label").hasClass("unselected") == false) {
-		d3.selectAll("rect.wall3").classed("outlined", false);
-		d3.selectAll("rect.wall3").classed("filled", true);
+	else {
+		d3.selectAll("rect.wall2").classed("outlined", false);
+		d3.selectAll("rect.wall2").classed("filled", true);
 	}
 
 
