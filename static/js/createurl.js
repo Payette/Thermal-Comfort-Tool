@@ -26,19 +26,51 @@ function createURL() {
 
 
 	// values regardless of case
-	var distFromFacade = $('#distFromFacade').val();
-	var ppd = $("#ppd").val();
+	var thisDistFromFacade = $('#distFromFacade').val();
+	var thisPpd = $("#ppd").val();
+
+	var thisRvalue = $("#rvalue").val();
+	var thisAirspeed = $("#airspeed").val();
+	var thisClothing = $("#clothing").val();
+	var thisMet = $("#metabolic").val();
+
+	// values for only case 1
+	var ceiling1 = $("#ceiling").val();
+	var length1 = $("#wallWidth").val();
+	var windowHeight1 = $("#windowHeight").val();
+	var sillHeight1 = $("#sill").val();
+	var windowWidth1 = $("#windowWidth").val();
+	var glzRatio1 = $("#glazing").val();
+	var windowSep1 =  $('#distWindow').val();
+
+	var uvalue1 = $("#uvalue").val();
+	
+	var outdoorTemp1 = $("#outdoortemp").val();
+	var indoorTemp1 = $("#airtemp").val();
+	var humid1 = $("#humidity").val();
+
+	var LowECheck1 = $("#lowECheck").is(":checked"); //provides a true/false
+	var LowEEmis1 = $("#lowE").val();
+
+	var occToWallCenter1 = $("#occupantDist").val();
 
 
-	var rvalue = $("#rvalue").val();
-	var airspeed = $("#airspeed").val();
-	var clothing = $("#clothing").val();
-	var met = $("#metabolic").val();
+	var startURL = location.href + "/?units=" + units + "&case1=" + case1Vis + "&case2=" + case2Vis + "&case3=" + case3Vis + "&ppd=" + thisPpd + "&distFromFacade=" + thisDistFromFacade;
+
+	var endURL = "&rValue=" + thisRvalue + "&airspeed=" + thisAirspeed + "&clothing=" + thisClothing + "&metabolic=" + thisMet;
+
+	var case1URL = "&ceiling=" + ceiling1 + "&wallWidth=" + length1 + "&windowHeight=" + windowHeight1 + "&sillHeight=" + sillHeight1 + "&windowWidth=" + windowWidth1 + "&glazingRatio=" + glzRatio1 + "&windowSeparation=" + windowSep1 + "&uValue=" + uvalue1 + "&outdoorTemp=" + outdoorTemp1 + "&indoortemp=" + indoorTemp1 + "&humidity=" + humid1 + "&lowE=" + LowEEmis1 + "&occPosition=" + occToWallCenter1;
+
+	var case2URL;
 
 
-	var generatedURL = location.href + "/?units=" + units + "case1=" + case1Vis + "&case2=" + case2Vis + "&case3=" + case3Vis;
 
-	return generatedURL;
+
+	
+
+	var completeURL = startURL + case1URL + endURL;
+
+	return completeURL;
 
 }
 
@@ -46,21 +78,7 @@ function createURL() {
 /*var case1Data = {
 	ceilingHeightValue: $("#ceiling").val(),
 	wallLen: $("#wallWidth").val(),
-	windowHeightValue: $("#windowHeight").val(),
-	windowWidthValue: $("#windowWidth").val(),
-	glzRatioValue: $("#glazing").val(),
-	sillHeightValue: $("#sill").val(),
-	distanceWindows: $('#distWindow').val(),
-
-	occDistToWallCenter: 0,
-
-	uvalueValue: $("#uvalue").val(),
-	intLowEChecked: $("#lowECheck").is(":checked"), //provides a true/false
-	intLowEEmissivity: $("#lowE").val(),
-
-	outdoorTempValue: $("#outdoortemp").val(),
-	airtempValue: $("#airtemp").val(),
-	humidityValue: $("#humidity").val()
+	
 }
 
 
