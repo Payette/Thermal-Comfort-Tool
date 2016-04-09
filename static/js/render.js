@@ -42,9 +42,16 @@ render.makeGraph = function () {
 
 	// Set up scale functions
 	// x-axis: distance from facade
-	var x = d3.scale.linear()
+	var x;
+	if (unitSys == "IP") {
+		x = d3.scale.linear()
 			.range([0, width]) // value -> display
 			.domain([0, 13]);
+	} else if (unitSys == "SI") {
+		x = d3.scale.linear()
+			.range([0, width]) // value -> display
+			.domain([0, 4]);
+	}
 	// y-axis: U-Value
 	var y = d3.scale.linear()
 			.range([height, 0])
@@ -77,8 +84,15 @@ render.makeGraph = function () {
 	graphSvg.append("g")
 		.attr("class", "axis")
 		.attr("id", "graphXAxis")
-		.attr("transform", "translate(" + margin.left + "," + (height + margin.top) + ")")
+		.attr("transform", "translate(" + margin.left + "," + (height + margin.top) + ")");
+
+	if (unitSys == "IP") {
+		graphSvg.select("#graphXAxis")
     	.call(xAxis.ticks(6).tickValues([2, 4, 6, 8, 10, 12]));
+    } else if (unitSys == "SI") {
+		graphSvg.select("#graphXAxis")
+    	.call(xAxis.ticks(7).tickValues([0.5, 1, 1.5, 2, 2.5, 3, 3.5]));
+    }
 
 	graphSvg.append("g")
 	    .attr("class", "axis")
@@ -102,8 +116,16 @@ render.makeGraph = function () {
 	    .attr("id", "XAxisLabel")
 	    .attr("text-anchor", "middle")
 	    .attr("x", width/2 + margin.left)
-	    .attr("y", height + margin.top + margin.bottom - 6)
-	    .text("Occupant Distance from Façade (ft)");
+	    .attr("y", height + margin.top + margin.bottom - 6);
+
+	if (unitSys == "IP") {
+		graphSvg.select("#XAxisLabel")
+    	.text("Occupant Distance from Façade (ft)");
+    } else if (unitSys == "SI") {
+		graphSvg.select("#XAxisLabel")
+    	.text("Occupant Distance from Façade (m)");
+    }
+	    
 
 	graphSvg.append("g")
 	.attr("transform", "translate(10," + (height/2 + margin.top) + ")")

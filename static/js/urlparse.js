@@ -31,8 +31,12 @@ if ($("#caseSelection #case3Label").hasClass("unselected") == false) {
 
 // determine units
 if (typeof urlParameters.units != 'undefined') {
-	if (urlParameters.units = "IP") {
-		unitSys = "IP";
+
+	console.log(urlParameters.units);
+
+	unitSys = urlParameters.units;
+
+	if (unitSys == "IP") {
 
 		$(".optionButton#IP").addClass("selected");
 		$(".optionButton#SI").removeClass("selected");
@@ -47,10 +51,10 @@ if (typeof urlParameters.units != 'undefined') {
 		$(".unitsUVal").append("Btu/hr*ft&sup2;*&deg;F");
 		$(".unitsRVal").append("hr*ft&sup2;*&deg;F/Btu");
 		$(".unitsAirSpeed").append("fpm");
+	}
 
-	} else if (urlParameters.units = "SI") {
+	if (unitSys == "SI") {
 
-		console.log("SI noticed")
 		//change to SI
 		unitSys = "SI"
 		$(".optionButton#SI").addClass("selected");
