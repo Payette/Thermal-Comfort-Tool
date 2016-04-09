@@ -530,7 +530,7 @@ render.makeGraph = function () {
 
 	var wallCase2 = facadeSvgCase2.append("rect")
 		.attr("class", function() {
-			if ($("#caseSelection #case2Label".hasClass("unselected")) {
+			if ($("#caseSelection #case2Label".hasClass("unselected") == true) {
 				return "wall2 outlined"
 			} else {
 				return "wall2 filled"
