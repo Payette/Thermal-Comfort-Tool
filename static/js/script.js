@@ -87,8 +87,8 @@ var case3Data = {
 	humidityValue: $("#humidity3").val()
 }
 
-var changedVar = "ceilingHeightValue"
-var unitSys = "IP"
+var changedVar = "ceilingHeightValue";
+var unitSys = "IP";
 
 
 //ensure slider has correct max value
