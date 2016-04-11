@@ -50,7 +50,14 @@ body {
 	padding: 0 0 5px 0;
 	margin: 0;
 	font-family: "museo-sans", sans-serif;
+
+	width: 55%;
 }
+
+#inputs legend.first {
+	float: left;
+}
+
 
 
 
@@ -89,25 +96,6 @@ body {
 	margin: 0 0 5px 0;
 }
 
-/*div.inputWrapperLeft span, div.inputWrapperCenter span, div.inputWrapperRight span  {
-	display: none;
-}
-*/
-
-
-
-/*#inputs div.inputWrapperCenter hr, #inputs div.inputWrapperRight hr {
-	width: 20px;
-	margin: 7px auto;
-	height: 1px;
-	background-color: #b9b9b9;
-}
-
-#inputs div.inputWrapperRight hr {
-	margin: 7px 0 7px 25px;
-}*/
-
-
 
 
 #inputs input {
@@ -143,6 +131,70 @@ body {
 
 
 
+/* ----- CASES ----- */
+
+#caseWrapper {
+	overflow: hidden;
+	display: inline-block;
+	height: 16px;
+	width: 100%;
+}
+
+
+
+#caseSelection {
+	display: block;
+	float: right;
+	width: 44%;
+}
+
+#caseSelection h2 {
+	width: 32%;
+	display: inline-block;
+	text-align: center;
+	font-size: 16px;
+	font-family: "museo-sans", sans-serif;
+
+	padding: 0;
+	margin: 0;
+	vertical-align: top;
+
+	color: #000;
+}
+
+#caseSelection h2#case1Label {
+	color: rgb(108,28,131);
+}
+
+#caseSelection h2#case2Label {
+	color: rgb(18,124,173);
+}
+
+#caseSelection h2#case3Label {
+	color: rgb(21,222,154);
+}
+
+#caseSelection h2#case2Label.unselected, #caseSelection h2#case3Label.unselected {
+	display: none;
+}
+
+
+#caseSelection h2 span {
+	display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* ------ FACADE STYLING ----- */
 
 #facadeWrapper {
@@ -150,16 +202,12 @@ body {
 	overflow: auto;
 }
 
+
 #case1FacadeWrapper, #case2FacadeWrapper, #case3FacadeWrapper {
 	float: left;
 	display: inline-block;
 	width: 33%;
-	border: 1px solid red;
-/*	transform: scale(1.5); 
-	-webkit-transform: scale(1.5); 
-	-moz-transform: scale(1.5); 
-	-ms-transform: scale(1.5); 
-	-o-transform: scale(1.5)*/
+	position: relative;
 }
 
 #case1FacadeWrapper svg, #case2FacadeWrapper svg, #case3FacadeWrapper svg {
@@ -167,17 +215,10 @@ body {
 	-webkit-transform: scale(1.5); 
 	-moz-transform: scale(1.5); 
 	-ms-transform: scale(1.5); 
-	-o-transform: scale(1.5)
-}
+	-o-transform: scale(1.5);
 
-
-
-svg.facadeCase1, svg.facadeCase2, svg.facadeCase3 {
-/*	transform: scale(1.5); 
-	-webkit-transform: scale(1.5); 
-	-moz-transform: scale(1.5); 
-	-ms-transform: scale(1.5); 
-	-o-transform: scale(1.5)*/
+	position: relative;
+	left: 15%;
 }
 
 
@@ -185,10 +226,13 @@ svg.facadeCase1, svg.facadeCase2, svg.facadeCase3 {
 .facadeHeading {
 	font-family: "museo-sans", sans-serif;
 	font-weight: 500;
-	font-size: 11px;
+	font-size: 16px;
 	margin: 0;
-	display: inline-block;
+	display: block;
 	float: left;
+
+	position: absolute;
+	bottom: -30px;
 }
 
 .greyText {
@@ -234,21 +278,78 @@ rect.blue {
 
 /* ------ CHART STYLING ----- */
 
-#graph {
-	position: relative;
+#graphWrapper {
+	border: 1px solid red;
+	height: 550px;
 }
 
+svg#graph {
+	position: relative;
+	left: 18%;
+	top: 20%;
+
+	transform: scale(1.5); 
+	-webkit-transform: scale(1.5); 
+	-moz-transform: scale(1.5); 
+	-ms-transform: scale(1.5); 
+	-o-transform: scale(1.5);
+}
+
+#graph .axis path,
+#graph .axis line {
+    fill: none;
+}
+
+text.axislabel {
+	font-size: 11px;
+}
+
+.axis text {
+	font-size: 11px;
+}
+
+.occupantLine {
+	stroke: #000;
+	stroke-width: 2;
+	stroke-linecap: round;
+	stroke-dasharray: 0 4;
+}
+
+#graph .grid line { /* horizontal reference lines */
+	stroke-width: 1;
+	stroke: #000;
+	stroke-linecap: round;
+	stroke-dasharray: 0 4;
+}
+
+#graph .grid path {
+	stroke-width: 0;
+}
+
+#graph #graphXAxis line {
+	stroke-width: .5;
+	stroke: rgb(90,90,90);
+}
+
+#graph #graphYAxis line {
+	stroke-width: 0;
+}
+
+
+
+
+
+
 #thresholdTooltip {
-	position: absolute;
+/*	position: absolute;
 	bottom: 0;
 	left: 0;
 	width: 260px;
-	padding: 10px;
+	padding: 10px;*/
+
+	display: none;
 }
 
-#thresholdTooltip.hidden {
-	display: block;
-}
 
 #thresholdTooltip h1 {
 	font-family: "museo-sans", sans-serif;

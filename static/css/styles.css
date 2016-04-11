@@ -324,7 +324,7 @@ rect.blue {
 
 
 #caseWrapper {
-	overflow: auto;
+	overflow: hidden;
 	width: 100%;
 	display: inline-block;
 	height: 16px;
@@ -338,7 +338,7 @@ rect.blue {
 }
 
 #caseSelection h2 {
-	width: 57px;
+	width: 55px;
 	display: inline-block;
 	text-align: center;
 	font-size: 10px;
