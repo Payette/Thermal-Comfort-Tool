@@ -35,6 +35,7 @@ var case1Data = {
 	occDistToWallCenter: $("#occupantDist").val(),
 
 	uvalueValue: $("#uvalue").val(),
+	calcUVal: $("#calcuvalue").val(),
 	intLowEChecked: $("#lowECheck").is(":checked"), //provides a true/false
 	intLowEEmissivity: $("#lowE").val(),
 
@@ -57,6 +58,7 @@ var case2Data = {
 	occDistToWallCenter: $("#occupantDist2").val(),
 
 	uvalueValue: $("#uvalue2").val(),
+	calcUVal: $("#calcuvalue2").val(),
 	intLowEChecked: $("#lowECheck2").is(":checked"), //provides a true/false
 	intLowEEmissivity: $("#lowE2").val(),
 
@@ -79,6 +81,7 @@ var case3Data = {
 	occDistToWallCenter: $("#occupantDist3").val(),
 
 	uvalueValue: $("#uvalue3").val(),
+	calcUVal: $("#calcuvalue3").val(),
 	intLowEChecked: $("#lowECheck3").is(":checked"), //provides a true/false
 	intLowEEmissivity: $("#lowE3").val(),
 

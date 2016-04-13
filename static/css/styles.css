@@ -156,15 +156,15 @@ body {
 }
 
 .case1Text {
-	color: rgb(108,28,131);
+	color: rgb(0,160,221);
 }
 
 .case2Text {
-	color: rgb(18,124,173);
+	color: rgb(248,151,29);
 }
 
 .case3Text {
-	color: rgb(21,222,154);
+	color: rgb(108,28,131);
 }
 
 
@@ -324,7 +324,7 @@ rect.blue {
 
 
 #caseWrapper {
-	overflow: auto;
+	overflow: hidden;
 	width: 100%;
 	display: inline-block;
 	height: 16px;
@@ -338,7 +338,7 @@ rect.blue {
 }
 
 #caseSelection h2 {
-	width: 57px;
+	width: 55px;
 	display: inline-block;
 	text-align: center;
 	font-size: 10px;
@@ -510,6 +510,10 @@ div.inputWrapperCenter span {
 	vertical-align: middle;
 }
 
+#inputs div.inputWrapperRight input#calcuvalue3 {
+	margin: 0px 0px 0px 19px;
+}
+
 div.inputWrapperRight span {
 	float: right;
 }
@@ -559,12 +563,10 @@ div.inputWrapperRight span {
 	padding: 1px 2px 0px 0px;
 }
 
-/*#inputs input.noChange {
-	margin: 0px 1px 0px 0px;
-	width: 36px;
-	text-align: center;
+#inputs input.inactive#calcuvalue, #inputs input.inactive#calcuvalue2, #inputs input.inactive#calcuvalue3 {
+	padding: 2px 9px 0px 4px;
+	font-style: normal;
 }
-*/
 
 
 
@@ -766,18 +768,19 @@ input[type=checkbox] {
 	position: absolute;
 	right: -7px;
 	top: -7px;
-	width: 18px;
-	height: 18px;
+	width: 20px;
+	height: 20px;
 }
 
 
 #inputs div.alert {
 	position: absolute;
 
-	background-color: rgb(245, 245, 245);
+	background-color: #fff;
 	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
 	padding: 10px;
 	border-radius: 10px;
+	border: 2px solid #f72734;
 	
 	display: none;
 }
