@@ -2240,6 +2240,8 @@ render.makeGraph = function () {
 			occPointData3 = newOccLocData;
 		}
 
+		autocalcUValues();
+
 		updateFacade();
 
 		// Update static tooltip text
@@ -2256,20 +2258,20 @@ render.makeGraph = function () {
 		var fullDataCase3 = script.computeData(case3Data);
 
 		//Compute the U-Value required to make the occupant comfortable.
-		case1Data.uvalueValue = uVal.uValFinal(fullDataCase1.wallViews[12], fullDataCase1.glzViews[12], fullDataCase1.facadeDist[12], fullDataCase1.dwnPPDFac, parseFloat(case1Data.windowHeightValue), case1Data.airtempValue, case1Data.outdoorTempValue, rvalueValue, case1Data.intLowEChecked, case1Data.intLowEEmissivity, airspeedValue, case1Data.humidityValue, metabolic, clothingValue, ppdValue);
+		case1Data.calcUVal = uVal.uValFinal(fullDataCase1.wallViews[12], fullDataCase1.glzViews[12], fullDataCase1.facadeDist[12], fullDataCase1.dwnPPDFac, parseFloat(case1Data.windowHeightValue), case1Data.airtempValue, case1Data.outdoorTempValue, rvalueValue, case1Data.intLowEChecked, case1Data.intLowEEmissivity, airspeedValue, case1Data.humidityValue, metabolic, clothingValue, ppdValue);
 
-		case2Data.uvalueValue = uVal.uValFinal(fullDataCase2.wallViews[12], fullDataCase2.glzViews[12], fullDataCase2.facadeDist[12], fullDataCase2.dwnPPDFac, parseFloat(case2Data.windowHeightValue), case2Data.airtempValue, case2Data.outdoorTempValue, rvalueValue, case2Data.intLowEChecked, case2Data.intLowEEmissivity, airspeedValue, case2Data.humidityValue, metabolic, clothingValue, ppdValue);
+		case2Data.calcUVal = uVal.uValFinal(fullDataCase2.wallViews[12], fullDataCase2.glzViews[12], fullDataCase2.facadeDist[12], fullDataCase2.dwnPPDFac, parseFloat(case2Data.windowHeightValue), case2Data.airtempValue, case2Data.outdoorTempValue, rvalueValue, case2Data.intLowEChecked, case2Data.intLowEEmissivity, airspeedValue, case2Data.humidityValue, metabolic, clothingValue, ppdValue);
 
-		case3Data.uvalueValue = uVal.uValFinal(fullDataCase3.wallViews[12], fullDataCase3.glzViews[12], fullDataCase3.facadeDist[12], fullDataCase3.dwnPPDFac, parseFloat(case3Data.windowHeightValue), case3Data.airtempValue, case3Data.outdoorTempValue, rvalueValue, case3Data.intLowEChecked, case3Data.intLowEEmissivity, airspeedValue, case3Data.humidityValue, metabolic, clothingValue, ppdValue);
+		case3Data.calcUVal = uVal.uValFinal(fullDataCase3.wallViews[12], fullDataCase3.glzViews[12], fullDataCase3.facadeDist[12], fullDataCase3.dwnPPDFac, parseFloat(case3Data.windowHeightValue), case3Data.airtempValue, case3Data.outdoorTempValue, rvalueValue, case3Data.intLowEChecked, case3Data.intLowEEmissivity, airspeedValue, case3Data.humidityValue, metabolic, clothingValue, ppdValue);
 
 		// Update the value in the form.
-		$("#uvalue").val(Math.round(case1Data.uvalueValue * 1000) / 1000);
-		$("#uvalue2").val(Math.round(case2Data.uvalueValue * 1000) / 1000);
-		$("#uvalue3").val(Math.round(case3Data.uvalueValue * 1000) / 1000);
+		$("#calcuvalue").val(Math.round(case1Data.calcUVal * 1000) / 1000);
+		$("#calcuvalue2").val(Math.round(case2Data.calcUVal * 1000) / 1000);
+		$("#calcuvalue3").val(Math.round(case3Data.calcUVal * 1000) / 1000);
 
 
 		// Re-run the functions with the new inputs.
-		fullDataCase1 = script.computeData(case1Data);
+/*		fullDataCase1 = script.computeData(case1Data);
 		fullDataCase2 = script.computeData(case2Data);
 		fullDataCase3 = script.computeData(case3Data);
 
@@ -2292,7 +2294,7 @@ render.makeGraph = function () {
 
 
 
-		thresholdDataText();
+		thresholdDataText();*/
 
 	}
 
