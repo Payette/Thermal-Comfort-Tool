@@ -40,12 +40,13 @@ body {
 #inputs #legend, #occupantSliders #legend {
 	border: none;
 	padding: 0 0 10px 0;
-	margin-bottom: 20px;
+	margin-bottom: 35px;
+	margin-top: 35px;
 }
 
 #inputs legend, #occupantSliders legend {
 	font-weight: 700;
-	font-size: 18px;
+	font-size: 16px;
 	text-transform: uppercase;
 	padding: 0 0 5px 0;
 	margin: 0;
@@ -61,14 +62,12 @@ body {
 
 
 
-#inputs hr, #occupantSliders hr {
+#inputs hr, #occupantSliders hr{
 	padding: 0;
-	margin: 0 0 5px 0;
-	background: black;
-	border: none;
-	color: black;
-	height: 2px;
-	/*width: 100%;*/
+	margin: 5px 0 5px 0;
+	border: 1px solid black;
+	height: 0px;
+	width: 100%;
 }
 
 #inputs label {
@@ -80,7 +79,7 @@ body {
 	padding: 1px 0;
 	font-family: "museo-sans", sans-serif;
 	font-weight: 300;
-	font-size: 18px;
+	font-size: 16px;
 }
 
 #inputs label.indent {
@@ -108,7 +107,7 @@ body {
 
 	font-family: "museo-sans", sans-serif;
 	font-weight: 300;
-	font-size: 18px;
+	font-size: 16px;
 	text-align: center;
 	color: black;
 
@@ -116,9 +115,6 @@ body {
 }
 
 #inputs input.inactive {
-/*	border-color: rgb(235, 235, 235);
-	border-style: solid;
-	border-width: 1px;*/
 	color: #d5d5d5;
 	font-style: italic;
 	cursor: default;
@@ -162,19 +158,20 @@ body {
 	color: #000;
 }
 
-#caseSelection h2#case1Label {
+#inputs input.case1, #caseSelection h2#case1Label {
+	color: rgb(0,160,221);
+}
+
+#inputs input.case2, #caseSelection h2#case2Label {
+	color: rgb(248,151,29);
+}
+
+#inputs input.case3, #caseSelection h2#case3Label {
 	color: rgb(108,28,131);
 }
 
-#caseSelection h2#case2Label {
-	color: rgb(18,124,173);
-}
 
-#caseSelection h2#case3Label {
-	color: rgb(21,222,154);
-}
-
-#caseSelection h2#case2Label.unselected, #caseSelection h2#case3Label.unselected {
+#inputs input.case1.unselected, #inputs input.case2.unselected, #inputs input.case3.unselected, #caseSelection h2#case2Label.unselected, #caseSelection h2#case3Label.unselected {
 	display: none;
 }
 
@@ -225,7 +222,7 @@ body {
 
 .facadeHeading {
 	font-family: "museo-sans", sans-serif;
-	font-weight: 500;
+	font-weight: 700;
 	font-size: 16px;
 	margin: 0;
 	display: block;
@@ -240,15 +237,15 @@ body {
 }
 
 .case1Text {
-	color: rgb(108,28,131);
+	color: rgb(0,160,221);
 }
 
 .case2Text {
-	color: rgb(18,124,173);
+	color: rgb(248,151,29);
 }
 
 .case3Text {
-	color: rgb(21,222,154);
+	color: rgb(108,28,131);
 }
 
 rect.filled {
@@ -262,7 +259,7 @@ rect.outlined {
 	fill: #fff;
 	stroke: rgb(190,190,190);
 	stroke-width: 1px;
-	stroke-dasharray: 4, 3;
+	stroke-dasharray: 3, 6;
 }
 
 rect.white {
@@ -279,7 +276,6 @@ rect.blue {
 /* ------ CHART STYLING ----- */
 
 #graphWrapper {
-	border: 1px solid red;
 	height: 550px;
 }
 
@@ -312,7 +308,7 @@ text.axislabel {
 	stroke: #000;
 	stroke-width: 2;
 	stroke-linecap: round;
-	stroke-dasharray: 0 4;
+	stroke-dasharray: 0 6;
 }
 
 #graph .grid line { /* horizontal reference lines */
@@ -364,7 +360,104 @@ text.axislabel {
 
 
 
-#options, label#calcUValQuestion, #uValButton, .alert {
+
+
+#explanation {
+	border: solid 2px #000;
+	padding: 10px;
+	margin: 15px 0 0 0;
+}
+
+
+#explanation h1 {
+	margin: 0;
+	padding-bottom: 5px;
+	font-weight: 700;
+	font-size: 16px;
+	text-transform: uppercase;
+
+	font-family: "museo-sans", sans-serif;
+}
+
+#col {
+	column-count:2;
+	-moz-column-count:2;
+	-webkit-column-count: 2;
+
+	-moz-column-gap: 26px;
+	-webkit-column-gap: 26px;
+	column-gap: 26px;
+
+	column-width: 250px;
+	-webkit-column-count: 250px;
+	-moz-column-count: 250px;
+}
+
+#col h2 {
+	margin: 0 0 5px 0;
+	font-weight: 700;
+	font-size: 16px;
+
+	font-family: "museo-sans", sans-serif;
+
+	-moz-column-break-before: always;
+	-webkit-column-break-before: always;
+	break-before: always;
+}
+
+#col p {
+	font-family: "museo-sans", sans-serif;
+	font-size: 16px;
+	line-height: 1.5;
+	margin: 0;
+ 	padding-bottom: 5px;
+}
+
+.keepTogether {
+	display: inline-block;
+	width: 100%;
+}
+
+
+.keepTogether span.discomfortIcon {
+	display: block;
+	float: left;
+	width: 12px;
+	height: 12px;
+	margin: 0px 5px 0 0;
+	background-size: 10px 10px;
+	background-position: left bottom;
+	background-repeat: no-repeat;
+}
+
+.keepTogether ul {
+	margin: 0;
+	padding: 0 0 0 10px;
+	font-family: "museo-sans", sans-serif;
+	font-size: 16px;
+}
+
+.blackTri {
+	background-image: url(../../static/images/triangle-black.png);
+}
+
+.blackCirc {
+	background-image: url(../../static/images/circle-black.png);
+}
+
+
+
+
+
+
+
+
+
+#options, label#calcUValQuestion, #uValButton, .alert, label#setGlazing, br#glzBR, input#windowWidthCheck, label#checkWindWidth, input#glazingRatioCheck, label#checkGlzRatio {
 	display: none;
+}
+
+label#calcUValQuestion {
+	display: block;
 }
 

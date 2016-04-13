@@ -7,9 +7,9 @@ render.makeGraph = function () {
 
 
 	var maxContainerWidth = 550; // based on Payette website layout
-	var color1 = "rgb(108,28,131)";
-	var color2 = "rgb(18,124,173)";
-	var color3 = "rgb(21,222,154)";
+	var color1 = "rgb(0,160,221)";
+	var color2 = "rgb(248,151,29)";
+	var color3 = "rgb(108,28,131)";
 	var grey = "rgb(190,190,190)";
 	var lightblue = "rgb(194,224,255)";
 	var lightgrey = "rgb(235,235,235)";
@@ -735,6 +735,7 @@ render.makeGraph = function () {
     	if ($(this).hasClass("unselected") == true) {
     		//becomes selected
 			$(this).removeClass("unselected");
+			$("#inputs input.case2").removeClass("unselected");
 
 			sizeButton();
 
@@ -757,6 +758,7 @@ render.makeGraph = function () {
 
 
 			$("#inputs input.case2, div.case2, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2, hr.case2").css("display","none");
+			$("#inputs input.case2").addClass("unselected");
 
 			d3.selectAll("rect.wall2").classed("outlined", true);
 			d3.selectAll("rect.wall2").classed("filled", false);
@@ -782,6 +784,7 @@ render.makeGraph = function () {
     	if ($(this).hasClass("unselected") == true) {
     		//becomes selected
 			$(this).removeClass("unselected");
+			$("#inputs input.case3").removeClass("unselected");
 
 			sizeButton();
 
@@ -801,6 +804,7 @@ render.makeGraph = function () {
 			sizeButton();
 
 			$("#inputs input.case3, div.case3, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3, hr.case3").css("display","none");
+			$("#inputs input.case2").addClass("unselected");
 
 			d3.selectAll("rect.wall3").classed("outlined", true);
 			d3.selectAll("rect.wall3").classed("filled", false);
@@ -1122,9 +1126,7 @@ render.makeGraph = function () {
 		window.print();
 	})
 
-	$("#calcUValue").click(function(event) {
-		autocalcUValues();
-	});
+
 
 	
 
@@ -2270,31 +2272,32 @@ render.makeGraph = function () {
 		$("#calcuvalue3").val(Math.round(case3Data.calcUVal * 1000) / 1000);
 
 
-		// Re-run the functions with the new inputs.
-/*		fullDataCase1 = script.computeData(case1Data);
-		fullDataCase2 = script.computeData(case2Data);
-		fullDataCase3 = script.computeData(case3Data);
+		if (case1Data.calcUVal <= 0.01) {
+			$("#calcuvalue").css("color", "#f72734");
+		} else {
+			$("#calcuvalue").css("color", "#d5d5d5");
+		}	
 
+		if (case2Data.calcUVal <= 0.01) {
+			$("#calcuvalue2").css("color", "#f72734");
+		} else {
+			$("#calcuvalue2").css("color", "#d5d5d5");
+		}
 
-		// Update the PPD graph and facade SVG.
-		updateGraphData(fullDataCase1.dataSet, fullDataCase1.occPtInfo, graphPoints, ".connectLine", ".occdot1");
-		updateFacade(case1Data, fullDataCase1.glzCoords, fullDataCase1.windowWidth, fullDataCase1.windowHeight);
+		if (case3Data.calcUVal <= 0.01) {
+			$("#calcuvalue3").css("color", "#f72734");
+		} else {
+			$("#calcuvalue3").css("color", "#d5d5d5");
+		}
 
-		updateGraphData(fullDataCase2.dataSet, fullDataCase2.occPtInfo, graphCase2Points, ".connectLine2", ".occdot2");
-		updateFacade(case2Data, fullDataCase2.glzCoords, fullDataCase2.windowWidth, fullDataCase2.windowHeight);
+		if (case1Data.calcUVal <= 0.01 || case2Data.calcUVal <= 0.01 || case3Data.calcUVal <= 0.01) {
+			$("#calcUValQuestion .bigfoot-footnote__button").css("background-color", "#f72734").css("color", "#fff");
 
-		updateGraphData(fullDataCase3.dataSet, fullDataCase3.occPtInfo, graphCase3Points, ".connectLine3", ".occdot3");
-		updateFacade(case3Data, fullDataCase3.glzCoords, fullDataCase3.windowWidth, fullDataCase3.windowHeight);
-
-		checkUValue(case1Data.uvalueValue, case2Data.uvalueValue, case3Data.uvalueValue);
-
-		occPointData = fullDataCase1.occPtInfo;
-		occPointData2 = fullDataCase2.occPtInfo;
-		occPointData3 = fullDataCase3.occPtInfo;
-
-
-
-		thresholdDataText();*/
+			/*Warning! Thermal comfort cannot be achieved given the current glazing geometry and space/occupancy conditions, regardless of glazing performance. This is commonly due to low indoor air temperatures or low clothing values.*/
+			$(".bigfoot-footnote__content").css("background", "#f72734");
+		} else {
+			$("#calcUValQuestion .bigfoot-footnote__button").css("background-color", "rgba(110, 110, 110, 0.2)").css("color", "#777");
+		}
 
 	}
 
@@ -2346,6 +2349,10 @@ render.makeGraph = function () {
 
 		d3.selectAll(".occupantLine").remove();
 		occupantDistanceRefLine();
+
+
+
+
 	}
 
 
