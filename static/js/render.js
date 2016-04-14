@@ -1121,13 +1121,13 @@ render.makeGraph = function () {
 
 		$("#URLpop").dialog("open");
 		
+		// encode url so it can be passed to the shortening function
 		var urlToShorten = encodeURI(urlresult);
 
-		shorten(urlToShorten, function(response) { 
-            console.log(response); 
+		var shortenedURL = shorten(urlToShorten, function(response) { 
+            console.log(response.data.url); 
 
-            /*$("#URLpop textarea").empty();
-            $("#URLpop textarea").append(response.data.url);*/
+            return response.data.url;
         }); 
 
 
