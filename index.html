@@ -56,12 +56,27 @@
 				draggable: false,
 				closeOnEscape: true,
 				buttons: [
+					{text: "Shorten URL",
+					click: function() {
+						var urlToShorten = $("#URLpop textarea").val();
+
+						shorten(urlToShorten, function(response) { 
+							/*console.log(response.data.url);*/
+
+							$("#URLpop textarea").empty();
+							$("#URLpop textarea").append(response.data.url);
+
+							/*$("#URLpop textarea").focus(function() {
+								$("#URLpop textarea").select();
+							});*/
+
+				        }); 
+					}},
 					{text: "Close",
 					click: function() {
 						$(this).dialog("close");
 					}},
-					{text: "Shorten URL",
-					}],
+					],
 				modal: true,
 				width: 450,
 			});

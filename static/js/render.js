@@ -1109,29 +1109,36 @@ render.makeGraph = function () {
 	// show URL in modal alert
     $(".optionButton#URL").click(function(event) {
 		var urlresult = createURL();
+		// encode url so it can be passed to the shortening function
+		var urlToShorten = encodeURI(urlresult);
 
 		$("#URLpop textarea").empty();
 		$("#URLpop textarea").append(urlresult);
-
-
 
 		$("#URLpop textarea").focus(function() {
 			$("#URLpop textarea").select();
 		});
 
 		$("#URLpop").dialog("open");
+
+/*	    // shorten URL
+	    $("div.ui-dialog-buttonset").click(function(event) {	
+			
+			var shortenedURL = shorten(urlToShorten, function(response) { 
+	            console.log(response.data.url); 
+
+	            //return response.data.url;
+	        }); 
+
+	        //console.log(shortenedURL);
+	    })
+*/
 		
-		var urlToShorten = "'" + urlresult + "'";
-
-		shorten(urlToShorten, function(response) { 
-            console.log(response); 
-
-            /*$("#URLpop textarea").empty();
-            $("#URLpop textarea").append(response.data.url);*/
-        }); 
-
-
 	})
+
+
+
+
 
 	// print to PDF
 	$(".optionButton#PDF").click(function(event) {
