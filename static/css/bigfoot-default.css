@@ -237,7 +237,7 @@
   max-width: 100%;
 }
 .bigfoot-footnote__content *:last-child {
-  margin-bottom: 0 !important;
+  margin-bottom: 5px !important;
 }
 .bigfoot-footnote__content *:first-child {
   margin-top: 0 !important;

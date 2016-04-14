@@ -2626,9 +2626,9 @@ render.makeGraph = function () {
 
 
 		if (Math.round(occdata.ppd) <= ppdValue) {
-			text = "<h1 class=" + className + "><span id='icon' class='check'></span>" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1>";
+			text = "<h1 class=" + className + "><img src='static/images/check.png' id='icon' class='check'>" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1>";
 		} else {
-			text = "<h1 class=" + className + "><span id='icon' class='cross'></span>" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1>";
+			text = "<h1 class=" + className + "><img src='static/images/x.png' id='icon' class='cross'>" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1>";
 		}
 
 		return text;

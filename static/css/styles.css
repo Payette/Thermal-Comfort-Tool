@@ -32,7 +32,7 @@ body {
 
 #graph .axislabel, #graph .axis text {
 	font-family: "museo-sans", sans-serif;
-	font-size: 11px;
+	font-size: 12px;
 	font-weight: 300;
 }
 
@@ -78,7 +78,7 @@ body {
 
 #tooltip, #thresholdTooltip {
 	position: absolute;
-	width: 260px;
+	width: 280px;
 	padding: 10px;
 	pointer-events: none;
 	background-color: rgba(255,255,255,.8);
@@ -94,7 +94,7 @@ body {
 #tooltip h1, #thresholdTooltip h1 {
 	font-family: "museo-sans", sans-serif;
 	font-weight: 300;
-	font-size: 11px;
+	font-size: 12px;
 	padding: 0 0 3px 0;
 	margin: 0;
 }
@@ -107,24 +107,15 @@ body {
 
 
 
-#thresholdTooltip h1 span#icon, #tooltip h1 span#icon {
+#thresholdTooltip h1 img#icon, #tooltip h1 img#icon {
 	display: block;
 	float: left;
 	width: 12px;
 	height: 12px;
 	margin: 0px 3px 0 0;
-	background-size: 11px 11px;
-	background-position: left bottom;
-	background-repeat: no-repeat;
+	padding: 0;
 }
 
-#thresholdTooltip h1 span#icon.check, #tooltip h1 span#icon.check {
-	background-image: url(../../static/images/check.png);
-}
-
-#thresholdTooltip h1 span#icon.cross, #tooltip h1 span#icon.cross {
-	background-image: url(../../static/images/x.png);
-}
 
 
 
@@ -338,7 +329,7 @@ rect.blue {
 }
 
 #caseSelection h2 {
-	width: 55px;
+	width: 60px;
 	display: inline-block;
 	text-align: center;
 	font-size: 10px;
@@ -358,7 +349,7 @@ rect.blue {
 	float: left;
 	width: 12px;
 	height: 12px;
-	margin: 0px 1px 0 5px;
+	margin: 0px 1px 0 10px;
 	background-size: 11px 11px;
 }
 
@@ -400,6 +391,8 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 	font-family: "museo-sans", sans-serif;
 	position: relative;
 	z-index: 0;
+
+	line-height: 1em;
 }
 
 #occupantSliders {
@@ -547,7 +540,7 @@ div.inputWrapperRight span {
 
 	font-family: "museo-sans", sans-serif;
 	font-weight: 300;
-	font-size: 9px;
+	font-size: 10px;
 	text-align: right;
 	color: black;
 }
