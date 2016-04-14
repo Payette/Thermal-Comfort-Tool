@@ -1113,29 +1113,33 @@ render.makeGraph = function () {
 		$("#URLpop textarea").empty();
 		$("#URLpop textarea").append(urlresult);
 
-
-
 		$("#URLpop textarea").focus(function() {
 			$("#URLpop textarea").select();
 		});
 
 		$("#URLpop").dialog("open");
 		
-		// encode url so it can be passed to the shortening function
+	})
+
+
+    // shorten URL
+    $("div.ui-dialog-buttonset").click(function(event) {
+    	var urlresult = createURL();
+
+      	
+      	// encode url so it can be passed to the shortening function
 		var urlToShorten = encodeURI(urlresult);
 
 		var shortenedURL = shorten(urlToShorten, function(response) { 
-            console.log(response.data.url); 
+            //console.log(response.data.url); 
 
             return response.data.url;
         }); 
 
-        $("div.ui-dialog-buttonset").click(function(event) {
-        	console.log("wahoo!");
-        })
+        console.log(shortenedURL);
+    })
 
 
-	})
 
 	// print to PDF
 	$(".optionButton#PDF").click(function(event) {
