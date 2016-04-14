@@ -65,11 +65,12 @@
 						var urlToShorten = $("#URLpop textarea").val();
 
 						var shortenedURL = shorten(urlToShorten, function(response) { 
+							console.log(response.data.url);
 
-				            return response.data.url;
+				            /*return response.data.url;*/
 				        }); 
 
-						 console.log(shortenedURL);
+						 //console.log(shortenedURL);
 
 						/*$("#URLpop textarea").empty();
 						$("#URLpop textarea").append(urlresult);
