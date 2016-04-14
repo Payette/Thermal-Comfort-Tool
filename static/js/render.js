@@ -1118,26 +1118,28 @@ render.makeGraph = function () {
 		});
 
 		$("#URLpop").dialog("open");
+
+	    // shorten URL
+	    $("div.ui-dialog-buttonset").click(function(event) {
+	    	var urlresult = createURL();
+
+	      	
+	      	// encode url so it can be passed to the shortening function
+			var urlToShorten = encodeURI(urlresult);
+
+			var shortenedURL = shorten(urlToShorten, function(response) { 
+	            //console.log(response.data.url); 
+
+	            return response.data.url;
+	        }); 
+
+	        console.log(shortenedURL);
+	    })
+
 		
 	})
 
 
-    // shorten URL
-    $("div.ui-dialog-buttonset").click(function(event) {
-    	var urlresult = createURL();
-
-      	
-      	// encode url so it can be passed to the shortening function
-		var urlToShorten = encodeURI(urlresult);
-
-		var shortenedURL = shorten(urlToShorten, function(response) { 
-            //console.log(response.data.url); 
-
-            return response.data.url;
-        }); 
-
-        console.log(shortenedURL);
-    })
 
 
 
