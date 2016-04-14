@@ -56,10 +56,6 @@
 				draggable: false,
 				closeOnEscape: true,
 				buttons: [
-					{text: "Close",
-					click: function() {
-						$(this).dialog("close");
-					}},
 					{text: "Shorten URL",
 					click: function() {
 						var urlToShorten = $("#URLpop textarea").val();
@@ -75,7 +71,11 @@
 							});*/
 
 				        }); 
-					}
+					},
+					{text: "Close",
+					click: function() {
+						$(this).dialog("close");
+					}},
 					}],
 				modal: true,
 				width: 450,
