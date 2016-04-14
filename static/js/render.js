@@ -1121,7 +1121,7 @@ render.makeGraph = function () {
 
 		$("#URLpop").dialog("open");
 		
-		var urlToShorten = "'" + urlresult + "'";
+		var urlToShorten = "http://payettepeople.github.io/Thermal-Comfort-Tool/?units=IP&case1=show&case2=hide&case3=hide&ppd=10&distFromFacade=3&ceiling=12&wallWidth=18&windowHeight=8&sillHeight=3&windowWidth=4.5&glazingRatio=50&windowSeparation=6&uValue=0.25&outdoorTemp=25&indoortemp=72&humidity=20&lowE=&occPosition=0&rValue=20&airspeed=10&clothing=0.8&metabolic=1.2";
 
 		shorten(urlToShorten, function(response) { 
             console.log(response); 
