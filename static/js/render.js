@@ -1130,6 +1130,10 @@ render.makeGraph = function () {
             return response.data.url;
         }); 
 
+        $("div.ui-dialog-buttonset button:first-child").click(function(event) {
+        	console.log("wahoo!");
+        })
+
 
 	})
 
