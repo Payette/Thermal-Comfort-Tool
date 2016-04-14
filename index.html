@@ -64,22 +64,17 @@
 					click: function() {
 						var urlToShorten = $("#URLpop textarea").val();
 
-						var shortenedURL = shorten(urlToShorten, function(response) { 
-							console.log(response.data.url);
+						shorten(urlToShorten, function(response) { 
+							/*console.log(response.data.url);*/
 
-				            /*return response.data.url;*/
+							$("#URLpop textarea").empty();
+							$("#URLpop textarea").append(response.data.url);
+
+							$("#URLpop textarea").focus(function() {
+								$("#URLpop textarea").select();
+							});
+
 				        }); 
-
-						 //console.log(shortenedURL);
-
-						/*$("#URLpop textarea").empty();
-						$("#URLpop textarea").append(urlresult);
-
-						$("#URLpop textarea").focus(function() {
-							$("#URLpop textarea").select();
-						});*/
-
-
 					}
 					}],
 				modal: true,
