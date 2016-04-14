@@ -945,16 +945,15 @@ div#URLpop textarea {
 }
 
 
-.keepTogether span.discomfortIcon {
+.keepTogether img.discomfortIcon {
 	display: block;
 	float: left;
-	width: 12px;
-	height: 12px;
+	width: 11px;
+	height: 11px;
 	margin: 0px 5px 0 0;
-	background-size: 10px 10px;
-	background-position: left bottom;
-	background-repeat: no-repeat;
 }
+
+
 
 .keepTogether ul {
 	margin: 0;
@@ -963,29 +962,7 @@ div#URLpop textarea {
 	font-size: 12px;
 }
 
-.blackTri {
-	background-image: url(../../static/images/triangle-black.png);
-}
 
-.blackCirc {
-	background-image: url(../../static/images/circle-black.png);
-}
-
-.redTri {
-	background-image: url(../../static/images/triangle-red.png);
-}
-
-.redCirc {
-	background-image: url(../../static/images/circle-red.png);
-}
-
-.greyTri {
-	background-image: url(../../static/images/triangle-grey.png);
-}
-
-.greyCirc {
-	background-image: url(../../static/images/circle-grey.png);
-}
 
 
 

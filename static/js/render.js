@@ -980,7 +980,7 @@ render.makeGraph = function () {
 	$(".optionButton#SI").click(function(event) {
 
 		if ($(".optionButton#SI").hasClass("selected") == false) {
-			//change to SI
+			//change to SI;
 			unitSys = "SI"
 			$(".optionButton#SI").addClass("selected");
 			$(".optionButton#IP").removeClass("selected");
@@ -995,6 +995,7 @@ render.makeGraph = function () {
 			$(".unitsUVal").append("W/m&sup2;*K");
 			$(".unitsRVal").append("m&sup2;*K/W");
 			$(".unitsAirSpeed").append("m/s");
+
 
 			// change values in form.
 			case1Data.occDistToWallCenter = units.Ft2M(case1Data.occDistToWallCenter);
@@ -1187,7 +1188,7 @@ render.makeGraph = function () {
 			$("#checkWindWidth").removeClass("unselected");
 			$("#checkGlzRatio").addClass("unselected");
 
-			$("#glazingRatioCheck").removeAttr("checked");
+			$("#glazingRatioCheck").prop(":checked", false);
 
 
 		} else if (($("#windowWidthCheck").is(":checked")) == false) {
@@ -1200,7 +1201,7 @@ render.makeGraph = function () {
 			$("#checkGlzRatio").removeClass("unselected");
 			$("#checkWindWidth").addClass("unselected");
 
-			$("#glazingRatioCheck").attr("checked", "checked");
+			$("#glazingRatioCheck").prop(":checked", true);
 
 		}
 	});
@@ -1213,7 +1214,7 @@ render.makeGraph = function () {
 			$("#checkGlzRatio").removeClass("unselected");
 			$("#checkWindWidth").addClass("unselected");
 
-			$("#windowWidthCheck").removeAttr("checked");
+			$("#windowWidthCheck").prop(":checked", false);
 
 		} else if (($("#glazingRatioCheck").is(":checked")) == false) {
 			glzOrWidth = false;
@@ -1225,7 +1226,7 @@ render.makeGraph = function () {
 			$("#checkWindWidth").removeClass("unselected");
 			$("#checkGlzRatio").addClass("unselected");
 
-			$("#windowWidthCheck").attr("checked", "checked");
+			$("#windowWidthCheck").prop(":checked", true);
 		}
 	})
 
@@ -2575,34 +2576,6 @@ render.makeGraph = function () {
 		}
 	}
 
-	function checkUValue(UValue1, UValue2, UValue3) {
-
-		if (UValue1 <= 0.05 || UValue2 <= 0.05 || UValue3 <= 0.05) {
-			$("#uvaluePop").css("display","block");
-
-			if (UValue1 <= 0.05) {
-				$("#uvalue").css("color", "#f72734");
-				$("#airtemp").css("color", "#f72734");
-				$("#clothing").css("color", "#f72734");
-			}
-
-			if (UValue2 <= 0.05) {
-				$("#uvalue2").css("color", "#f72734");
-				$("#airtemp2").css("color", "#f72734");
-				$("#clothing").css("color", "#f72734");
-			}
-
-			if (UValue3 <= 0.05) {
-				$("#uvalue3").css("color", "#f72734");
-				$("#airtemp3").css("color", "#f72734");
-				$("#clothing").css("color", "#f72734");
-			}
-
-		} else {
-			$("#uvaluePop").css("display","none")
-			$("#uvalue, #uvalue2, #uvalue3").css("color", "black");
-		}
-	}
 
 	function determineInputProportion() {
 
