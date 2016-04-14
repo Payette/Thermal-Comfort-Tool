@@ -1121,7 +1121,7 @@ render.makeGraph = function () {
 
 		$("#URLpop").dialog("open");
 		
-		var urlToShorten = escape(urlresult);
+		var urlToShorten = encodeURI(urlresult);
 
 		shorten(urlToShorten, function(response) { 
             console.log(response); 
