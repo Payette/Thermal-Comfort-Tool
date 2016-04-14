@@ -61,6 +61,32 @@
 						$(this).dialog("close");
 					}},
 					{text: "Shorten URL",
+					click: function() {
+						var thisURL = $("#URLpop textarea").val();
+						console.log(thisURL)
+						/*var urlToShorten = encodeURI(urlresult);
+
+						$("#URLpop textarea").empty();
+						$("#URLpop textarea").append(urlresult);
+
+						$("#URLpop textarea").focus(function() {
+							$("#URLpop textarea").select();
+						});
+
+						$("#URLpop").dialog("open");
+
+					    // shorten URL
+					    $("div.ui-dialog-buttonset").click(function(event) {	
+							
+							var shortenedURL = shorten(urlToShorten, function(response) { 
+					            console.log(response.data.url); 
+
+					            //return response.data.url;
+					        }); 
+
+					        //console.log(shortenedURL);
+					    })*/
+					}
 					}],
 				modal: true,
 				width: 450,

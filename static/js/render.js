@@ -1121,7 +1121,7 @@ render.makeGraph = function () {
 
 		$("#URLpop").dialog("open");
 
-	    // shorten URL
+/*	    // shorten URL
 	    $("div.ui-dialog-buttonset").click(function(event) {	
 			
 			var shortenedURL = shorten(urlToShorten, function(response) { 
@@ -1132,7 +1132,7 @@ render.makeGraph = function () {
 
 	        //console.log(shortenedURL);
 	    })
-
+*/
 		
 	})
 
