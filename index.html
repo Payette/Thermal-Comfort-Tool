@@ -61,14 +61,10 @@
 						var urlToShorten = $("#URLpop textarea").val();
 
 						shorten(urlToShorten, function(response) { 
-							/*console.log(response.data.url);*/
 
+							// replace long url with shortened url
 							$("#URLpop textarea").empty();
 							$("#URLpop textarea").append(response.data.url);
-
-							/*$("#URLpop textarea").focus(function() {
-								$("#URLpop textarea").select();
-							});*/
 
 				        }); 
 					}},
