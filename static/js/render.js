@@ -1128,12 +1128,12 @@ render.makeGraph = function () {
 			var urlToShorten = encodeURI(urlresult);
 
 			var shortenedURL = shorten(urlToShorten, function(response) { 
-	            //console.log(response.data.url); 
+	            console.log(response.data.url); 
 
-	            return response.data.url;
+	            //return response.data.url;
 	        }); 
 
-	        console.log(shortenedURL);
+	        //console.log(shortenedURL);
 	    })
 
 		
