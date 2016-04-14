@@ -1109,6 +1109,8 @@ render.makeGraph = function () {
 	// show URL in modal alert
     $(".optionButton#URL").click(function(event) {
 		var urlresult = createURL();
+		// encode url so it can be passed to the shortening function
+		var urlToShorten = encodeURI(urlresult);
 
 		$("#URLpop textarea").empty();
 		$("#URLpop textarea").append(urlresult);
@@ -1120,13 +1122,8 @@ render.makeGraph = function () {
 		$("#URLpop").dialog("open");
 
 	    // shorten URL
-	    $("div.ui-dialog-buttonset").click(function(event) {
-	    	var urlresult = createURL();
-
-	      	
-	      	// encode url so it can be passed to the shortening function
-			var urlToShorten = encodeURI(urlresult);
-
+	    $("div.ui-dialog-buttonset").click(function(event) {	
+			
 			var shortenedURL = shorten(urlToShorten, function(response) { 
 	            console.log(response.data.url); 
 
