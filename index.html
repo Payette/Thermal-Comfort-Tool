@@ -27,8 +27,10 @@
 	<script type="text/javascript" charset="utf-8" src="static/js/misc.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/createurl.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/urlobject.js"></script>
+	<script type="text/javascript" charset="utf-8" src="static/js/shortenURL.js"></script>
 
-
+	<!-- Make Chart -->
+	<script type="text/javascript" src="static/js/render.js"></script>
 
 
 
@@ -57,7 +59,9 @@
 					{text: "Close",
 					click: function() {
 						$(this).dialog("close");
-					}}],
+					}},
+					{text: "Shorten URL",
+					}],
 				modal: true,
 				width: 450,
 			});
@@ -65,10 +69,11 @@
 
 
 
+
+
 	</script>
 
-	<!-- Make Chart -->
-	<script type="text/javascript" src="static/js/render.js"></script>
+	
 
 
 </head>
@@ -298,7 +303,7 @@
 			<hr>
 			<p class="subtext">It is recommended to use the default values for these variables unless you have an atypical building program and are very familiar with their impact on the PMV model. When comparing multiple cases, some of these values are consistent across all scenarios.</p>
 
-	<!-- 		<label for="radiant">Radiant Floor<sup id="fnref:9"><a href="#fn:9" rel="footnote">?</a></sup></label>
+			<!-- <label for="radiant">Radiant Floor<sup id="fnref:9"><a href="#fn:9" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><div class="customCheckStyleCentered case1"><input type="checkbox" name="radiant" id="radiant" class="checkbox customCheck"><label for="radiant" id="radiantCheck1" class="unselected"></label></div></div>
 			<div class="inputWrapperCenter"><div class="customCheckStyleCentered case2" id="offsetMiddle"><input type="checkbox" name="radiant2" id="radiant2" class="checkbox customCheck"><label for="radiant2" id="radiantCheck2" class="unselected"></label></div></div>
 			<div class="inputWrapperRight"><div class="customCheckStyleCentered case3" id="offsetLeft"><input type="checkbox" name="radiant3" id="radiant3" class="checkbox customCheck"><label for="radiant3" id="radiantCheck3" class="unselected"></label></div></div><br> -->

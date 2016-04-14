@@ -1113,12 +1113,24 @@ render.makeGraph = function () {
 		$("#URLpop textarea").empty();
 		$("#URLpop textarea").append(urlresult);
 
+
+
 		$("#URLpop textarea").focus(function() {
 			$("#URLpop textarea").select();
 		});
 
 		$("#URLpop").dialog("open");
 		
+		var urlToShorten = "'" + urlresult + "'";
+
+		shorten(urlToShorten, function(response) { 
+            console.log(response); 
+
+            /*$("#URLpop textarea").empty();
+            $("#URLpop textarea").append(response.data.url);*/
+        }); 
+
+
 	})
 
 	// print to PDF
@@ -1127,8 +1139,6 @@ render.makeGraph = function () {
 	})
 
 
-
-	
 
 
 
