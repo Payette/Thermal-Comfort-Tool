@@ -220,6 +220,7 @@ rect.blue {
 	width: 193px;
 	height: 20px;
 	float: left;
+	padding: 0px;
 }
 
 #ppd, #distFromFacade {

@@ -1,18 +1,9 @@
-.dimHover {
-  width: 12px;
-  text-align: center;
-  padding: 2px;
-}
 
-.bigfoot-footnote__button {
-  top: -0.1em;
-  padding: 1px;
-}
-
-.bigfoot-footnote__button, .dimHover {
+button.bigfoot-footnote__button, button.dimHover {
   position: relative;
+  top: -1px;
+  padding: 1px;
   height: 12px;
-  width: 12px;
   z-index: 5;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
