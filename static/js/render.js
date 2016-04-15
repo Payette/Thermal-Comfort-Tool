@@ -878,73 +878,73 @@ render.makeGraph = function () {
 			updateOccupantImageLocation("#occupantImage3", "#occupantDist3", case3Data);
 
 			case1Data.ceilingHeightValue = units.M2Ft(case1Data.ceilingHeightValue);
-			$("#ceiling").val(case1Data.ceilingHeightValue);
+			$("#ceiling").val(round(case1Data.ceilingHeightValue*10)/10);
 			case2Data.ceilingHeightValue = units.M2Ft(case2Data.ceilingHeightValue);
-			$("#ceiling2").val(case2Data.ceilingHeightValue);
+			$("#ceiling2").val(round(case2Data.ceilingHeightValue*10)/10);
 			case3Data.ceilingHeightValue = units.M2Ft(case3Data.ceilingHeightValue);
-			$("#ceiling3").val(case3Data.ceilingHeightValue);
+			$("#ceiling3").val(round(case3Data.ceilingHeightValue*10)/10);
 
 			case1Data.wallLen = units.M2Ft(case1Data.wallLen);
-			$("#wallWidth").val(case1Data.wallLen);
+			$("#wallWidth").val(round(case1Data.wallLen*10)/10);
 			case2Data.wallLen = units.M2Ft(case2Data.wallLen);
-			$("#wallWidth2").val(case2Data.wallLen);
+			$("#wallWidth2").val(round(case2Data.wallLen*10)/10);
 			case3Data.wallLen = units.M2Ft(case3Data.wallLen);
-			$("#wallWidth3").val(case3Data.wallLen);
+			$("#wallWidth3").val(round(case3Data.wallLen*10)/10);
 
 			case1Data.windowHeightValue = units.M2Ft(case1Data.windowHeightValue);
-			$("#windowHeight").val(case1Data.windowHeightValue);
+			$("#windowHeight").val(round(case1Data.windowHeightValue*10)/10);
 			case2Data.windowHeightValue = units.M2Ft(case2Data.windowHeightValue);
-			$("#windowHeight2").val(case2Data.windowHeightValue);
+			$("#windowHeight2").val(round(case2Data.windowHeightValue*10)/10);
 			case3Data.windowHeightValue = units.M2Ft(case3Data.windowHeightValue);
-			$("#windowHeight3").val(case3Data.windowHeightValue);
+			$("#windowHeight3").val(round(case3Data.windowHeightValue*10)/10);
 
 			case1Data.windowWidthValue = units.M2Ft(case1Data.windowWidthValue);
-			$("#windowWidth").val(case1Data.windowWidthValue);
+			$("#windowWidth").val(round(case1Data.windowWidthValue*10)/10);
 			case2Data.windowWidthValue = units.M2Ft(case2Data.windowWidthValue);
-			$("#windowWidth2").val(case2Data.windowWidthValue);
+			$("#windowWidth2").val(round(case2Data.windowWidthValue*10)/10);
 			case3Data.windowWidthValue = units.M2Ft(case3Data.windowWidthValue);
-			$("#windowWidth3").val(case3Data.windowWidthValue);
+			$("#windowWidth3").val(round(case3Data.windowWidthValue*10)/10);
 
 			case1Data.sillHeightValue = units.M2Ft(case1Data.sillHeightValue);
-			$("#sill").val(case1Data.sillHeightValue);
+			$("#sill").val(round(case1Data.sillHeightValue*10)/10);
 			case2Data.sillHeightValue = units.M2Ft(case2Data.sillHeightValue);
-			$("#sill2").val(case2Data.sillHeightValue);
+			$("#sill2").val(round(case2Data.sillHeightValue*10)/10);
 			case3Data.sillHeightValue = units.M2Ft(case3Data.sillHeightValue);
-			$("#sill3").val(case3Data.sillHeightValue);
+			$("#sill3").val(round(case3Data.sillHeightValue*10)/10);
 
 			case1Data.distanceWindows = units.M2Ft(case1Data.distanceWindows);
-			$("#distWindow").val(case1Data.distanceWindows);
+			$("#distWindow").val(round(case1Data.distanceWindows*10)/10);
 			case2Data.distanceWindows = units.M2Ft(case2Data.distanceWindows);
-			$("#distWindow2").val(case2Data.distanceWindows);
+			$("#distWindow2").val(round(case2Data.distanceWindows*10)/10);
 			case3Data.distanceWindows = units.M2Ft(case3Data.distanceWindows);
-			$("#distWindow3").val(case3Data.distanceWindows);
+			$("#distWindow3").val(round(case3Data.distanceWindows*10)/10);
 
 			case1Data.uvalueValue = units.uSI2uIP(case1Data.uvalueValue);
-			$("#uvalue").val(case1Data.uvalueValue);
+			$("#uvalue").val(round(case1Data.uvalueValue*100)/100);
 			case2Data.uvalueValue = units.uSI2uIP(case2Data.uvalueValue);
-			$("#uvalue2").val(case2Data.uvalueValue);
+			$("#uvalue2").val(round(case2Data.uvalueValue*100)/100);
 			case3Data.uvalueValue = units.uSI2uIP(case3Data.uvalueValue);
-			$("#uvalue3").val(case3Data.uvalueValue);
+			$("#uvalue3").val(round(case3Data.uvalueValue*100)/100);
 
 			case1Data.outdoorTempValue = units.C2F(case1Data.outdoorTempValue);
-			$("#outdoortemp").val(case1Data.outdoorTempValue);
+			$("#outdoortemp").val(round(case1Data.outdoorTempValue));
 			case2Data.outdoorTempValue = units.C2F(case2Data.outdoorTempValue);
-			$("#outdoortemp2").val(case2Data.outdoorTempValue);
+			$("#outdoortemp2").val(round(case2Data.outdoorTempValue));
 			case3Data.outdoorTempValue = units.C2F(case3Data.outdoorTempValue);
-			$("#outdoortemp3").val(case3Data.outdoorTempValue);
+			$("#outdoortemp3").val(round(case3Data.outdoorTempValue));
 
 			case1Data.airtempValue = units.C2F(case1Data.airtempValue);
-			$("#airtemp").val(case1Data.airtempValue);
+			$("#airtemp").val(round(case1Data.airtempValue));
 			case2Data.airtempValue = units.C2F(case2Data.airtempValue);
-			$("#airtemp2").val(case2Data.airtempValue);
+			$("#airtemp2").val(round(case2Data.airtempValue));
 			case3Data.airtempValue = units.C2F(case3Data.airtempValue);
-			$("#airtemp3").val(case3Data.airtempValue);
+			$("#airtemp3").val(round(case3Data.airtempValue));
 
 			rvalueValue = units.rSI2rIP(rvalueValue);
-			$("#rvalue").val(rvalueValue);
+			$("#rvalue").val(round(rvalueValue*100)/100);
 
 			airspeedValue = units.mps2fpm(airspeedValue);
-			$("#airspeed").val(airspeedValue);
+			$("#airspeed").val(round(airspeedValue*10)/10);
 
 			occDistFromFacade = units.M2Ft(occDistFromFacade);
 			$("#distFromFacade").val(occDistFromFacade);
@@ -1007,73 +1007,73 @@ render.makeGraph = function () {
 			updateOccupantImageLocation("#occupantImage3", "#occupantDist3", case3Data);
 
 			case1Data.ceilingHeightValue = units.Ft2M(case1Data.ceilingHeightValue);
-			$("#ceiling").val(case1Data.ceilingHeightValue);
+			$("#ceiling").val(round(case1Data.ceilingHeightValue*100)/100);
 			case2Data.ceilingHeightValue = units.Ft2M(case2Data.ceilingHeightValue);
-			$("#ceiling2").val(case2Data.ceilingHeightValue);
+			$("#ceiling2").val(round(case2Data.ceilingHeightValue*100)/100);
 			case3Data.ceilingHeightValue = units.Ft2M(case3Data.ceilingHeightValue);
-			$("#ceiling3").val(case3Data.ceilingHeightValue);
+			$("#ceiling3").val(round(case3Data.ceilingHeightValue*100)/100);
 
 			case1Data.wallLen = units.Ft2M(case1Data.wallLen);
-			$("#wallWidth").val(case1Data.wallLen);
+			$("#wallWidth").val(round(case1Data.wallLen*100)/100);
 			case2Data.wallLen = units.Ft2M(case2Data.wallLen);
-			$("#wallWidth2").val(case2Data.wallLen);
+			$("#wallWidth2").val(round(case2Data.wallLen*100)/100);
 			case3Data.wallLen = units.Ft2M(case3Data.wallLen);
-			$("#wallWidth3").val(case3Data.wallLen);
+			$("#wallWidth3").val(round(case3Data.wallLen*100)/100);
 
 			case1Data.windowHeightValue = units.Ft2M(case1Data.windowHeightValue);
-			$("#windowHeight").val(case1Data.windowHeightValue);
+			$("#windowHeight").val(round(case1Data.windowHeightValue*100)/100);
 			case2Data.windowHeightValue = units.Ft2M(case2Data.windowHeightValue);
-			$("#windowHeight2").val(case2Data.windowHeightValue);
+			$("#windowHeight2").val(round(case2Data.windowHeightValue*100)/100);
 			case3Data.windowHeightValue = units.Ft2M(case3Data.windowHeightValue);
-			$("#windowHeight3").val(case3Data.windowHeightValue);
+			$("#windowHeight3").val(round(case3Data.windowHeightValue*100)/100);
 
 			case1Data.windowWidthValue = units.Ft2M(case1Data.windowWidthValue);
-			$("#windowWidth").val(case1Data.windowWidthValue);
+			$("#windowWidth").val(round(case1Data.windowWidthValue*100)/100);
 			case2Data.windowWidthValue = units.Ft2M(case2Data.windowWidthValue);
-			$("#windowWidth2").val(case2Data.windowWidthValue);
+			$("#windowWidth2").val(round(case2Data.windowWidthValue*100)/100);
 			case3Data.windowWidthValue = units.Ft2M(case3Data.windowWidthValue);
-			$("#windowWidth3").val(case3Data.windowWidthValue);
+			$("#windowWidth3").val(round(case3Data.windowWidthValue*100)/100);
 
 			case1Data.sillHeightValue = units.Ft2M(case1Data.sillHeightValue);
-			$("#sill").val(case1Data.sillHeightValue);
+			$("#sill").val(round(case1Data.sillHeightValue*100)/100);
 			case2Data.sillHeightValue = units.Ft2M(case2Data.sillHeightValue);
-			$("#sill2").val(case2Data.sillHeightValue);
+			$("#sill2").val(round(case2Data.sillHeightValue*100)/100);
 			case3Data.sillHeightValue = units.Ft2M(case3Data.sillHeightValue);
-			$("#sill3").val(case3Data.sillHeightValue);
+			$("#sill3").val(round(case3Data.sillHeightValue*100)/100);
 
 			case1Data.distanceWindows = units.Ft2M(case1Data.distanceWindows);
-			$("#distWindow").val(case1Data.distanceWindows);
+			$("#distWindow").val(round(case1Data.distanceWindows*100)/100);
 			case2Data.distanceWindows = units.Ft2M(case2Data.distanceWindows);
-			$("#distWindow2").val(case2Data.distanceWindows);
+			$("#distWindow2").val(round(case2Data.distanceWindows*100)/100);
 			case3Data.distanceWindows = units.Ft2M(case3Data.distanceWindows);
-			$("#distWindow3").val(case3Data.distanceWindows);
+			$("#distWindow3").val(round(case3Data.distanceWindows*100)/100);
 
 			case1Data.uvalueValue = units.uIP2uSI(case1Data.uvalueValue);
-			$("#uvalue").val(case1Data.uvalueValue);
+			$("#uvalue").val(round(case1Data.uvalueValue*100)/100);
 			case2Data.uvalueValue = units.uIP2uSI(case2Data.uvalueValue);
-			$("#uvalue2").val(case2Data.uvalueValue);
+			$("#uvalue2").val(round(case2Data.uvalueValue*100)/100);
 			case3Data.uvalueValue = units.uIP2uSI(case3Data.uvalueValue);
-			$("#uvalue3").val(case3Data.uvalueValue);
+			$("#uvalue3").val(round(case3Data.uvalueValue*100)/100);
 
 			case1Data.outdoorTempValue = units.F2C(case1Data.outdoorTempValue);
-			$("#outdoortemp").val(case1Data.outdoorTempValue);
+			$("#outdoortemp").val(round(case1Data.outdoorTempValue));
 			case2Data.outdoorTempValue = units.F2C(case2Data.outdoorTempValue);
-			$("#outdoortemp2").val(case2Data.outdoorTempValue);
+			$("#outdoortemp2").val(round(case2Data.outdoorTempValue));
 			case3Data.outdoorTempValue = units.F2C(case3Data.outdoorTempValue);
-			$("#outdoortemp3").val(case3Data.outdoorTempValue);
+			$("#outdoortemp3").val(round(case3Data.outdoorTempValue));
 
 			case1Data.airtempValue = units.F2C(case1Data.airtempValue);
-			$("#airtemp").val(case1Data.airtempValue);
+			$("#airtemp").val(round(case1Data.airtempValue));
 			case2Data.airtempValue = units.F2C(case2Data.airtempValue);
-			$("#airtemp2").val(case2Data.airtempValue);
+			$("#airtemp2").val(round(case2Data.airtempValue));
 			case3Data.airtempValue = units.F2C(case3Data.airtempValue);
-			$("#airtemp3").val(case3Data.airtempValue);
+			$("#airtemp3").val(round(case3Data.airtempValue));
 
 			rvalueValue = units.rIP2rSI(rvalueValue);
-			$("#rvalue").val(rvalueValue);
+			$("#rvalue").val(round(rvalueValue*100)/100);
 
 			airspeedValue = units.fpm2mps(airspeedValue);
-			$("#airspeed").val(airspeedValue);
+			$("#airspeed").val(round(airspeedValue*100)/100);
 
 			occDistFromFacade = units.Ft2M(occDistFromFacade);
 			$("#distFromFacade").val(occDistFromFacade);
@@ -2201,11 +2201,13 @@ render.makeGraph = function () {
 			glzWidth = newGlzWidth;
 			glzHeight = newGlzHeight;
 
+			occPointData = newOccLocData;
+
 			checkCondensation(newCondensation, allData2.condensation, allData3.condensation);
 
 			updateGraphData(newDataset, newOccLocData, graphPoints, ".connectLine", ".occdot1");
 
-			occPointData = newOccLocData;
+			
 
 		}
 
@@ -2220,11 +2222,13 @@ render.makeGraph = function () {
 			glzWidthCase2 = newGlzWidth;
 			glzHeightCase2 = newGlzHeight;
 
+			occPointData2 = newOccLocData;
+
 			checkCondensation(allData.condensation, newCondensation, allData3.condensation);
 
 			updateGraphData(newDataset, newOccLocData, graphCase2Points, ".connectLine2", ".occdot2");
 
-			occPointData2 = newOccLocData;
+			
 		}
 
 		else if (object == case3Data) {
@@ -2238,11 +2242,13 @@ render.makeGraph = function () {
 			glzWidthCase3 = newGlzWidth;
 			glzHeightCase3 = newGlzHeight;
 
+			occPointData3 = newOccLocData;
+
 			checkCondensation(allData.condensation, allData2.condensation, newCondensation);
 
 			updateGraphData(newDataset, newOccLocData, graphCase3Points, ".connectLine3", ".occdot3");
 
-			occPointData3 = newOccLocData;
+			
 		}
 
 		autocalcUValues();
@@ -2310,6 +2316,7 @@ render.makeGraph = function () {
 	function updateGraphData(upDataset, upOccupantPoint, dotSelector, lineSelector, occSelector) {
 
 		defineScales();
+
 
 		//update graph with revised data
 		dotSelector.data(upDataset)

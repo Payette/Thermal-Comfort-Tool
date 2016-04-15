@@ -1,4 +1,3 @@
-
 function createURL() {
 
 	// case visibility

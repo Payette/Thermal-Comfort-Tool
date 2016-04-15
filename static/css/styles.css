@@ -99,14 +99,6 @@ body {
 	margin: 0;
 }
 
-
-
-
-
-
-
-
-
 #thresholdTooltip h1 img#icon, #tooltip h1 img#icon {
 	display: block;
 	float: left;
@@ -115,7 +107,6 @@ body {
 	margin: 0px 3px 0 0;
 	padding: 0;
 }
-
 
 
 
@@ -219,14 +210,16 @@ rect.blue {
 
 
 #sliderWrapper, #sliderWrapper2, #sliderWrapper3 {
-	height: 10px;
+	height: 15px;
 	float: left;
 	position: relative;
+	overflow: visible;
 }
 
 .occSlider {
-	width: 190px;
-	float: right;
+	width: 193px;
+	height: 20px;
+	float: left;
 }
 
 #ppd, #distFromFacade {
@@ -234,6 +227,7 @@ rect.blue {
 	width: 75%;
 	float: left;
 	margin: 0;
+	padding-top: 0;
 }
 
 #ppd p {
@@ -264,28 +258,69 @@ rect.blue {
 
 
 
-#occupantDist, #occupantDist2, #occupantDist3 {
+input[type=range]#occupantDist, input[type=range]#occupantDist2, input[type=range]#occupantDist3 {
+	-moz-appearance: none;
+	-ms-appearance: none;
+	-webkit-appearance: none;
 	margin: 0;
 	padding: 0;
 	border: 0;
 	position: absolute;
 	width: 100%;
-	top: -3px;
+}
+
+input[type=range]:focus {
+  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+input[type=range]#occupantDist::-ms-track, input[type=range]#occupantDist2::-ms-track, input[type=range]#occupantDist3::-ms-track, input[type=range]#ppd::-ms-track, input[type=range]#distFromFacade::-ms-track {
+	-ms-appearance: none;
+	height: 3px;
+	background-color: #d5d5d5;
+	margin-right: 0;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border:0;
+	color: transparent;
+}
+
+input[type=range]#ppd::-ms-fill-lower {
+	background: rgb(147,229,0);
+}
+
+input[type=range]#distFromFacade::-ms-fill-lower, input[type=range]#occupantDist::-ms-fill-lower, input[type=range]#occupantDist2::-ms-fill-lower, input[type=range]#occupantDist3::-ms-fill-lower {
+	background: #d5d5d5;
 }
 
 
 #occupantDist::-moz-range-track, #occupantDist2::-moz-range-track, #occupantDist3::-moz-range-track, #ppd::-moz-range-track, #distFromFacade::-moz-range-track {
 	-moz-appearance: none;
-	height: 2px;
+	height: 3px;
 	background-color: #d5d5d5;
 	margin-right: 3px;
 }
+
+input[type=range]#ppd::-moz-range-progress{
+	background-color: rgb(147,229,0);
+}
+
+
 #occupantDist::-webkit-slider-runnable-track, #occupantDist2::-webkit-slider-runnable-track, #occupantDist3::-webkit-slider-runnable-track, #ppd::-webkit-slider-runnable-track, #distFromFacade::-webkit-slider-runnable-track {
 	-webkit-appearance: none;
-	height: 2px;
+	height: 3px;
 	background-color: #d5d5d5;
 	margin-right: 3px;
 }
+
+
+#occupantDist::-ms-thumb, #occupantDist2::-ms-thumb, #occupantDist3::-ms-thumb, #ppd::-ms-thumb, #distFromFacade::-ms-thumb {
+    background-color: #FFF;
+    border: 3px solid rgb(150,150,150);
+    border-radius: 5px;
+    height: 5px;
+    width: 5px;
+}
+
 
 #occupantDist::-moz-range-thumb, #occupantDist2::-moz-range-thumb, #occupantDist3::-moz-range-thumb, #ppd::-moz-range-thumb, #distFromFacade::-moz-range-thumb {
 	-moz-appearance: none;
@@ -392,7 +427,7 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 	position: relative;
 	z-index: 0;
 
-	line-height: 1em;
+	/*line-height: 1em;*/
 }
 
 #occupantSliders {
