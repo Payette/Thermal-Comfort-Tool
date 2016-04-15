@@ -6,6 +6,8 @@ var render = render || {}
 render.makeGraph = function () {
 
 
+
+
 	var maxContainerWidth = 550; // based on Payette website layout
 	var color1 = "rgb(0,160,221)";
 	var color2 = "rgb(248,151,29)";
@@ -724,6 +726,7 @@ render.makeGraph = function () {
 
 
 
+
     /* ------ HIDE/SHOW CASES / ALERTS ------ */
 
     $("#caseSelection #case2Label").on("click", function() {
@@ -827,14 +830,23 @@ render.makeGraph = function () {
     	$("#humidity, #humidity2, #humidity3").css("color", "black");
     })
 
-	// remove uvalue alert on click
-    $("#uvaluePop img.close").on("click", function() {
-    	$("#uvaluePop").css("display","none");
-    	$("#uvalue, #uvalue2, #uvalue3, #airtemp, #airtemp2, #airtemp3, #clothing").css("color", "black");
-    })
 
+	// expand options
+    $(".expandOptions").on("click", function(){
 
-    
+    	if ($(".expandOptions").hasClass("expanded")) {
+    		$(".expandOptions").removeClass("expanded")
+    		$("span#expand").css("backgroundPosition", "0 0");
+			$(".hideContent").slideUp(400, "swing");
+    	} else {
+    		$(".expandOptions").addClass("expanded");
+    		$("span#expand").css("backgroundPosition", "0 -12px");
+			$(".hideContent").slideDown(400, "swing");
+    	}
+	
+	})
+	
+
 
 
 
@@ -1137,14 +1149,61 @@ render.makeGraph = function () {
 
 	/* ------ DETECT CHANGES TO INPUT VALUES ------ */
 	// universal changes
-	$("#distFromFacade").change(function(event) {
+
+	// occupant threshold sliders - to show value change as slider moves
+	if (Modernizr.oninput) {
+
+	} else { //for IE support
+	  	// not-supported
+	  	$("#distFromFacade").on("change", function(event) {
+			occDistFromFacade = $(this).val();
+
+			$("#distFromFacade").val(occDistFromFacade);
+			if (unitSys == "IP") {
+				$("#distOutput").text(occDistFromFacade + " ft");
+			} else {
+				$("#distOutput").text(occDistFromFacade + " m");
+			}
+
+			updateData(case1Data);
+			updateData(case2Data);
+			updateData(case3Data);
+
+			thresholdDataText();
+			d3.selectAll(".occupantLine").remove();
+			occupantDistanceRefLine();
+		})
+		$("#ppd").on("change", function(event) {
+			if ($(this).val() <= 4) {
+				ppdValue = 5;
+				$("#ppd").val(5);
+				$("#ppdOutput").text("5%");
+			}
+			else if ($(this).val() >30) {
+				ppdValue = 30;
+				$("#ppd").val(30);
+				$("#ppdOutput").text("30%");
+			}
+			else {
+				ppdValue = $(this).val();
+				$("#ppd").val(ppdValue);
+				$("#ppdOutput").text(ppdValue + "%");
+			}
+			// Update target PPD threshold line
+			updatePPDThreshold(ppdValue);
+			thresholdDataText()
+		});
+	}
+
+	// does not work in IE, see Modernizer code above
+	$("#distFromFacade").on("input", function(event) {
 		occDistFromFacade = $(this).val();
 
 		$("#distFromFacade").val(occDistFromFacade);
 		if (unitSys == "IP") {
-			$("#distOutput").val(occDistFromFacade + " ft");
+			$("#distOutput").text(occDistFromFacade + " ft");
 		} else {
-			$("#distOutput").val(occDistFromFacade + " m");
+			$("#distOutput").text(occDistFromFacade + " m");
 		}
 
 		updateData(case1Data);
@@ -1154,29 +1213,33 @@ render.makeGraph = function () {
 		thresholdDataText();
 		d3.selectAll(".occupantLine").remove();
 		occupantDistanceRefLine();
+	})
 
-	});
-
-	$("#ppd").change(function(event) {
+	// does not work in IE, see Modernizer code above
+	$("#ppd").on("input", function(event) {
 		if ($(this).val() <= 4) {
 			ppdValue = 5;
 			$("#ppd").val(5);
-			$("#ppdOutput").val("5%");
+			$("#ppdOutput").text("5%");
 		}
 		else if ($(this).val() >30) {
 			ppdValue = 30;
 			$("#ppd").val(30);
-			$("#ppdOutput").val("30%");
+			$("#ppdOutput").text("30%");
 		}
 		else {
 			ppdValue = $(this).val();
 			$("#ppd").val(ppdValue);
-			$("#ppdOutput").val(ppdValue + "%");
+			$("#ppdOutput").text(ppdValue + "%");
 		}
 		// Update target PPD threshold line
 		updatePPDThreshold(ppdValue);
 		thresholdDataText()
 	});
+
+
+
+	
 
 
 	$("#windowWidthCheck").change(function(event) {
@@ -2283,29 +2346,48 @@ render.makeGraph = function () {
 
 		if (case1Data.calcUVal <= 0.01) {
 			$("#calcuvalue").css("color", "#f72734");
+			$("#calcuvalue").val("*");
+			$("#calcuvalue").css("text-align", "center");
+			$("#calcuvalue").css("font-weight", "700");
+
 		} else {
-			$("#calcuvalue").css("color", "#d5d5d5");
+			$("#calcuvalue").css("color", "#ADADAD");
+			$("#calcuvalue").val(case1Data.calcUVal);
+			$("#calcuvalue").css("text-align", "right");
+			$("#calcuvalue").css("font-weight", "300");
 		}	
 
 		if (case2Data.calcUVal <= 0.01) {
 			$("#calcuvalue2").css("color", "#f72734");
+			$("#calcuvalue2").val("*");
+			$("#calcuvalue").css("text-align", "center");
+			$("#calcuvalue").css("font-weight", "700");
 		} else {
-			$("#calcuvalue2").css("color", "#d5d5d5");
+			$("#calcuvalue2").css("color", "#ADADAD");
+			$("#calcuvalue").val(case2Data.calcUVal);
+			$("#calcuvalue").css("text-align", "right");
+			$("#calcuvalue").css("font-weight", "300");
 		}
 
 		if (case3Data.calcUVal <= 0.01) {
 			$("#calcuvalue3").css("color", "#f72734");
+			$("#calcuvalue3").val("*");
+			$("#calcuvalue").css("text-align", "center");
+			$("#calcuvalue").css("font-weight", "700");
 		} else {
-			$("#calcuvalue3").css("color", "#d5d5d5");
+			$("#calcuvalue3").css("color", "#ADADAD");
+			$("#calcuvalue").val(case3Data.calcUVal);
+			$("#calcuvalue").css("text-align", "right");
+			$("#calcuvalue").css("font-weight", "300");
 		}
 
 		if (case1Data.calcUVal <= 0.01 || case2Data.calcUVal <= 0.01 || case3Data.calcUVal <= 0.01) {
 			$("#calcUValQuestion .bigfoot-footnote__button").css("background-color", "#f72734").css("color", "#fff");
-
-			/*Warning! Thermal comfort cannot be achieved given the current glazing geometry and space/occupancy conditions, regardless of glazing performance. This is commonly due to low indoor air temperatures or low clothing values.*/
-			$(".bigfoot-footnote__content").css("background", "#f72734");
+			$("#inputs label#calcUValQuestion.grey").css("color", "#f72734");
+			
 		} else {
 			$("#calcUValQuestion .bigfoot-footnote__button").css("background-color", "rgba(110, 110, 110, 0.2)").css("color", "#777");
+			$("#inputs label#calcUValQuestion.grey").css("color", "#ADADAD");
 		}
 
 	}
@@ -2898,7 +2980,7 @@ render.makeGraph = function () {
 
 
 
-
+/*
 	function addDimensions(glazingData, glazingWidth, glazingHeight) {
 
 		//get position of left-most window
@@ -3027,7 +3109,7 @@ render.makeGraph = function () {
 			.attr("marker-start", "url(#arrowhead)")
 			.attr("marker-end", "url(#arrowhead)");
 	}
-
+*/
 
 
 

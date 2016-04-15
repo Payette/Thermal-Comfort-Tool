@@ -234,13 +234,14 @@ rect.blue {
 	margin: 0;
 }
 
-.occSlider output {
+.occSlider p {
 	float: right;
 	display: inline-block;
 
 	font-weight: 300;
 	font-size: 12px;
 	color: #777;
+	margin: 0;
 }
 
 
@@ -598,31 +599,6 @@ div.inputWrapperRight span {
 
 
 
-#uValButton {
-	width: 100%;
-	margin: 4px 0 4px 0px;
-}
-
-#inputs input[type=button]#calcUValue {
-	color: #ADADAD;
-	width: 48px;
-	padding: 3px 2px;
-	height: 20px;
-	margin: 0;
-	border-radius: 10px;
-	border: 1px solid #ADADAD;
-	background-color: #fff;
-	cursor: pointer;
-	text-align: center;
-}
-
-#inputs input[type=button]#calcUValue:hover {
-	color: #fff;
-	background-color: #777;
-	border-color: #777;
-}
-
-
 
 
 
@@ -897,6 +873,26 @@ div#units, div#share {
 }
 
 
+.expandOptions {
+	margin: 0;
+}
+
+span#expand {
+	display: inline-block;
+	height: 12px;
+	width: 12px;
+	margin: 2px 5px 0 0;
+	background-image: url(../../static/images/expand-small.png);
+	overflow: hidden;
+	position: relative;
+	top: 1px;
+}
+
+.hideContent {
+	display: none;
+}
+
+
 
 
 div#URLpop {
@@ -989,7 +985,6 @@ div#URLpop textarea {
 	font-family: "museo-sans", sans-serif;
 	font-size: 12px;
 }
-
 
 
 
