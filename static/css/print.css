@@ -70,7 +70,7 @@ body {
 	width: 100%;
 }
 
-#inputs label {
+#inputs label, #inputs label.indent {
 	color: black;
 	width: 55%;
 	float: left;
@@ -82,10 +82,12 @@ body {
 	font-size: 16px;
 }
 
-#inputs label.indent {
-	width: 30%;
-	padding-left: 0;
+#inputs label.inactive {
+	color: #b9b9b9;
+	font-style: italic;
+	font-weight: 100;
 }
+
 
 
 #inputs div.inputWrapperLeft, #inputs div.inputWrapperCenter, #inputs div.inputWrapperRight {
@@ -121,6 +123,18 @@ body {
 	background-color: #fff;
 	padding: 1px 2px 0px 0px;
 }
+
+
+#inputs div.inputWrapperCenter hr, #inputs div.inputWrapperRight hr {
+	width: 20%;
+	margin: 7px auto;
+	height: 1px;
+	background-color: #b9b9b9;
+}
+
+/*#inputs div.inputWrapperRight hr {
+	margin: 7px 0 7px 25px;
+}*/
 
 
 
@@ -419,15 +433,12 @@ text.axislabel {
 }
 
 
-.keepTogether span.discomfortIcon {
+.keepTogether img.discomfortIcon {
 	display: block;
 	float: left;
 	width: 12px;
 	height: 12px;
-	margin: 0px 5px 0 0;
-	background-size: 10px 10px;
-	background-position: left bottom;
-	background-repeat: no-repeat;
+	margin: 0px 10px 0 0;
 }
 
 .keepTogether ul {
@@ -435,14 +446,6 @@ text.axislabel {
 	padding: 0 0 0 10px;
 	font-family: "museo-sans", sans-serif;
 	font-size: 16px;
-}
-
-.blackTri {
-	background-image: url(../../static/images/triangle-black.png);
-}
-
-.blackCirc {
-	background-image: url(../../static/images/circle-black.png);
 }
 
 

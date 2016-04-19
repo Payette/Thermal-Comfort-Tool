@@ -19,6 +19,8 @@
 
 	<script type="text/javascript" charset="utf-8" src="static/js/bigfoot.min.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/d3/d3.v3.js"></script>
+	<script type="text/javascript" charset="utf-8" src="static/js/modernizr-custom.js"></script>
+
 	<script type="text/javascript" charset="utf-8" src="static/js/geo.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/PPDCalc.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/UValCalc.js"></script>
@@ -29,9 +31,9 @@
 	<script type="text/javascript" charset="utf-8" src="static/js/urlobject.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/shortenURL.js"></script>
 
+
 	<!-- Make Chart -->
 	<script type="text/javascript" src="static/js/render.js"></script>
-
 
 
 	<script type="text/javascript">
@@ -61,14 +63,10 @@
 						var urlToShorten = $("#URLpop textarea").val();
 
 						shorten(urlToShorten, function(response) { 
-							/*console.log(response.data.url);*/
 
+							// replace long url with shortened url
 							$("#URLpop textarea").empty();
 							$("#URLpop textarea").append(response.data.url);
-
-							/*$("#URLpop textarea").focus(function() {
-								$("#URLpop textarea").select();
-							});*/
 
 				        }); 
 					}},
@@ -81,7 +79,6 @@
 				width: 450,
 			});
 		});
-
 
 
 
@@ -106,7 +103,7 @@
 				<div id="case1Chart"></div>
 				<h1 id="case1Heading" class="facadeHeading case1Text">Case 1</h1>
  				<div id="sliderWrapper">
-					<input type="range" name="occupantDist" id="occupantDist" min="0" max="20" value="0"/>
+					<input type="range" name="occupantDist" id="occupantDist" min="0" max="20" value="0" autocomplete="off"/>
 					<output for="occupantDist" id="occupantImage"/></output>
 				</div>
 			</div>
@@ -114,7 +111,7 @@
 				<div id="case2Chart"></div>
 				<h1 id="case2Heading" class="facadeHeading greyText">Case 2</h1>
 	 			<div id="sliderWrapper2">
-					<input type="range" name="occupantDist2" id="occupantDist2" min="0" max="20" value="0"/>
+					<input type="range" name="occupantDist2" id="occupantDist2" min="0" max="20" value="0" autocomplete="off"/>
 					<output for="occupantDist2" id="occupantImage2"/></output>
 				</div>
 			</div>
@@ -122,7 +119,7 @@
 				<div id="case3Chart"></div>
 				<h1 id="case3Heading" class="facadeHeading greyText">Case 3</h1>
  			<div id="sliderWrapper3">
-					<input type="range" name="occupantDist3" id="occupantDist3" min="0" max="20" value="0"/>
+					<input type="range" name="occupantDist3" id="occupantDist3" min="0" max="20" value="0" autocomplete="off"/>
 					<output for="occupantDist3" id="occupantImage3"/></output>
 				</div>
 			</div>
@@ -147,10 +144,10 @@
 					<hr> -->
 
 					<label for="distFromFacade">Occupant Distance From Fa&ccedil;ade (<span class="units IP">ft</span>)<sup id="fnref:19"><a href="#fn:19" rel="footnote">?</a></sup></label>
-					<div class="occSlider"><input type="range" name="distFromFacade" id="distFromFacade" value="3" min="1" max="12" step="0.25" class="case1"><output id="distOutput" for="distFromFacade">3 <span class="units IP">ft</span></output></div>
+					<div class="occSlider"><input type="range" name="distFromFacade" id="distFromFacade" value="3" min="1" max="12" step="0.25" class="case1"><p id="distOutput">3 <span class="units IP">ft</span></p></div>
 
 					<label for="ppd">Acceptable Percentage of People Dissatisfied from Cold (%)<sup id="fnref:20"><a href="#fn:20" rel="footnote">?</a></sup></label>
-					<div class="occSlider"><input type="range" name="ppd" id="ppd" value="10" min="5" max="30" class="case1"><output id="ppdOutput" for="ppd">10%</output></div><br>
+					<div class="occSlider"><input type="range" name="ppd" id="ppd" value="10" min="5" max="30" class="case1"><p id="ppdOutput">10%</p></div><br>
 
 				</fieldset>
 
@@ -158,10 +155,9 @@
 		</div>
 
 		<div id="explanation">
-			<!-- <h1>Understanding Discomfort</h1> -->
 			<div id="col">
 				<div class="keepTogether">
-				<h2><span class="discomfortIcon blackTri"></span>Downdraft Discomfort</h2>
+				<h2><img class="discomfortIcon" src="static/images/triangle-black.png">Downdraft Discomfort</h2>
 				<p>Cold convective air currents, formed by warm room air hitting the cold window surface, create discomfort at the occupant’s feet and ankles. The strength of these currents depends on the height of the window pane, as well as the interior temperature of the glass.</p>
 				<p><b>To minimize downdraft discomfort, try:</b>
 				<ul>
@@ -173,7 +169,7 @@
 				</div>
 
 				<div class="keepTogether">
-				<h2><span class="discomfortIcon blackCirc"></span>Radiant Discomfort</h2>
+				<h2><img class="discomfortIcon" src="static/images/circle-black.png">Radiant Discomfort</h2>
 				<p>Cold interior glass surfaces affect the mean radiant temperature of occupants, and in turn make them feel cold. This discomfort depends on how much the occupant “sees” of the glass, how cold the interior glass surface is and the emissivity of the glass. If the glass has a room-side low-e coating the radiant discomfort will be greatly reduced.</p>
 				<p><b>To minimize radiant discomfort, try:</b>
 				<ul>
@@ -186,7 +182,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> <!-- end of LEFT -->
 
 	<div id="URLpop">
 		<textarea>the link</textarea>
@@ -208,7 +204,7 @@
 			<div id="share">
 				<h2>Share</h2>
 				<input type="button" name="PDF" id="PDF" value="Save as PDF" class="optionButton unselected">
-				<input type="button" name="URL" id="URL" value="Copy URL Link" class="optionButton unselected">
+				<input type="button" name="URL" id="URL" value="Copy URL" class="optionButton unselected">
 				<div style="clear:both;"></div>
 			</div>
 		</div>
@@ -230,9 +226,9 @@
 			<hr>
 
 			<label for="ceiling">Ceiling Height (<span class="units IP">ft</span>)<sup id="fnref:1"><a href="#fn:1" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="ceiling" id="ceiling" min="1" max="100"  value="12" class="case1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="ceiling2" id="ceiling2" min="1" max="100"  value="12" class="case2 unselected"></div>
-			<div class="inputWrapperRight"><input type="text" name="ceiling3" id="ceiling3" min="1" max="100"  value="12" class="case3 unselected"></div><br>
+			<div class="inputWrapperLeft"><input type="text" name="ceiling" id="ceiling" min="1" max="100"  value="12" step="0.5" class="case1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="ceiling2" id="ceiling2" min="1" max="100"  value="12" step="0.5" class="case2 unselected"></div>
+			<div class="inputWrapperRight"><input type="text" name="ceiling3" id="ceiling3" min="1" max="100"  value="12" step="0.5" class="case3 unselected"></div><br>
 
 			<label for="wallWidth">Room Length (<span class="units IP">ft</span>)<sup id="fnref:2"><a href="#fn:2" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="wallWidth" id="wallWidth" value="18" step="1" class="case1"></div>
@@ -280,9 +276,9 @@
 			<div class="inputWrapperRight"><input type="text" name="uvalue3" id="uvalue3" value="0.25" step="0.01" class="case3 unselected"></div><br>
 
 			<label class="grey" id="calcUValQuestion">What U-Value will meet the target PPD?<sup id="fnref:9" class="uValAlert"><a href="#fn:9" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="calcuvalue" id="calcuvalue" value="0.266" class="inactive case1" ></div>
-			<div class="inputWrapperCenter"><input type="text" name="calcuvaluel2" id="calcuvalue2" value="0.266" class="inactive case2 unselected"></div>
-			<div class="inputWrapperRight"><input type="text" name="calcuvalue3" id="calcuvalue3" value="0.266" class="inactive case3 unselected"></div><br>
+			<div class="inputWrapperLeft"><input type="text" name="calcuvalue" id="calcuvalue" value="0.266" class="inactive case1"  disabled></div>
+			<div class="inputWrapperCenter"><input type="text" name="calcuvaluel2" id="calcuvalue2" value="0.266" class="inactive case2 unselected"  disabled></div>
+			<div class="inputWrapperRight"><input type="text" name="calcuvalue3" id="calcuvalue3" value="0.266" class="inactive case3 unselected"  disabled></div><br>
 		</fieldset>
 
 
@@ -314,49 +310,47 @@
 
 
 		<fieldset class="inputgroup">
-			<legend class="heading">Advanced Options</legend>
+			<legend class="heading expandOptions"><span id="expand"></span>Advanced Options</legend>
 			<hr>
-			<p class="subtext">It is recommended to use the default values for these variables unless you have an atypical building program and are very familiar with their impact on the PMV model. When comparing multiple cases, some of these values are consistent across all scenarios.</p>
+			<div class="hideContent">
+				<p class="subtext">It is recommended to use the default values for these variables unless you have an atypical building program and are very familiar with their impact on the PMV model. When comparing multiple cases, some of these values are consistent across all scenarios.</p>
 
-			<!-- <label for="radiant">Radiant Floor<sup id="fnref:9"><a href="#fn:9" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><div class="customCheckStyleCentered case1"><input type="checkbox" name="radiant" id="radiant" class="checkbox customCheck"><label for="radiant" id="radiantCheck1" class="unselected"></label></div></div>
-			<div class="inputWrapperCenter"><div class="customCheckStyleCentered case2" id="offsetMiddle"><input type="checkbox" name="radiant2" id="radiant2" class="checkbox customCheck"><label for="radiant2" id="radiantCheck2" class="unselected"></label></div></div>
-			<div class="inputWrapperRight"><div class="customCheckStyleCentered case3" id="offsetLeft"><input type="checkbox" name="radiant3" id="radiant3" class="checkbox customCheck"><label for="radiant3" id="radiantCheck3" class="unselected"></label></div></div><br> -->
+				<label for="lowECheck">Room-side Low-E Coating<sup id="fnref:13"><a href="#fn:13" rel="footnote">?</a></sup></label>
 
-			<label for="lowECheck">Room-side Low-E Coating<sup id="fnref:13"><a href="#fn:13" rel="footnote">?</a></sup></label>
+				<div class="inputWrapperLeft"><div class="customCheckStyleCentered case1"><input type="checkbox" name="lowECheckThis" id="lowECheck" class="checkbox customCheck"><label for="lowECheck" id="checkLowE1" class="unselected"></label></div></div>
 
-			<div class="inputWrapperLeft"><div class="customCheckStyleCentered case1"><input type="checkbox" name="lowECheckThis" id="lowECheck" class="checkbox customCheck"><label for="lowECheck" id="checkLowE1" class="unselected"></label></div></div>
+				<div class="inputWrapperCenter"><div class="customCheckStyleCentered case2" id="offsetMiddle"><input type="checkbox" name="lowECheck2" id="lowECheck2" class="checkbox customCheck"><label for="lowECheck2" id="checkLowE2" class="unselected unselected"></label></div></div>
 
-			<div class="inputWrapperCenter"><div class="customCheckStyleCentered case2" id="offsetMiddle"><input type="checkbox" name="lowECheck2" id="lowECheck2" class="checkbox customCheck"><label for="lowECheck2" id="checkLowE2" class="unselected unselected"></label></div></div>
+				<div class="inputWrapperRight"><div class="customCheckStyleCentered case3" id="offsetLeft"><input type="checkbox" name="lowECheck3" id="lowECheck3" class="checkbox customCheck"><label for="lowECheck3" id="checkLowE3" class="unselected unselected"></label></div></div><br>
 
-			<div class="inputWrapperRight"><div class="customCheckStyleCentered case3" id="offsetLeft"><input type="checkbox" name="lowECheck3" id="lowECheck3" class="checkbox customCheck"><label for="lowECheck3" id="checkLowE3" class="unselected unselected"></label></div></div><br>
-
-			<label for="lowE" class="inactive indent" id="lowELabel">Emissivity<sup id="fnref:14"><a href="#fn:14" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="lowE" id="lowE" value="" class="inactive case1" step="0.1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="lowE2" id="lowE2" value="" class="inactive case2 unselected" step="0.1"></div>
-			<div class="inputWrapperRight"><input type="text" name="lowE3" id="lowE3" value="" class="inactive case3 unselected" step="0.1"></div><br>
+				<label for="lowE" class="inactive indent" id="lowELabel">Emissivity<sup id="fnref:14"><a href="#fn:14" rel="footnote">?</a></sup></label>
+				<div class="inputWrapperLeft"><input type="text" name="lowE" id="lowE" value="" class="inactive case1" step="0.1"></div>
+				<div class="inputWrapperCenter"><input type="text" name="lowE2" id="lowE2" value="" class="inactive case2 unselected" step="0.1"></div>
+				<div class="inputWrapperRight"><input type="text" name="lowE3" id="lowE3" value="" class="inactive case3 unselected" step="0.1"></div><br>
 
 
-			<label for="rvalue">Wall R-Value (<span class="unitsRVal IP">hr*ft&sup2;*&deg;F/Btu</span>)<sup id="fnref:15"><a href="#fn:15" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="rvalue" id="rvalue" value="20" class="case1"></div>
-			<div class="inputWrapperCenter"><hr class="case2 unselected"></div>
-			<div class="inputWrapperRight"><hr class="case3 unselected"></div><br>
+				<label for="rvalue">Wall R-Value (<span class="unitsRVal IP">hr*ft&sup2;*&deg;F/Btu</span>)<sup id="fnref:15"><a href="#fn:15" rel="footnote">?</a></sup></label>
+				<div class="inputWrapperLeft"><input type="text" name="rvalue" id="rvalue" value="20" class="case1"></div>
+				<div class="inputWrapperCenter"><hr class="case2 unselected"></div>
+				<div class="inputWrapperRight"><hr class="case3 unselected"></div><br>
 
 
-			<label for="airspeed">Air Speed (<span class="unitsAirSpeed IP">fpm</span>)<sup id="fnref:16"><a href="#fn:16" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="airspeed" id="airspeed" value="10" class="case1"></div>
-			<div class="inputWrapperCenter"><hr class="case2 unselected"></div>
-			<div class="inputWrapperRight"><hr class="case3 unselected"></div><br>
+				<label for="airspeed">Air Speed (<span class="unitsAirSpeed IP">fpm</span>)<sup id="fnref:16"><a href="#fn:16" rel="footnote">?</a></sup></label>
+				<div class="inputWrapperLeft"><input type="text" name="airspeed" id="airspeed" value="10" step="0.5" class="case1"></div>
+				<div class="inputWrapperCenter"><hr class="case2 unselected"></div>
+				<div class="inputWrapperRight"><hr class="case3 unselected"></div><br>
 
-			<label for="clothing">Clothing (clo)<sup id="fnref:17"><a href="#fn:17" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="clothing" id="clothing" value="0.8" step="0.1" class="case1"></div>
-			<div class="inputWrapperCenter"><hr class="case2 unselected"></div>
-			<div class="inputWrapperRight"><hr class="case3 unselected"></div><br>
+				<label for="clothing">Clothing (clo)<sup id="fnref:17"><a href="#fn:17" rel="footnote">?</a></sup></label>
+				<div class="inputWrapperLeft"><input type="text" name="clothing" id="clothing" value="0.8" step="0.1" class="case1"></div>
+				<div class="inputWrapperCenter"><hr class="case2 unselected"></div>
+				<div class="inputWrapperRight"><hr class="case3 unselected"></div><br>
 
-			<label for="metabolic">Metabolic Rate (met)<sup id="fnref:18"><a href="#fn:18" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="metabolic" id="metabolic" value="1.2" step="0.1" class="case1"></div>
-			<div class="inputWrapperCenter"><hr class="case2 unselected"></div>
-			<div class="inputWrapperRight"><hr class="case3 unselected"></div><br>
+				<label for="metabolic">Metabolic Rate (met)<sup id="fnref:18"><a href="#fn:18" rel="footnote">?</a></sup></label>
+				<div class="inputWrapperLeft"><input type="text" name="metabolic" id="metabolic" value="1.2" step="0.1" class="case1"></div>
+				<div class="inputWrapperCenter"><hr class="case2 unselected"></div>
+				<div class="inputWrapperRight"><hr class="case3 unselected"></div><br>
+
+			</div>
 
 		</fieldset>
 		</form>
@@ -399,7 +393,7 @@
 	    </li>
 
 	    <li class="footnote" id="fn:9"> <!-- calculate u value -->
-	        <p>U-value required to meet the PPD threshold at the specified occupant distance from fa&ccedil;ade.<a href="#fnref:9" title="return to article"> ↩</a></p>
+	        <p>U-value required to meet the PPD threshold at the specified occupant distance from fa&ccedil;ade.<span id="uValueCalcReason"> Regardless of glazing performance, sometimes thermal comfort cannot be achieved with the given glazing geometry and space/occupancy conditions. This is commonly due to low indoor air temperatures or low clothing values.</span><a href="#fnref:9" title="return to article"> ↩</a></p>
 	    </li>
 	    
 	    <li class="footnote" id="fn:10"> <!-- outdoor temp -->
