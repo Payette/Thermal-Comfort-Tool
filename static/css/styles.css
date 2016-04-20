@@ -117,6 +117,7 @@ body {
 #facadeWrapper {
 	width: 100%
 	overflow: auto;
+	margin-bottom: 35px;
 }
 
 #case1FacadeWrapper, #case2FacadeWrapper, #case3FacadeWrapper {
