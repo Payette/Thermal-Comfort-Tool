@@ -26,6 +26,8 @@ button.bigfoot-footnote__button, button.dimHover {
   -webkit-transition-duration: 0.25s;
           transition-duration: 0.25s;
 }
+
+
 .bigfoot-footnote__button:hover, .bigfoot-footnote__button:focus {
   outline: none;
   background-color: rgba(110, 110, 110, 0.5);
@@ -225,6 +227,11 @@ button.bigfoot-footnote__button, button.dimHover {
   -webkit-font-smoothing: subpixel-antialiased;
   line-height: normal;
 }
+
+.bigfoot-footnote__content p {
+  color: #404040;
+}
+
 .bigfoot-footnote__content img {
   max-width: 100%;
 }

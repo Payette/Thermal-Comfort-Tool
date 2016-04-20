@@ -1187,7 +1187,10 @@ render.makeGraph = function () {
 			}
 			// Update target PPD threshold line
 			updatePPDThreshold(ppdValue);
-			thresholdDataText()
+			thresholdDataText();
+
+			// update calculated uvalue
+			autocalcUValues();
 		});
 	}
 
@@ -1230,7 +1233,10 @@ render.makeGraph = function () {
 		}
 		// Update target PPD threshold line
 		updatePPDThreshold(ppdValue);
-		thresholdDataText()
+		thresholdDataText();
+
+		// update calculated uvalue
+		autocalcUValues();
 	});
 
 
@@ -2335,9 +2341,9 @@ render.makeGraph = function () {
 		case3Data.calcUVal = uVal.uValFinal(fullDataCase3.wallViews[12], fullDataCase3.glzViews[12], fullDataCase3.facadeDist[12], fullDataCase3.dwnPPDFac, parseFloat(case3Data.windowHeightValue), case3Data.airtempValue, case3Data.outdoorTempValue, rvalueValue, case3Data.intLowEChecked, case3Data.intLowEEmissivity, airspeedValue, case3Data.humidityValue, metabolic, clothingValue, ppdValue);
 
 		// Update the value in the form.
-		$("#calcuvalue").val(Math.round(case1Data.calcUVal * 1000) / 1000);
-		$("#calcuvalue2").val(Math.round(case2Data.calcUVal * 1000) / 1000);
-		$("#calcuvalue3").val(Math.round(case3Data.calcUVal * 1000) / 1000);
+		$("#calcuvalue").val(Math.round(case1Data.calcUVal * 100) / 100);
+		$("#calcuvalue2").val(Math.round(case2Data.calcUVal * 100) / 100);
+		$("#calcuvalue3").val(Math.round(case3Data.calcUVal * 100) / 100);
 
 
 		if (case1Data.calcUVal <= 0.01) {
