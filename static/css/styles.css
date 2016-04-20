@@ -512,6 +512,11 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 	width: 100%;
 }
 
+#inputs hr.final {
+	margin: 10px 0 0 0;
+	height: 1px;
+}
+
 
 #inputs div.inputWrapperLeft {
 	width: 60px;
