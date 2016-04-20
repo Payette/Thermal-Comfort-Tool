@@ -830,6 +830,10 @@ render.makeGraph = function () {
     	$("#humidity, #humidity2, #humidity3").css("color", "black");
     })
 
+    $("#uvaluePop img.close").on("click", function() {
+     	$("#uvaluePop").css("display","none");
+    })
+
 
 	// expand options
     $(".expandOptions").on("click", function(){
@@ -2346,50 +2350,40 @@ render.makeGraph = function () {
 		$("#calcuvalue3").val(Math.round(case3Data.calcUVal * 100) / 100);
 
 
-		if (case1Data.calcUVal <= 0.01) {
-			$("#calcuvalue").css("color", "#f72734");
-			$("#calcuvalue").val("*");
-			$("#calcuvalue").css("text-align", "center");
-			$("#calcuvalue").css("font-weight", "700");
 
-		} else {
-			$("#calcuvalue").css("color", "#ADADAD");
-			$("#calcuvalue").val(case1Data.calcUVal);
-			$("#calcuvalue").css("text-align", "right");
-			$("#calcuvalue").css("font-weight", "300");
-		}	
-
-		if (case2Data.calcUVal <= 0.01) {
-			$("#calcuvalue2").css("color", "#f72734");
-			$("#calcuvalue2").val("*");
-			$("#calcuvalue").css("text-align", "center");
-			$("#calcuvalue").css("font-weight", "700");
-		} else {
-			$("#calcuvalue2").css("color", "#ADADAD");
-			$("#calcuvalue").val(case2Data.calcUVal);
-			$("#calcuvalue").css("text-align", "right");
-			$("#calcuvalue").css("font-weight", "300");
-		}
-
-		if (case3Data.calcUVal <= 0.01) {
-			$("#calcuvalue3").css("color", "#f72734");
-			$("#calcuvalue3").val("*");
-			$("#calcuvalue").css("text-align", "center");
-			$("#calcuvalue").css("font-weight", "700");
-		} else {
-			$("#calcuvalue3").css("color", "#ADADAD");
-			$("#calcuvalue").val(case3Data.calcUVal);
-			$("#calcuvalue").css("text-align", "right");
-			$("#calcuvalue").css("font-weight", "300");
-		}
 
 		if (case1Data.calcUVal <= 0.01 || case2Data.calcUVal <= 0.01 || case3Data.calcUVal <= 0.01) {
-			$("#calcUValQuestion .bigfoot-footnote__button").css("background-color", "#f72734").css("color", "#fff");
-			$("#inputs label#calcUValQuestion.grey").css("color", "#f72734");
-			
+			$("#uvaluePop").css("display","block");
+
+			if (case1Data.calcUVal <= 0.01) {
+				$("#calcuvalue").css("color", "#f72734");
+				/*$("#calcuvalue").val("*");
+				$("#calcuvalue").css("text-align", "center");
+				$("#calcuvalue").css("font-weight", "700");*/
+			}
+
+			if (case2Data.calcUVal <= 0.01) {
+				$("#calcuvalue2").css("color", "#f72734");
+				/*$("#calcuvalue2").val("*");
+				$("#calcuvalue2").css("text-align", "center");
+				$("#calcuvalue2").css("font-weight", "700");*/
+			}
+
+			if (case3Data.calcUVal <= 0.01) {
+				$("#calcuvalue3").css("color", "#f72734");
+				/*$("#calcuvalue3").val("*");
+				$("#calcuvalue3").css("text-align", "center");
+				$("#calcuvalue3").css("font-weight", "700");*/
+			}
+
 		} else {
-			$("#calcUValQuestion .bigfoot-footnote__button").css("background-color", "rgba(110, 110, 110, 0.2)").css("color", "#777");
-			$("#inputs label#calcUValQuestion.grey").css("color", "#ADADAD");
+			$("#uvaluePop").css("display","none");
+			$("#calcuvalue, #calcuvalue2, #calcuvalue3").css("color", "#d5d5d5");
+			/*$("#calcuvalue").val(case1Data.calcUVal);
+			$("#calcuvalue").val(case2Data.calcUVal);
+			$("#calcuvalue").val(case3Data.calcUVal);*/
+			/*$("#calcuvalue").css("text-align", "right");
+			$("#calcuvalue, #calcuvalue2, #calcuvalue3").css("font-weight", "300");*/
 		}
 
 	}
