@@ -110,7 +110,7 @@ function createURL() {
 
 	// only all cases
 	if ($("#caseSelection #case2Label").hasClass("unselected") == false && $("#caseSelection #case3Label").hasClass("unselected") == false) {
-		var completeURL = startURL + case1URL + case3URL + case3URL + endURL;
+		var completeURL = startURL + case1URL + case2URL + case3URL + endURL;
 	}
 	
 
