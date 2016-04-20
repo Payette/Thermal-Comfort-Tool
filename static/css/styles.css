@@ -253,10 +253,12 @@ rect.blue {
 	background-image: url(../../static/images/slider.png);
 	background-size: 180px 250px;
 	display: inline-block;
-	bottom: 510px; /* imageHeight + facMargin.bottom*2*/
+	bottom: 500px; /* imageHeight + facMargin.bottom*2*/
 	left: -15px; /* - imageWidth/2 */
 	opacity: .8;
 }
+
+
 
 
 
@@ -814,7 +816,7 @@ input[type=checkbox] {
 
 
 
-#sliderWrapper2, #sliderWrapper3, {
+#sliderWrapper2, #sliderWrapper3, #occupantImage2, #occupantImage3 {
 	display: none;
 }
 

@@ -743,7 +743,7 @@ render.makeGraph = function () {
 			sizeButton();
 
 			$("#inputs input.case2, div.case2, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").css("display","inline-block");
-			$("hr.case2").css("display","block");
+			$("hr.case2, #occupantImage2").css("display","block");
 
 			d3.selectAll("rect.wall2").classed("outlined", false);
 			d3.selectAll("rect.wall2").classed("filled", true);
@@ -760,7 +760,7 @@ render.makeGraph = function () {
 			sizeButton();
 
 
-			$("#inputs input.case2, div.case2, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2, hr.case2").css("display","none");
+			$("#inputs input.case2, div.case2, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2, hr.case2, #occupantImage2").css("display","none");
 			$("#inputs input.case2").addClass("unselected");
 
 			d3.selectAll("rect.wall2").classed("outlined", true);
@@ -792,7 +792,7 @@ render.makeGraph = function () {
 			sizeButton();
 
 			$("#inputs input.case3, div.case3, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3").css("display","inline-block");
-			$("hr.case3").css("display","block");
+			$("hr.case3, #occupantImage3").css("display","block");
 
 			d3.selectAll("rect.wall3").classed("outlined", false);
 			d3.selectAll("rect.wall3").classed("filled", true);
@@ -806,7 +806,7 @@ render.makeGraph = function () {
 
 			sizeButton();
 
-			$("#inputs input.case3, div.case3, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3, hr.case3").css("display","none");
+			$("#inputs input.case3, div.case3, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3, hr.case3, #occupantImage3").css("display","none");
 			$("#inputs input.case2").addClass("unselected");
 
 			d3.selectAll("rect.wall3").classed("outlined", true);
@@ -2589,7 +2589,7 @@ render.makeGraph = function () {
 
 
 		var newLeft = 0 - resizeWidth/2;
-		var newBottom = Math.round(resizeHeight + facMargin.bottom*2);
+		var newBottom = Math.round(resizeHeight + facMargin.bottom + 5);
 
 		var newbackgroundsize = resizeWidth.toString() + "px " + resizeHeight.toString() + "px";
 
@@ -2609,6 +2609,7 @@ render.makeGraph = function () {
 		$(sliderID).css({
 			width: facadeScaleWidth(caseName.wallLen)/2,
 		})
+		$(sliderID).attr("max", (caseName.wallLen)/2);
 
 	}
 
