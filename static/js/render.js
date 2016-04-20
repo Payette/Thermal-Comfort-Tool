@@ -1126,10 +1126,6 @@ render.makeGraph = function () {
 		$("#URLpop textarea").empty();
 		$("#URLpop textarea").append(urlresult);
 
-		$("#URLpop textarea").focus(function() {
-			$("#URLpop textarea").select();
-		});
-
 		$("#URLpop").dialog("open");
 	
 	})
