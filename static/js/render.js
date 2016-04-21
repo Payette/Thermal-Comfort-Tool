@@ -2381,7 +2381,7 @@ render.makeGraph = function () {
 
 		} else {
 			$("#uvaluePop").css("display","none");
-			$("#calcuvalue, #calcuvalue2, #calcuvalue3").css("color", "#d5d5d5");
+			$("#calcuvalue, #calcuvalue2, #calcuvalue3").css("color", "#ADADAD");
 			/*$("#calcuvalue").val(case1Data.calcUVal);
 			$("#calcuvalue").val(case2Data.calcUVal);
 			$("#calcuvalue").val(case3Data.calcUVal);*/
@@ -2645,7 +2645,7 @@ render.makeGraph = function () {
 	function checkCondensation(conValue1, conValue2, conValue3) {
 
 		if (conValue1 != "none" || conValue2 != "none" || conValue3 != "none") {
-			$("#condensation").css("display","block");
+			/*$("#condensation").css("display","block");*/
 
 			if (conValue1 != "none") {
 				$("#humidity").css("color", "#f72734");

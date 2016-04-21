@@ -368,13 +368,12 @@ input[type=range]#ppd::-moz-range-progress{
 }
 
 #caseSelection h2 {
-	width: 60px;
 	display: inline-block;
-	text-align: center;
+	text-align: left;
 	font-size: 10px;
 
 	padding: 0;
-	margin: 0;
+	margin: 0 1px 0 8px;
 	vertical-align: top;
 
 	color: #000;
@@ -388,7 +387,7 @@ input[type=range]#ppd::-moz-range-progress{
 	float: left;
 	width: 12px;
 	height: 12px;
-	margin: 0px 1px 0 10px;
+	margin: 0px 2px 0 0;
 	background-size: 11px 11px;
 }
 
@@ -517,7 +516,7 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 
 
 #inputs div.inputWrapperLeft {
-	width: 60px;
+	width: 55px;
 	height: 16px;
 	padding: 2px 0px;
 	display: inline-block;
@@ -542,16 +541,13 @@ div.inputWrapperCenter span {
 }
 
 #inputs div.inputWrapperRight {
-	width: 60px;
+	width: 56px;
 	height: 16px;
 	padding: 2px 0px;
 	display: inline-block;
 	vertical-align: middle;
 }
 
-#inputs div.inputWrapperRight input#calcuvalue3 {
-	margin: 0px 0px 0px 19px;
-}
 
 div.inputWrapperRight span {
 	float: right;
@@ -595,23 +591,33 @@ div.inputWrapperRight span {
 	border-color: rgb(235, 235, 235);
 	border-style: solid;
 	border-width: 1px;
-	color: #d5d5d5;
+	color: #ADADAD;
 	font-style: italic;
 	cursor: default;
 	background-color: #fff;
 	padding: 1px 2px 0px 0px;
 }
 
-#inputs input.inactive#calcuvalue, #inputs input.inactive#calcuvalue2, #inputs input.inactive#calcuvalue3 {
-	padding: 2px 9px 0px 4px;
+#inputs input.inactive#calcuvalue, #inputs input.inactive#calcuvalue2, #inputs input.inactive#calcuvalue3, #inputs input.inactive#condRisk1, #inputs input.inactive#condRisk2, #inputs input.inactive#condRisk3 {
+	padding: 0px 11px 0px 2px;
 	font-style: normal;
+	border-top: none;
+	border-right: none;
+	border-left: none;
+	border-bottom-style: solid;
+	border-width: 2px;
+
+}
+
+#inputs input#calcuvalue3, #inputs input.inactive#condRisk3 {
+	margin: 0 0 0 16px;
 }
 
 
 
 
 
-br#glzBR {
+br.glzBR {
 	clear: both;
 }
 
@@ -636,13 +642,28 @@ br#glzBR {
 
 #inputs label {
 	color: #777;
-	width: 212px;
+	width: 226px;
 }
 
 #inputs label.grey {
 	color: #ADADAD;
-	height: 25px;
 }
+
+
+#inputs label.indent {
+	padding-left: 48px;
+	width: 164px;
+}
+
+
+#inputs label.inactive {
+	color: #b9b9b9;
+	font-style: italic;
+	font-weight: 300;
+}
+
+
+
 
 #occupantSliders label {
 	color: #000;
@@ -657,29 +678,14 @@ br#glzBR {
 }
 
 
-#inputs label.indent {
-	padding-left: 48px;
-	width: 164px;
-}
 
 
-#inputs label.inactive {
-	color: #b9b9b9;
-	font-style: italic;
-	font-weight: 100;
-}
-
-
-
+/* custom checkbox styling */
 #inputs label input.customCheck {
 	width: 15px;
 	vertical-align: middle;
 }
 
-
-
-
-/* custom checkbox styling */
 input[type=checkbox] {
 	visibility: hidden;
 }
@@ -975,7 +981,15 @@ div#URLpop textarea {
 	font-size: 12px;
 	line-height: 1.5;
 	margin: 0;
- 	padding-bottom: 5px;
+ 	padding: 0;
+}
+
+#col h3 {
+	font-family: "museo-sans", sans-serif;
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 1.5;
+	margin: 20px 0 0 0;
 }
 
 .keepTogether {
