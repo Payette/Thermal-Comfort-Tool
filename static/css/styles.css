@@ -169,9 +169,6 @@ body {
 }
 
 
-#windowHeightDim, #windowWidthDim, #sillHeightDim, #windowSepDim, #facadeWidthDim, #facadeHeightDim {
-	display: none;
-}
 
 
 
@@ -1013,7 +1010,6 @@ div#URLpop textarea {
 div.case2, div.case3, #inputs input.case2, #inputs input.case3, hr.case2, hr.case3 {
 	display: none;
 }
-
 
 
 

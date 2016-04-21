@@ -794,6 +794,7 @@ render.makeGraph = function () {
 			$("#inputs input.case3, div.case3, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3").css("display","inline-block");
 			$("hr.case3, #occupantImage3").css("display","block");
 
+
 			d3.selectAll("rect.wall3").classed("outlined", false);
 			d3.selectAll("rect.wall3").classed("filled", true);
 			d3.selectAll("rect.window3").classed("white", false);
@@ -807,6 +808,8 @@ render.makeGraph = function () {
 			sizeButton();
 
 			$("#inputs input.case3, div.case3, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3, hr.case3, #occupantImage3").css("display","none");
+
+
 			$("#inputs input.case2").addClass("unselected");
 
 			d3.selectAll("rect.wall3").classed("outlined", true);
@@ -2841,17 +2844,10 @@ render.makeGraph = function () {
 		var yPosition;
 		if (d3.max(compareOccupantArray) < 25) {
 			// all ppd values are less than 25
-			yPosition = y(d3.max(compareOccupantArray)) - divHeight;
+			yPosition = y(d3.max(compareOccupantArray)) - divHeight - 30;
 		} else if (d3.max(compareOccupantArray) > 25) {
 			// at least one case is above 25
-			if (d3.min(compareOccupantArray) <= 23) {
-				// but at least 1 case below 23
-				// locate text box next to lowest point
-				yPosition = y(d3.min(compareOccupantArray)) - divHeight;
-			} else { // all are above 25
-				// locate text box at top of chart
-				yPosition = 0 + margin.top;
-			}
+			yPosition = margin.top - 15;
 		}
 
 
@@ -2943,35 +2939,60 @@ render.makeGraph = function () {
 	function occupantDistanceRefLine() {
 
 		//find max cy of visible occ points
-		var compareOccupantArray = [];
+		var compareOccupantArray = [occPointData.ppd, occPointData2.ppd, occPointData3.ppd];
 
-		if ($("#caseSelection #case1Label").hasClass("unselected") == false ) {
-			compareOccupantArray.push(occPointData.ppd);
-		}
 
-		if ($("#caseSelection #case2Label").hasClass("unselected") == false ) {
-			compareOccupantArray.push(occPointData2.ppd);
-		}
-
-		if ($("#caseSelection #case3Label").hasClass("unselected") == false ) {
-			compareOccupantArray.push(occPointData3.ppd);
-		}
+		var sortedPPD = compareOccupantArray.sort(function(a, b) {
+			return d3.ascending(a, b);
+		});
 
 
 
 		var xPosition = x(occPointData.dist);
 		var yPosition = y(d3.min(compareOccupantArray));
 
-		// add line
+		// add lines between points
+
 		graphSvg.append("line")
 			.attr("class","occupantLine")
+			.attr("id", "occDistLine1")
 			.attr("x1", xPosition)
 			.attr("x2", xPosition)
 			.attr("y1", height)
-			.attr("y2", yPosition + 8)
+			.attr("y2", y(sortedPPD[0]) + 8)
 			.attr("transform", function() {
 				return "translate(" + margin.left + "," + margin.top + ")";
 			});
+
+
+		if ((sortedPPD[1] != sortedPPD[0]) && (sortedPPD[1] != sortedPPD[2])) {
+
+			graphSvg.append("line")
+				.attr("class","occupantLine")
+				.attr("id", "occDistLine2")
+				.attr("x1", xPosition)
+				.attr("x2", xPosition)
+				.attr("y1", y(sortedPPD[0]) - 8)
+				.attr("y2", y(sortedPPD[1]) + 8)
+				.attr("transform", function() {
+					return "translate(" + margin.left + "," + margin.top + ")";
+				});	
+		}
+
+		if ((sortedPPD[2] != sortedPPD[1]) && (sortedPPD[2] != sortedPPD[0])) {
+			graphSvg.append("line")
+			.attr("class","occupantLine")
+			.attr("id", "occDistLine3")
+			.attr("x1", xPosition)
+			.attr("x2", xPosition)
+			.attr("y1", y(sortedPPD[1]) - 8)
+			.attr("y2", y(sortedPPD[2]) + 8)
+			.attr("transform", function() {
+				return "translate(" + margin.left + "," + margin.top + ")";
+			});	
+		}
+		
+		
 	}
 
 
