@@ -28,15 +28,47 @@ body {
 #graphWrapper {
 	height: auto;
 	position: relative;
+	background-color: rgb(240,240,240);
 }
 
-#graph .axislabel, #graph .axis text {
+#graphWrapper ul {
+	list-style: none;
+	float: right;
+	margin: 15px 20px 10px 10px;
+
 	font-family: "museo-sans", sans-serif;
-	font-size: 12px;
+	font-size: 11px;
 	font-weight: 300;
 }
 
+#graphWrapper ul li {
+	display: inline;
+	color: #777777;
+	margin-left: 15px;
+}
 
+#graphWrapper ul li img {
+	display: inline;
+	width: 9px;
+	height: 9px;
+	margin: 0 5px 0 0;
+
+}
+
+
+
+#graph .axislabel, #graph .axis text {
+	font-family: "museo-sans", sans-serif;
+	font-size: 11px;
+}
+
+#graph .axislabel {
+	font-weight: 700;
+}
+
+#graph .axis text {
+	font-weight: 300;
+}
 
 #graph .axis path,
 #graph .axis line {
@@ -117,7 +149,7 @@ body {
 #facadeWrapper {
 	width: 100%
 	overflow: auto;
-	margin-bottom: 35px;
+	margin-bottom: 25px;
 }
 
 #case1FacadeWrapper, #case2FacadeWrapper, #case3FacadeWrapper {
@@ -203,7 +235,7 @@ rect.blue {
 
 
 #occupancyWrapper {
-	margin: 20px 0 0 0;
+	margin: 0 0 30px 0;
 }
 
 

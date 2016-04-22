@@ -5,16 +5,12 @@ var render = render || {}
 //function to make graph
 render.makeGraph = function () {
 
-
-
-
 	var maxContainerWidth = 550; // based on Payette website layout
 	var color1 = "rgb(0,160,221)";
 	var color2 = "rgb(248,151,29)";
 	var color3 = "rgb(108,28,131)";
 	var grey = "rgb(190,190,190)";
 	var lightblue = "rgb(194,224,255)";
-	var lightgrey = "rgb(235,235,235)";
 
 
 	// Case 1 Data
@@ -37,9 +33,9 @@ render.makeGraph = function () {
 
 
 	/* ------ SET UP GRAPH VARIABLES AND DATA FUNCTIONS ------ */
-	var margin = {top: 10, right: 0, bottom: 45, left: 50},
+	var margin = {top: 20, right: 20, bottom: 60, left: 70},
     	width = maxContainerWidth - margin.left - margin.right,
-    	height = 325 - margin.top - margin.bottom;
+    	height = 340 - margin.top - margin.bottom;
 
 
 	// Set up scale functions
@@ -119,7 +115,7 @@ render.makeGraph = function () {
 	    .attr("id", "XAxisLabel")
 	    .attr("text-anchor", "middle")
 	    .attr("x", width/2 + margin.left)
-	    .attr("y", height + margin.top + margin.bottom - 6);
+	    .attr("y", height + margin.top + margin.bottom - 15);
 
 	if (unitSys == "IP") {
 		graphSvg.select("#XAxisLabel")
@@ -131,7 +127,7 @@ render.makeGraph = function () {
 	    
 
 	graphSvg.append("g")
-	.attr("transform", "translate(10," + (height/2 + margin.top) + ")")
+	.attr("transform", "translate(25," + (height/2 + margin.top) + ")")
 	.append("text")
     .attr("class", "axislabel")
     .attr("text-anchor", "middle")
@@ -2872,7 +2868,7 @@ render.makeGraph = function () {
 			.attr("height", function() { return height - y(data)})
 			.attr("transform", function() {
 					return "translate(" + margin.left + "," + margin.top + ")";})
-			.style("fill", lightgrey);
+			.style("fill", "white");
 
 		var ppdLine = graphSvg.append("g")
 			.attr("class", "referenceLineGroup")
