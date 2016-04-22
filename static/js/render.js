@@ -327,30 +327,53 @@ render.makeGraph = function () {
 
 		// ppd icon
 		if (d.ppd <= ppdValue) {
-			thisIcon = "<img src='static/images/check.png' id='icon' class='check'>";
+			thisIcon = "<img src='static/images/check.png' class='icon'>";
 		} else {
-			thisIcon = "<img src='static/images/x.png' id='icon' class='check'>";
+			thisIcon = "<img src='static/images/x.png' class='icon'>";
 		}
 
 
 		if (d3.select(this).attr("class") == "dotCase1") {
-			hoverText = "<h1 class='case1Text'>" + thisIcon + "Case 1: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason + "</h1>";
+			hoverText = thisIcon + "<h1 class='case1Text'>Case 1: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason + "</h1><div style='clear:both;'></div>";
 
 		} else if (d3.select(this).attr("class") == "dotCase2") {
-			hoverText = "<h1 class='case2Text'>" + thisIcon + "Case 2: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason + "</h1>";
+			hoverText = thisIcon + "<h1 class='case2Text'>Case 2: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason + "</h1><div style='clear:both;'></div>";
 
 		} else if (d3.select(this).attr("class") == "dotCase3") {
-			hoverText = "<h1 class='case3Text'>" + thisIcon + "Case 3: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason + "</h1>";
-
+			hoverText = thisIcon + "<h1 class='case3Text'>Case 3: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason + "</h1><div style='clear:both;'></div>";
 		}
 
 		$("#tooltip").append(hoverText);
 
 		//Get this dots x/y values, then augment for the tooltip
 		var thisHeight = $("#tooltip").height();
-		var xPosition = x(d.dist) + margin.left + 8;
-		var yPosition = y(d.ppd) - thisHeight + margin.top + 20;
+		var xPosition;
+		var yPosition;
 
+
+		// set XPosition for tooltip
+		// change width of tooltip so it doesn't stretch outside wrapper
+		if (x(d.dist) > 190 ) {
+			$("div#tooltip").css("width","150px");
+			$("div#tooltip h1").css("width","135px");
+			yPosition = y(d.ppd) - thisHeight + margin.top + 30;
+
+			// prevent the tooltip from going outside the graph wrapper
+			if (x(d.dist) > 300) {
+				// keep fixed at right edge
+				xPosition = maxContainerWidth - margin.right - $("div#tooltip").width();
+			} else {
+				// position relative to data point
+				xPosition = x(d.dist) + margin.left + 8;
+			}
+			
+		} else {
+			// full width tooltip
+			$("div#tooltip").css("width","280px");
+			$("div#tooltip h1").css("width","auto");
+			xPosition = x(d.dist) + margin.left + 8;
+			yPosition = y(d.ppd) - thisHeight + margin.top + 20;
+		}
 
 
 
@@ -2749,9 +2772,9 @@ render.makeGraph = function () {
 
 
 		if (Math.round(occdata.ppd) <= ppdValue) {
-			text = "<h1 class=" + className + "><img src='static/images/check.png' id='icon' class='check'>" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1>";
+			text = "<img src='static/images/check.png' class='icon'><h1 class=" + className + ">" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1><div style='clear:both;'></div>";
 		} else {
-			text = "<h1 class=" + className + "><img src='static/images/x.png' id='icon' class='cross'>" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1>";
+			text = "<img src='static/images/x.png' class='icon'><h1 class=" + className + ">" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1><div style='clear:both;'></div>";
 		}
 
 		return text;
@@ -2882,8 +2905,8 @@ render.makeGraph = function () {
 		// change width of tooltip so it doesn't stretch outside wrapper
 		if (x(occPointData.dist) > 190 ) {
 			$("div#thresholdTooltip").css("width","150px");
-
-			yPadding = 5;
+			$("div#thresholdTooltip h1").css("width","135px");
+			yPadding = 20;
 
 			// prevent the tooltip from going outside the graph wrapper
 			if (x(occPointData.dist) > 300) {
@@ -2897,6 +2920,7 @@ render.makeGraph = function () {
 		} else {
 			// full width tooltip
 			$("div#thresholdTooltip").css("width","280px");
+			$("div#thresholdTooltip h1").css("width","auto");
 			xPosition = x(occPointData.dist) + margin.left + 8;
 			yPadding = 10;
 		}

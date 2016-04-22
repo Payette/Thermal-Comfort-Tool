@@ -29,7 +29,6 @@ body {
 	height: auto;
 	position: relative;
 	background-color: rgb(240,240,240);
-	z-index: 1000;
 }
 
 #graphWrapper ul {
@@ -131,9 +130,10 @@ body {
 	padding: 0 0 3px 0;
 	margin: 0;
 
+	float: left;
 }
 
-#thresholdTooltip h1 img#icon, #tooltip h1 img#icon {
+#thresholdTooltip img.icon, #tooltip img.icon {
 	display: block;
 	float: left;
 	width: 12px;
