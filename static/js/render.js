@@ -5,16 +5,12 @@ var render = render || {}
 //function to make graph
 render.makeGraph = function () {
 
-
-
-
 	var maxContainerWidth = 550; // based on Payette website layout
 	var color1 = "rgb(0,160,221)";
 	var color2 = "rgb(248,151,29)";
 	var color3 = "rgb(108,28,131)";
 	var grey = "rgb(190,190,190)";
 	var lightblue = "rgb(194,224,255)";
-	var lightgrey = "rgb(235,235,235)";
 
 
 	// Case 1 Data
@@ -37,9 +33,9 @@ render.makeGraph = function () {
 
 
 	/* ------ SET UP GRAPH VARIABLES AND DATA FUNCTIONS ------ */
-	var margin = {top: 45, right: 0, bottom: 45, left: 50},
+	var margin = {top: 20, right: 20, bottom: 60, left: 70},
     	width = maxContainerWidth - margin.left - margin.right,
-    	height = 325 - margin.top - margin.bottom;
+    	height = 340 - margin.top - margin.bottom;
 
 
 	// Set up scale functions
@@ -119,7 +115,7 @@ render.makeGraph = function () {
 	    .attr("id", "XAxisLabel")
 	    .attr("text-anchor", "middle")
 	    .attr("x", width/2 + margin.left)
-	    .attr("y", height + margin.top + margin.bottom - 6);
+	    .attr("y", height + margin.top + margin.bottom - 15);
 
 	if (unitSys == "IP") {
 		graphSvg.select("#XAxisLabel")
@@ -131,7 +127,7 @@ render.makeGraph = function () {
 	    
 
 	graphSvg.append("g")
-	.attr("transform", "translate(10," + (height/2 + margin.top) + ")")
+	.attr("transform", "translate(25," + (height/2 + margin.top) + ")")
 	.append("text")
     .attr("class", "axislabel")
     .attr("text-anchor", "middle")
@@ -331,30 +327,53 @@ render.makeGraph = function () {
 
 		// ppd icon
 		if (d.ppd <= ppdValue) {
-			thisIcon = "check";
+			thisIcon = "<img src='static/images/check.png' class='icon'>";
 		} else {
-			thisIcon = "cross";
+			thisIcon = "<img src='static/images/x.png' class='icon'>";
 		}
 
 
 		if (d3.select(this).attr("class") == "dotCase1") {
-			hoverText = "<h1 class='case1Text'><span id='icon' class='" + thisIcon + "'></span>CASE 1: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason;
+			hoverText = thisIcon + "<h1 class='case1Text'>Case 1: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason + "</h1><div style='clear:both;'></div>";
 
 		} else if (d3.select(this).attr("class") == "dotCase2") {
-			hoverText = "<h1 class='case1Text'><span id='icon' class='" + thisIcon + "'></span>CASE 2: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason;
+			hoverText = thisIcon + "<h1 class='case2Text'>Case 2: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason + "</h1><div style='clear:both;'></div>";
 
 		} else if (d3.select(this).attr("class") == "dotCase3") {
-			hoverText = "<h1 class='case1Text'><span id='icon' class='" + thisIcon + "'></span>CASE 3: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason;
-
+			hoverText = thisIcon + "<h1 class='case3Text'>Case 3: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason + "</h1><div style='clear:both;'></div>";
 		}
 
 		$("#tooltip").append(hoverText);
 
 		//Get this dots x/y values, then augment for the tooltip
 		var thisHeight = $("#tooltip").height();
-		var xPosition = x(d.dist) + margin.left;
-		var yPosition = y(d.ppd) - thisHeight + 13;
+		var xPosition;
+		var yPosition;
 
+
+		// set XPosition for tooltip
+		// change width of tooltip so it doesn't stretch outside wrapper
+		if (x(d.dist) > 190 ) {
+			$("div#tooltip").css("width","150px");
+			$("div#tooltip h1").css("width","135px");
+			yPosition = y(d.ppd) - thisHeight + margin.top + 30;
+
+			// prevent the tooltip from going outside the graph wrapper
+			if (x(d.dist) > 300) {
+				// keep fixed at right edge
+				xPosition = maxContainerWidth - margin.right - $("div#tooltip").width();
+			} else {
+				// position relative to data point
+				xPosition = x(d.dist) + margin.left + 8;
+			}
+			
+		} else {
+			// full width tooltip
+			$("div#tooltip").css("width","280px");
+			$("div#tooltip h1").css("width","auto");
+			xPosition = x(d.dist) + margin.left + 8;
+			yPosition = y(d.ppd) - thisHeight + margin.top + 20;
+		}
 
 
 
@@ -743,7 +762,7 @@ render.makeGraph = function () {
 			sizeButton();
 
 			$("#inputs input.case2, div.case2, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").css("display","inline-block");
-			$("hr.case2").css("display","block");
+			$("hr.case2, #occupantImage2").css("display","block");
 
 			d3.selectAll("rect.wall2").classed("outlined", false);
 			d3.selectAll("rect.wall2").classed("filled", true);
@@ -760,7 +779,7 @@ render.makeGraph = function () {
 			sizeButton();
 
 
-			$("#inputs input.case2, div.case2, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2, hr.case2").css("display","none");
+			$("#inputs input.case2, div.case2, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2, hr.case2, #occupantImage2").css("display","none");
 			$("#inputs input.case2").addClass("unselected");
 
 			d3.selectAll("rect.wall2").classed("outlined", true);
@@ -792,7 +811,8 @@ render.makeGraph = function () {
 			sizeButton();
 
 			$("#inputs input.case3, div.case3, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3").css("display","inline-block");
-			$("hr.case3").css("display","block");
+			$("hr.case3, #occupantImage3").css("display","block");
+
 
 			d3.selectAll("rect.wall3").classed("outlined", false);
 			d3.selectAll("rect.wall3").classed("filled", true);
@@ -806,7 +826,9 @@ render.makeGraph = function () {
 
 			sizeButton();
 
-			$("#inputs input.case3, div.case3, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3, hr.case3").css("display","none");
+			$("#inputs input.case3, div.case3, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3, hr.case3, #occupantImage3").css("display","none");
+
+
 			$("#inputs input.case2").addClass("unselected");
 
 			d3.selectAll("rect.wall3").classed("outlined", true);
@@ -825,9 +847,13 @@ render.makeGraph = function () {
     });
 
     // remove condensation alert on click
-    $("#condensation img.close").on("click", function() {
+/*    $("#condensation img.close").on("click", function() {
     	$("#condensation").css("display","none");
     	$("#humidity, #humidity2, #humidity3").css("color", "black");
+    })*/
+
+    $("#uvaluePop img.close").on("click", function() {
+     	$("#uvaluePop").css("display","none");
     })
 
 
@@ -836,12 +862,27 @@ render.makeGraph = function () {
 
     	if ($(".expandOptions").hasClass("expanded")) {
     		$(".expandOptions").removeClass("expanded")
-    		$("span#expand").css("backgroundPosition", "0 0");
+    		$(".expandOptions span.expand").css("backgroundPosition", "0 0");
 			$(".hideContent").slideUp(400, "swing");
     	} else {
     		$(".expandOptions").addClass("expanded");
-    		$("span#expand").css("backgroundPosition", "0 -12px");
+    		$(".expandOptions span.expand").css("backgroundPosition", "0 -12px");
 			$(".hideContent").slideDown(400, "swing");
+    	}
+	
+	})
+
+	// expand explanation
+    $(".expandExplanation").on("click", function(){
+
+    	if ($(".expandExplanation").hasClass("expanded")) {
+    		$(".expandExplanation").removeClass("expanded")
+    		$(".expandExplanation span.expand").css("backgroundPosition", "0 0");
+			$(".explanContent").slideUp(400, "swing");
+    	} else {
+    		$(".expandExplanation").addClass("expanded");
+    		$(".expandExplanation span.expand").css("backgroundPosition", "0 -12px");
+			$(".explanContent").slideDown(400, "swing");
     	}
 	
 	})
@@ -1187,7 +1228,10 @@ render.makeGraph = function () {
 			}
 			// Update target PPD threshold line
 			updatePPDThreshold(ppdValue);
-			thresholdDataText()
+			thresholdDataText();
+
+			// update calculated uvalue
+			autocalcUValues();
 		});
 	}
 
@@ -1230,7 +1274,10 @@ render.makeGraph = function () {
 		}
 		// Update target PPD threshold line
 		updatePPDThreshold(ppdValue);
-		thresholdDataText()
+		thresholdDataText();
+
+		// update calculated uvalue
+		autocalcUValues();
 	});
 
 
@@ -2262,7 +2309,8 @@ render.makeGraph = function () {
 
 			occPointData = newOccLocData;
 
-			checkCondensation(newCondensation, allData2.condensation, allData3.condensation);
+			condensation1 = newCondensation;
+			checkCondensation(condensation1, condensation2, condensation3);
 
 			updateGraphData(newDataset, newOccLocData, graphPoints, ".connectLine", ".occdot1");
 
@@ -2283,7 +2331,8 @@ render.makeGraph = function () {
 
 			occPointData2 = newOccLocData;
 
-			checkCondensation(allData.condensation, newCondensation, allData3.condensation);
+			condensation2 = newCondensation;
+			checkCondensation(condensation1, condensation2, condensation3);
 
 			updateGraphData(newDataset, newOccLocData, graphCase2Points, ".connectLine2", ".occdot2");
 
@@ -2303,7 +2352,8 @@ render.makeGraph = function () {
 
 			occPointData3 = newOccLocData;
 
-			checkCondensation(allData.condensation, allData2.condensation, newCondensation);
+			condensation3 = newCondensation;
+			checkCondensation(condensation1, condensation2, condensation3);
 
 			updateGraphData(newDataset, newOccLocData, graphCase3Points, ".connectLine3", ".occdot3");
 
@@ -2335,55 +2385,45 @@ render.makeGraph = function () {
 		case3Data.calcUVal = uVal.uValFinal(fullDataCase3.wallViews[12], fullDataCase3.glzViews[12], fullDataCase3.facadeDist[12], fullDataCase3.dwnPPDFac, parseFloat(case3Data.windowHeightValue), case3Data.airtempValue, case3Data.outdoorTempValue, rvalueValue, case3Data.intLowEChecked, case3Data.intLowEEmissivity, airspeedValue, case3Data.humidityValue, metabolic, clothingValue, ppdValue);
 
 		// Update the value in the form.
-		$("#calcuvalue").val(Math.round(case1Data.calcUVal * 1000) / 1000);
-		$("#calcuvalue2").val(Math.round(case2Data.calcUVal * 1000) / 1000);
-		$("#calcuvalue3").val(Math.round(case3Data.calcUVal * 1000) / 1000);
+		$("#calcuvalue").val(Math.round(case1Data.calcUVal * 100) / 100);
+		$("#calcuvalue2").val(Math.round(case2Data.calcUVal * 100) / 100);
+		$("#calcuvalue3").val(Math.round(case3Data.calcUVal * 100) / 100);
 
 
-		if (case1Data.calcUVal <= 0.01) {
-			$("#calcuvalue").css("color", "#f72734");
-			$("#calcuvalue").val("*");
-			$("#calcuvalue").css("text-align", "center");
-			$("#calcuvalue").css("font-weight", "700");
 
-		} else {
-			$("#calcuvalue").css("color", "#ADADAD");
-			$("#calcuvalue").val(case1Data.calcUVal);
-			$("#calcuvalue").css("text-align", "right");
-			$("#calcuvalue").css("font-weight", "300");
-		}	
-
-		if (case2Data.calcUVal <= 0.01) {
-			$("#calcuvalue2").css("color", "#f72734");
-			$("#calcuvalue2").val("*");
-			$("#calcuvalue").css("text-align", "center");
-			$("#calcuvalue").css("font-weight", "700");
-		} else {
-			$("#calcuvalue2").css("color", "#ADADAD");
-			$("#calcuvalue").val(case2Data.calcUVal);
-			$("#calcuvalue").css("text-align", "right");
-			$("#calcuvalue").css("font-weight", "300");
-		}
-
-		if (case3Data.calcUVal <= 0.01) {
-			$("#calcuvalue3").css("color", "#f72734");
-			$("#calcuvalue3").val("*");
-			$("#calcuvalue").css("text-align", "center");
-			$("#calcuvalue").css("font-weight", "700");
-		} else {
-			$("#calcuvalue3").css("color", "#ADADAD");
-			$("#calcuvalue").val(case3Data.calcUVal);
-			$("#calcuvalue").css("text-align", "right");
-			$("#calcuvalue").css("font-weight", "300");
-		}
 
 		if (case1Data.calcUVal <= 0.01 || case2Data.calcUVal <= 0.01 || case3Data.calcUVal <= 0.01) {
-			$("#calcUValQuestion .bigfoot-footnote__button").css("background-color", "#f72734").css("color", "#fff");
-			$("#inputs label#calcUValQuestion.grey").css("color", "#f72734");
-			
+			$("#uvaluePop").css("display","block");
+
+			if (case1Data.calcUVal <= 0.01) {
+				$("#calcuvalue").css("color", "#f72734");
+				/*$("#calcuvalue").val("*");
+				$("#calcuvalue").css("text-align", "center");
+				$("#calcuvalue").css("font-weight", "700");*/
+			}
+
+			if (case2Data.calcUVal <= 0.01) {
+				$("#calcuvalue2").css("color", "#f72734");
+				/*$("#calcuvalue2").val("*");
+				$("#calcuvalue2").css("text-align", "center");
+				$("#calcuvalue2").css("font-weight", "700");*/
+			}
+
+			if (case3Data.calcUVal <= 0.01) {
+				$("#calcuvalue3").css("color", "#f72734");
+				/*$("#calcuvalue3").val("*");
+				$("#calcuvalue3").css("text-align", "center");
+				$("#calcuvalue3").css("font-weight", "700");*/
+			}
+
 		} else {
-			$("#calcUValQuestion .bigfoot-footnote__button").css("background-color", "rgba(110, 110, 110, 0.2)").css("color", "#777");
-			$("#inputs label#calcUValQuestion.grey").css("color", "#ADADAD");
+			$("#uvaluePop").css("display","none");
+			$("#calcuvalue, #calcuvalue2, #calcuvalue3").css("color", "#ADADAD");
+			/*$("#calcuvalue").val(case1Data.calcUVal);
+			$("#calcuvalue").val(case2Data.calcUVal);
+			$("#calcuvalue").val(case3Data.calcUVal);*/
+			/*$("#calcuvalue").css("text-align", "right");
+			$("#calcuvalue, #calcuvalue2, #calcuvalue3").css("font-weight", "300");*/
 		}
 
 	}
@@ -2589,7 +2629,7 @@ render.makeGraph = function () {
 
 
 		var newLeft = 0 - resizeWidth/2;
-		var newBottom = Math.round(resizeHeight + facMargin.bottom*2);
+		var newBottom = Math.round(resizeHeight + facMargin.bottom + 5);
 
 		var newbackgroundsize = resizeWidth.toString() + "px " + resizeHeight.toString() + "px";
 
@@ -2609,6 +2649,7 @@ render.makeGraph = function () {
 		$(sliderID).css({
 			width: facadeScaleWidth(caseName.wallLen)/2,
 		})
+		$(sliderID).attr("max", (caseName.wallLen)/2);
 
 	}
 
@@ -2641,23 +2682,39 @@ render.makeGraph = function () {
 	function checkCondensation(conValue1, conValue2, conValue3) {
 
 		if (conValue1 != "none" || conValue2 != "none" || conValue3 != "none") {
-			$("#condensation").css("display","block");
+			$("#condRisk button.bigfoot-footnote__button").css("background-color", "#f72734");
+			$("#condRisk button.bigfoot-footnote__button").css("color","white");
 
 			if (conValue1 != "none") {
-				$("#humidity").css("color", "#f72734");
+				$("#humidity, #condRisk1").addClass("alert");
+				$("#condRisk1").val("YES");
+			} else {
+				$("#humidity, #condRisk1").removeClass("alert");
+				$("#condRisk1").val("NO");
 			}
 
 			if (conValue2 != "none") {
-				$("#humidity2").css("color", "#f72734");
+				$("#humidity2, #condRisk2").addClass("alert");
+				$("#condRisk2").val("YES");
+			} else {
+				$("#humidity2, #condRisk2").removeClass("alert");
+				$("#condRisk2").val("NO");
 			}
 
 			if (conValue3 != "none") {
-				$("#humidity3").css("color", "#f72734");
+				$("#humidity3, #condRisk3").addClass("alert");
+				$("#condRisk3").val("YES");
+			} else {
+				$("#humidity3, #condRisk3").removeClass("alert");
+				$("#condRisk3").val("NO");
 			}
+		} 
 
-		} else {
-			$("#condensation").css("display","none")
-			$("#humidity, #humidity2, #humidity3").css("color", "black");
+		if (conValue1 == "none" && conValue2 == "none" && conValue3 == "none") {
+			$("#condRisk button.bigfoot-footnote__button").css("background-color", "rgba(110, 110, 110, 0.2)");
+			$("#condRisk button.bigfoot-footnote__button").css("color","black");
+			$("#humidity, #humidity2, #humidity3, #condRisk1, #condRisk2, #condRisk3").removeClass("alert");
+			$("#condRisk1, #condRisk2, #condRisk3").val("NO");
 		}
 	}
 
@@ -2711,9 +2768,9 @@ render.makeGraph = function () {
 
 
 		if (Math.round(occdata.ppd) <= ppdValue) {
-			text = "<h1 class=" + className + "><img src='static/images/check.png' id='icon' class='check'>" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1>";
+			text = "<img src='static/images/check.png' class='icon'><h1 class=" + className + ">" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1><div style='clear:both;'></div>";
 		} else {
-			text = "<h1 class=" + className + "><img src='static/images/x.png' id='icon' class='cross'>" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1>";
+			text = "<img src='static/images/x.png' class='icon'><h1 class=" + className + ">" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1><div style='clear:both;'></div>";
 		}
 
 		return text;
@@ -2836,21 +2893,41 @@ render.makeGraph = function () {
 
 		var divHeight = $("div#thresholdTooltip").height() - 10; //10 = padding
 
-		var xPosition = x(occPointData.dist) + margin.left + 15;
+		var xPosition;
 		var yPosition;
-		if (d3.max(compareOccupantArray) < 25) {
-			// all ppd values are less than 25
-			yPosition = y(d3.max(compareOccupantArray)) - divHeight;
-		} else if (d3.max(compareOccupantArray) > 25) {
-			// at least one case is above 25
-			if (d3.min(compareOccupantArray) <= 23) {
-				// but at least 1 case below 23
-				// locate text box next to lowest point
-				yPosition = y(d3.min(compareOccupantArray)) - divHeight;
-			} else { // all are above 25
-				// locate text box at top of chart
-				yPosition = 0 + margin.top;
+		var yPadding;
+
+		// set XPosition for tooltip
+		// change width of tooltip so it doesn't stretch outside wrapper
+		if (x(occPointData.dist) > 190 ) {
+			$("div#thresholdTooltip").css("width","150px");
+			$("div#thresholdTooltip h1").css("width","135px");
+			yPadding = 20;
+
+			// prevent the tooltip from going outside the graph wrapper
+			if (x(occPointData.dist) > 300) {
+				// keep fixed at right edge
+				xPosition = maxContainerWidth - margin.right - $("div#thresholdTooltip").width();
+			} else {
+				// position relative to data point
+				xPosition = x(occPointData.dist) + margin.left + 8;
 			}
+			
+		} else {
+			// full width tooltip
+			$("div#thresholdTooltip").css("width","280px");
+			$("div#thresholdTooltip h1").css("width","auto");
+			xPosition = x(occPointData.dist) + margin.left + 8;
+			yPadding = 10;
+		}
+
+		// set YPosition for tooltip
+		if (d3.max(compareOccupantArray) < 26) {
+			// all ppd values are less than 25
+			yPosition = y(d3.max(compareOccupantArray)) - divHeight + margin.top + yPadding;
+		} else if (d3.max(compareOccupantArray) > 26) {
+			// at least one case is above 25
+			yPosition = margin.top + yPadding + 12;
 		}
 
 
@@ -2875,7 +2952,7 @@ render.makeGraph = function () {
 			.attr("height", function() { return height - y(data)})
 			.attr("transform", function() {
 					return "translate(" + margin.left + "," + margin.top + ")";})
-			.style("fill", lightgrey);
+			.style("fill", "white");
 
 		var ppdLine = graphSvg.append("g")
 			.attr("class", "referenceLineGroup")
@@ -2942,35 +3019,60 @@ render.makeGraph = function () {
 	function occupantDistanceRefLine() {
 
 		//find max cy of visible occ points
-		var compareOccupantArray = [];
+		var compareOccupantArray = [occPointData.ppd, occPointData2.ppd, occPointData3.ppd];
 
-		if ($("#caseSelection #case1Label").hasClass("unselected") == false ) {
-			compareOccupantArray.push(occPointData.ppd);
-		}
 
-		if ($("#caseSelection #case2Label").hasClass("unselected") == false ) {
-			compareOccupantArray.push(occPointData2.ppd);
-		}
-
-		if ($("#caseSelection #case3Label").hasClass("unselected") == false ) {
-			compareOccupantArray.push(occPointData3.ppd);
-		}
+		var sortedPPD = compareOccupantArray.sort(function(a, b) {
+			return d3.ascending(a, b);
+		});
 
 
 
 		var xPosition = x(occPointData.dist);
 		var yPosition = y(d3.min(compareOccupantArray));
 
-		// add line
+		// add lines between points
+
 		graphSvg.append("line")
 			.attr("class","occupantLine")
+			.attr("id", "occDistLine1")
 			.attr("x1", xPosition)
 			.attr("x2", xPosition)
 			.attr("y1", height)
-			.attr("y2", yPosition + 8)
+			.attr("y2", y(sortedPPD[0]) + 8)
 			.attr("transform", function() {
 				return "translate(" + margin.left + "," + margin.top + ")";
 			});
+
+
+		if ((sortedPPD[1] != sortedPPD[0]) && (sortedPPD[1] != sortedPPD[2])) {
+
+			graphSvg.append("line")
+				.attr("class","occupantLine")
+				.attr("id", "occDistLine2")
+				.attr("x1", xPosition)
+				.attr("x2", xPosition)
+				.attr("y1", y(sortedPPD[0]) - 8)
+				.attr("y2", y(sortedPPD[1]) + 8)
+				.attr("transform", function() {
+					return "translate(" + margin.left + "," + margin.top + ")";
+				});	
+		}
+
+		if ((sortedPPD[2] != sortedPPD[1]) && (sortedPPD[2] != sortedPPD[0])) {
+			graphSvg.append("line")
+			.attr("class","occupantLine")
+			.attr("id", "occDistLine3")
+			.attr("x1", xPosition)
+			.attr("x2", xPosition)
+			.attr("y1", y(sortedPPD[1]) - 8)
+			.attr("y2", y(sortedPPD[2]) + 8)
+			.attr("transform", function() {
+				return "translate(" + margin.left + "," + margin.top + ")";
+			});	
+		}
+		
+		
 	}
 
 

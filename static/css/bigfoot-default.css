@@ -1,23 +1,24 @@
 
 button.bigfoot-footnote__button, button.dimHover {
   position: relative;
-  top: -1px;
-  padding: 1px;
-  height: 12px;
+  top: -2px;
+  height: 10px;
+  width: 10px;
+  padding: 1px 0px;
   z-index: 5;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   display: inline-block;
   
-  margin: 0.1em 0.1em 0 0.7em;
+  margin: 0.1em 0.1em 0 0.5em;
   border: none;
-  border-radius: 6px;
+  border-radius: 5px;
   cursor: pointer;
   background-color: rgba(110, 110, 110, 0.2);
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
   font-size: 8px;
-  line-height: 9px;
+  line-height: 8px;
   vertical-align: top;
   text-decoration: none;
   -webkit-font-smoothing: antialiased;
@@ -26,6 +27,8 @@ button.bigfoot-footnote__button, button.dimHover {
   -webkit-transition-duration: 0.25s;
           transition-duration: 0.25s;
 }
+
+
 .bigfoot-footnote__button:hover, .bigfoot-footnote__button:focus {
   outline: none;
   background-color: rgba(110, 110, 110, 0.5);
@@ -80,7 +83,7 @@ button.bigfoot-footnote__button, button.dimHover {
 }
 .bigfoot-footnote {
   position: absolute;
-  z-index: 10;
+  z-index: 2000;
   top: 0;
   left: 0;
   display: inline-block;
@@ -198,7 +201,7 @@ button.bigfoot-footnote__button, button.dimHover {
           transition-delay: 0;
 }
 
-.bigfoot-footnote__wrapper {
+div.bigfoot-footnote__wrapper {
   position: relative;
   z-index: 14;
   width: 22em;
@@ -209,6 +212,7 @@ button.bigfoot-footnote__button, button.dimHover {
   background-color: #fafafa;
   border-radius: 0.5em;
   line-height: 0;
+  padding: 0;
 }
 
 .bigfoot-footnote__content {
@@ -225,11 +229,16 @@ button.bigfoot-footnote__button, button.dimHover {
   -webkit-font-smoothing: subpixel-antialiased;
   line-height: normal;
 }
+
+.bigfoot-footnote__content p {
+  color: #404040;
+}
+
 .bigfoot-footnote__content img {
   max-width: 100%;
 }
 .bigfoot-footnote__content *:last-child {
-  margin-bottom: 5px !important;
+  margin-bottom: 0px !important;
 }
 .bigfoot-footnote__content *:first-child {
   margin-top: 0 !important;

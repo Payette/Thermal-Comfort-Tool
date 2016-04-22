@@ -348,6 +348,15 @@ text.axislabel {
 
 
 
+#occupantImage, #occupantImage2, #occupantImage3 {
+	border: 2px solid #777;
+	/*list-style-image: url(../../static/images/slider.png);
+	display: list-item;
+	list-style-position: inside;*/
+}
+
+
+
 
 
 #thresholdTooltip {

@@ -28,15 +28,48 @@ body {
 #graphWrapper {
 	height: auto;
 	position: relative;
+	background-color: rgb(240,240,240);
+	overflow: hidden;
 }
 
-#graph .axislabel, #graph .axis text {
+#graphWrapper ul {
+	list-style: none;
+	float: right;
+	margin: 15px 20px 10px 10px;
+
 	font-family: "museo-sans", sans-serif;
-	font-size: 12px;
+	font-size: 11px;
 	font-weight: 300;
 }
 
+#graphWrapper ul li {
+	display: inline;
+	color: #777777;
+	margin: 0 0 0 15px;
+}
 
+#graphWrapper ul li img {
+	display: inline;
+	width: 9px;
+	height: 9px;
+	margin: 0 5px 0 0;
+
+}
+
+
+
+#graph .axislabel, #graph .axis text {
+	font-family: "museo-sans", sans-serif;
+	font-size: 11px;
+}
+
+#graph .axislabel {
+	font-weight: 700;
+}
+
+#graph .axis text {
+	font-weight: 300;
+}
 
 #graph .axis path,
 #graph .axis line {
@@ -79,10 +112,10 @@ body {
 #tooltip, #thresholdTooltip {
 	position: absolute;
 	width: 280px;
-	padding: 10px;
+	/*padding: 5px;*/
 	pointer-events: none;
-	background-color: rgba(255,255,255,.8);
-	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+	/*background-color: rgba(240,240,240,.9);
+	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);*/
 }
 
 
@@ -93,13 +126,15 @@ body {
 
 #tooltip h1, #thresholdTooltip h1 {
 	font-family: "museo-sans", sans-serif;
-	font-weight: 300;
+	font-weight: 700;
 	font-size: 12px;
 	padding: 0 0 3px 0;
 	margin: 0;
+
+	float: left;
 }
 
-#thresholdTooltip h1 img#icon, #tooltip h1 img#icon {
+#thresholdTooltip img.icon, #tooltip img.icon {
 	display: block;
 	float: left;
 	width: 12px;
@@ -117,6 +152,7 @@ body {
 #facadeWrapper {
 	width: 100%
 	overflow: auto;
+	margin-bottom: 25px;
 }
 
 #case1FacadeWrapper, #case2FacadeWrapper, #case3FacadeWrapper {
@@ -168,9 +204,6 @@ body {
 }
 
 
-#windowHeightDim, #windowWidthDim, #sillHeightDim, #windowSepDim, #facadeWidthDim, #facadeHeightDim {
-	display: none;
-}
 
 
 
@@ -205,7 +238,7 @@ rect.blue {
 
 
 #occupancyWrapper {
-	margin: 20px 0 0 0;
+	margin: 0 0 30px 0;
 }
 
 
@@ -253,10 +286,12 @@ rect.blue {
 	background-image: url(../../static/images/slider.png);
 	background-size: 180px 250px;
 	display: inline-block;
-	bottom: 510px; /* imageHeight + facMargin.bottom*2*/
+	bottom: 500px; /* imageHeight + facMargin.bottom*2*/
 	left: -15px; /* - imageWidth/2 */
 	opacity: .8;
 }
+
+
 
 
 
@@ -368,13 +403,12 @@ input[type=range]#ppd::-moz-range-progress{
 }
 
 #caseSelection h2 {
-	width: 60px;
 	display: inline-block;
-	text-align: center;
+	text-align: left;
 	font-size: 10px;
 
 	padding: 0;
-	margin: 0;
+	margin: 0 1px 0 8px;
 	vertical-align: top;
 
 	color: #000;
@@ -388,7 +422,7 @@ input[type=range]#ppd::-moz-range-progress{
 	float: left;
 	width: 12px;
 	height: 12px;
-	margin: 0px 1px 0 10px;
+	margin: 0px 2px 0 0;
 	background-size: 11px 11px;
 }
 
@@ -510,9 +544,14 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 	width: 100%;
 }
 
+#inputs hr.final {
+	margin: 10px 0 0 0;
+	height: 1px;
+}
+
 
 #inputs div.inputWrapperLeft {
-	width: 60px;
+	width: 55px;
 	height: 16px;
 	padding: 2px 0px;
 	display: inline-block;
@@ -537,16 +576,13 @@ div.inputWrapperCenter span {
 }
 
 #inputs div.inputWrapperRight {
-	width: 60px;
+	width: 56px;
 	height: 16px;
 	padding: 2px 0px;
 	display: inline-block;
 	vertical-align: middle;
 }
 
-#inputs div.inputWrapperRight input#calcuvalue3 {
-	margin: 0px 0px 0px 19px;
-}
 
 div.inputWrapperRight span {
 	float: right;
@@ -590,23 +626,38 @@ div.inputWrapperRight span {
 	border-color: rgb(235, 235, 235);
 	border-style: solid;
 	border-width: 1px;
-	color: #d5d5d5;
+	color: #ADADAD;
 	font-style: italic;
 	cursor: default;
 	background-color: #fff;
 	padding: 1px 2px 0px 0px;
 }
 
-#inputs input.inactive#calcuvalue, #inputs input.inactive#calcuvalue2, #inputs input.inactive#calcuvalue3 {
-	padding: 2px 9px 0px 4px;
+#inputs input.inactive.alert, #inputs input.alert {
+	color: #f72734;
+}
+
+
+#inputs input.inactive#calcuvalue, #inputs input.inactive#calcuvalue2, #inputs input.inactive#calcuvalue3, #inputs input.inactive#condRisk1, #inputs input.inactive#condRisk2, #inputs input.inactive#condRisk3 {
+	padding: 0px 11px 0px 2px;
 	font-style: normal;
+	border-top: none;
+	border-right: none;
+	border-left: none;
+	border-bottom-style: solid;
+	border-width: 2px;
+}
+
+#inputs input#calcuvalue3, #inputs input.inactive#condRisk3 {
+	margin: 0 0 0 16px;
 }
 
 
 
 
 
-br#glzBR {
+
+br.glzBR {
 	clear: both;
 }
 
@@ -631,13 +682,28 @@ br#glzBR {
 
 #inputs label {
 	color: #777;
-	width: 212px;
+	width: 226px;
 }
 
 #inputs label.grey {
 	color: #ADADAD;
-	height: 25px;
 }
+
+
+#inputs label.indent {
+	padding-left: 48px;
+	width: 164px;
+}
+
+
+#inputs label.inactive {
+	color: #b9b9b9;
+	font-style: italic;
+	font-weight: 300;
+}
+
+
+
 
 #occupantSliders label {
 	color: #000;
@@ -652,29 +718,14 @@ br#glzBR {
 }
 
 
-#inputs label.indent {
-	padding-left: 48px;
-	width: 164px;
-}
 
 
-#inputs label.inactive {
-	color: #b9b9b9;
-	font-style: italic;
-	font-weight: 100;
-}
-
-
-
+/* custom checkbox styling */
 #inputs label input.customCheck {
 	width: 15px;
 	vertical-align: middle;
 }
 
-
-
-
-/* custom checkbox styling */
 input[type=checkbox] {
 	visibility: hidden;
 }
@@ -771,7 +822,7 @@ input[type=checkbox] {
 
 #inputs div#uvaluePop {
 	width: 142px;
-	bottom: 110px;
+	bottom: 53px;
 	left: 218px;
 	z-index: 1000;
 }
@@ -814,7 +865,7 @@ input[type=checkbox] {
 
 
 
-#sliderWrapper2, #sliderWrapper3, {
+#sliderWrapper2, #sliderWrapper3, #occupantImage2, #occupantImage3 {
 	display: none;
 }
 
@@ -887,18 +938,20 @@ div#units, div#share {
 	margin: 0;
 }
 
-span#expand {
-	display: inline-block;
+span.expand {
+	padding: 0;
+	display: block;
+	float: left;
 	height: 12px;
 	width: 12px;
-	margin: 2px 5px 0 0;
+	margin: 2px 5px 0px 0px;
 	background-image: url(../../static/images/expand-small.png);
 	overflow: hidden;
 	position: relative;
-	top: 1px;
+	top: -2px;
 }
 
-.hideContent {
+.hideContent, .explanContent {
 	display: none;
 }
 
@@ -923,11 +976,23 @@ div#URLpop textarea {
 
 
 #explanation {
-	border: solid 2px #000;
-	padding: 10px;
-	margin: 15px 0 0 0;
+	padding: 0;
+	margin: 30px 0 0 0;
 }
 
+.keepTogether {
+	margin: 0 0 30px 0;
+}
+
+#explanation hr {
+	padding: 0;
+	margin: 0 0 15px 0;
+	background: #000;
+	border: none;
+	color: #000;
+	height: 1px;
+	width: 100%;
+}
 
 #explanation h1 {
 	margin: 0;
@@ -939,57 +1004,52 @@ div#URLpop textarea {
 	font-family: "museo-sans", sans-serif;
 }
 
-#col {
-	column-count:2;
-	-moz-column-count:2;
-	-webkit-column-count: 2;
-
-	-moz-column-gap: 26px;
-	-webkit-column-gap: 26px;
-	column-gap: 26px;
-
-	column-width: 250px;
-	-webkit-column-count: 250px;
-	-moz-column-count: 250px;
-}
-
-#col h2 {
+#explanation h2 {
 	margin: 0 0 5px 0;
 	font-weight: 700;
 	font-size: 12px;
 
 	font-family: "museo-sans", sans-serif;
-
-	-moz-column-break-before: always;
-	-webkit-column-break-before: always;
-	break-before: always;
 }
 
-#col p {
+#explanation h3 {
+	font-family: "museo-sans", sans-serif;
+	font-size: 12px;
+	font-weight: 300;
+	line-height: 1.5;
+	margin: 20px 0 0 0;
+}
+
+#explanation p {
 	font-family: "museo-sans", sans-serif;
 	font-size: 12px;
 	line-height: 1.5;
 	margin: 0;
- 	padding-bottom: 5px;
-}
-
-.keepTogether {
-	display: inline-block;
-	width: 100%;
+ 	padding: 0;
 }
 
 
-.keepTogether img.discomfortIcon {
-	display: block;
+#explanation img.diagram {
 	float: left;
-	width: 11px;
-	height: 11px;
+	width: 140px;
+	margin: 0 20px 0 0;
+}
+
+#explanation img.discomfortIcon {
+	float: left;
+	width: 9px;
+	height: 9px;
 	margin: 0px 5px 0 0;
+	padding: 2px 0;
+}
+
+#explanation div.descripText {
+	float: left;
+	width: 390px;
 }
 
 
-
-.keepTogether ul {
+#explanation ul {
 	margin: 0;
 	padding: 0 0 0 10px;
 	font-family: "museo-sans", sans-serif;
@@ -1005,7 +1065,6 @@ div#URLpop textarea {
 div.case2, div.case3, #inputs input.case2, #inputs input.case3, hr.case2, hr.case3 {
 	display: none;
 }
-
 
 
 
