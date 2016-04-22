@@ -327,20 +327,20 @@ render.makeGraph = function () {
 
 		// ppd icon
 		if (d.ppd <= ppdValue) {
-			thisIcon = "check";
+			thisIcon = "<img src='static/images/check.png' id='icon' class='check'>";
 		} else {
-			thisIcon = "cross";
+			thisIcon = "<img src='static/images/x.png' id='icon' class='check'>";
 		}
 
 
 		if (d3.select(this).attr("class") == "dotCase1") {
-			hoverText = "<h1 class='case1Text'><span id='icon' class='" + thisIcon + "'></span>CASE 1: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason;
+			hoverText = "<h1 class='case1Text'>" + thisIcon + "CASE 1: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason + "</h1>";
 
 		} else if (d3.select(this).attr("class") == "dotCase2") {
-			hoverText = "<h1 class='case1Text'><span id='icon' class='" + thisIcon + "'></span>CASE 2: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason;
+			hoverText = "<h1 class='case2Text'>" + thisIcon + "CASE 2: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason + "</h1>";
 
 		} else if (d3.select(this).attr("class") == "dotCase3") {
-			hoverText = "<h1 class='case1Text'><span id='icon' class='" + thisIcon + "'></span>CASE 3: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason;
+			hoverText = "<h1 class='case3Text'>" + thisIcon + "CASE 3: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason + "</h1>";
 
 		}
 
@@ -348,10 +348,8 @@ render.makeGraph = function () {
 
 		//Get this dots x/y values, then augment for the tooltip
 		var thisHeight = $("#tooltip").height();
-		var xPosition = x(d.dist) + margin.left;
-		var yPosition = y(d.ppd) - thisHeight + 13;
-
-
+		var xPosition = x(d.dist) + margin.left + 10;
+		var yPosition = y(d.ppd) - thisHeight + margin.top + 5;
 
 
 		d3.select("#tooltip")
@@ -2836,14 +2834,14 @@ render.makeGraph = function () {
 
 		var divHeight = $("div#thresholdTooltip").height() - 10; //10 = padding
 
-		var xPosition = x(occPointData.dist) + margin.left + 15;
+		var xPosition = x(occPointData.dist) + margin.left + 10;
 		var yPosition;
 		if (d3.max(compareOccupantArray) < 25) {
 			// all ppd values are less than 25
-			yPosition = y(d3.max(compareOccupantArray)) - divHeight - 30;
+			yPosition = y(d3.max(compareOccupantArray)) - divHeight + 15;
 		} else if (d3.max(compareOccupantArray) > 25) {
 			// at least one case is above 25
-			yPosition = margin.top - 15;
+			yPosition = margin.top + 20;
 		}
 
 
