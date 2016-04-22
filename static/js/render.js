@@ -847,10 +847,10 @@ render.makeGraph = function () {
     });
 
     // remove condensation alert on click
-    $("#condensation img.close").on("click", function() {
+/*    $("#condensation img.close").on("click", function() {
     	$("#condensation").css("display","none");
     	$("#humidity, #humidity2, #humidity3").css("color", "black");
-    })
+    })*/
 
     $("#uvaluePop img.close").on("click", function() {
      	$("#uvaluePop").css("display","none");
@@ -2686,29 +2686,26 @@ render.makeGraph = function () {
 			$("#condRisk button.bigfoot-footnote__button").css("color","white");
 
 			if (conValue1 != "none") {
-				$("#humidity, #condRisk1").css("color", "#f72734");
+				$("#humidity, #condRisk1").addClass("alert");
 				$("#condRisk1").val("YES");
 			} else {
-				$("#humidity").css("color", "black");
-				$("#condRisk1").css("color", "#ADADAD");
+				$("#humidity, #condRisk1").removeClass("alert");
 				$("#condRisk1").val("NO");
 			}
 
 			if (conValue2 != "none") {
-				$("#humidity2, #condRisk2").css("color", "#f72734");
+				$("#humidity2, #condRisk2").addClass("alert");
 				$("#condRisk2").val("YES");
 			} else {
-				$("#humidity2").css("color", "black");
-				$("#condRisk2").css("color", "#ADADAD");
+				$("#humidity2, #condRisk2").removeClass("alert");
 				$("#condRisk2").val("NO");
 			}
 
 			if (conValue3 != "none") {
-				$("#humidity3, #condRisk3").css("color", "#f72734");
+				$("#humidity3, #condRisk3").addClass("alert");
 				$("#condRisk3").val("YES");
 			} else {
-				$("#humidity3").css("color", "black");
-				$("#condRisk3").css("color", "#ADADAD");
+				$("#humidity3, #condRisk3").removeClass("alert");
 				$("#condRisk3").val("NO");
 			}
 		} 
@@ -2716,8 +2713,7 @@ render.makeGraph = function () {
 		if (conValue1 == "none" && conValue2 == "none" && conValue3 == "none") {
 			$("#condRisk button.bigfoot-footnote__button").css("background-color", "rgba(110, 110, 110, 0.2)");
 			$("#condRisk button.bigfoot-footnote__button").css("color","black");
-			$("#humidity, #humidity2, #humidity3").css("color", "black");
-			$("#condRisk1, #condRisk2, #condRisk3").css("color", "#ADADAD");
+			$("#humidity, #humidity2, #humidity3, #condRisk1, #condRisk2, #condRisk3").removeClass("alert");
 			$("#condRisk1, #condRisk2, #condRisk3").val("NO");
 		}
 	}
@@ -2926,12 +2922,12 @@ render.makeGraph = function () {
 		}
 
 		// set YPosition for tooltip
-		if (d3.max(compareOccupantArray) < 25) {
+		if (d3.max(compareOccupantArray) < 26) {
 			// all ppd values are less than 25
 			yPosition = y(d3.max(compareOccupantArray)) - divHeight + margin.top + yPadding;
-		} else if (d3.max(compareOccupantArray) > 25) {
+		} else if (d3.max(compareOccupantArray) > 26) {
 			// at least one case is above 25
-			yPosition = margin.top + yPadding;
+			yPosition = margin.top + yPadding + 12;
 		}
 
 

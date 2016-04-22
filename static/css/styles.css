@@ -29,6 +29,7 @@ body {
 	height: auto;
 	position: relative;
 	background-color: rgb(240,240,240);
+	overflow: hidden;
 }
 
 #graphWrapper ul {
@@ -632,6 +633,11 @@ div.inputWrapperRight span {
 	padding: 1px 2px 0px 0px;
 }
 
+#inputs input.inactive.alert, #inputs input.alert {
+	color: #f72734;
+}
+
+
 #inputs input.inactive#calcuvalue, #inputs input.inactive#calcuvalue2, #inputs input.inactive#calcuvalue3, #inputs input.inactive#condRisk1, #inputs input.inactive#condRisk2, #inputs input.inactive#condRisk3 {
 	padding: 0px 11px 0px 2px;
 	font-style: normal;
@@ -640,12 +646,12 @@ div.inputWrapperRight span {
 	border-left: none;
 	border-bottom-style: solid;
 	border-width: 2px;
-
 }
 
 #inputs input#calcuvalue3, #inputs input.inactive#condRisk3 {
 	margin: 0 0 0 16px;
 }
+
 
 
 
