@@ -2286,7 +2286,8 @@ render.makeGraph = function () {
 
 			occPointData = newOccLocData;
 
-			checkCondensation(newCondensation, allData2.condensation, allData3.condensation);
+			condensation1 = newCondensation;
+			checkCondensation(condensation1, condensation2, condensation3);
 
 			updateGraphData(newDataset, newOccLocData, graphPoints, ".connectLine", ".occdot1");
 
@@ -2307,7 +2308,8 @@ render.makeGraph = function () {
 
 			occPointData2 = newOccLocData;
 
-			checkCondensation(allData.condensation, newCondensation, allData3.condensation);
+			condensation2 = newCondensation;
+			checkCondensation(condensation1, condensation2, condensation3);
 
 			updateGraphData(newDataset, newOccLocData, graphCase2Points, ".connectLine2", ".occdot2");
 
@@ -2327,7 +2329,8 @@ render.makeGraph = function () {
 
 			occPointData3 = newOccLocData;
 
-			checkCondensation(allData.condensation, allData2.condensation, newCondensation);
+			condensation3 = newCondensation;
+			checkCondensation(condensation1, condensation2, condensation3);
 
 			updateGraphData(newDataset, newOccLocData, graphCase3Points, ".connectLine3", ".occdot3");
 
@@ -2656,23 +2659,43 @@ render.makeGraph = function () {
 	function checkCondensation(conValue1, conValue2, conValue3) {
 
 		if (conValue1 != "none" || conValue2 != "none" || conValue3 != "none") {
-			/*$("#condensation").css("display","block");*/
+			$("#condRisk button.bigfoot-footnote__button").css("background-color", "#f72734");
+			$("#condRisk button.bigfoot-footnote__button").css("color","white");
 
 			if (conValue1 != "none") {
-				$("#humidity").css("color", "#f72734");
+				$("#humidity, #condRisk1").css("color", "#f72734");
+				$("#condRisk1").val("YES");
+			} else {
+				$("#humidity").css("color", "black");
+				$("#condRisk1").css("color", "#ADADAD");
+				$("#condRisk1").val("NO");
 			}
 
 			if (conValue2 != "none") {
-				$("#humidity2").css("color", "#f72734");
+				$("#humidity2, #condRisk2").css("color", "#f72734");
+				$("#condRisk2").val("YES");
+			} else {
+				$("#humidity2").css("color", "black");
+				$("#condRisk2").css("color", "#ADADAD");
+				$("#condRisk2").val("NO");
 			}
 
 			if (conValue3 != "none") {
-				$("#humidity3").css("color", "#f72734");
+				$("#humidity3, #condRisk3").css("color", "#f72734");
+				$("#condRisk3").val("YES");
+			} else {
+				$("#humidity3").css("color", "black");
+				$("#condRisk3").css("color", "#ADADAD");
+				$("#condRisk3").val("NO");
 			}
+		} 
 
-		} else {
-			$("#condensation").css("display","none")
+		if (conValue1 == "none" && conValue2 == "none" && conValue3 == "none") {
+			$("#condRisk button.bigfoot-footnote__button").css("background-color", "rgba(110, 110, 110, 0.2)");
+			$("#condRisk button.bigfoot-footnote__button").css("color","black");
 			$("#humidity, #humidity2, #humidity3").css("color", "black");
+			$("#condRisk1, #condRisk2, #condRisk3").css("color", "#ADADAD");
+			$("#condRisk1, #condRisk2, #condRisk3").val("NO");
 		}
 	}
 
