@@ -161,31 +161,44 @@
 
 
 		<div id="explanation">
-			<div id="col">
-				<div class="keepTogether">
-				<h2><img class="discomfortIcon" src="static/images/triangle-black.png">Downdraft Discomfort</h2>
-				<p>Cold convective air currents, formed by warm room air hitting the cold window surface, create discomfort at the occupant’s feet and ankles. The strength of these currents depends on the height of the window pane, as well as the interior temperature of the glass.</p>
-				<h3>To minimize downdraft discomfort, try:</h3>
-				<ul>
-					<li>decreasing the window height</li>
-					<li>decreasing the window U-Value</li>
-					<li>using a glazing assembly without a room-side low-e coating</li>
-				</ul>
-				</div>
+			<h1 class="expandExplanation"><span class="expand" id="explainer"></span>Understanding Discomfort and How to Minimize It</h1>
+			<hr>
 
-				<div class="keepTogether">
-				<h2><img class="discomfortIcon" src="static/images/circle-black.png">Radiant Discomfort</h2>
-				<p>Cold interior glass surfaces affect the mean radiant temperature of occupants, and in turn make them feel cold. This discomfort depends on how much the occupant “sees” of the glass, how cold the interior glass surface is and the emissivity of the glass. If the glass has a room-side low-e coating the radiant discomfort will be greatly reduced.</p>
-				<h3>To minimize radiant discomfort, try:</h3>
-				<ul>
-					<li>decreasing the total amount of glazing</li>
-					<li>decreasing the window U-Value</li>
-					<li>increasing the sill height</li>
-					<li>using a glazing assembly with a room-side low-e coating</li>
-				</ul>
+			<div class="explanContent">
+			<div class="keepTogether">
+				<img class="diagram" src="static/images/discomfort-downdraft.png">
+				<div class="descripText">
+					<h2><img class="discomfortIcon" src="static/images/triangle-black.png">Downdraft Discomfort</h2>
+					<p>Cold convective air currents, formed by warm room air hitting the cold window surface, create discomfort at the occupant’s feet and ankles. The strength of these currents depends on the height of the window pane, as well as the interior temperature of the glass.</p>
+					<h3>To minimize downdraft discomfort, try:</h3>
+					<ul>
+						<li>decreasing the window height</li>
+						<li>decreasing the window U-Value</li>
+						<li>using a glazing assembly without a room-side low-e coating</li>
+					</ul>
 				</div>
+				<div style="clear:both;"></div>
+			</div>
+
+			<div class="keepTogether">
+				<img class="diagram" src="static/images/discomfort-radiant.png">
+				<div class="descripText">
+					<h2><img class="discomfortIcon" src="static/images/circle-black.png">Radiant Discomfort</h2>
+					<p>Cold interior glass surfaces affect the mean radiant temperature of occupants, and in turn make them feel cold. This discomfort depends on how much the occupant “sees” of the glass, how cold the interior glass surface is and the emissivity of the glass. If the glass has a room-side low-e coating the radiant discomfort will be greatly reduced.</p>
+					<h3>To minimize radiant discomfort, try:</h3>
+					<ul>
+						<li>decreasing the total amount of glazing</li>
+						<li>decreasing the window U-Value</li>
+						<li>increasing the sill height</li>
+						<li>using a glazing assembly with a room-side low-e coating</li>
+					</ul>
+				</div>
+				<div style="clear:both;"></div>
+			</div>
 			</div>
 		</div>
+
+
 	</div> <!-- end of LEFT -->
 
 	<div id="URLpop">
@@ -326,7 +339,7 @@
 
 
 		<fieldset class="inputgroup">
-			<legend class="heading expandOptions"><span id="expand"></span>Advanced Options</legend>
+			<legend class="heading expandOptions"><span class="expand" id="advOptions"></span>Advanced Options</legend>
 			<hr>
 			<div class="hideContent">
 				<p class="subtext">It is recommended to use the default values for these variables unless you have an atypical building program and are familiar with their impact on Fanger’s thermal comfort and risk of downdraft models. Note, that the tool will maintain most of these values constant across all cases.</p>

@@ -29,6 +29,7 @@ body {
 	height: auto;
 	position: relative;
 	background-color: rgb(240,240,240);
+	z-index: 1000;
 }
 
 #graphWrapper ul {
@@ -44,7 +45,7 @@ body {
 #graphWrapper ul li {
 	display: inline;
 	color: #777777;
-	margin-left: 15px;
+	margin: 0 0 0 15px;
 }
 
 #graphWrapper ul li img {
@@ -111,10 +112,10 @@ body {
 #tooltip, #thresholdTooltip {
 	position: absolute;
 	width: 280px;
-	padding: 10px;
+	/*padding: 5px;*/
 	pointer-events: none;
-	background-color: rgba(255,255,255,.8);
-	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+	/*background-color: rgba(240,240,240,.9);
+	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);*/
 }
 
 
@@ -125,10 +126,11 @@ body {
 
 #tooltip h1, #thresholdTooltip h1 {
 	font-family: "museo-sans", sans-serif;
-	font-weight: 300;
+	font-weight: 700;
 	font-size: 12px;
 	padding: 0 0 3px 0;
 	margin: 0;
+
 }
 
 #thresholdTooltip h1 img#icon, #tooltip h1 img#icon {
@@ -930,18 +932,20 @@ div#units, div#share {
 	margin: 0;
 }
 
-span#expand {
-	display: inline-block;
+span.expand {
+	padding: 0;
+	display: block;
+	float: left;
 	height: 12px;
 	width: 12px;
-	margin: 2px 5px 0 0;
+	margin: 2px 5px 0px 0px;
 	background-image: url(../../static/images/expand-small.png);
 	overflow: hidden;
 	position: relative;
-	top: 1px;
+	top: -2px;
 }
 
-.hideContent {
+.hideContent, .explanContent {
 	display: none;
 }
 
@@ -966,11 +970,23 @@ div#URLpop textarea {
 
 
 #explanation {
-	border: solid 2px #000;
-	padding: 10px;
-	margin: 15px 0 0 0;
+	padding: 0;
+	margin: 30px 0 0 0;
 }
 
+.keepTogether {
+	margin: 0 0 30px 0;
+}
+
+#explanation hr {
+	padding: 0;
+	margin: 0 0 15px 0;
+	background: #000;
+	border: none;
+	color: #000;
+	height: 1px;
+	width: 100%;
+}
 
 #explanation h1 {
 	margin: 0;
@@ -982,33 +998,23 @@ div#URLpop textarea {
 	font-family: "museo-sans", sans-serif;
 }
 
-#col {
-	column-count:2;
-	-moz-column-count:2;
-	-webkit-column-count: 2;
-
-	-moz-column-gap: 26px;
-	-webkit-column-gap: 26px;
-	column-gap: 26px;
-
-	column-width: 250px;
-	-webkit-column-count: 250px;
-	-moz-column-count: 250px;
-}
-
-#col h2 {
+#explanation h2 {
 	margin: 0 0 5px 0;
 	font-weight: 700;
 	font-size: 12px;
 
 	font-family: "museo-sans", sans-serif;
-
-	-moz-column-break-before: always;
-	-webkit-column-break-before: always;
-	break-before: always;
 }
 
-#col p {
+#explanation h3 {
+	font-family: "museo-sans", sans-serif;
+	font-size: 12px;
+	font-weight: 300;
+	line-height: 1.5;
+	margin: 20px 0 0 0;
+}
+
+#explanation p {
 	font-family: "museo-sans", sans-serif;
 	font-size: 12px;
 	line-height: 1.5;
@@ -1016,31 +1022,28 @@ div#URLpop textarea {
  	padding: 0;
 }
 
-#col h3 {
-	font-family: "museo-sans", sans-serif;
-	font-size: 12px;
-	font-weight: 700;
-	line-height: 1.5;
-	margin: 20px 0 0 0;
-}
 
-.keepTogether {
-	display: inline-block;
-	width: 100%;
-}
-
-
-.keepTogether img.discomfortIcon {
-	display: block;
+#explanation img.diagram {
 	float: left;
-	width: 11px;
-	height: 11px;
+	width: 140px;
+	margin: 0 20px 0 0;
+}
+
+#explanation img.discomfortIcon {
+	float: left;
+	width: 9px;
+	height: 9px;
 	margin: 0px 5px 0 0;
+	padding: 2px 0;
+}
+
+#explanation div.descripText {
+	float: left;
+	width: 390px;
 }
 
 
-
-.keepTogether ul {
+#explanation ul {
 	margin: 0;
 	padding: 0 0 0 10px;
 	font-family: "museo-sans", sans-serif;

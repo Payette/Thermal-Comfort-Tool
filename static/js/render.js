@@ -334,13 +334,13 @@ render.makeGraph = function () {
 
 
 		if (d3.select(this).attr("class") == "dotCase1") {
-			hoverText = "<h1 class='case1Text'>" + thisIcon + "CASE 1: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason + "</h1>";
+			hoverText = "<h1 class='case1Text'>" + thisIcon + "Case 1: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason + "</h1>";
 
 		} else if (d3.select(this).attr("class") == "dotCase2") {
-			hoverText = "<h1 class='case2Text'>" + thisIcon + "CASE 2: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason + "</h1>";
+			hoverText = "<h1 class='case2Text'>" + thisIcon + "Case 2: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason + "</h1>";
 
 		} else if (d3.select(this).attr("class") == "dotCase3") {
-			hoverText = "<h1 class='case3Text'>" + thisIcon + "CASE 3: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason + "</h1>";
+			hoverText = "<h1 class='case3Text'>" + thisIcon + "Case 3: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason + "</h1>";
 
 		}
 
@@ -348,8 +348,10 @@ render.makeGraph = function () {
 
 		//Get this dots x/y values, then augment for the tooltip
 		var thisHeight = $("#tooltip").height();
-		var xPosition = x(d.dist) + margin.left + 10;
-		var yPosition = y(d.ppd) - thisHeight + margin.top + 5;
+		var xPosition = x(d.dist) + margin.left + 8;
+		var yPosition = y(d.ppd) - thisHeight + margin.top + 20;
+
+
 
 
 		d3.select("#tooltip")
@@ -837,12 +839,27 @@ render.makeGraph = function () {
 
     	if ($(".expandOptions").hasClass("expanded")) {
     		$(".expandOptions").removeClass("expanded")
-    		$("span#expand").css("backgroundPosition", "0 0");
+    		$(".expandOptions span.expand").css("backgroundPosition", "0 0");
 			$(".hideContent").slideUp(400, "swing");
     	} else {
     		$(".expandOptions").addClass("expanded");
-    		$("span#expand").css("backgroundPosition", "0 -12px");
+    		$(".expandOptions span.expand").css("backgroundPosition", "0 -12px");
 			$(".hideContent").slideDown(400, "swing");
+    	}
+	
+	})
+
+	// expand explanation
+    $(".expandExplanation").on("click", function(){
+
+    	if ($(".expandExplanation").hasClass("expanded")) {
+    		$(".expandExplanation").removeClass("expanded")
+    		$(".expandExplanation span.expand").css("backgroundPosition", "0 0");
+			$(".explanContent").slideUp(400, "swing");
+    	} else {
+    		$(".expandExplanation").addClass("expanded");
+    		$(".expandExplanation span.expand").css("backgroundPosition", "0 -12px");
+			$(".explanContent").slideDown(400, "swing");
     	}
 	
 	})
@@ -2834,14 +2851,40 @@ render.makeGraph = function () {
 
 		var divHeight = $("div#thresholdTooltip").height() - 10; //10 = padding
 
-		var xPosition = x(occPointData.dist) + margin.left + 10;
+		var xPosition;
 		var yPosition;
+		var yPadding;
+
+		// set XPosition for tooltip
+		// change width of tooltip so it doesn't stretch outside wrapper
+		if (x(occPointData.dist) > 190 ) {
+			$("div#thresholdTooltip").css("width","150px");
+
+			yPadding = 5;
+
+			// prevent the tooltip from going outside the graph wrapper
+			if (x(occPointData.dist) > 300) {
+				// keep fixed at right edge
+				xPosition = maxContainerWidth - margin.right - $("div#thresholdTooltip").width();
+			} else {
+				// position relative to data point
+				xPosition = x(occPointData.dist) + margin.left + 8;
+			}
+			
+		} else {
+			// full width tooltip
+			$("div#thresholdTooltip").css("width","280px");
+			xPosition = x(occPointData.dist) + margin.left + 8;
+			yPadding = 10;
+		}
+
+		// set YPosition for tooltip
 		if (d3.max(compareOccupantArray) < 25) {
 			// all ppd values are less than 25
-			yPosition = y(d3.max(compareOccupantArray)) - divHeight + 15;
+			yPosition = y(d3.max(compareOccupantArray)) - divHeight + margin.top + yPadding;
 		} else if (d3.max(compareOccupantArray) > 25) {
 			// at least one case is above 25
-			yPosition = margin.top + 20;
+			yPosition = margin.top + yPadding;
 		}
 
 
