@@ -434,17 +434,16 @@ render.makeGraph = function () {
 	var glzHeightCase3 = allData3.windowHeight;
 
 
-	var facMargin = {top: 43, right: 1, bottom: 2, left: 1};
+	var facMargin = {top: 1, right: 1, bottom: 2, left: 1};
 
 
-	var maxAllowableFacWidth = (maxContainerWidth - 14*2 - 6)/3;
-	var maxAllowableFacHeight = 128;
-	var governingProportion = maxAllowableFacWidth/maxAllowableFacHeight;
+	var maxAllowableSVGWidth = (maxContainerWidth - 14*2 - 6)/3;
+	var maxAllowableSVGHeight = 128;
 
 	//overall SVG width is fixed
 	var facSpacing = 14;
-	var facWidth = maxAllowableFacWidth + facSpacing;
-	var facWidthNoSpacing = maxAllowableFacWidth;
+	var facWidth = maxAllowableSVGWidth + facSpacing;
+	var facWidthNoSpacing = maxAllowableSVGWidth;
 	var facHeight; // determined when comparing proportions
 
 
@@ -466,53 +465,67 @@ render.makeGraph = function () {
 
 	function defineScales() {
 
-		var proportinateMult;
+		var maxCeilingHeight = d3.max([Math.ceil(case1Data.ceilingHeightValue), Math.ceil(case2Data.ceilingHeightValue), Math.ceil(case3Data.ceilingHeightValue)]);
+		var ceilingPixelMultipler = maxAllowableSVGHeight/maxCeilingHeight; // pixel per ft or m
 
-		proportionData = determineInputProportion();
+		var maxWallLength = d3.max([Math.ceil(case1Data.wallLen), Math.ceil(case2Data.wallLen), Math.ceil(case3Data.wallLen)]);
+		var lengthPixelMultipler = maxAllowableSVGWidth/maxWallLength; // pixels per ft or m
 
-		var inputProportion = proportionData.maxProportion;
-		var maxCeilingCase = proportionData.maxCeilingCase;
-		var maxLengthCase = proportionData.maxLengthCase;
+		if (ceilingPixelMultipler < lengthPixelMultipler) {
+			// use ceiling height as the constraining dimension
+
+			// # of feet along width based on height factor
+			var proportionateWidth = maxAllowableSVGWidth/(maxAllowableSVGHeight/maxCeilingHeight);
+
+			if (proportionateWidth < maxWallLength) {
+				alert("uh oh! width is bigger than container");
+			} else {
+
+				facadeScaleWidth = d3.scale.linear()
+					.domain([0, proportionateWidth]) //input domain
+					.range([0, maxAllowableSVGWidth]); //output range
+
+				facadeScaleHeight = d3.scale.linear()
+					.domain([0, maxCeilingHeight]) //input domain
+					.range([0, maxAllowableSVGHeight]); //output range
+
+				//overall SVG height can vary - determined by whether ceiling height or wall length governs
+				facHeight = maxAllowableSVGHeight;
+
+			}
+		} else if (ceilingPixelMultipler > lengthPixelMultipler) {
+			// use wall length as the constraining dimension
+
+			// # of feet along height based on width factor
+			var proportionateHeight = maxAllowableSVGHeight/(maxAllowableSVGWidth/maxWallLength);
+
+			if (proportionateHeight < maxCeilingHeight) {
+				alert("uh oh! height is bigger than container");
+			} else {
+
+				var PixelsMaxCeilingHeight = maxCeilingHeight*(maxAllowableSVGWidth/maxWallLength);
+
+				facadeScaleWidth = d3.scale.linear()
+					.domain([0, maxWallLength]) //input domain
+					.range([0, maxAllowableSVGWidth]); //output range
+
+				facadeScaleHeight = d3.scale.linear()
+					.domain([0, maxCeilingHeight]) //input domain
+					.range([0, PixelsMaxCeilingHeight]); //output range
+
+				//overall SVG height can vary - determined by whether ceiling height or wall length governs
+				facHeight = PixelsMaxCeilingHeight;
+			}
+		}
 
 
 		// set height difference between cases
-		case1CeilingDiff =  maxCeilingCase.ceilingHeightValue-case1Data.ceilingHeightValue;
-		case2CeilingDiff =  maxCeilingCase.ceilingHeightValue-case2Data.ceilingHeightValue;
-		case3CeilingDiff =  maxCeilingCase.ceilingHeightValue-case3Data.ceilingHeightValue;
+		case1CeilingDiff =  maxCeilingHeight-case1Data.ceilingHeightValue;
+		case2CeilingDiff =  maxCeilingHeight-case2Data.ceilingHeightValue;
+		case3CeilingDiff =  maxCeilingHeight-case3Data.ceilingHeightValue;
 
 
 
-		// determine whether to use max ceiling height or max wall length for setting scales
-
-		if (inputProportion > governingProportion) {
-			// wall width should be maximized
-			wallSVGWidth = maxAllowableFacWidth;
-
-			// make svg height proportionate to facade width
-			proportinateMult = maxLengthCase.ceilingHeightValue/maxLengthCase.wallLen;
-			wallSVGHeight = proportinateMult*wallSVGWidth;
-
-		} else if (inputProportion < governingProportion) {
-
-			// ceiling height should be maximized
-			wallSVGHeight = maxAllowableFacHeight;
-
-			proportinateMult = maxCeilingCase.wallLen/maxCeilingCase.ceilingHeightValue;
-			wallSVGWidth = proportinateMult*wallSVGHeight;
-
-			// make svg width proportionate to facade height
-		}
-
-		facadeScaleWidth = d3.scale.linear()
-				.domain([0, maxLengthCase.wallLen]) //input domain
-				.range([0, wallSVGWidth]); //output range
-
-		facadeScaleHeight = d3.scale.linear()
-				.domain([0, maxCeilingCase.ceilingHeightValue]) //input domain
-				.range([0, wallSVGHeight]); //output range
-
-		//overall SVG height can vary - determined by whether ceiling height or wall length governs
-		facHeight = wallSVGHeight;
 
 	}
 
@@ -718,7 +731,7 @@ render.makeGraph = function () {
 			sizeButton();
 
 			$("#inputs input.case2, div.case2, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").css("display","inline-block");
-			$("hr.case2, #occupantImage2").css("display","block");
+			$("hr.case2, #occupantImage2, div.customCheckStyleCentered.case2").css("display","block");
 
 			d3.selectAll("rect.wall2").classed("outlined", false);
 			d3.selectAll("rect.wall2").classed("filled", true);
@@ -767,7 +780,7 @@ render.makeGraph = function () {
 			sizeButton();
 
 			$("#inputs input.case3, div.case3, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3").css("display","inline-block");
-			$("hr.case3, #occupantImage3").css("display","block");
+			$("hr.case3, #occupantImage3, div.customCheckStyleCentered.case3").css("display","block");
 
 
 			d3.selectAll("rect.wall3").classed("outlined", false);
@@ -942,11 +955,11 @@ render.makeGraph = function () {
 			airspeedValue = units.mps2fpm(airspeedValue);
 			$("#airspeed").val(round(airspeedValue*10)/10);
 
+
 			occDistFromFacade = units.M2Ft(occDistFromFacade);
-			$("#distFromFacade").val(occDistFromFacade);
-			$("#distOutput").val(round(occDistFromFacade * 10)/10 + " ft");
-
-
+			$("input #distFromFacade").val(occDistFromFacade);
+			$("#distOutput").empty;
+			$("#distOutput").text(round(occDistFromFacade * 10)/10 + " ft");
 
 			// update graph axis / scales
 			x = d3.scale.linear()
@@ -965,6 +978,7 @@ render.makeGraph = function () {
     		// update occupant dist from facade slider
     		$("#distFromFacade").attr("max", 12);
     		$("#distFromFacade").attr("min", 1);
+
 
 
 			updateData(case1Data);
@@ -1073,7 +1087,8 @@ render.makeGraph = function () {
 
 			occDistFromFacade = units.Ft2M(occDistFromFacade);
 			$("#distFromFacade").val(occDistFromFacade);
-			$("#distOutput").val(round(occDistFromFacade * 10)/10 + " m");
+			$("#distOutput").empty();
+			$("#distOutput").text(round(occDistFromFacade * 10)/10 + " m");
 
 
 
@@ -2345,7 +2360,7 @@ render.makeGraph = function () {
 	/* ------ FUNCTIONS TO UPDATE VISUALS ------ */
 	function updateGraphData(upDataset, upOccupantPoint, dotSelector, lineSelector, occSelector) {
 
-		defineScales();
+		
 
 
 		//update graph with revised data
@@ -2400,7 +2415,6 @@ render.makeGraph = function () {
 
 		//re-evaluate scales
 		defineScales();
-
 
 		/* -- UPDATE CASE 1 FACADE REPRESENTATION -- */
 		//update wall
@@ -2598,35 +2612,28 @@ render.makeGraph = function () {
 			$("#condRisk button.bigfoot-footnote__button").css("color","white");
 
 			if (conValue1 != "none") {
-				$("#humidity, #condRisk1").addClass("alert");
-				$("#condRisk1").val("YES");
+				$("#condRisk1").addClass("alert").val("YES");
 			} else {
-				$("#humidity, #condRisk1").removeClass("alert");
-				$("#condRisk1").val("NO");
+				$("#condRisk1").removeClass("alert").val("NO");
 			}
 
 			if (conValue2 != "none") {
-				$("#humidity2, #condRisk2").addClass("alert");
-				$("#condRisk2").val("YES");
+				$("#condRisk2").addClass("alert").val("YES");
 			} else {
-				$("#humidity2, #condRisk2").removeClass("alert");
-				$("#condRisk2").val("NO");
+				$("#condRisk2").removeClass("alert").val("NO");
 			}
 
 			if (conValue3 != "none") {
-				$("#humidity3, #condRisk3").addClass("alert");
-				$("#condRisk3").val("YES");
+				$("#condRisk3").addClass("alert").val("YES");
 			} else {
-				$("#humidity3, #condRisk3").removeClass("alert");
-				$("#condRisk3").val("NO");
+				$("#condRisk3").removeClass("alert").val("NO");
 			}
 		} 
 
 		if (conValue1 == "none" && conValue2 == "none" && conValue3 == "none") {
 			$("#condRisk button.bigfoot-footnote__button").css("background-color", "rgba(110, 110, 110, 0.2)");
 			$("#condRisk button.bigfoot-footnote__button").css("color","black");
-			$("#humidity, #humidity2, #humidity3, #condRisk1, #condRisk2, #condRisk3").removeClass("alert");
-			$("#condRisk1, #condRisk2, #condRisk3").val("NO");
+			$("#condRisk1, #condRisk2, #condRisk3").removeClass("alert").val("NO");
 		}
 	}
 
