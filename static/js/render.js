@@ -802,11 +802,7 @@ render.makeGraph = function () {
 
     });
 
-    // remove condensation alert on click
-/*    $("#condensation img.close").on("click", function() {
-    	$("#condensation").css("display","none");
-    	$("#humidity, #humidity2, #humidity3").css("color", "black");
-    })*/
+
 
     $("#uvaluePop img.close").on("click", function() {
      	$("#uvaluePop").css("display","none");
@@ -843,15 +839,6 @@ render.makeGraph = function () {
 	
 	})
 	
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1292,23 +1279,6 @@ render.makeGraph = function () {
 		}
 	})
 
-
-	/*$("#radiant, #radiant2, #radiant3").change(function(event) {
-		if (($("#radiant").is(":checked")) == true) {
-			radiantFloorChecked = true;
-
-			$("#radiantCheck1, #radiantCheck2, #radiantCheck3").removeClass("unselected");
-
-		} else if (($("#radiant").is(":checked")) == false) {
-			radiantFloorChecked = false;
-
-			$("#radiantCheck1, #radiantCheck2, #radiantCheck3").addClass("unselected");
-		}
-
-		updateData(case1Data);
-		updateData(case2Data);
-		updateData(case3Data);
-	})*/
 
 
 	$("#rvalue").focusout(function(event) {
