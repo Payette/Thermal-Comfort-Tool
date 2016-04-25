@@ -664,50 +664,6 @@ render.makeGraph = function () {
 
 
 
-	$("#ceilingHeightButt").on("mouseover", function() {
-		$("#facadeHeightDim").fadeIn("fast");
-	})
-	$("#ceilingHeightButt").on("mouseout", function() {
-		$("#facadeHeightDim").fadeOut("fast");
-	})
-
-	$("#roomLengthButt").on("mouseover", function() {
-		$("#facadeWidthDim").fadeIn("fast");
-	})
-	$("#roomLengthButt").on("mouseout", function() {
-		$("#facadeWidthDim").fadeOut("fast");
-	})
-
-
-	$("#windHeightButt").on("mouseover", function() {
-		$("#windowHeightDimLabel, #windowHeightDim").fadeIn("fast");
-	})
-	$("#windHeightButt").on("mouseout", function() {
-		$("#windowHeightDimLabel, #windowHeightDim").fadeOut("fast");
-	})
-
-	$("#windWidthButt").on("mouseover", function() {
-		$("#windowWidthDim").fadeIn("fast");
-	})
-	$("#windWidthButt").on("mouseout", function() {
-		$("#windowWidthDim").fadeOut("fast");
-	})
-
-	$("#sillHeightButt").on("mouseover", function() {
-		$("#sillHeightDim, #sillHeightDimLabelTop, #sillHeightDimLabelBottom").fadeIn("fast");
-	})
-	$("#sillHeightButt").on("mouseout", function() {
-		$("#sillHeightDim, #sillHeightDimLabelTop, #sillHeightDimLabelBottom").fadeOut("fast");
-	})
-
-	$("#windSepButt").on("mouseover", function() {
-		$("#windowSepDim").fadeIn("fast");
-	})
-	$("#windSepButt").on("mouseout", function() {
-		$("#windowSepDim").fadeOut("fast");
-	})
-
-
 		/* ---- SVG DEFINITIONS ---- */
 
 	var defs = facadeSvgCase1.append("defs");
@@ -2397,33 +2353,19 @@ render.makeGraph = function () {
 
 			if (case1Data.calcUVal <= 0.01) {
 				$("#calcuvalue").css("color", "#f72734");
-				/*$("#calcuvalue").val("*");
-				$("#calcuvalue").css("text-align", "center");
-				$("#calcuvalue").css("font-weight", "700");*/
 			}
 
 			if (case2Data.calcUVal <= 0.01) {
 				$("#calcuvalue2").css("color", "#f72734");
-				/*$("#calcuvalue2").val("*");
-				$("#calcuvalue2").css("text-align", "center");
-				$("#calcuvalue2").css("font-weight", "700");*/
 			}
 
 			if (case3Data.calcUVal <= 0.01) {
 				$("#calcuvalue3").css("color", "#f72734");
-				/*$("#calcuvalue3").val("*");
-				$("#calcuvalue3").css("text-align", "center");
-				$("#calcuvalue3").css("font-weight", "700");*/
 			}
 
 		} else {
 			$("#uvaluePop").css("display","none");
 			$("#calcuvalue, #calcuvalue2, #calcuvalue3").css("color", "#ADADAD");
-			/*$("#calcuvalue").val(case1Data.calcUVal);
-			$("#calcuvalue").val(case2Data.calcUVal);
-			$("#calcuvalue").val(case3Data.calcUVal);*/
-			/*$("#calcuvalue").css("text-align", "right");
-			$("#calcuvalue, #calcuvalue2, #calcuvalue3").css("font-weight", "300");*/
 		}
 
 	}
@@ -3078,136 +3020,6 @@ render.makeGraph = function () {
 
 
 
-/*
-	function addDimensions(glazingData, glazingWidth, glazingHeight) {
-
-		//get position of left-most window
-		var firstWindow = $(".window1:last");
-
-
-		var leftEdgeWindow = parseFloat(firstWindow.attr("x"));
-		var middleWidth = parseFloat(firstWindow.attr("x")) + facadeScaleWidth(glazingWidth/2);
-		var verticalWindowMidpoint = parseFloat(firstWindow.attr("y")) + facadeScaleHeight(glazingHeight/2);
-		var topOfWindow = parseFloat(firstWindow.attr("y"));
-		var bottomOfWindow = parseFloat(firstWindow.attr("y")) + facadeScaleHeight(glazingHeight);
-		var sillHeightPixels = facadeScaleHeight(glazingData[0][0][2]);
-
-		try {
-			var windowSeparationPixels = facadeScaleWidth(glazingData[0][0][0]) - facadeScaleWidth(glazingData[1][0][0]);
-		} catch (err) {
-			var windowSeparationPixels = case1Data.wallLen/2
-		}
-
-
-
-		// window height
-		facadeSvgCase1.append("g")
-			.attr("class", "dimensions")
-			.attr("id", "windowHeightDim")
-			.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case1CeilingDiff)) + ")");
-		var windowHeightDimensions = facadeSvgCase1.selectAll("#windowHeightDim");
-		windowHeightDimensions.append("line")
-		    .attr("class", "dimline")
-		    .attr("x2", middleWidth)
-			.attr("x1", middleWidth)
-			.attr("y1", topOfWindow)
-			.attr("y2", bottomOfWindow)
-			.attr("marker-end", "url(#arrowhead)")
-			.attr("marker-start", "url(#arrowhead)");
-
-
-		//window width
-		facadeSvgCase1.append("g")
-			.attr("class", "dimensions")
-			.attr("id", "windowWidthDim")
-			.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case1CeilingDiff)) + ")");
-		var windowWidthDimensions = facadeSvgCase1.selectAll("#windowWidthDim");
-		windowWidthDimensions.append("line")
-		    .attr("class", "dimline")
-		    .attr("x1", leftEdgeWindow)
-			.attr("x2", leftEdgeWindow + facadeScaleWidth(glazingWidth))
-			.attr("y1", verticalWindowMidpoint)
-			.attr("y2", verticalWindowMidpoint)
-			.attr("marker-start", "url(#arrowhead)")
-			.attr("marker-end", "url(#arrowhead)");
-
-
-		//sill height
-		facadeSvgCase1.append("g")
-			.attr("class", "dimensions")
-			.attr("id", "sillHeightDim")
-			.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case1CeilingDiff)) + ")");
-		var sillHeightDimensions = facadeSvgCase1.selectAll("#sillHeightDim");
-		sillHeightDimensions.append("line")
-		    .attr("class", "dimline")
-		    .attr("x2", middleWidth)
-			.attr("x1", middleWidth)
-			.attr("y1", bottomOfWindow)
-			.attr("y2", bottomOfWindow + sillHeightPixels)
-			.attr("marker-end", "url(#arrowhead)")
-			.attr("marker-start", "url(#arrowhead)");
-
-
-		//window separation
-
-		facadeSvgCase1.append("g")
-			.attr("class", "dimensions")
-			.attr("id", "windowSepDim")
-			.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case1CeilingDiff)) + ")");
-		var windowSepDimensions = facadeSvgCase1.selectAll("#windowSepDim");
-
-		if (case1Data.distanceWindows != case1Data.wallLen) {
-			windowSepDimensions.append("line")
-		    .attr("class", "dimline")
-		    .attr("x1", middleWidth)
-			.attr("x2", middleWidth + windowSeparationPixels)
-			.attr("y1", verticalWindowMidpoint)
-			.attr("y2", verticalWindowMidpoint)
-			.attr("marker-start", "url(#arrowhead)")
-			.attr("marker-end", "url(#arrowhead)");
-		} else {
-			windowSepDimensions.append("line")
-		    .attr("class", "dimline")
-		    .attr("x1", 0)
-			.attr("x2", function() {return facadeScaleWidth(case1Data.wallLen)})
-			.attr("y1", function() {return facadeScaleHeight(case1Data.ceilingHeightValue/2)})
-			.attr("y2", function() {return facadeScaleHeight(case1Data.ceilingHeightValue/2)})
-			.attr("marker-start", "url(#arrowhead)")
-			.attr("marker-end", "url(#arrowhead)");
-		}
-
-
-		// ceiling height
-		facadeSvgCase1.append("g")
-			.attr("class", "dimensions")
-			.attr("id", "facadeHeightDim")
-			.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case1CeilingDiff)) + ")");
-		var facHeightDimensions = facadeSvgCase1.selectAll("#facadeHeightDim");
-		facHeightDimensions.append("line")
-		    .attr("class", "dimline")
-		    .attr("x1", function() {return facadeScaleWidth(case1Data.wallLen/4)})
-			.attr("x2", function() {return facadeScaleWidth(case1Data.wallLen/4)})
-			.attr("y2", 0)
-			.attr("y1", function() {return facadeScaleHeight(case1Data.ceilingHeightValue)})
-			.attr("marker-end", "url(#arrowhead)")
-			.attr("marker-start", "url(#arrowhead)");
-
-		// room length
-		facadeSvgCase1.append("g")
-			.attr("class", "dimensions")
-			.attr("id", "facadeWidthDim")
-			.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case1CeilingDiff)) + ")");
-		var facWidthDimensions = facadeSvgCase1.selectAll("#facadeWidthDim");
-		facWidthDimensions.append("line")
-		    .attr("class", "dimline")
-		    .attr("x1", 0)
-			.attr("x2", function() {return facadeScaleWidth(case1Data.wallLen)})
-			.attr("y1", function() {return facadeScaleHeight(case1Data.ceilingHeightValue/2)})
-			.attr("y2", function() {return facadeScaleHeight(case1Data.ceilingHeightValue/2)})
-			.attr("marker-start", "url(#arrowhead)")
-			.attr("marker-end", "url(#arrowhead)");
-	}
-*/
 
 
 
