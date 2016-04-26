@@ -409,14 +409,14 @@ comf.calcFullMRTppd = function(winView, opaView, winFilmCoeff, airTemp, outdoorT
   if (intLowE != true){
     var ptMRT = winView*windowTemp + opaView*opaqueTemp + (1-winView-opaView)*indoorSrfTemp
   } else {
-    var ptMRT = (winView*windowTemp*lowEmissivity + opaView*opaqueTemp*0.9 + (1-winView-opaView)*indoorSrfTemp*0.9)/(winView*0.2 + (1-winView)*0.9)
+    var ptMRT = (winView*windowTemp*lowEmissivity + opaView*opaqueTemp*0.9 + (1-winView-opaView)*indoorSrfTemp*0.9)/(winView*lowEmissivity + (1-winView)*0.9)
   }
 
   //Compute the PMV at the point
   var mrtResult = comf.pmvElevatedAirspeed(airTemp, ptMRT, vel, rh, met, clo, 0)
 	if (mrtResult.pmv > 0){
 		var finalMRTPPD = 5
-	} else {
+  } else {
 		var finalMRTPPD = mrtResult.ppd
   }
 
