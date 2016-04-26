@@ -957,7 +957,9 @@ render.makeGraph = function () {
 
 
 			occDistFromFacade = units.M2Ft(occDistFromFacade);
-			$("input #distFromFacade").val(occDistFromFacade);
+			// update occupant dist from facade slider
+    		$("#distFromFacade").attr("max", 12).attr("min", 1);
+			$("#distFromFacade").attr("value", occDistFromFacade);
 			$("#distOutput").empty;
 			$("#distOutput").text(round(occDistFromFacade * 10)/10 + " ft");
 
@@ -974,10 +976,6 @@ render.makeGraph = function () {
 
     		graphSvg.select("#XAxisLabel")
 	    	.text("Occupant Distance from Façade (ft)");
-
-    		// update occupant dist from facade slider
-    		$("#distFromFacade").attr("max", 12);
-    		$("#distFromFacade").attr("min", 1);
 
 
 
@@ -1086,7 +1084,9 @@ render.makeGraph = function () {
 			$("#airspeed").val(round(airspeedValue*100)/100);
 
 			occDistFromFacade = units.Ft2M(occDistFromFacade);
-			$("#distFromFacade").val(occDistFromFacade);
+			// update occupant dist from facade slider
+    		$("#distFromFacade").attr("max", 4).attr("min", .25);
+			$("#distFromFacade").attr("value", occDistFromFacade);
 			$("#distOutput").empty();
 			$("#distOutput").text(round(occDistFromFacade * 10)/10 + " m");
 
@@ -1104,10 +1104,6 @@ render.makeGraph = function () {
 
     		graphSvg.select("#XAxisLabel")
 	    	.text("Occupant Distance from Façade (m)");
-
-    		// update occupant dist from facade slider
-    		$("#distFromFacade").attr("max", 4);
-    		$("#distFromFacade").attr("min", .25);
 
 
 			updateData(case1Data);
@@ -1153,7 +1149,7 @@ render.makeGraph = function () {
 	  	$("#distFromFacade").on("change", function(event) {
 			occDistFromFacade = $(this).val();
 
-			$("#distFromFacade").val(occDistFromFacade);
+			$("#distFromFacade").attr("value",occDistFromFacade);
 			if (unitSys == "IP") {
 				$("#distOutput").text(occDistFromFacade + " ft");
 			} else {
@@ -1181,7 +1177,7 @@ render.makeGraph = function () {
 			}
 			else {
 				ppdValue = $(this).val();
-				$("#ppd").val(ppdValue);
+				$("#ppd").attr("value",ppdValue);
 				$("#ppdOutput").text(ppdValue + "%");
 			}
 			// Update target PPD threshold line
@@ -1197,7 +1193,7 @@ render.makeGraph = function () {
 	$("#distFromFacade").on("input", function(event) {
 		occDistFromFacade = $(this).val();
 
-		$("#distFromFacade").val(occDistFromFacade);
+		$("#distFromFacade").attr("value",occDistFromFacade);
 		if (unitSys == "IP") {
 			$("#distOutput").text(occDistFromFacade + " ft");
 		} else {
@@ -1227,7 +1223,7 @@ render.makeGraph = function () {
 		}
 		else {
 			ppdValue = $(this).val();
-			$("#ppd").val(ppdValue);
+			$("#ppd").attr("value",ppdValue);
 			$("#ppdOutput").text(ppdValue + "%");
 		}
 		// Update target PPD threshold line
@@ -1237,6 +1233,7 @@ render.makeGraph = function () {
 		// update calculated uvalue
 		autocalcUValues();
 	});
+
 
 
 
