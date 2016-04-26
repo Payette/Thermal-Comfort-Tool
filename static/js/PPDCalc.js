@@ -366,14 +366,14 @@ comf.pierceSET = function(ta, tr, vel, rh, met, clo, wme) {
 }
 
 comf.pmvElevatedAirspeed = function(ta, tr, vel, rh, met, clo, wme) {
-    // returns pmv at elevated airspeed (> comf.still_air_threshold)
     var r = {}
-    var set = comf.pierceSET(ta, tr, vel, rh, met , clo, wme);
+    var set = 0
     if (vel <= comf.still_air_threshold) {
         var pmv = comf.pmv(ta, tr, vel, rh, met, clo, wme)
         var ta_adj = ta
         var ce = 0
     } else {
+        var set = comf.pierceSET(ta, tr, vel, rh, met, clo, wme);
         var ce_l = 0;
         var ce_r = 40;
         var eps = 0.001;  // precision of ce
@@ -388,7 +388,6 @@ comf.pmvElevatedAirspeed = function(ta, tr, vel, rh, met, clo, wme) {
     }
     r.pmv = pmv.pmv;
     r.ppd = pmv.ppd;
-    r.set = set;
     r.ta_adj = ta - ce;
     r.tr_adj = tr - ce;
     r.cooling_effect = ce;
