@@ -174,114 +174,18 @@ render.makeGraph = function () {
 			.style("stroke-width", .5);
 
 
-    // Add dots at each point
-	var graphPoints = graphSvg.selectAll(".dotCase1")
-		.data(dataset)
-		.enter()
-		.append("path")
-		.attr("class","dotCase1")
-		.attr("d", d3.svg.symbol()
-			.type(function(d) {
-				if (d.govfact == "dwn") {
-					return "triangle-up";
-				} else if (d.govfact == "mrt") {
-					return "circle";
-				}
-			})
-			.size("35"))
-		.attr("transform", function(d) {
-				return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
-		.style("fill", color1);
-
-	var graphCase2Points = graphSvg.selectAll(".dotCase2")
-		.data(dataset2)
-		.enter()
-		.append("path")
-		.attr("class","dotCase2")
-		.attr("d", d3.svg.symbol()
-			.type(function(d) {
-				if (d.govfact == "dwn") {
-					return "triangle-up";
-				} else if (d.govfact == "mrt") {
-					return "circle";
-				}
-			})
-			.size("35"))
-		.attr("transform", function(d) {
-				return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
-		.style("fill", color2);
-
-	var graphCase3Points = graphSvg.selectAll(".dotCase3")
-		.data(dataset3)
-		.enter()
-		.append("path")
-		.attr("class","dotCase3")
-		.attr("d", d3.svg.symbol()
-			.type(function(d) {
-				if (d.govfact == "dwn") {
-					return "triangle-up";
-				} else if (d.govfact == "mrt") {
-					return "circle";
-				}
-			})
-			.size("35"))
-		.attr("transform", function(d) {
-				return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
-		.style("fill", color3);
+	// call function to initialize all data points
+	updateGraphPoints(dataset, "dotCase1", color1);
+	updateGraphPoints(dataset2, "dotCase2", color2);
+	updateGraphPoints(dataset3, "dotCase3", color3);
 
 
 
 	// Add point at occupant location
-	var occupantPoint = graphSvg.append("path")
-		.attr("class","occdot1")
-		.attr("d", d3.svg.symbol()
-			.type(function() {
-				if (occPointData.govfact == "dwn") {
-					return "triangle-up";
-				} else if (occPointData.govfact == "mrt") {
-					return "circle";
-				}
-			})
-			.size("35"))
-		.attr("transform", function() {
-				return "translate(" + (margin.left + x(occPointData.dist)) + "," + (margin.top + y(occPointData.ppd)) + ")";})
-		.style("fill", "#FFF")
-		.style("stroke-width", 2)
-		.style("stroke", color1);
+	updateOccupantPoint([occPointData], "occdot1", color1);
+	updateOccupantPoint([occPointData2], "occdot2", color2);
+	updateOccupantPoint([occPointData3], "occdot3", color3);
 
-	var occupantPoint2 = graphSvg.append("path")
-		.attr("class","occdot2")
-		.attr("d", d3.svg.symbol()
-			.type(function() {
-				if (occPointData2.govfact == "dwn") {
-					return "triangle-up";
-				} else if (occPointData2.govfact == "mrt") {
-					return "circle";
-				}
-			})
-			.size("35"))
-		.attr("transform", function() {
-				return "translate(" + (margin.left + x(occPointData2.dist)) + "," + (margin.top + y(occPointData2.ppd)) + ")";})
-		.style("fill", "#FFF")
-		.style("stroke-width", 2)
-		.style("stroke", color2);
-
-	var occupantPoint3 = graphSvg.append("path")
-		.attr("class","occdot3")
-		.attr("d", d3.svg.symbol()
-			.type(function() {
-				if (occPointData3.govfact == "dwn") {
-					return "triangle-up";
-				} else if (occPointData3.govfact == "mrt") {
-					return "circle";
-				}
-			})
-			.size("35"))
-		.attr("transform", function() {
-				return "translate(" + (margin.left + x(occPointData3.dist)) + "," + (margin.top + y(occPointData3.ppd)) + ")";})
-		.style("fill", "#FFF")
-		.style("stroke-width", 2)
-		.style("stroke", color3);
 
 
 	// hide or show different cases on the chart
@@ -297,10 +201,6 @@ render.makeGraph = function () {
 		$(".connectLine3, .dotCase3, .occdot3").css("display","inline-block");
 	}
 
-
-
-	// Add line at occupant location
-	occupantDistanceRefLine();
 
 	// add text at occupanct location
 	thresholdDataText();
@@ -1085,7 +985,7 @@ render.makeGraph = function () {
 
 			occDistFromFacade = units.Ft2M(occDistFromFacade);
 			// update occupant dist from facade slider
-    		$("#distFromFacade").attr("max", 4).attr("min", .25);
+    		$("#distFromFacade").attr("max", 4.5).attr("min", .25);
 			$("#distFromFacade").attr("value", occDistFromFacade);
 			$("#distOutput").empty();
 			$("#distOutput").text(round(occDistFromFacade * 10)/10 + " m");
@@ -1095,12 +995,12 @@ render.makeGraph = function () {
 			// update graph axis / scales
 			x = d3.scale.linear()
 			.range([0, width]) // value -> display
-			.domain([0, 4]);
+			.domain([0, 4.5]);
 
 			xAxis = d3.svg.axis().scale(x).orient("bottom");
 
 			graphSvg.select("#graphXAxis")
-    		.call(xAxis.ticks(7).tickValues([0.5, 1, 1.5, 2, 2.5, 3, 3.5]));
+    		.call(xAxis.ticks(8).tickValues([0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4]));
 
     		graphSvg.select("#XAxisLabel")
 	    	.text("Occupant Distance from Façade (m)");
@@ -2250,10 +2150,10 @@ render.makeGraph = function () {
 			condensation1 = newCondensation;
 			checkCondensation(condensation1, condensation2, condensation3);
 
-			updateGraphData(newDataset, newOccLocData, graphPoints, ".connectLine", ".occdot1");
-
-
-
+			// update data points
+			updateGraphPoints(newDataset, "dotCase1", color1);
+			updateOccupantPoint([occPointData], "occdot1", color1);
+			updateConnectedLine(newDataset, ".connectLine");
 		}
 
 		else if (object == case2Data) {
@@ -2272,9 +2172,10 @@ render.makeGraph = function () {
 			condensation2 = newCondensation;
 			checkCondensation(condensation1, condensation2, condensation3);
 
-			updateGraphData(newDataset, newOccLocData, graphCase2Points, ".connectLine2", ".occdot2");
-
-
+			// update data points
+			updateGraphPoints(newDataset, "dotCase2", color2);
+			updateOccupantPoint([occPointData2], "occdot2", color2);
+			updateConnectedLine(newDataset, ".connectLine2");
 		}
 
 		else if (object == case3Data) {
@@ -2293,9 +2194,10 @@ render.makeGraph = function () {
 			condensation3 = newCondensation;
 			checkCondensation(condensation1, condensation2, condensation3);
 
-			updateGraphData(newDataset, newOccLocData, graphCase3Points, ".connectLine3", ".occdot3");
-
-
+			// update data points
+			updateGraphPoints(newDataset, "dotCase3", color3);
+			updateOccupantPoint([occPointData3], "occdot3", color3);
+			updateConnectedLine(newDataset, ".connectLine3");
 		}
 
 		autocalcUValues();
@@ -2351,256 +2253,6 @@ render.makeGraph = function () {
 
 	}
 
-
-
-	/* ------ FUNCTIONS TO UPDATE VISUALS ------ */
-	function updateGraphData(upDataset, upOccupantPoint, dotSelector, lineSelector, occSelector) {
-
-
-
-
-		//update graph with revised data
-		dotSelector.data(upDataset)
-			.attr("d", d3.svg.symbol()
-				.type(function(d) {
-					if (d.govfact == "dwn") {
-						return "triangle-up";
-					} else if (d.govfact == "mrt") {
-						return "circle";
-					}
-				})
-				.size("35"))
-			.attr("transform", function(d) {
-					return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
-			.transition()
-			.duration(500);
-
-
-		//update connection line
-		graphSvg.selectAll(lineSelector)
-			.attr("d", line(upDataset))
-			.transition()
-			.duration(500);
-
-		//update occupant point if different
-		d3.selectAll(occSelector)
-			.attr("d", d3.svg.symbol()
-				.type(function() {
-					if (upOccupantPoint.govfact == "dwn") {
-						return "triangle-up";
-					} else if (upOccupantPoint.govfact == "mrt") {
-						return "circle";
-					}
-				})
-				.size("35"))
-			.attr("transform", function() {
-				return "translate(" + (margin.left + x(upOccupantPoint.dist)) + "," + (margin.top + y(upOccupantPoint.ppd)) + ")";})
-			.transition()
-			.duration(500);
-
-		d3.selectAll(".occupantLine").remove();
-		occupantDistanceRefLine();
-
-
-
-
-	}
-
-
-	function updateFacade() {
-
-		//re-evaluate scales
-		defineScales();
-
-		/* -- UPDATE CASE 1 FACADE REPRESENTATION -- */
-		//update wall
-		d3.select("#facadeCase1")
-			.attr("height", facHeight + facMargin.top + facMargin.bottom)
-			.transition()
-			.duration(500);
-		wallCase1
-			.attr("width", function(d) {return facadeScaleWidth(case1Data.wallLen)})
-			.attr("height", function(d) {return facadeScaleHeight(case1Data.ceilingHeightValue)})
-			.attr("transform", function() {
-				return "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case1CeilingDiff)) + ")"
-			})
-			.transition()
-			.duration(500);
-		//update windows
-		d3.selectAll("rect.window1").remove();
-		facadeSvgCase1.selectAll(".window1")
-			.data(glzCoords)
-			.enter()
-			.append("rect")
-			.attr("class", "window1 blue")
-			.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facadeScaleWidth(case1Data.wallLen)/2)})
-			.attr("y", function(d) {return (facadeScaleHeight(case1Data.ceilingHeightValue - d[3][2]))})
-			.attr("width", facadeScaleWidth(glzWidth))
-			.attr("height", facadeScaleHeight(glzHeight))
-			.attr("transform", function() {
-				return "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case1CeilingDiff)) + ")"
-			});
-
-
-		/* -- UPDATE CASE 2 FACADE REPRESENTATION -- */
-		d3.select("#facadeCase2")
-			.attr("height", facHeight + facMargin.top + facMargin.bottom)
-			.transition()
-			.duration(500);
-		wallCase2.attr("width", function(d) {return facadeScaleWidth(case2Data.wallLen)})
-			.attr("height", function(d) {return facadeScaleHeight(case2Data.ceilingHeightValue)})
-			.attr("transform", function() {
-				return "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case2CeilingDiff)) + ")"
-			})
-			.transition()
-			.duration(500);
-		//update windows
-		d3.selectAll("rect.window2").remove()
-		facadeSvgCase2.selectAll(".window2")
-			.data(glzCoordsCase2)
-			.enter()
-			.append("rect")
-			.attr("class", function(d) {
-				if ($("#caseSelection #case2Label").hasClass("unselected")) {
-					return "window2 white"
-				} else {
-					return "window2 blue"
-				}
-			})
-			.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facadeScaleWidth(case2Data.wallLen)/2)})
-			.attr("y", function(d) {return (facadeScaleHeight(case2Data.ceilingHeightValue - d[3][2]))})
-			.attr("width", facadeScaleWidth(glzWidthCase2))
-			.attr("height", facadeScaleHeight(glzHeightCase2))
-			.attr("transform", function() {
-				return "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case2CeilingDiff)) + ")"
-			});
-
-
-
-
-		/* -- UPDATE CASE 3 FACADE REPRESENTATION -- */
-		d3.select("#facadeCase3")
-			.attr("height", facHeight + facMargin.top + facMargin.bottom)
-			.transition()
-			.duration(500);
-		wallCase3.attr("width", function(d) {return facadeScaleWidth(case3Data.wallLen)})
-			.attr("height", function(d) {return facadeScaleHeight(case3Data.ceilingHeightValue)})
-			.attr("transform", function() {
-				return "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case3CeilingDiff)) + ")"
-			})
-			.transition()
-			.duration(500);
-		//update windows
-		d3.selectAll("rect.window3").remove()
-		facadeSvgCase3.selectAll(".window3")
-			.data(glzCoordsCase3)
-			.enter()
-			.append("rect")
-			.attr("class", function(d) {
-				if ($("#caseSelection #case3Label").hasClass("unselected")) {
-					return "window3 white"
-				} else {
-					return "window3 blue"
-				}
-			})
-			.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facadeScaleWidth(case3Data.wallLen)/2)})
-			.attr("y", function(d) {return (facadeScaleHeight(case3Data.ceilingHeightValue - d[3][2]))})
-			.attr("width", facadeScaleWidth(glzWidthCase3))
-			.attr("height", facadeScaleHeight(glzHeightCase3))
-			.attr("transform", function() {
-				return "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case3CeilingDiff)) + ")"
-			});
-
-
-
-
-
-		checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist", "#case1Heading");
-		checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#case2Heading");
-		checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#case3Heading");
-
-
-	}
-
-
-
-	function checkOccupantImageSize(caseName, imageID, sliderID, labelID) {
-
-		var imageHeight = $("#occupantImage").height();
-		var imageWidth = $("#occupantImage").width();
-
-		// original image dimensions
-		var originalHeight = 500;
-		var originalWidth = 360;
-
-
-		var resizeHeight;
-		//assume 4.35ft/1.32m sitting height
-		if (unitSys == "IP") {
-			resizeHeight = Math.round(facadeScaleHeight(4.35));
-		} else {
-			resizeHeight = Math.round(facadeScaleHeight(1.32588));
-		}
-
-
-
-
-		var resizeWidth = Math.round((resizeHeight/originalHeight)*originalWidth);
-
-		var diffBtwSVGandFacade = facWidth - facadeScaleWidth(caseName.wallLen);
-
-
-		var newLeft = 0 - resizeWidth/2;
-		var newBottom = Math.round(resizeHeight + facMargin.bottom + 5);
-
-		var newbackgroundsize = resizeWidth.toString() + "px " + resizeHeight.toString() + "px";
-
-		$(imageID).css({
-			width: resizeWidth,
-			height: resizeHeight,
-			//left: newLeft,
-			bottom: newBottom,
-			backgroundSize: newbackgroundsize,
-		})
-
-		$(labelID).css({
-			width: facadeScaleWidth(caseName.wallLen)/2
-		})
-
-
-		$(sliderID).css({
-			width: facadeScaleWidth(caseName.wallLen)/2,
-		})
-		$(sliderID).attr("max", (caseName.wallLen)/2);
-
-	}
-
-	function updateOccupantImageLocation(imageID, sliderID, caseName) {
-
-
-		var slider = $(sliderID);
- 		var width = slider.width();
- 		var imageWidth = parseFloat($(imageID).css("width"));
-
-		var sliderScale = d3.scale.linear()
-			.domain([slider.attr("min"), slider.attr("max")])
-			.range([0, width]);
-
-		var newPosition = sliderScale(caseName.occDistToWallCenter);
-
-		var newLeftPosition = (0 - imageWidth/2 + newPosition) + "px";
-
-	   	// Move occupant image
-	   	$(imageID).css({
-	       left: newLeftPosition,
-		})
-	}
-
-
-	/* ------ FUNCTIONS FOR GENERAL REFERENCE VISUALS ------ */
-
-
-
 	function checkCondensation(conValue1, conValue2, conValue3) {
 
 		if (conValue1 != "none" || conValue2 != "none" || conValue3 != "none") {
@@ -2634,41 +2286,119 @@ render.makeGraph = function () {
 	}
 
 
-	function determineInputProportion() {
-
-		var svgProportionData = {};
-		// maxCeilingCase, maxLengthCase, maxProportion
-
-		// find the max ceiling height and wall length out of the 3 cases
-		var ceilingHeightArray = [case1Data.ceilingHeightValue, case2Data.ceilingHeightValue, case3Data.ceilingHeightValue];
-		var maxCeilingHeight = d3.max(ceilingHeightArray);
-
-		if (maxCeilingHeight == case1Data.ceilingHeightValue) {
-			svgProportionData.maxCeilingCase = case1Data;
-		} else if (maxCeilingHeight == case2Data.ceilingHeightValue) {
-			svgProportionData.maxCeilingCase = case2Data;
-		} else if (maxCeilingHeight == case3Data.ceilingHeightValue) {
-			svgProportionData.maxCeilingCase = case3Data;
-		};
 
 
-		var wallLengthArray = [case1Data.wallLen, case2Data.wallLen, case3Data.wallLen];
-		var maxWallLength = d3.max(wallLengthArray);
 
-		if (maxWallLength == case1Data.wallLen) {
-			svgProportionData.maxLengthCase = case1Data;
-		} else if (maxWallLength == case2Data.wallLen) {
-			svgProportionData.maxLengthCase = case2Data;
-		} else if (maxWallLength == case3Data.wallLen) {
-			svgProportionData.maxLengthCase = case3Data;
-		};
+	/* ------ FUNCTIONS TO INITIALIZE AND UPDATE GRAPH ------ */
+	function updateGraphPoints(data, className, color) {
+		// DATA JOIN
+		// Join new data with old elements, if any.
+		var points = graphSvg.selectAll("." + className)
+			.data(data);
 
+		// ENTER
+		// Create new elements as needed
+		points.enter().append("path")
+			.attr("d", d3.svg.symbol()
+				.type(function(d) {
+					if (d.govfact == "dwn") {
+						return "triangle-up";
+					} else if (d.govfact == "mrt") {
+						return "circle";
+					}
+				})
+				.size("35"))
+			.attr("class",className)
+			.attr("transform", function(d) {
+				return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
+			.style("fill", color);
 
-		svgProportionData.maxProportion = maxWallLength/maxCeilingHeight;
+		// UPDATE
+		// Update old elements as needed.
+		points.attr("d", d3.svg.symbol()
+				.type(function(d) {
+					if (d.govfact == "dwn") {
+						return "triangle-up";
+					} else if (d.govfact == "mrt") {
+						return "circle";
+					}
+				})
+				.size("35"))
+			.attr("class",className)
+			.attr("transform", function(d) {
+				return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
+			.style("fill", color);
 
-		return svgProportionData;
+		// EXIT
+		// Remove old elements as needed
+		points.exit().remove();
 	}
 
+
+	function updateOccupantPoint(data, className, color) {
+		// DATA JOIN
+		// Join new data with old elements, if any.
+		var occupantPoint = graphSvg.selectAll("." + className)
+			.data(data);
+
+		// ENTER
+		// Create new elements as needed
+		occupantPoint.enter().append("path")
+			.attr("d", d3.svg.symbol()
+				.type(function(d) {
+					if (d.govfact == "dwn") {
+						return "triangle-up";
+					} else if (d.govfact == "mrt") {
+						return "circle";
+					}
+				})
+				.size("35"))
+			.attr("class",className)
+			.attr("transform", function(d) {
+				return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
+			.style("fill", "#FFF")
+			.style("stroke", color);
+
+		// UPDATE
+		// Update old elements as needed.
+		occupantPoint.attr("d", d3.svg.symbol()
+				.type(function(d) {
+					if (d.govfact == "dwn") {
+						return "triangle-up";
+					} else if (d.govfact == "mrt") {
+						return "circle";
+					}
+				})
+				.size("35"))
+			.attr("class",className)
+			.attr("transform", function(d) {
+				return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
+			.style("fill", "#FFF")
+			.style("stroke-width", 2)
+			.style("stroke", color);
+
+		// EXIT
+		// Remove old elements as needed
+		occupantPoint.exit().remove();
+
+		// Add line at occupant position
+		d3.selectAll(".occupantLine").remove();
+		occupantDistanceRefLine();
+	}
+
+
+	function updateConnectedLine(data, lineClass) {
+
+		var line = d3.svg.line()
+				.x(function(d) {return x(d.dist);})
+				.y(function(d) {return y(d.ppd);});
+
+		graphSvg.selectAll(lineClass)
+			.attr("d", line(data))
+			.transition()
+			.duration(500);
+
+	}
 
 	function occupantPositionText(occdata, className, caseName) {
 
@@ -2851,7 +2581,7 @@ render.makeGraph = function () {
 		.style("top", yPosition + "px");
 
 
-	} // end thresholdDataText
+	} 
 
 
 	function drawPPDThreshold(data) {
@@ -2988,6 +2718,197 @@ render.makeGraph = function () {
 		}
 
 
+	}
+
+
+
+	/* ------ FUNCTIONS TO UPDATE FACADE IMAGES ------ */
+	function updateFacade() {
+
+		//re-evaluate scales
+		defineScales();
+
+		/* -- UPDATE CASE 1 FACADE REPRESENTATION -- */
+		//update wall
+		d3.select("#facadeCase1")
+			.attr("height", facHeight + facMargin.top + facMargin.bottom)
+			.transition()
+			.duration(500);
+		wallCase1
+			.attr("width", function(d) {return facadeScaleWidth(case1Data.wallLen)})
+			.attr("height", function(d) {return facadeScaleHeight(case1Data.ceilingHeightValue)})
+			.attr("transform", function() {
+				return "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case1CeilingDiff)) + ")"
+			})
+			.transition()
+			.duration(500);
+		//update windows
+		d3.selectAll("rect.window1").remove();
+		facadeSvgCase1.selectAll(".window1")
+			.data(glzCoords)
+			.enter()
+			.append("rect")
+			.attr("class", "window1 blue")
+			.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facadeScaleWidth(case1Data.wallLen)/2)})
+			.attr("y", function(d) {return (facadeScaleHeight(case1Data.ceilingHeightValue - d[3][2]))})
+			.attr("width", facadeScaleWidth(glzWidth))
+			.attr("height", facadeScaleHeight(glzHeight))
+			.attr("transform", function() {
+				return "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case1CeilingDiff)) + ")"
+			});
+
+
+		/* -- UPDATE CASE 2 FACADE REPRESENTATION -- */
+		d3.select("#facadeCase2")
+			.attr("height", facHeight + facMargin.top + facMargin.bottom)
+			.transition()
+			.duration(500);
+		wallCase2.attr("width", function(d) {return facadeScaleWidth(case2Data.wallLen)})
+			.attr("height", function(d) {return facadeScaleHeight(case2Data.ceilingHeightValue)})
+			.attr("transform", function() {
+				return "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case2CeilingDiff)) + ")"
+			})
+			.transition()
+			.duration(500);
+		//update windows
+		d3.selectAll("rect.window2").remove()
+		facadeSvgCase2.selectAll(".window2")
+			.data(glzCoordsCase2)
+			.enter()
+			.append("rect")
+			.attr("class", function(d) {
+				if ($("#caseSelection #case2Label").hasClass("unselected")) {
+					return "window2 white"
+				} else {
+					return "window2 blue"
+				}
+			})
+			.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facadeScaleWidth(case2Data.wallLen)/2)})
+			.attr("y", function(d) {return (facadeScaleHeight(case2Data.ceilingHeightValue - d[3][2]))})
+			.attr("width", facadeScaleWidth(glzWidthCase2))
+			.attr("height", facadeScaleHeight(glzHeightCase2))
+			.attr("transform", function() {
+				return "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case2CeilingDiff)) + ")"
+			});
+
+
+
+
+		/* -- UPDATE CASE 3 FACADE REPRESENTATION -- */
+		d3.select("#facadeCase3")
+			.attr("height", facHeight + facMargin.top + facMargin.bottom)
+			.transition()
+			.duration(500);
+		wallCase3.attr("width", function(d) {return facadeScaleWidth(case3Data.wallLen)})
+			.attr("height", function(d) {return facadeScaleHeight(case3Data.ceilingHeightValue)})
+			.attr("transform", function() {
+				return "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case3CeilingDiff)) + ")"
+			})
+			.transition()
+			.duration(500);
+		//update windows
+		d3.selectAll("rect.window3").remove()
+		facadeSvgCase3.selectAll(".window3")
+			.data(glzCoordsCase3)
+			.enter()
+			.append("rect")
+			.attr("class", function(d) {
+				if ($("#caseSelection #case3Label").hasClass("unselected")) {
+					return "window3 white"
+				} else {
+					return "window3 blue"
+				}
+			})
+			.attr("x", function(d) {return (facadeScaleWidth(d[3][0])+facadeScaleWidth(case3Data.wallLen)/2)})
+			.attr("y", function(d) {return (facadeScaleHeight(case3Data.ceilingHeightValue - d[3][2]))})
+			.attr("width", facadeScaleWidth(glzWidthCase3))
+			.attr("height", facadeScaleHeight(glzHeightCase3))
+			.attr("transform", function() {
+				return "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case3CeilingDiff)) + ")"
+			});
+
+
+
+
+
+		checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist", "#case1Heading");
+		checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#case2Heading");
+		checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#case3Heading");
+
+
+	}
+
+
+	function checkOccupantImageSize(caseName, imageID, sliderID, labelID) {
+
+		var imageHeight = $("#occupantImage").height();
+		var imageWidth = $("#occupantImage").width();
+
+		// original image dimensions
+		var originalHeight = 500;
+		var originalWidth = 360;
+
+
+		var resizeHeight;
+		//assume 4.35ft/1.32m sitting height
+		if (unitSys == "IP") {
+			resizeHeight = Math.round(facadeScaleHeight(4.35));
+		} else {
+			resizeHeight = Math.round(facadeScaleHeight(1.32588));
+		}
+
+
+
+
+		var resizeWidth = Math.round((resizeHeight/originalHeight)*originalWidth);
+
+		var diffBtwSVGandFacade = facWidth - facadeScaleWidth(caseName.wallLen);
+
+
+		var newLeft = 0 - resizeWidth/2;
+		var newBottom = Math.round(resizeHeight + facMargin.bottom + 5);
+
+		var newbackgroundsize = resizeWidth.toString() + "px " + resizeHeight.toString() + "px";
+
+		$(imageID).css({
+			width: resizeWidth,
+			height: resizeHeight,
+			//left: newLeft,
+			bottom: newBottom,
+			backgroundSize: newbackgroundsize,
+		})
+
+		$(labelID).css({
+			width: facadeScaleWidth(caseName.wallLen)/2
+		})
+
+
+		$(sliderID).css({
+			width: facadeScaleWidth(caseName.wallLen)/2,
+		})
+		$(sliderID).attr("max", (caseName.wallLen)/2);
+
+	}
+
+	function updateOccupantImageLocation(imageID, sliderID, caseName) {
+
+
+		var slider = $(sliderID);
+ 		var width = slider.width();
+ 		var imageWidth = parseFloat($(imageID).css("width"));
+
+		var sliderScale = d3.scale.linear()
+			.domain([slider.attr("min"), slider.attr("max")])
+			.range([0, width]);
+
+		var newPosition = sliderScale(caseName.occDistToWallCenter);
+
+		var newLeftPosition = (0 - imageWidth/2 + newPosition) + "px";
+
+	   	// Move occupant image
+	   	$(imageID).css({
+	       left: newLeftPosition,
+		})
 	}
 
 
