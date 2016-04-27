@@ -1,475 +1,144 @@
-body {
-	margin: 0 20px;
-	font-family: "museo-sans", sans-serif;
+#options, .alert, label#setGlazing, br.glzBR, input#windowWidthCheck, label#checkWindWidth, input#glazingRatioCheck, label#checkGlzRatio, span.expand, #projectList {
+  display: none;
 }
 
-#header {
-	width: 100%;
-	margin: 0 auto;
+.hideContent, .explanContent {
+  display: block;
 }
 
-#wrapper {
-	width: 100%;
-	margin: 0 auto;
+h2.case1Text, #inputs input.case1, #caseSelection h2#case1Label, #inputs input.inactive.case1#calcuvalue {
+  color: rgb(0,160,221);
 }
 
-.left {
-	position: relative;
-	float: left;
-	width: 58%;
-	padding: 0;
-	margin: 0 2% 0 0;
-	border: 1px solid blue;
+h2.case2Text, #inputs input.case2, #caseSelection h2#case2Label, #inputs input.inactive.case2#calcuvalue2 {
+  color: rgb(248,151,29);
+}
+
+h2.case3Text, #inputs input.case3, #caseSelection h2#case3Label, #inputs input.inactive.case3#calcuvalue3 {
+  color: rgb(108,28,131);
 }
 
 
-
-#inputs {
-	float: left;
-	width: 38%;
-	border: 1px solid blue;
-}
-
-#inputs .inputgroup, #occupantSliders .inputgroup {
-	border: none;
-	padding: 0 0 15px 0;
-	position: relative;
-}
-
-
-#inputs #legend, #occupantSliders #legend {
-	border: none;
-	padding: 0 0 10px 0;
-	margin-bottom: 35px;
-	margin-top: 35px;
-}
-
-#inputs legend, #occupantSliders legend {
-	font-weight: 700;
-	font-size: 16px;
-	text-transform: uppercase;
-	padding: 0 0 5px 0;
-	margin: 0;
-	font-family: "museo-sans", sans-serif;
-
-	width: 55%;
-}
-
-#inputs legend.first {
-	float: left;
-}
-
-
-
-
-#inputs hr, #occupantSliders hr{
-	padding: 0;
-	margin: 5px 0 5px 0;
-	border: 1px solid black;
-	height: 0px;
-	width: 100%;
-}
-
-#inputs label, #inputs label.indent {
-	color: black;
-	width: 55%;
-	float: left;
-	display: inline-block;
-	margin: 0 0 5px 0;
-	padding: 1px 0;
-	font-family: "museo-sans", sans-serif;
-	font-weight: 300;
-	font-size: 16px;
-}
-
-#inputs label.inactive {
-	color: #b9b9b9;
-	font-style: italic;
-	font-weight: 100;
-}
-
-
-
-#inputs div.inputWrapperLeft, #inputs div.inputWrapperCenter, #inputs div.inputWrapperRight {
-	width: 14%;
-	display: inline-block;
-	vertical-align: middle;
-	margin: 0 0 5px 0;
-}
-
-
-
-#inputs input {
-	background-color: none;
-	padding: 1px 0;
-	margin: 0;
-	display: inline-block;
-	float: left;
-	border: none;
-
-	font-family: "museo-sans", sans-serif;
-	font-weight: 300;
-	font-size: 16px;
-	text-align: center;
-	color: black;
-
-	width: 100%;
-}
-
-#inputs input.inactive {
-	color: #d5d5d5;
-	font-style: italic;
-	cursor: default;
-	background-color: #fff;
-	padding: 1px 2px 0px 0px;
-}
-
-
-#inputs div.inputWrapperCenter hr, #inputs div.inputWrapperRight hr {
-	width: 20%;
-	margin: 7px auto;
-	height: 1px;
-	background-color: #b9b9b9;
-}
-
-/*#inputs div.inputWrapperRight hr {
-	margin: 7px 0 7px 25px;
-}*/
-
-
-
-
-
-
-/* ----- CASES ----- */
-
-#caseWrapper {
-	overflow: hidden;
-	display: inline-block;
-	height: 16px;
-	width: 100%;
-}
-
-
-
-#caseSelection {
-	display: block;
-	float: right;
-	width: 44%;
-}
-
-#caseSelection h2 {
-	width: 32%;
-	display: inline-block;
-	text-align: center;
-	font-size: 16px;
-	font-family: "museo-sans", sans-serif;
-
-	padding: 0;
-	margin: 0;
-	vertical-align: top;
-
-	color: #000;
-}
-
-#inputs input.case1, #caseSelection h2#case1Label {
-	color: rgb(0,160,221);
-}
-
-#inputs input.case2, #caseSelection h2#case2Label {
-	color: rgb(248,151,29);
-}
-
-#inputs input.case3, #caseSelection h2#case3Label {
-	color: rgb(108,28,131);
+#inputs .hideContent input.case1, #inputs .hideContent input.case2, #inputs .hideContent input.case3 {
+  color: black;
 }
 
 
 #inputs input.case1.unselected, #inputs input.case2.unselected, #inputs input.case3.unselected, #caseSelection h2#case2Label.unselected, #caseSelection h2#case3Label.unselected {
-	display: none;
+  color: #ADADAD;
 }
 
-
-#caseSelection h2 span {
-	display: none;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* ------ FACADE STYLING ----- */
-
-#facadeWrapper {
-	width: 100%
-	overflow: auto;
-}
-
-
-#case1FacadeWrapper, #case2FacadeWrapper, #case3FacadeWrapper {
-	float: left;
-	display: inline-block;
-	width: 33%;
-	position: relative;
-}
-
-#case1FacadeWrapper svg, #case2FacadeWrapper svg, #case3FacadeWrapper svg {
-	transform: scale(1.5); 
-	-webkit-transform: scale(1.5); 
-	-moz-transform: scale(1.5); 
-	-ms-transform: scale(1.5); 
-	-o-transform: scale(1.5);
-
-	position: relative;
-	left: 15%;
-}
-
-
-
-.facadeHeading {
-	font-family: "museo-sans", sans-serif;
-	font-weight: 700;
-	font-size: 16px;
-	margin: 0;
-	display: block;
-	float: left;
-
-	position: absolute;
-	bottom: -30px;
-}
-
-.greyText {
-	color: #b9b9b9;
-}
-
-.case1Text {
-	color: rgb(0,160,221);
-}
-
-.case2Text {
-	color: rgb(248,151,29);
-}
-
-.case3Text {
-	color: rgb(108,28,131);
-}
-
-rect.filled {
-	fill: rgb(190,190,190);
-	stroke: rgb(190,190,190);
-	stroke-width: 1px;
-	stroke-dasharray: 0;
-}
-
-rect.outlined {
-	fill: #fff;
-	stroke: rgb(190,190,190);
-	stroke-width: 1px;
-	stroke-dasharray: 3, 6;
-}
-
-rect.white {
-	fill: #fff;
-}
-
-rect.blue {
-	fill: #E1F0FF;
+#inputs input.inactive, #inputs input.inactive#calcuvalue, #inputs input.inactive#calcuvalue2, #inputs input.inactive#calcuvalue3, #inputs input.inactive#condRisk1, #inputs input.inactive#condRisk2, #inputs input.inactive#condRisk3 {
+  border-style: none;
 }
 
 
 
 
-/* ------ CHART STYLING ----- */
 
-#graphWrapper {
-	height: 550px;
+
+
+input[type=range]#occupantDist::-ms-track, input[type=range]#occupantDist2::-ms-track, input[type=range]#occupantDist3::-ms-track, input[type=range]#ppd::-ms-track, input[type=range]#distFromFacade::-ms-track {
+  -ms-appearance: none;
+  height: 1px;
+  border: 1px solid #d5d5d5;
+  margin-right: 0;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: transparent;
 }
 
-svg#graph {
-	position: relative;
-	left: 18%;
-	top: 20%;
-
-	transform: scale(1.5); 
-	-webkit-transform: scale(1.5); 
-	-moz-transform: scale(1.5); 
-	-ms-transform: scale(1.5); 
-	-o-transform: scale(1.5);
+input[type=range]#ppd::-ms-fill-lower {
+  border: 1px solid rgb(147,229,0);
+  height: 1px;
 }
 
-#graph .axis path,
-#graph .axis line {
-    fill: none;
+input[type=range]#ppd::-moz-range-progress{
+  border: 1px solid rgb(147,229,0);
+  height: 1px;
 }
 
-text.axislabel {
-	font-size: 11px;
-}
 
-.axis text {
-	font-size: 11px;
-}
-
-.occupantLine {
-	stroke: #000;
-	stroke-width: 2;
-	stroke-linecap: round;
-	stroke-dasharray: 0 6;
-}
-
-#graph .grid line { /* horizontal reference lines */
-	stroke-width: 1;
-	stroke: #000;
-	stroke-linecap: round;
-	stroke-dasharray: 0 4;
-}
-
-#graph .grid path {
-	stroke-width: 0;
-}
-
-#graph #graphXAxis line {
-	stroke-width: .5;
-	stroke: rgb(90,90,90);
-}
-
-#graph #graphYAxis line {
-	stroke-width: 0;
+#occupantDist::-moz-range-track, #occupantDist2::-moz-range-track, #occupantDist3::-moz-range-track, #ppd::-moz-range-track, #distFromFacade::-moz-range-track {
+  -moz-appearance: none;
+  height: 1px;
+  border: 1px solid #d5d5d5;
+  margin-right: 3px;
 }
 
 
 
+#occupantDist::-webkit-slider-runnable-track, #occupantDist2::-webkit-slider-runnable-track, #occupantDist3::-webkit-slider-runnable-track, #ppd::-webkit-slider-runnable-track, #distFromFacade::-webkit-slider-runnable-track {
+  -webkit-appearance: none;
+  height: 1px;
+  border: 1px solid #d5d5d5;
+  margin-right: 3px;
+}
+
+
+#occupantDist::-ms-thumb, #occupantDist2::-ms-thumb, #occupantDist3::-ms-thumb, #ppd::-ms-thumb, #distFromFacade::-ms-thumb {
+    background-color: #FFF;
+    border: 3px solid rgb(150,150,150);
+    border-radius: 5px;
+    height: 5px;
+    width: 5px;
+}
+
+
+#occupantDist::-moz-range-thumb, #occupantDist2::-moz-range-thumb, #occupantDist3::-moz-range-thumb, #ppd::-moz-range-thumb, #distFromFacade::-moz-range-thumb {
+  -moz-appearance: none;
+    background-color: #FFF;
+    border: 3px solid rgb(150,150,150);
+    border-radius: 5px;
+    height: 5px;
+    width: 5px;
+}
+
+#occupantDist::-webkit-slider-thumb, #occupantDist2::-webkit-slider-thumb, #occupantDist3::-webkit-slider-thumb, #ppd::-webkit-slider-thumb, #distFromFacade::-webkit-slider-thumb {
+  -webkit-appearance: none;
+    background-color: #FFF;
+    border: 3px solid rgb(150,150,150);
+    border-radius: 5px;
+    height: 5px;
+    width: 5px;
+}
 
 #occupantImage, #occupantImage2, #occupantImage3 {
-	border: 2px solid #777;
-	/*list-style-image: url(../../static/images/slider.png);
-	display: list-item;
-	list-style-position: inside;*/
+   border: 2px solid #777;
+}
+
+/*#occupantImage:before {
+  content: url(/images_research_projects/GlazingSelectionTool/slider.png);
+   width:  20px;
+  height: 20px;
+}*/
+
+img.diagram {
+  border: none;
+  opacity: 1;
 }
 
 
 
-
-
-#thresholdTooltip {
-/*	position: absolute;
-	bottom: 0;
-	left: 0;
-	width: 260px;
-	padding: 10px;*/
-
-	display: none;
+#graph .grid line {
+  stroke-width: 1px;
+  stroke-dasharray: 1 4;
+  stroke-linecap: round;
+  stroke: black;
 }
 
-
-#thresholdTooltip h1 {
-	font-family: "museo-sans", sans-serif;
-	font-weight: 300;
-	font-size: 14px;
-	padding: 0 0 3px 0;
-	margin: 0;
+#graph line.refLine {
+  stroke-width: 2px;
+  stroke: black;
 }
 
-
-
-
-
-
-
-
-#explanation {
-	border: solid 2px #000;
-	padding: 10px;
-	margin: 15px 0 0 0;
+line.occupantLine {
+  stroke-dasharray: 0 0;
+  stroke-width: 1;
+  stroke-linecap: butt;
 }
 
-
-#explanation h1 {
-	margin: 0;
-	padding-bottom: 5px;
-	font-weight: 700;
-	font-size: 16px;
-	text-transform: uppercase;
-
-	font-family: "museo-sans", sans-serif;
-}
-
-#col {
-	column-count:2;
-	-moz-column-count:2;
-	-webkit-column-count: 2;
-
-	-moz-column-gap: 26px;
-	-webkit-column-gap: 26px;
-	column-gap: 26px;
-
-	column-width: 250px;
-	-webkit-column-count: 250px;
-	-moz-column-count: 250px;
-}
-
-#col h2 {
-	margin: 0 0 5px 0;
-	font-weight: 700;
-	font-size: 16px;
-
-	font-family: "museo-sans", sans-serif;
-
-	-moz-column-break-before: always;
-	-webkit-column-break-before: always;
-	break-before: always;
-}
-
-#col p {
-	font-family: "museo-sans", sans-serif;
-	font-size: 16px;
-	line-height: 1.5;
-	margin: 0;
- 	padding-bottom: 5px;
-}
-
-.keepTogether {
-	display: inline-block;
-	width: 100%;
-}
-
-
-.keepTogether img.discomfortIcon {
-	display: block;
-	float: left;
-	width: 12px;
-	height: 12px;
-	margin: 0px 10px 0 0;
-}
-
-.keepTogether ul {
-	margin: 0;
-	padding: 0 0 0 10px;
-	font-family: "museo-sans", sans-serif;
-	font-size: 16px;
-}
-
-
-
-
-
-
-
-
-
-#options, label#calcUValQuestion, #uValButton, .alert, label#setGlazing, br#glzBR, input#windowWidthCheck, label#checkWindWidth, input#glazingRatioCheck, label#checkGlzRatio {
-	display: none;
-}
-
-label#calcUValQuestion {
-	display: block;
+rect.thresholdRect {
+  fill: #F0F0F0;
 }
 
