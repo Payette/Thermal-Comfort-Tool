@@ -124,7 +124,7 @@ render.makeGraph = function () {
 		graphSvg.select("#XAxisLabel")
     	.text("Occupant Distance from Façade (m)");
     }
-	    
+
 
 	graphSvg.append("g")
 	.attr("transform", "translate(25," + (height/2 + margin.top) + ")")
@@ -229,7 +229,7 @@ render.makeGraph = function () {
 				return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
 		.style("fill", color3);
 
-	
+
 
 	// Add point at occupant location
 	var occupantPoint = graphSvg.append("path")
@@ -366,7 +366,7 @@ render.makeGraph = function () {
 				// position relative to data point
 				xPosition = x(d.dist) + margin.left + 8;
 			}
-			
+
 		} else {
 			// full width tooltip
 			$("div#tooltip").css("width","280px");
@@ -834,7 +834,7 @@ render.makeGraph = function () {
     		$(".expandOptions span.expand").css("backgroundPosition", "0 -12px");
 			$(".hideContent").slideDown(400, "swing");
     	}
-	
+
 	})
 
 	// expand explanation
@@ -849,9 +849,9 @@ render.makeGraph = function () {
     		$(".expandExplanation span.expand").css("backgroundPosition", "0 -12px");
 			$(".explanContent").slideDown(400, "swing");
     	}
-	
+
 	})
-	
+
 
 
 
@@ -866,7 +866,7 @@ render.makeGraph = function () {
 			$(".optionButton#SI").addClass("unselected");
 
 
-					
+
 			// change labels to have ft
 			$(".units, .unitsTemp, .unitsUVal, .unitsRVal, .unitsAirSpeed").removeClass("SI");
 			$(".units, .unitsTemp, .unitsUVal, .unitsRVal, .unitsAirSpeed").addClass("IP");
@@ -1122,7 +1122,7 @@ render.makeGraph = function () {
 		$("#URLpop textarea").append(urlresult);
 
 		$("#URLpop").dialog("open");
-	
+
 	})
 
 
@@ -1237,7 +1237,7 @@ render.makeGraph = function () {
 
 
 
-	
+
 
 
 	$("#windowWidthCheck").change(function(event) {
@@ -2252,7 +2252,7 @@ render.makeGraph = function () {
 
 			updateGraphData(newDataset, newOccLocData, graphPoints, ".connectLine", ".occdot1");
 
-			
+
 
 		}
 
@@ -2274,7 +2274,7 @@ render.makeGraph = function () {
 
 			updateGraphData(newDataset, newOccLocData, graphCase2Points, ".connectLine2", ".occdot2");
 
-			
+
 		}
 
 		else if (object == case3Data) {
@@ -2295,7 +2295,7 @@ render.makeGraph = function () {
 
 			updateGraphData(newDataset, newOccLocData, graphCase3Points, ".connectLine3", ".occdot3");
 
-			
+
 		}
 
 		autocalcUValues();
@@ -2316,11 +2316,10 @@ render.makeGraph = function () {
 		var fullDataCase3 = script.computeData(case3Data);
 
 		//Compute the U-Value required to make the occupant comfortable.
-		case1Data.calcUVal = uVal.uValFinal(fullDataCase1.wallViews[12], fullDataCase1.glzViews[12], fullDataCase1.facadeDist[12], fullDataCase1.dwnPPDFac, parseFloat(case1Data.windowHeightValue), case1Data.airtempValue, case1Data.outdoorTempValue, rvalueValue, case1Data.intLowEChecked, case1Data.intLowEEmissivity, airspeedValue, case1Data.humidityValue, metabolic, clothingValue, ppdValue);
-
-		case2Data.calcUVal = uVal.uValFinal(fullDataCase2.wallViews[12], fullDataCase2.glzViews[12], fullDataCase2.facadeDist[12], fullDataCase2.dwnPPDFac, parseFloat(case2Data.windowHeightValue), case2Data.airtempValue, case2Data.outdoorTempValue, rvalueValue, case2Data.intLowEChecked, case2Data.intLowEEmissivity, airspeedValue, case2Data.humidityValue, metabolic, clothingValue, ppdValue);
-
-		case3Data.calcUVal = uVal.uValFinal(fullDataCase3.wallViews[12], fullDataCase3.glzViews[12], fullDataCase3.facadeDist[12], fullDataCase3.dwnPPDFac, parseFloat(case3Data.windowHeightValue), case3Data.airtempValue, case3Data.outdoorTempValue, rvalueValue, case3Data.intLowEChecked, case3Data.intLowEEmissivity, airspeedValue, case3Data.humidityValue, metabolic, clothingValue, ppdValue);
+		var numPtsLen = (fullDataCase1.wallViews.length)-1
+		case1Data.calcUVal = uVal.uValFinal(fullDataCase1.wallViews[numPtsLen], fullDataCase1.glzViews[numPtsLen], fullDataCase1.facadeDist[numPtsLen], fullDataCase1.dwnPPDFac, parseFloat(case1Data.windowHeightValue), case1Data.airtempValue, case1Data.outdoorTempValue, rvalueValue, case1Data.intLowEChecked, case1Data.intLowEEmissivity, airspeedValue, case1Data.humidityValue, metabolic, clothingValue, ppdValue);
+		case2Data.calcUVal = uVal.uValFinal(fullDataCase2.wallViews[numPtsLen], fullDataCase2.glzViews[numPtsLen], fullDataCase2.facadeDist[numPtsLen], fullDataCase2.dwnPPDFac, parseFloat(case2Data.windowHeightValue), case2Data.airtempValue, case2Data.outdoorTempValue, rvalueValue, case2Data.intLowEChecked, case2Data.intLowEEmissivity, airspeedValue, case2Data.humidityValue, metabolic, clothingValue, ppdValue);
+		case3Data.calcUVal = uVal.uValFinal(fullDataCase3.wallViews[numPtsLen], fullDataCase3.glzViews[numPtsLen], fullDataCase3.facadeDist[numPtsLen], fullDataCase3.dwnPPDFac, parseFloat(case3Data.windowHeightValue), case3Data.airtempValue, case3Data.outdoorTempValue, rvalueValue, case3Data.intLowEChecked, case3Data.intLowEEmissivity, airspeedValue, case3Data.humidityValue, metabolic, clothingValue, ppdValue);
 
 		// Update the value in the form.
 		$("#calcuvalue").val(Math.round(case1Data.calcUVal * 100) / 100);
@@ -2357,7 +2356,7 @@ render.makeGraph = function () {
 	/* ------ FUNCTIONS TO UPDATE VISUALS ------ */
 	function updateGraphData(upDataset, upOccupantPoint, dotSelector, lineSelector, occSelector) {
 
-		
+
 
 
 		//update graph with revised data
@@ -2543,7 +2542,7 @@ render.makeGraph = function () {
 			resizeHeight = Math.round(facadeScaleHeight(1.32588));
 		}
 
-		
+
 
 
 		var resizeWidth = Math.round((resizeHeight/originalHeight)*originalWidth);
@@ -2600,7 +2599,7 @@ render.makeGraph = function () {
 
 	/* ------ FUNCTIONS FOR GENERAL REFERENCE VISUALS ------ */
 
-	
+
 
 	function checkCondensation(conValue1, conValue2, conValue3) {
 
@@ -2625,7 +2624,7 @@ render.makeGraph = function () {
 			} else {
 				$("#condRisk3").removeClass("alert").val("NO");
 			}
-		} 
+		}
 
 		if (conValue1 == "none" && conValue2 == "none" && conValue3 == "none") {
 			$("#condRisk button.bigfoot-footnote__button").css("background-color", "rgba(110, 110, 110, 0.2)");
@@ -2755,13 +2754,13 @@ render.makeGraph = function () {
 
 		// if cases 1, 2 and 3
 		if ($("#caseSelection #case2Label").hasClass("unselected") == false  && $("#caseSelection #case3Label").hasClass("unselected") == false) {
-			
+
 			// if case 1 is greatest...
 			if (maxCase == occPointData.ppd) {
 				// case 1 is first
 				totalText = case1Text;
 
-				// find out what's next 
+				// find out what's next
 				if (occPointData2.ppd >= occPointData3.ppd) {
 					// case 2 is second
 					totalText = totalText + case2Text + case3Text;
@@ -2776,7 +2775,7 @@ render.makeGraph = function () {
 				// case 2 is first
 				totalText = case2Text;
 
-				// find out what's next 
+				// find out what's next
 				if (occPointData.ppd >= occPointData3.ppd) {
 					// case 1 is second
 					totalText = totalText + case1Text + case3Text;
@@ -2791,7 +2790,7 @@ render.makeGraph = function () {
 				// case 3 is first
 				totalText = case3Text;
 
-				// find out what's next 
+				// find out what's next
 				if (occPointData.ppd >= occPointData2.ppd) {
 					// case 1 is second
 					totalText = totalText + case1Text + case2Text;
@@ -2828,7 +2827,7 @@ render.makeGraph = function () {
 				// position relative to data point
 				xPosition = x(occPointData.dist) + margin.left + 8;
 			}
-			
+
 		} else {
 			// full width tooltip
 			$("div#thresholdTooltip").css("width","280px");
@@ -2972,7 +2971,7 @@ render.makeGraph = function () {
 				.attr("y2", y(sortedPPD[1]) + 8)
 				.attr("transform", function() {
 					return "translate(" + margin.left + "," + margin.top + ")";
-				});	
+				});
 		}
 
 		if ((sortedPPD[2] != sortedPPD[1]) && (sortedPPD[2] != sortedPPD[0])) {
@@ -2985,10 +2984,10 @@ render.makeGraph = function () {
 			.attr("y2", y(sortedPPD[2]) + 8)
 			.attr("transform", function() {
 				return "translate(" + margin.left + "," + margin.top + ")";
-			});	
+			});
 		}
-		
-		
+
+
 	}
 
 
