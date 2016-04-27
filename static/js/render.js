@@ -805,6 +805,8 @@ render.makeGraph = function () {
 			updateData(case1Data);
 			updateData(case2Data);
 			updateData(case3Data);
+
+			updateOccupantDistanceRefLine();
 		}
 	})
 
@@ -932,6 +934,8 @@ render.makeGraph = function () {
 			updateData(case1Data);
 			updateData(case2Data);
 			updateData(case3Data);
+
+			updateOccupantDistanceRefLine();
 
 
 		}
@@ -2290,8 +2294,6 @@ render.makeGraph = function () {
 
 		var maxPPD = findMaxVisiblePPD();
 
-		console.log(maxPPD);
-
 		var xPosition = x(occPointData.dist);
 		var yPosition = y(maxPPD);
 
@@ -2310,13 +2312,18 @@ render.makeGraph = function () {
 		var newMaxPPD = findMaxVisiblePPD();
 		var newYPosition = y(newMaxPPD);
 
+		var newXPosition = x(occPointData.dist);
+
 		d3.select(".occupantLine")
+			.attr("x1", newXPosition)
+			.attr("x2", newXPosition)
 			.attr("y2", newYPosition)
 			.transition();
 	}
 
 
 	function updateOccupantPoint(data, className, color) {
+
 		// DATA JOIN
 		// Join new data with old elements, if any.
 		var thisOccupantPoint = graphSvg.selectAll("." + className)
