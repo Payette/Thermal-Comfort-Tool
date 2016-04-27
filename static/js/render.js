@@ -187,6 +187,9 @@ render.makeGraph = function () {
 	// add text at occupanct location
 	thresholdDataText();
 
+	// add text for printing
+	addPayetteText();
+
 
 	// hide or show different cases on the chart
 	if ($("#caseSelection #case2Label").hasClass("unselected") == true) {
@@ -2382,6 +2385,17 @@ render.makeGraph = function () {
 			.transition()
 			.duration(500);
 
+	}
+
+
+	function addPayetteText() {
+		var creditText = "Glazing and Comfort Analysis Tool created by Payette";
+
+		graphSvg.append("text")
+			.text(creditText)
+			.attr("class", "creditText")
+			.attr("x", width - 185)
+			.attr("y", height + margin.top - 10);
 	}
 
 	function occupantPositionText(occdata, className, caseName) {
