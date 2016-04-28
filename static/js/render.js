@@ -2394,7 +2394,7 @@ render.makeGraph = function () {
 		graphSvg.append("text")
 			.text(creditText)
 			.attr("class", "creditText")
-			.attr("x", width - 185)
+			.attr("x", width - 165)
 			.attr("y", height + margin.top - 10);
 	}
 

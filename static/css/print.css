@@ -35,7 +35,7 @@ h2.case3Text, #inputs input.case3, #caseSelection h2#case3Label, #inputs input.i
 
 #graph .creditText {
   font-family: "museo-sans", sans-serif;
-  font-size: 10px;
+  font-size: 9px;
   font-style: italic;
   display: block;
 }
