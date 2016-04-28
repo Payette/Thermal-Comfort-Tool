@@ -2010,6 +2010,7 @@ render.makeGraph = function () {
 
 
 
+
 	/* ------ FUNCTIONS TO UPDATE DATA ------ */
 	// Called after adjusting values based on change events
 	function updateData(object) {
@@ -2679,6 +2680,20 @@ render.makeGraph = function () {
 	}
 
 
+	function updateOnlyOccupantPointData() {
+		var newOccData1 = script.computeData(case1Data).occPtInfo;
+		occPointData = newOccData1;
+
+		var newOccData2 = script.computeData(case2Data).occPtInfo;
+		occPointData2 = newOccData2;
+
+		var newOccData3 = script.computeData(case3Data).occPtInfo;
+		occPointData3 = newOccData3;
+
+		thresholdDataText();
+	}
+
+
 	// Draggable occupant and PPD lines on graph
 	var dragPPDLine = d3.behavior.drag()
 		.on("drag", function() {
@@ -2686,19 +2701,28 @@ render.makeGraph = function () {
 			var newY = d3.event.y;
 			var oldY = parseFloat(d3.select(".thresholdRect").attr("y"));
 
-			var originalRectHeight = parseFloat(d3.select(".thresholdRect").attr("height"));
-			var newRectHeight = originalRectHeight + (oldY - newY);
+			// update value of slider
+			// define scale to map the new Y value
+			ppdSliderDragScale = d3.scale.linear()
+					.domain([0, 260]) //input domain
+					.range([30, 0]); //output range
+
+			var updatedPPD = ppdSliderDragScale(newY);
+
+			// prevent line from sliding beyond bounds of axis
+			if (updatedPPD < 5) {
+				updatedPPD = 5;
+				newY = y(5);
+			}
+			if (updatedPPD > 30) {
+				updatedPPD = 30;
+				newY = y(30);
+			}
 
 			// adjust PPD threshold line
 			d3.select(this)
 				.attr("y1", newY)
 				.attr("y2", newY)
-				.transition();
-
-			// adjust PPD threshold rectangle
-			d3.select(".thresholdRect")
-				.attr("y", newY)
-				.attr("height", newRectHeight)
 				.transition();
 
 			// adjust the X and Check Indicators
@@ -2709,13 +2733,15 @@ render.makeGraph = function () {
 				.attr("y", newY - 16)
 				.transition();
 
-			// update value of slider
-			// define scale to map the new Y value
-			ppdSliderDragScale = d3.scale.linear()
-					.domain([0, 260]) //input domain
-					.range([30, 0]); //output range
+			var originalRectHeight = parseFloat(d3.select(".thresholdRect").attr("height"));
+			var newRectHeight = originalRectHeight + (oldY - newY);
 
-			var updatedPPD = ppdSliderDragScale(newY);
+			// adjust PPD threshold rectangle
+			d3.select(".thresholdRect")
+				.attr("y", newY)
+				.attr("height", newRectHeight)
+				.transition();
+			
 			
 			ppdValue = Math.round(updatedPPD);
 			$("#ppd").attr("value",ppdValue);
@@ -2745,6 +2771,27 @@ render.makeGraph = function () {
 
 			var newOccPosition = occDistSliderDragScale(newX);
 
+			// prevent line from sliding beyond boudns of data paints
+			if (unitSys == "IP") {
+				if (newOccPosition < 1) {
+					newOccPosition = 1;
+					newX = x(1) + margin.left;
+				}
+				if (newOccPosition > 12) {
+					newOccPosition = 12;
+					newX = x(12) + margin.left;
+				}
+			} else {
+				if (newOccPosition < 0.5) {
+					newOccPosition = 0.5;
+					newX = x(0.5) + margin.left;
+				}
+				if (newOccPosition > 4) {
+					newOccPosition = 4;
+					newX = x(4) + margin.left;
+				}
+			}
+
 			// update the global value
 			occDistFromFacade = Math.round(newOccPosition*10)/10;
 			// update the slider
@@ -2755,22 +2802,23 @@ render.makeGraph = function () {
 				$("#distOutput").text(occDistFromFacade + " m");
 			}
 
+			//update occupant point data
+			updateOnlyOccupantPointData();
 
-			
-			var oldX = parseFloat(d3.select(".occupantLine").attr("x1"));
+			// adjust the occupant point
+			updateOccupantPoint([occPointData], "occdot1", color1);
+			updateOccupantPoint([occPointData2], "occdot2", color2);
+			updateOccupantPoint([occPointData3], "occdot3", color3);
+
+			var newMaxPPD = findMaxVisiblePPD();
+			var newYPosition = y(newMaxPPD);
 
 			// adjust PPD threshold line
 			d3.select(this)
 				.attr("x1", newX - margin.left)
 				.attr("x2", newX - margin.left)
-				/*.attr("y2", )*/
+				.attr("y2", newYPosition)
 				.transition();
-
-			// adjust the occupant point
-			updateData(case1Data);
-			updateData(case2Data);
-			updateData(case3Data);
-
 		});
 
 	d3.selectAll(".refLine").call(dragPPDLine);
