@@ -288,7 +288,7 @@ rect.blue {
 }
 
 
-#occupantImage, #occupantImage2, #occupantImage3 {
+/*#occupantImage,*/ #occupantImage2, #occupantImage3 {
 	position: relative;
 	width: 180px; 
   	height: 250px;

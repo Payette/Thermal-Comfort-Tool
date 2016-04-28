@@ -547,6 +547,73 @@ render.makeGraph = function () {
 
 
 
+	addSVGSliderImages();
+
+
+	function addSVGSliderImages() {
+		// add image to SVG canvas for facades
+		d3.selectAll("#facadeCase1")
+			.append("svg:image")
+			.attr("class","occSliderImage")
+			.attr("id", "testImage")
+			.attr("xlink:href", "static/images/slider.png")
+			.attr("width",360)
+			.attr("height",500)
+			.style("opacity", 0.8);
+
+		var imageHeight = parseFloat(d3.select(".occSliderImage").attr("height"));
+		var imageWidth = parseFloat(d3.select(".occSliderImage").attr("width"));
+
+		var originalHeight = 500;
+		var originalWidth = 360;
+
+		var resizeHeight;
+		//assume 4.35ft/1.32m sitting height
+		if (unitSys == "IP") {
+			resizeHeight = Math.round(facadeScaleHeight(4.35));
+		} else {
+			resizeHeight = Math.round(facadeScaleHeight(1.32588));
+		}
+
+		var resizeWidth = Math.round((resizeHeight/originalHeight)*originalWidth);
+
+		var diffBtwSVGandFacade = facWidth - facadeScaleWidth(case1Data.wallLen);
+
+
+		var newLeft = facadeScaleWidth(case1Data.wallLen)/2 - resizeWidth/2;
+		var newTop = Math.round(facHeight - resizeHeight);
+
+		d3.select("#testImage")
+			.attr("width", resizeWidth)
+			.attr("height", resizeHeight)
+			.attr("x", newLeft)
+			.attr("y", newTop);
+	}
+
+	function updateSVGSliderImage() {
+
+		var slider = $("#occupantDist");
+ 		var width = slider.width();
+ 		var imageWidth = parseFloat(d3.select("#testImage").attr("width"));
+
+		var sliderScale = d3.scale.linear()
+			.domain([slider.attr("min"), slider.attr("max")])
+			.range([0, width]);
+
+		var newPosition = sliderScale(case1Data.occDistToWallCenter);
+
+		var newLeftPosition = facadeScaleWidth(case1Data.wallLen)/2 - imageWidth/2 + newPosition;
+
+		console.log(newPosition);
+
+	   	// Move occupant image
+	   	d3.select("#testImage")
+	       .attr("x", newLeftPosition)
+	       .transition();
+	}
+	
+
+
 
 
 
@@ -1188,6 +1255,8 @@ render.makeGraph = function () {
 		$("#occupantDist").attr("value", case1Data.occDistToWallCenter);
 
 		updateOccupantImageLocation("#occupantImage", "#occupantDist", case1Data);
+
+		updateSVGSliderImage();
 
 		updateData(case1Data);
 	})
