@@ -1056,9 +1056,13 @@ div#URLpop textarea {
 	font-size: 12px;
 }
 
+.refLine.draggable {
+	cursor: ns-resize;
+}
 
-
-
+.occupantLine.draggable {
+	cursor: ew-resize;
+}
 
 
 /* -- show cases only when selected -- */
