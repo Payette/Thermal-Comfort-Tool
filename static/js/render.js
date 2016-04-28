@@ -803,8 +803,6 @@ render.makeGraph = function () {
     		graphSvg.select("#XAxisLabel")
 	    	.text("Occupant Distance from Façade (ft)");
 
-
-
 			updateData(case1Data);
 			updateData(case2Data);
 			updateData(case3Data);
@@ -2309,6 +2307,8 @@ render.makeGraph = function () {
 			.attr("transform", function() {
 				return "translate(" + margin.left + "," + margin.top + ")";
 		});
+
+		d3.selectAll(".occupantLine").classed("draggable", true);
 	}
 
 	function updateOccupantDistanceRefLine() {
@@ -2582,6 +2582,7 @@ render.makeGraph = function () {
 	} 
 
 
+
 	function drawPPDThreshold(data) {
 
 		//data = PPD threshold (ie 10%)
@@ -2610,8 +2611,10 @@ render.makeGraph = function () {
 			.attr("x2", width)
 			.attr("y1", y(data))
 			.attr("y2", y(data))
-			.style("stroke", "black");
+			.style("stroke", "black")
+			.style("stroke-width", "2");
 
+		d3.selectAll(".refLine").classed("draggable", true);
 
 		// add symbols
 		ppdLine.append("svg:image")
@@ -2622,7 +2625,7 @@ render.makeGraph = function () {
 			.attr("width", 12)
 			.attr("height", 12);
 
-		var crossLine = ppdLine.append("svg:image")
+		ppdLine.append("svg:image")
 			.attr("class", "crossLine")
 			.attr("xlink:href", "static/images/x.png")
 			.attr("x", 4)
@@ -2659,7 +2662,102 @@ render.makeGraph = function () {
 	}
 
 
+	// Draggable occupant and PPD lines on graph
+	var dragPPDLine = d3.behavior.drag()
+		.on("drag", function() {
 
+			var newY = d3.event.y;
+			var oldY = parseFloat(d3.select(".thresholdRect").attr("y"));
+
+			var originalRectHeight = parseFloat(d3.select(".thresholdRect").attr("height"));
+			var newRectHeight = originalRectHeight + (oldY - newY);
+
+			// adjust PPD threshold line
+			d3.select(this)
+				.attr("y1", newY)
+				.attr("y2", newY)
+				.transition();
+
+			// adjust PPD threshold rectangle
+			d3.select(".thresholdRect")
+				.attr("y", newY)
+				.attr("height", newRectHeight)
+				.transition();
+
+			// adjust the X and Check Indicators
+			d3.select(".checkLine")
+				.attr("y", newY + 4)
+				.transition();
+			d3.select(".crossLine")
+				.attr("y", newY - 16)
+				.transition();
+
+			// update value of slider
+			// define scale to map the new Y value
+			ppdSliderDragScale = d3.scale.linear()
+					.domain([0, 260]) //input domain
+					.range([30, 0]); //output range
+
+			var updatedPPD = ppdSliderDragScale(newY);
+			
+			ppdValue = Math.round(updatedPPD);
+			$("#ppd").attr("value",ppdValue);
+			$("#ppdOutput").text(ppdValue + "%");
+
+			// update occupant position text
+			thresholdDataText();
+			// update calculated uvalue
+			autocalcUValues();
+		});
+
+	var dragOccupantLine = d3.behavior.drag()
+		.on("drag", function() {
+
+			var newX = d3.event.x;
+
+			// define scale to map the new X value
+			if (unitSys == "IP") {
+				var occDistSliderDragScale = d3.scale.linear()
+					.domain([margin.left, width+margin.left]) //input domain
+					.range([0, 13]); //output range
+			} else {
+				var occDistSliderDragScale = d3.scale.linear()
+					.domain([0, width]) //input domain
+					.range([0, 4.5]); //output range
+			}
+
+			var newOccPosition = occDistSliderDragScale(newX);
+
+			// update the global value
+			occDistFromFacade = Math.round(newOccPosition*10)/10;
+			// update the slider
+			$("#distFromFacade").attr("value",occDistFromFacade);
+			if (unitSys == "IP") {
+				$("#distOutput").text(occDistFromFacade + " ft");
+			} else {
+				$("#distOutput").text(occDistFromFacade + " m");
+			}
+
+
+			
+			var oldX = parseFloat(d3.select(".occupantLine").attr("x1"));
+
+			// adjust PPD threshold line
+			d3.select(this)
+				.attr("x1", newX - margin.left)
+				.attr("x2", newX - margin.left)
+				/*.attr("y2", )*/
+				.transition();
+
+			// adjust the occupant point
+			updateData(case1Data);
+			updateData(case2Data);
+			updateData(case3Data);
+
+		});
+
+	d3.selectAll(".refLine").call(dragPPDLine);
+	d3.selectAll(".occupantLine").call(dragOccupantLine);
 
 
 
