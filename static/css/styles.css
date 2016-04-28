@@ -957,11 +957,6 @@ span.expand {
 
 
 
-
-div#URLpop {
-	
-}
-
 div#URLpop textarea {
 	font-family: "museo-sans", sans-serif;
 	text-align: center;
@@ -972,6 +967,23 @@ div#URLpop textarea {
 	height: 220px;
 }
 
+div#disclaimer p,  div#disclaimer h1{
+	font-family: "museo-sans", sans-serif;
+	text-align: center;
+	font-size: 12px;
+	font-weight: 300;
+	color: #000;
+}
+
+div#disclaimer p {
+	font-size: 12px;
+	font-weight: 300;
+}
+
+div#disclaimer h1{
+	font-size: 16px;
+	font-weight: 700;
+}
 
 
 

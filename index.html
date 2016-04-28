@@ -81,8 +81,24 @@
 			});
 		});
 
-
-
+		$(function() {
+			$("#disclaimer").dialog({
+				autoOpen: true,
+				draggable: false,
+				closeOnEscape: false,
+				modal: true,
+				width: 550,
+				buttons: [
+				{text: "Accept",
+				click: function(){
+					$(this).dialog("close");
+				}},
+				{text: "Decline",
+				click: function() {
+					window.location.href="http://www.payette.com/projects/Research-at-Payette/";
+				}}]
+			})
+		})
 
 	</script>
 
@@ -93,6 +109,12 @@
 
 
 <body>
+
+	<div id="disclaimer">
+		<h1>Terms and Conditions</h1>
+		<p>Some text here about the terms and conditions.</p>
+		<p>Include <a href="http://www.google.com">link</a> to long form PDF?</p>
+	</div>
 
 	<div id="header"><img src="static/images/header.png"></div>
 	<div id="wrapper">
@@ -211,7 +233,7 @@
 		<hr>
 		<p>This tool evaluates potential thermal discomfort caused by glazing design and properties on occupants in the winter time. To learn more about the principles behind downdraft and radiant discomfort, and how to mitigate them, refer to the resources at the bottom of this page.</p>
 
-		<p class="survey">Provide feedback or report bugs <a href="https://www.surveymonkey.com/r/83LF73D">here.</a></p>
+		<p class="survey">Read the <a href="http://google.com">Terms &amp; Conditions</a>. Provide feedback or report bugs <a href="https://www.surveymonkey.com/r/83LF73D">here.</a></p>
 
 		<div id="options">
 			<div id="units">
