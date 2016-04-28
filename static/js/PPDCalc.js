@@ -366,14 +366,14 @@ comf.pierceSET = function(ta, tr, vel, rh, met, clo, wme) {
 }
 
 comf.pmvElevatedAirspeed = function(ta, tr, vel, rh, met, clo, wme) {
-    // returns pmv at elevated airspeed (> comf.still_air_threshold)
     var r = {}
-    var set = comf.pierceSET(ta, tr, vel, rh, met , clo, wme);
+    var set = 0
     if (vel <= comf.still_air_threshold) {
         var pmv = comf.pmv(ta, tr, vel, rh, met, clo, wme)
         var ta_adj = ta
         var ce = 0
     } else {
+        var set = comf.pierceSET(ta, tr, vel, rh, met, clo, wme);
         var ce_l = 0;
         var ce_r = 40;
         var eps = 0.001;  // precision of ce
@@ -388,7 +388,6 @@ comf.pmvElevatedAirspeed = function(ta, tr, vel, rh, met, clo, wme) {
     }
     r.pmv = pmv.pmv;
     r.ppd = pmv.ppd;
-    r.set = set;
     r.ta_adj = ta - ce;
     r.tr_adj = tr - ce;
     r.cooling_effect = ce;
@@ -409,14 +408,14 @@ comf.calcFullMRTppd = function(winView, opaView, winFilmCoeff, airTemp, outdoorT
   if (intLowE != true){
     var ptMRT = winView*windowTemp + opaView*opaqueTemp + (1-winView-opaView)*indoorSrfTemp
   } else {
-    var ptMRT = (winView*windowTemp*lowEmissivity + opaView*opaqueTemp*0.9 + (1-winView-opaView)*indoorSrfTemp*0.9)/(winView*0.2 + (1-winView)*0.9)
+    var ptMRT = (winView*windowTemp*lowEmissivity + opaView*opaqueTemp*0.9 + (1-winView-opaView)*indoorSrfTemp*0.9)/(winView*lowEmissivity + (1-winView)*0.9)
   }
 
   //Compute the PMV at the point
   var mrtResult = comf.pmvElevatedAirspeed(airTemp, ptMRT, vel, rh, met, clo, 0)
 	if (mrtResult.pmv > 0){
 		var finalMRTPPD = 5
-	} else {
+  } else {
 		var finalMRTPPD = mrtResult.ppd
   }
 

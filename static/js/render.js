@@ -51,14 +51,10 @@ render.makeGraph = function () {
 			.domain([0, 4]);
 	}
 
-	// y-axis: U-Value
+	// y-axis: PPD
 	var y = d3.scale.linear()
 			.range([height, 0])
 			.domain([0, 30]);
-
-
-
-
 
 	// Define axes
 	var xAxis = d3.svg.axis().scale(x).orient("bottom");
@@ -124,7 +120,7 @@ render.makeGraph = function () {
 		graphSvg.select("#XAxisLabel")
     	.text("Occupant Distance from Façade (m)");
     }
-	    
+
 
 	graphSvg.append("g")
 	.attr("transform", "translate(25," + (height/2 + margin.top) + ")")
@@ -140,6 +136,9 @@ render.makeGraph = function () {
 
 
     /* ------ PLOT THE DATA ------ */
+    //draw occupant position line so that it's behind the points
+    occupantDistanceRefLine();
+
 
     // Add line between points
 	var line = d3.svg.line()
@@ -174,114 +173,22 @@ render.makeGraph = function () {
 			.style("stroke-width", .5);
 
 
-    // Add dots at each point
-	var graphPoints = graphSvg.selectAll(".dotCase1")
-		.data(dataset)
-		.enter()
-		.append("path")
-		.attr("class","dotCase1")
-		.attr("d", d3.svg.symbol()
-			.type(function(d) {
-				if (d.govfact == "dwn") {
-					return "triangle-up";
-				} else if (d.govfact == "mrt") {
-					return "circle";
-				}
-			})
-			.size("35"))
-		.attr("transform", function(d) {
-				return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
-		.style("fill", color1);
+	// call function to initialize all data points
+	updateGraphPoints(dataset, "dotCase1", color1);
+	updateGraphPoints(dataset2, "dotCase2", color2);
+	updateGraphPoints(dataset3, "dotCase3", color3);
 
-	var graphCase2Points = graphSvg.selectAll(".dotCase2")
-		.data(dataset2)
-		.enter()
-		.append("path")
-		.attr("class","dotCase2")
-		.attr("d", d3.svg.symbol()
-			.type(function(d) {
-				if (d.govfact == "dwn") {
-					return "triangle-up";
-				} else if (d.govfact == "mrt") {
-					return "circle";
-				}
-			})
-			.size("35"))
-		.attr("transform", function(d) {
-				return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
-		.style("fill", color2);
+	// call function to initialize point at occupant location
+	updateOccupantPoint([occPointData], "occdot1", color1);
+	updateOccupantPoint([occPointData2], "occdot2", color2);
+	updateOccupantPoint([occPointData3], "occdot3", color3);
 
-	var graphCase3Points = graphSvg.selectAll(".dotCase3")
-		.data(dataset3)
-		.enter()
-		.append("path")
-		.attr("class","dotCase3")
-		.attr("d", d3.svg.symbol()
-			.type(function(d) {
-				if (d.govfact == "dwn") {
-					return "triangle-up";
-				} else if (d.govfact == "mrt") {
-					return "circle";
-				}
-			})
-			.size("35"))
-		.attr("transform", function(d) {
-				return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
-		.style("fill", color3);
 
-	
+	// add text at occupanct location
+	thresholdDataText();
 
-	// Add point at occupant location
-	var occupantPoint = graphSvg.append("path")
-		.attr("class","occdot1")
-		.attr("d", d3.svg.symbol()
-			.type(function() {
-				if (occPointData.govfact == "dwn") {
-					return "triangle-up";
-				} else if (occPointData.govfact == "mrt") {
-					return "circle";
-				}
-			})
-			.size("35"))
-		.attr("transform", function() {
-				return "translate(" + (margin.left + x(occPointData.dist)) + "," + (margin.top + y(occPointData.ppd)) + ")";})
-		.style("fill", "#FFF")
-		.style("stroke-width", 2)
-		.style("stroke", color1);
-
-	var occupantPoint2 = graphSvg.append("path")
-		.attr("class","occdot2")
-		.attr("d", d3.svg.symbol()
-			.type(function() {
-				if (occPointData2.govfact == "dwn") {
-					return "triangle-up";
-				} else if (occPointData2.govfact == "mrt") {
-					return "circle";
-				}
-			})
-			.size("35"))
-		.attr("transform", function() {
-				return "translate(" + (margin.left + x(occPointData2.dist)) + "," + (margin.top + y(occPointData2.ppd)) + ")";})
-		.style("fill", "#FFF")
-		.style("stroke-width", 2)
-		.style("stroke", color2);
-
-	var occupantPoint3 = graphSvg.append("path")
-		.attr("class","occdot3")
-		.attr("d", d3.svg.symbol()
-			.type(function() {
-				if (occPointData3.govfact == "dwn") {
-					return "triangle-up";
-				} else if (occPointData3.govfact == "mrt") {
-					return "circle";
-				}
-			})
-			.size("35"))
-		.attr("transform", function() {
-				return "translate(" + (margin.left + x(occPointData3.dist)) + "," + (margin.top + y(occPointData3.ppd)) + ")";})
-		.style("fill", "#FFF")
-		.style("stroke-width", 2)
-		.style("stroke", color3);
+	// add text for printing
+	addPayetteText();
 
 
 	// hide or show different cases on the chart
@@ -298,15 +205,7 @@ render.makeGraph = function () {
 	}
 
 
-
-	// Add line at occupant location
-	occupantDistanceRefLine();
-
-	// add text at occupanct location
-	thresholdDataText();
-
-
-
+	
 
 	// Show text on hover over dot
 	var points = d3.selectAll(".dotCase1, .dotCase2, .dotCase3");
@@ -366,7 +265,7 @@ render.makeGraph = function () {
 				// position relative to data point
 				xPosition = x(d.dist) + margin.left + 8;
 			}
-			
+
 		} else {
 			// full width tooltip
 			$("div#tooltip").css("width","280px");
@@ -404,7 +303,6 @@ render.makeGraph = function () {
 		}
 	}
 
-
 	// check for condensation
 	checkCondensation(allData.condensation, allData2.condensation, allData3.condensation);
 
@@ -433,21 +331,16 @@ render.makeGraph = function () {
 	var glzWidthCase3 = allData3.windowWidth;
 	var glzHeightCase3 = allData3.windowHeight;
 
+	var facMargin = {top: 1, right: 1, bottom: 2, left: 1};
 
-	var facMargin = {top: 43, right: 1, bottom: 2, left: 1};
-
-
-	var maxAllowableFacWidth = (maxContainerWidth - 14*2 - 6)/3;
-	var maxAllowableFacHeight = 128;
-	var governingProportion = maxAllowableFacWidth/maxAllowableFacHeight;
+	var maxAllowableSVGWidth = (maxContainerWidth - 14*2 - 6)/3;
+	var maxAllowableSVGHeight = 128;
 
 	//overall SVG width is fixed
 	var facSpacing = 14;
-	var facWidth = maxAllowableFacWidth + facSpacing;
-	var facWidthNoSpacing = maxAllowableFacWidth;
+	var facWidth = maxAllowableSVGWidth + facSpacing;
+	var facWidthNoSpacing = maxAllowableSVGWidth;
 	var facHeight; // determined when comparing proportions
-
-
 
 	// define scales based on whether width or height governs
 	defineScales();
@@ -466,53 +359,63 @@ render.makeGraph = function () {
 
 	function defineScales() {
 
-		var proportinateMult;
+		var maxCeilingHeight = d3.max([Math.ceil(case1Data.ceilingHeightValue), Math.ceil(case2Data.ceilingHeightValue), Math.ceil(case3Data.ceilingHeightValue)]);
+		var ceilingPixelMultipler = maxAllowableSVGHeight/maxCeilingHeight; // pixel per ft or m
 
-		proportionData = determineInputProportion();
+		var maxWallLength = d3.max([Math.ceil(case1Data.wallLen), Math.ceil(case2Data.wallLen), Math.ceil(case3Data.wallLen)]);
+		var lengthPixelMultipler = maxAllowableSVGWidth/maxWallLength; // pixels per ft or m
 
-		var inputProportion = proportionData.maxProportion;
-		var maxCeilingCase = proportionData.maxCeilingCase;
-		var maxLengthCase = proportionData.maxLengthCase;
+		if (ceilingPixelMultipler < lengthPixelMultipler) {
+			// use ceiling height as the constraining dimension
 
+			// # of feet along width based on height factor
+			var proportionateWidth = maxAllowableSVGWidth/(maxAllowableSVGHeight/maxCeilingHeight);
 
-		// set height difference between cases
-		case1CeilingDiff =  maxCeilingCase.ceilingHeightValue-case1Data.ceilingHeightValue;
-		case2CeilingDiff =  maxCeilingCase.ceilingHeightValue-case2Data.ceilingHeightValue;
-		case3CeilingDiff =  maxCeilingCase.ceilingHeightValue-case3Data.ceilingHeightValue;
+			if (proportionateWidth < maxWallLength) {
+				alert("uh oh! width is bigger than container");
+			} else {
 
+				facadeScaleWidth = d3.scale.linear()
+					.domain([0, proportionateWidth]) //input domain
+					.range([0, maxAllowableSVGWidth]); //output range
 
+				facadeScaleHeight = d3.scale.linear()
+					.domain([0, maxCeilingHeight]) //input domain
+					.range([0, maxAllowableSVGHeight]); //output range
 
-		// determine whether to use max ceiling height or max wall length for setting scales
+				//overall SVG height can vary - determined by whether ceiling height or wall length governs
+				facHeight = maxAllowableSVGHeight;
 
-		if (inputProportion > governingProportion) {
-			// wall width should be maximized
-			wallSVGWidth = maxAllowableFacWidth;
+			}
+		} else if (ceilingPixelMultipler > lengthPixelMultipler) {
+			// use wall length as the constraining dimension
 
-			// make svg height proportionate to facade width
-			proportinateMult = maxLengthCase.ceilingHeightValue/maxLengthCase.wallLen;
-			wallSVGHeight = proportinateMult*wallSVGWidth;
+			// # of feet along height based on width factor
+			var proportionateHeight = maxAllowableSVGHeight/(maxAllowableSVGWidth/maxWallLength);
 
-		} else if (inputProportion < governingProportion) {
+			if (proportionateHeight < maxCeilingHeight) {
+				alert("uh oh! height is bigger than container");
+			} else {
 
-			// ceiling height should be maximized
-			wallSVGHeight = maxAllowableFacHeight;
+				var PixelsMaxCeilingHeight = maxCeilingHeight*(maxAllowableSVGWidth/maxWallLength);
 
-			proportinateMult = maxCeilingCase.wallLen/maxCeilingCase.ceilingHeightValue;
-			wallSVGWidth = proportinateMult*wallSVGHeight;
+				facadeScaleWidth = d3.scale.linear()
+					.domain([0, maxWallLength]) //input domain
+					.range([0, maxAllowableSVGWidth]); //output range
 
-			// make svg width proportionate to facade height
+				facadeScaleHeight = d3.scale.linear()
+					.domain([0, maxCeilingHeight]) //input domain
+					.range([0, PixelsMaxCeilingHeight]); //output range
+
+				//overall SVG height can vary - determined by whether ceiling height or wall length governs
+				facHeight = PixelsMaxCeilingHeight;
+			}
 		}
 
-		facadeScaleWidth = d3.scale.linear()
-				.domain([0, maxLengthCase.wallLen]) //input domain
-				.range([0, wallSVGWidth]); //output range
-
-		facadeScaleHeight = d3.scale.linear()
-				.domain([0, maxCeilingCase.ceilingHeightValue]) //input domain
-				.range([0, wallSVGHeight]); //output range
-
-		//overall SVG height can vary - determined by whether ceiling height or wall length governs
-		facHeight = wallSVGHeight;
+		// set height difference between cases
+		case1CeilingDiff =  maxCeilingHeight-case1Data.ceilingHeightValue;
+		case2CeilingDiff =  maxCeilingHeight-case2Data.ceilingHeightValue;
+		case3CeilingDiff =  maxCeilingHeight-case3Data.ceilingHeightValue;
 
 	}
 
@@ -659,93 +562,6 @@ render.makeGraph = function () {
 
 
 
-
-
-
-
-
-	$("#ceilingHeightButt").on("mouseover", function() {
-		$("#facadeHeightDim").fadeIn("fast");
-	})
-	$("#ceilingHeightButt").on("mouseout", function() {
-		$("#facadeHeightDim").fadeOut("fast");
-	})
-
-	$("#roomLengthButt").on("mouseover", function() {
-		$("#facadeWidthDim").fadeIn("fast");
-	})
-	$("#roomLengthButt").on("mouseout", function() {
-		$("#facadeWidthDim").fadeOut("fast");
-	})
-
-
-	$("#windHeightButt").on("mouseover", function() {
-		$("#windowHeightDimLabel, #windowHeightDim").fadeIn("fast");
-	})
-	$("#windHeightButt").on("mouseout", function() {
-		$("#windowHeightDimLabel, #windowHeightDim").fadeOut("fast");
-	})
-
-	$("#windWidthButt").on("mouseover", function() {
-		$("#windowWidthDim").fadeIn("fast");
-	})
-	$("#windWidthButt").on("mouseout", function() {
-		$("#windowWidthDim").fadeOut("fast");
-	})
-
-	$("#sillHeightButt").on("mouseover", function() {
-		$("#sillHeightDim, #sillHeightDimLabelTop, #sillHeightDimLabelBottom").fadeIn("fast");
-	})
-	$("#sillHeightButt").on("mouseout", function() {
-		$("#sillHeightDim, #sillHeightDimLabelTop, #sillHeightDimLabelBottom").fadeOut("fast");
-	})
-
-	$("#windSepButt").on("mouseover", function() {
-		$("#windowSepDim").fadeIn("fast");
-	})
-	$("#windSepButt").on("mouseout", function() {
-		$("#windowSepDim").fadeOut("fast");
-	})
-
-
-		/* ---- SVG DEFINITIONS ---- */
-
-	var defs = facadeSvgCase1.append("defs");
-	var defs2 = facadeSvgCase2.append("defs");
-	var defs3 = facadeSvgCase3.append("defs");
-
-	//arrowhead marker
-    var arrow = defs.append("marker")
-	    .attr("id", "arrowhead")
-	    .attr("refX", 3.5)
-	    .attr("refY", 3.5)
-	    .attr("markerWidth", 6)
-	    .attr("markerHeight", 6)
-	    .attr("orient", "auto");
-	arrow.append("line")
-	    .attr("stroke", "#777")
-        .attr("x1", "0")
-        .attr("x2", "6")
-        .attr("y1", "0")
-        .attr("y2", "6");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /* ------ HIDE/SHOW CASES / ALERTS ------ */
 
     $("#caseSelection #case2Label").on("click", function() {
@@ -753,31 +569,23 @@ render.makeGraph = function () {
     	$("#case2Heading").toggleClass("greyText").toggleClass("case2Text");
     	$("#case2Button").toggleClass("unselected");
 
-
     	if ($(this).hasClass("unselected") == true) {
     		//becomes selected
 			$(this).removeClass("unselected");
 			$("#inputs input.case2").removeClass("unselected");
 
-			sizeButton();
-
 			$("#inputs input.case2, div.case2, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").css("display","inline-block");
-			$("hr.case2, #occupantImage2").css("display","block");
+			$("hr.case2, #occupantImage2, div.customCheckStyleCentered.case2").css("display","block");
 
 			d3.selectAll("rect.wall2").classed("outlined", false);
 			d3.selectAll("rect.wall2").classed("filled", true);
 			d3.selectAll("rect.window2").classed("white", false);
 			d3.selectAll("rect.window2").classed("blue", true);
-
-
 		}
 
 		else if ($(this).hasClass("unselected") == false) {
 			// becomes unselected
 			$(this).addClass("unselected");
-
-			sizeButton();
-
 
 			$("#inputs input.case2, div.case2, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2, hr.case2, #occupantImage2").css("display","none");
 			$("#inputs input.case2").addClass("unselected");
@@ -790,10 +598,7 @@ render.makeGraph = function () {
 
 		// Update static tooltip text
 		thresholdDataText();
-		d3.selectAll(".occupantLine").remove();
-		occupantDistanceRefLine();
-
-
+		updateOccupantDistanceRefLine();
 
     });
 
@@ -808,10 +613,8 @@ render.makeGraph = function () {
 			$(this).removeClass("unselected");
 			$("#inputs input.case3").removeClass("unselected");
 
-			sizeButton();
-
 			$("#inputs input.case3, div.case3, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3").css("display","inline-block");
-			$("hr.case3, #occupantImage3").css("display","block");
+			$("hr.case3, #occupantImage3, div.customCheckStyleCentered.case3").css("display","block");
 
 
 			d3.selectAll("rect.wall3").classed("outlined", false);
@@ -824,10 +627,7 @@ render.makeGraph = function () {
 			// becomes unselected
 			$(this).addClass("unselected");
 
-			sizeButton();
-
 			$("#inputs input.case3, div.case3, #sliderWrapper3, .connectLine3, .dotCase3, .occdot3, hr.case3, #occupantImage3").css("display","none");
-
 
 			$("#inputs input.case2").addClass("unselected");
 
@@ -840,17 +640,10 @@ render.makeGraph = function () {
 
 		// Update static tooltip text
 		thresholdDataText();
-		d3.selectAll(".occupantLine").remove();
-		occupantDistanceRefLine();
-
-
+		updateOccupantDistanceRefLine();
     });
 
-    // remove condensation alert on click
-/*    $("#condensation img.close").on("click", function() {
-    	$("#condensation").css("display","none");
-    	$("#humidity, #humidity2, #humidity3").css("color", "black");
-    })*/
+
 
     $("#uvaluePop img.close").on("click", function() {
      	$("#uvaluePop").css("display","none");
@@ -869,7 +662,7 @@ render.makeGraph = function () {
     		$(".expandOptions span.expand").css("backgroundPosition", "0 -12px");
 			$(".hideContent").slideDown(400, "swing");
     	}
-	
+
 	})
 
 	// expand explanation
@@ -884,19 +677,8 @@ render.makeGraph = function () {
     		$(".expandExplanation span.expand").css("backgroundPosition", "0 -12px");
 			$(".explanContent").slideDown(400, "swing");
     	}
-	
+
 	})
-	
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -910,7 +692,7 @@ render.makeGraph = function () {
 			$(".optionButton#SI").addClass("unselected");
 
 
-					
+
 			// change labels to have ft
 			$(".units, .unitsTemp, .unitsUVal, .unitsRVal, .unitsAirSpeed").removeClass("SI");
 			$(".units, .unitsTemp, .unitsUVal, .unitsRVal, .unitsAirSpeed").addClass("IP");
@@ -999,11 +781,13 @@ render.makeGraph = function () {
 			airspeedValue = units.mps2fpm(airspeedValue);
 			$("#airspeed").val(round(airspeedValue*10)/10);
 
+
 			occDistFromFacade = units.M2Ft(occDistFromFacade);
-			$("#distFromFacade").val(occDistFromFacade);
-			$("#distOutput").val(round(occDistFromFacade * 10)/10 + " ft");
-
-
+			// update occupant dist from facade slider
+    		$("#distFromFacade").attr("max", 12).attr("min", 1);
+			$("#distFromFacade").attr("value", occDistFromFacade);
+			$("#distOutput").empty;
+			$("#distOutput").text(round(occDistFromFacade * 10)/10 + " ft");
 
 			// update graph axis / scales
 			x = d3.scale.linear()
@@ -1019,14 +803,13 @@ render.makeGraph = function () {
     		graphSvg.select("#XAxisLabel")
 	    	.text("Occupant Distance from Façade (ft)");
 
-    		// update occupant dist from facade slider
-    		$("#distFromFacade").attr("max", 12);
-    		$("#distFromFacade").attr("min", 1);
 
 
 			updateData(case1Data);
 			updateData(case2Data);
 			updateData(case3Data);
+
+			updateOccupantDistanceRefLine();
 		}
 	})
 
@@ -1129,32 +912,33 @@ render.makeGraph = function () {
 			$("#airspeed").val(round(airspeedValue*100)/100);
 
 			occDistFromFacade = units.Ft2M(occDistFromFacade);
-			$("#distFromFacade").val(occDistFromFacade);
-			$("#distOutput").val(round(occDistFromFacade * 10)/10 + " m");
+			// update occupant dist from facade slider
+    		$("#distFromFacade").attr("max", 4.5).attr("min", .25);
+			$("#distFromFacade").attr("value", occDistFromFacade);
+			$("#distOutput").empty();
+			$("#distOutput").text(round(occDistFromFacade * 10)/10 + " m");
 
 
 
 			// update graph axis / scales
 			x = d3.scale.linear()
 			.range([0, width]) // value -> display
-			.domain([0, 4]);
+			.domain([0, 4.5]);
 
 			xAxis = d3.svg.axis().scale(x).orient("bottom");
 
 			graphSvg.select("#graphXAxis")
-    		.call(xAxis.ticks(7).tickValues([0.5, 1, 1.5, 2, 2.5, 3, 3.5]));
+    		.call(xAxis.ticks(8).tickValues([0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4]));
 
     		graphSvg.select("#XAxisLabel")
 	    	.text("Occupant Distance from Façade (m)");
-
-    		// update occupant dist from facade slider
-    		$("#distFromFacade").attr("max", 4);
-    		$("#distFromFacade").attr("min", .25);
 
 
 			updateData(case1Data);
 			updateData(case2Data);
 			updateData(case3Data);
+
+			updateOccupantDistanceRefLine();
 
 
 		}
@@ -1168,12 +952,8 @@ render.makeGraph = function () {
 		$("#URLpop textarea").append(urlresult);
 
 		$("#URLpop").dialog("open");
-	
+
 	})
-
-
-
-
 
 	// print to PDF
 	$(".optionButton#PDF").click(function(event) {
@@ -1195,7 +975,7 @@ render.makeGraph = function () {
 	  	$("#distFromFacade").on("change", function(event) {
 			occDistFromFacade = $(this).val();
 
-			$("#distFromFacade").val(occDistFromFacade);
+			$("#distFromFacade").attr("value",occDistFromFacade);
 			if (unitSys == "IP") {
 				$("#distOutput").text(occDistFromFacade + " ft");
 			} else {
@@ -1207,8 +987,7 @@ render.makeGraph = function () {
 			updateData(case3Data);
 
 			thresholdDataText();
-			d3.selectAll(".occupantLine").remove();
-			occupantDistanceRefLine();
+			updateOccupantDistanceRefLine();
 		})
 		$("#ppd").on("change", function(event) {
 			if ($(this).val() <= 4) {
@@ -1223,7 +1002,7 @@ render.makeGraph = function () {
 			}
 			else {
 				ppdValue = $(this).val();
-				$("#ppd").val(ppdValue);
+				$("#ppd").attr("value",ppdValue);
 				$("#ppdOutput").text(ppdValue + "%");
 			}
 			// Update target PPD threshold line
@@ -1239,7 +1018,7 @@ render.makeGraph = function () {
 	$("#distFromFacade").on("input", function(event) {
 		occDistFromFacade = $(this).val();
 
-		$("#distFromFacade").val(occDistFromFacade);
+		$("#distFromFacade").attr("value",occDistFromFacade);
 		if (unitSys == "IP") {
 			$("#distOutput").text(occDistFromFacade + " ft");
 		} else {
@@ -1251,8 +1030,7 @@ render.makeGraph = function () {
 		updateData(case3Data);
 
 		thresholdDataText();
-		d3.selectAll(".occupantLine").remove();
-		occupantDistanceRefLine();
+		updateOccupantDistanceRefLine();
 	})
 
 	// does not work in IE, see Modernizer code above
@@ -1269,7 +1047,7 @@ render.makeGraph = function () {
 		}
 		else {
 			ppdValue = $(this).val();
-			$("#ppd").val(ppdValue);
+			$("#ppd").attr("value",ppdValue);
 			$("#ppdOutput").text(ppdValue + "%");
 		}
 		// Update target PPD threshold line
@@ -1282,7 +1060,8 @@ render.makeGraph = function () {
 
 
 
-	
+
+
 
 
 	$("#windowWidthCheck").change(function(event) {
@@ -1336,23 +1115,6 @@ render.makeGraph = function () {
 		}
 	})
 
-
-	/*$("#radiant, #radiant2, #radiant3").change(function(event) {
-		if (($("#radiant").is(":checked")) == true) {
-			radiantFloorChecked = true;
-
-			$("#radiantCheck1, #radiantCheck2, #radiantCheck3").removeClass("unselected");
-
-		} else if (($("#radiant").is(":checked")) == false) {
-			radiantFloorChecked = false;
-
-			$("#radiantCheck1, #radiantCheck2, #radiantCheck3").addClass("unselected");
-		}
-
-		updateData(case1Data);
-		updateData(case2Data);
-		updateData(case3Data);
-	})*/
 
 
 	$("#rvalue").focusout(function(event) {
@@ -2312,10 +2074,11 @@ render.makeGraph = function () {
 			condensation1 = newCondensation;
 			checkCondensation(condensation1, condensation2, condensation3);
 
-			updateGraphData(newDataset, newOccLocData, graphPoints, ".connectLine", ".occdot1");
-
-			
-
+			// update data points
+			updateGraphPoints(newDataset, "dotCase1", color1);
+			updateOccupantPoint([occPointData], "occdot1", color1);
+			updateConnectedLine(newDataset, ".connectLine");
+			updateOccupantDistanceRefLine();
 		}
 
 		else if (object == case2Data) {
@@ -2334,9 +2097,11 @@ render.makeGraph = function () {
 			condensation2 = newCondensation;
 			checkCondensation(condensation1, condensation2, condensation3);
 
-			updateGraphData(newDataset, newOccLocData, graphCase2Points, ".connectLine2", ".occdot2");
-
-			
+			// update data points
+			updateGraphPoints(newDataset, "dotCase2", color2);
+			updateOccupantPoint([occPointData2], "occdot2", color2);
+			updateConnectedLine(newDataset, ".connectLine2");
+			updateOccupantDistanceRefLine();
 		}
 
 		else if (object == case3Data) {
@@ -2355,9 +2120,11 @@ render.makeGraph = function () {
 			condensation3 = newCondensation;
 			checkCondensation(condensation1, condensation2, condensation3);
 
-			updateGraphData(newDataset, newOccLocData, graphCase3Points, ".connectLine3", ".occdot3");
-
-			
+			// update data points
+			updateGraphPoints(newDataset, "dotCase3", color3);
+			updateOccupantPoint([occPointData3], "occdot3", color3);
+			updateConnectedLine(newDataset, ".connectLine3");
+			updateOccupantDistanceRefLine();
 		}
 
 		autocalcUValues();
@@ -2378,11 +2145,10 @@ render.makeGraph = function () {
 		var fullDataCase3 = script.computeData(case3Data);
 
 		//Compute the U-Value required to make the occupant comfortable.
-		case1Data.calcUVal = uVal.uValFinal(fullDataCase1.wallViews[12], fullDataCase1.glzViews[12], fullDataCase1.facadeDist[12], fullDataCase1.dwnPPDFac, parseFloat(case1Data.windowHeightValue), case1Data.airtempValue, case1Data.outdoorTempValue, rvalueValue, case1Data.intLowEChecked, case1Data.intLowEEmissivity, airspeedValue, case1Data.humidityValue, metabolic, clothingValue, ppdValue);
-
-		case2Data.calcUVal = uVal.uValFinal(fullDataCase2.wallViews[12], fullDataCase2.glzViews[12], fullDataCase2.facadeDist[12], fullDataCase2.dwnPPDFac, parseFloat(case2Data.windowHeightValue), case2Data.airtempValue, case2Data.outdoorTempValue, rvalueValue, case2Data.intLowEChecked, case2Data.intLowEEmissivity, airspeedValue, case2Data.humidityValue, metabolic, clothingValue, ppdValue);
-
-		case3Data.calcUVal = uVal.uValFinal(fullDataCase3.wallViews[12], fullDataCase3.glzViews[12], fullDataCase3.facadeDist[12], fullDataCase3.dwnPPDFac, parseFloat(case3Data.windowHeightValue), case3Data.airtempValue, case3Data.outdoorTempValue, rvalueValue, case3Data.intLowEChecked, case3Data.intLowEEmissivity, airspeedValue, case3Data.humidityValue, metabolic, clothingValue, ppdValue);
+		var numPtsLen = (fullDataCase1.wallViews.length)-1
+		case1Data.calcUVal = uVal.uValFinal(fullDataCase1.wallViews[numPtsLen], fullDataCase1.glzViews[numPtsLen], fullDataCase1.facadeDist[numPtsLen], fullDataCase1.dwnPPDFac, parseFloat(case1Data.windowHeightValue), case1Data.airtempValue, case1Data.outdoorTempValue, rvalueValue, case1Data.intLowEChecked, case1Data.intLowEEmissivity, airspeedValue, case1Data.humidityValue, metabolic, clothingValue, ppdValue);
+		case2Data.calcUVal = uVal.uValFinal(fullDataCase2.wallViews[numPtsLen], fullDataCase2.glzViews[numPtsLen], fullDataCase2.facadeDist[numPtsLen], fullDataCase2.dwnPPDFac, parseFloat(case2Data.windowHeightValue), case2Data.airtempValue, case2Data.outdoorTempValue, rvalueValue, case2Data.intLowEChecked, case2Data.intLowEEmissivity, airspeedValue, case2Data.humidityValue, metabolic, clothingValue, ppdValue);
+		case3Data.calcUVal = uVal.uValFinal(fullDataCase3.wallViews[numPtsLen], fullDataCase3.glzViews[numPtsLen], fullDataCase3.facadeDist[numPtsLen], fullDataCase3.dwnPPDFac, parseFloat(case3Data.windowHeightValue), case3Data.airtempValue, case3Data.outdoorTempValue, rvalueValue, case3Data.intLowEChecked, case3Data.intLowEEmissivity, airspeedValue, case3Data.humidityValue, metabolic, clothingValue, ppdValue);
 
 		// Update the value in the form.
 		$("#calcuvalue").val(Math.round(case1Data.calcUVal * 100) / 100);
@@ -2397,47 +2163,70 @@ render.makeGraph = function () {
 
 			if (case1Data.calcUVal <= 0.01) {
 				$("#calcuvalue").css("color", "#f72734");
-				/*$("#calcuvalue").val("*");
-				$("#calcuvalue").css("text-align", "center");
-				$("#calcuvalue").css("font-weight", "700");*/
 			}
 
 			if (case2Data.calcUVal <= 0.01) {
 				$("#calcuvalue2").css("color", "#f72734");
-				/*$("#calcuvalue2").val("*");
-				$("#calcuvalue2").css("text-align", "center");
-				$("#calcuvalue2").css("font-weight", "700");*/
 			}
 
 			if (case3Data.calcUVal <= 0.01) {
 				$("#calcuvalue3").css("color", "#f72734");
-				/*$("#calcuvalue3").val("*");
-				$("#calcuvalue3").css("text-align", "center");
-				$("#calcuvalue3").css("font-weight", "700");*/
 			}
 
 		} else {
 			$("#uvaluePop").css("display","none");
 			$("#calcuvalue, #calcuvalue2, #calcuvalue3").css("color", "#ADADAD");
-			/*$("#calcuvalue").val(case1Data.calcUVal);
-			$("#calcuvalue").val(case2Data.calcUVal);
-			$("#calcuvalue").val(case3Data.calcUVal);*/
-			/*$("#calcuvalue").css("text-align", "right");
-			$("#calcuvalue, #calcuvalue2, #calcuvalue3").css("font-weight", "300");*/
 		}
 
 	}
 
+	function checkCondensation(conValue1, conValue2, conValue3) {
+
+		if (conValue1 != "none" || conValue2 != "none" || conValue3 != "none") {
+			$("#condRisk button.bigfoot-footnote__button").css("background-color", "#f72734");
+			$("#condRisk button.bigfoot-footnote__button").css("color","white");
+
+			if (conValue1 != "none") {
+				$("#condRisk1").addClass("alert").val("YES");
+			} else {
+				$("#condRisk1").removeClass("alert").val("NO");
+			}
+
+			if (conValue2 != "none") {
+				$("#condRisk2").addClass("alert").val("YES");
+			} else {
+				$("#condRisk2").removeClass("alert").val("NO");
+			}
+
+			if (conValue3 != "none") {
+				$("#condRisk3").addClass("alert").val("YES");
+			} else {
+				$("#condRisk3").removeClass("alert").val("NO");
+			}
+		}
+
+		if (conValue1 == "none" && conValue2 == "none" && conValue3 == "none") {
+			$("#condRisk button.bigfoot-footnote__button").css("background-color", "rgba(110, 110, 110, 0.2)");
+			$("#condRisk button.bigfoot-footnote__button").css("color","black");
+			$("#condRisk1, #condRisk2, #condRisk3").removeClass("alert").val("NO");
+		}
+	}
 
 
-	/* ------ FUNCTIONS TO UPDATE VISUALS ------ */
-	function updateGraphData(upDataset, upOccupantPoint, dotSelector, lineSelector, occSelector) {
-
-		defineScales();
 
 
-		//update graph with revised data
-		dotSelector.data(upDataset)
+
+	/* ------ FUNCTIONS TO INITIALIZE AND UPDATE GRAPH ------ */
+	function updateGraphPoints(data, className, color) {
+
+		// DATA JOIN
+		// Join new data with old elements, if any.
+		var thesePoints = graphSvg.selectAll("." + className)
+			.data(data);
+
+		// ENTER
+		// Create new elements as needed
+		thesePoints.enter().append("path")
 			.attr("d", d3.svg.symbol()
 				.type(function(d) {
 					if (d.govfact == "dwn") {
@@ -2447,48 +2236,438 @@ render.makeGraph = function () {
 					}
 				})
 				.size("35"))
+			.attr("class",className)
 			.attr("transform", function(d) {
-					return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
-			.transition()
-			.duration(500);
+				return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
+			.style("fill", color);
 
-
-		//update connection line
-		graphSvg.selectAll(lineSelector)
-			.attr("d", line(upDataset))
-			.transition()
-			.duration(500);
-
-		//update occupant point if different
-		d3.selectAll(occSelector)
-			.attr("d", d3.svg.symbol()
-				.type(function() {
-					if (upOccupantPoint.govfact == "dwn") {
+		// UPDATE
+		// Update old elements as needed.
+		thesePoints.attr("d", d3.svg.symbol()
+				.type(function(d) {
+					if (d.govfact == "dwn") {
 						return "triangle-up";
-					} else if (upOccupantPoint.govfact == "mrt") {
+					} else if (d.govfact == "mrt") {
 						return "circle";
 					}
 				})
 				.size("35"))
+			.attr("class",className)
+			.attr("transform", function(d) {
+				return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
+			.style("fill", color);
+
+		// EXIT
+		// Remove old elements as needed
+		thesePoints.exit().remove();
+	}
+
+	function findMaxVisiblePPD() {
+
+		var maxPPD;
+
+				// if only case 1 is shown:
+		if ($("#caseSelection #case2Label").hasClass("unselected") == true && $("#caseSelection #case3Label").hasClass("unselected") == true) {
+
+			maxPPD = occPointData.ppd;
+			
+		// compare case 1 and case 2 
+		} else if ($("#caseSelection #case2Label").hasClass("unselected") == false && $("#caseSelection #case3Label").hasClass("unselected") == true) {
+
+			maxPPD = d3.max([occPointData.ppd, occPointData2.ppd]);
+
+		// compare case 1 and case 3 
+		} else if ($("#caseSelection #case2Label").hasClass("unselected") == true && $("#caseSelection #case3Label").hasClass("unselected") == false) {
+
+			maxPPD = d3.max([occPointData.ppd, occPointData3.ppd]);
+
+
+		// compare case 1, case 2 and 3
+		} else if ($("#caseSelection #case2Label").hasClass("unselected") == false && $("#caseSelection #case3Label").hasClass("unselected") == false) {
+
+			maxPPD = d3.max([occPointData.ppd, occPointData2.ppd, occPointData3.ppd]);
+
+		}
+
+		return maxPPD;
+
+	}
+
+	function occupantDistanceRefLine() {
+
+		var maxPPD = findMaxVisiblePPD();
+
+		var xPosition = x(occPointData.dist);
+		var yPosition = y(maxPPD);
+
+		graphSvg.append("line")
+			.attr("class","occupantLine")
+			.attr("x1", xPosition)
+			.attr("x2", xPosition)
+			.attr("y1", height)
+			.attr("y2", yPosition)
 			.attr("transform", function() {
-				return "translate(" + (margin.left + x(upOccupantPoint.dist)) + "," + (margin.top + y(upOccupantPoint.ppd)) + ")";})
+				return "translate(" + margin.left + "," + margin.top + ")";
+		});
+	}
+
+	function updateOccupantDistanceRefLine() {
+		var newMaxPPD = findMaxVisiblePPD();
+		var newYPosition = y(newMaxPPD);
+
+		var newXPosition = x(occPointData.dist);
+
+		d3.select(".occupantLine")
+			.attr("x1", newXPosition)
+			.attr("x2", newXPosition)
+			.attr("y2", newYPosition)
+			.transition();
+	}
+
+
+	function updateOccupantPoint(data, className, color) {
+
+		// DATA JOIN
+		// Join new data with old elements, if any.
+		var thisOccupantPoint = graphSvg.selectAll("." + className)
+			.data(data);
+
+		// ENTER
+		// Create new elements as needed
+		thisOccupantPoint.enter().append("path")
+			.attr("d", d3.svg.symbol()
+				.type(function(d) {
+					if (d.govfact == "dwn") {
+						return "triangle-up";
+					} else if (d.govfact == "mrt") {
+						return "circle";
+					}
+				})
+				.size("35"))
+			.attr("class",className)
+			.attr("transform", function(d) {
+				return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
+			.style("fill", "#FFF")
+			.style("stroke", color);
+
+		// UPDATE
+		// Update old elements as needed.
+		thisOccupantPoint.attr("d", d3.svg.symbol()
+				.type(function(d) {
+					if (d.govfact == "dwn") {
+						return "triangle-up";
+					} else if (d.govfact == "mrt") {
+						return "circle";
+					}
+				})
+				.size("35"))
+			.attr("class",className)
+			.attr("transform", function(d) {
+				return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
+			.style("fill", "#FFF")
+			.style("stroke-width", 2)
+			.style("stroke", color);
+
+		// EXIT
+		// Remove old elements as needed
+		thisOccupantPoint.exit().remove();
+	}
+
+
+	function updateConnectedLine(data, lineClass) {
+
+		var line = d3.svg.line()
+				.x(function(d) {return x(d.dist);})
+				.y(function(d) {return y(d.ppd);});
+
+		graphSvg.selectAll(lineClass)
+			.attr("d", line(data))
 			.transition()
 			.duration(500);
-
-		d3.selectAll(".occupantLine").remove();
-		occupantDistanceRefLine();
-
-
-
 
 	}
 
 
+	function addPayetteText() {
+		var creditText = "Glazing and Comfort Analysis Tool created by Payette";
+
+		graphSvg.append("text")
+			.text(creditText)
+			.attr("class", "creditText")
+			.attr("x", width - 165)
+			.attr("y", height + margin.top - 10);
+	}
+
+	function occupantPositionText(occdata, className, caseName) {
+
+		var text = "";
+		var reason = "";
+
+		if (occdata.govfact == "dwn") {
+			reason = "downdraft discomfort";
+		} else {
+			reason = "radiant discomfort";
+		}
+
+
+		if (Math.round(occdata.ppd) <= ppdValue) {
+			text = "<img src='static/images/check.png' class='icon'><h1 class=" + className + ">" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1><div style='clear:both;'></div>";
+		} else {
+			text = "<img src='static/images/x.png' class='icon'><h1 class=" + className + ">" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1><div style='clear:both;'></div>";
+		}
+
+		return text;
+	}
+
+
+
+	// Display text for occupancy dist from facade
+	function thresholdDataText() {
+
+
+		var totalText = "";
+		$("#thresholdTooltip").empty();
+
+		var case1Text = occupantPositionText(occPointData, "case1Text", "Case 1");
+		var case2Text = occupantPositionText(occPointData2, "case2Text", "Case 2");
+		var case3Text = occupantPositionText(occPointData3, "case3Text", "Case 3");
+
+
+
+		//find min cy of visible occ points
+		var compareOccupantArray = [];
+
+
+		compareOccupantArray.push(occPointData.ppd);
+		if ($("#caseSelection #case2Label").hasClass("unselected") == false ) {
+			compareOccupantArray.push(occPointData2.ppd);
+		}
+		if ($("#caseSelection #case3Label").hasClass("unselected") == false ) {
+			compareOccupantArray.push(occPointData3.ppd);
+		}
+
+
+
+		// put text in correct order
+		var maxCase = d3.max(compareOccupantArray);
+		var minCase = d3.min(compareOccupantArray);
+
+
+		// if only case 1 is shown
+		if ($("#caseSelection #case2Label").hasClass("unselected") == true  && $("#caseSelection #case3Label").hasClass("unselected") == true) {
+			totalText = case1Text;
+		}
+
+		// if only cases 1 and 2
+		if ($("#caseSelection #case2Label").hasClass("unselected") == false  && $("#caseSelection #case3Label").hasClass("unselected") == true) {
+			// determine if case 1 or case 2 is greater
+			if (maxCase == occPointData.ppd) {
+				totalText = case1Text + case2Text;
+			} else {
+				totalText = case2Text + case1Text;
+			}
+		}
+
+
+		// if only cases 1 and 3
+		if ($("#caseSelection #case2Label").hasClass("unselected") == true  && $("#caseSelection #case3Label").hasClass("unselected") == false) {
+			// determine if case 1 or case 3 is greater
+			if (maxCase == occPointData.ppd) {
+				totalText = case1Text + case3Text;
+			} else {
+				totalText = case3Text + case1Text;
+			}
+		}
+
+
+		// if cases 1, 2 and 3
+		if ($("#caseSelection #case2Label").hasClass("unselected") == false  && $("#caseSelection #case3Label").hasClass("unselected") == false) {
+
+			// if case 1 is greatest...
+			if (maxCase == occPointData.ppd) {
+				// case 1 is first
+				totalText = case1Text;
+
+				// find out what's next
+				if (occPointData2.ppd >= occPointData3.ppd) {
+					// case 2 is second
+					totalText = totalText + case2Text + case3Text;
+				} else {
+					// case 3 is second
+					totalText = totalText + case3Text + case2Text;
+				}
+			}
+
+			// if case 2 is greatest...
+			else if (maxCase == occPointData2.ppd) {
+				// case 2 is first
+				totalText = case2Text;
+
+				// find out what's next
+				if (occPointData.ppd >= occPointData3.ppd) {
+					// case 1 is second
+					totalText = totalText + case1Text + case3Text;
+				} else {
+					// case 3 is second
+					totalText = totalText + case3Text + case1Text;
+				}
+			}
+
+			// if case 3 is greatest...
+			else if (maxCase == occPointData3.ppd) {
+				// case 3 is first
+				totalText = case3Text;
+
+				// find out what's next
+				if (occPointData.ppd >= occPointData2.ppd) {
+					// case 1 is second
+					totalText = totalText + case1Text + case2Text;
+				} else {
+					// case 2 is second
+					totalText = totalText + case2Text + case1Text;
+				}
+			}
+
+		}
+
+
+
+		$("#thresholdTooltip").append(totalText);
+
+		var divHeight = $("div#thresholdTooltip").height() - 10; //10 = padding
+
+		var xPosition;
+		var yPosition;
+		var yPadding;
+
+		// set XPosition for tooltip
+		// change width of tooltip so it doesn't stretch outside wrapper
+		if (x(occPointData.dist) > 190 ) {
+			$("div#thresholdTooltip").css("width","150px");
+			$("div#thresholdTooltip h1").css("width","135px");
+			yPadding = 20;
+
+			// prevent the tooltip from going outside the graph wrapper
+			if (x(occPointData.dist) > 300) {
+				// keep fixed at right edge
+				xPosition = maxContainerWidth - margin.right - $("div#thresholdTooltip").width();
+			} else {
+				// position relative to data point
+				xPosition = x(occPointData.dist) + margin.left + 8;
+			}
+
+		} else {
+			// full width tooltip
+			$("div#thresholdTooltip").css("width","280px");
+			$("div#thresholdTooltip h1").css("width","auto");
+			xPosition = x(occPointData.dist) + margin.left + 8;
+			yPadding = 10;
+		}
+
+		// set YPosition for tooltip
+		if (d3.max(compareOccupantArray) < 26) {
+			// all ppd values are less than 25
+			yPosition = y(d3.max(compareOccupantArray)) - divHeight + margin.top + yPadding;
+		} else if (d3.max(compareOccupantArray) > 26) {
+			// at least one case is above 25
+			yPosition = margin.top + yPadding + 12;
+		}
+
+
+		d3.select("#thresholdTooltip")
+		.style("left", xPosition + "px")
+		.style("top", yPosition + "px");
+
+
+	} 
+
+
+	function drawPPDThreshold(data) {
+
+		//data = PPD threshold (ie 10%)
+
+		// add shaded rectangle
+		graphSvg.append("rect")
+			.attr("class", "thresholdRect")
+			.attr("x", 0)
+			.attr("y", function() { return y(data)})
+			.attr("width", width) //use width of graph
+			.attr("height", function() { return height - y(data)})
+			.attr("transform", function() {
+					return "translate(" + margin.left + "," + margin.top + ")";})
+			.style("fill", "white");
+
+		var ppdLine = graphSvg.append("g")
+			.attr("class", "referenceLineGroup")
+			.attr("transform", function() {
+					return "translate(" + margin.left + "," + margin.top + ")";})
+
+
+		// add line
+		ppdLine.append("line")
+			.attr("class","refLine")
+			.attr("x1", 0)
+			.attr("x2", width)
+			.attr("y1", y(data))
+			.attr("y2", y(data))
+			.style("stroke", "black");
+
+
+		// add symbols
+		ppdLine.append("svg:image")
+			.attr("class", "checkLine")
+			.attr("xlink:href", "static/images/check.png")
+			.attr("x", 4)
+			.attr("y", y(data) + 4)
+			.attr("width", 12)
+			.attr("height", 12);
+
+		var crossLine = ppdLine.append("svg:image")
+			.attr("class", "crossLine")
+			.attr("xlink:href", "static/images/x.png")
+			.attr("x", 4)
+			.attr("y", y(data) - 16)
+			.attr("width", 12)
+			.attr("height", 12);
+
+	}
+
+
+	function updatePPDThreshold(data) {
+		d3.selectAll(".refLine")
+			.transition()
+			.duration(400)
+			.attr("y1", y(data))
+			.attr("y2", y(data));
+
+		d3.selectAll(".thresholdRect")
+			.transition()
+			.duration(400)
+			.attr("y", function() { return y(data)})
+			.attr("height", function() { return height - y(data)});
+
+		// add symbols
+		d3.selectAll(".checkLine")
+			.transition()
+			.duration(400)
+			.attr("y", y(data) + 4);
+
+		d3.selectAll(".crossLine")
+			.transition()
+			.duration(400)
+			.attr("y", y(data) - 16);
+	}
+
+
+
+
+
+
+	/* ------ FUNCTIONS TO UPDATE FACADE IMAGES ------ */
 	function updateFacade() {
 
 		//re-evaluate scales
 		defineScales();
-
 
 		/* -- UPDATE CASE 1 FACADE REPRESENTATION -- */
 		//update wall
@@ -2601,7 +2780,6 @@ render.makeGraph = function () {
 	}
 
 
-
 	function checkOccupantImageSize(caseName, imageID, sliderID, labelID) {
 
 		var imageHeight = $("#occupantImage").height();
@@ -2620,7 +2798,7 @@ render.makeGraph = function () {
 			resizeHeight = Math.round(facadeScaleHeight(1.32588));
 		}
 
-		
+
 
 
 		var resizeWidth = Math.round((resizeHeight/originalHeight)*originalWidth);
@@ -2675,539 +2853,8 @@ render.makeGraph = function () {
 	}
 
 
-	/* ------ FUNCTIONS FOR GENERAL REFERENCE VISUALS ------ */
 
-	
 
-	function checkCondensation(conValue1, conValue2, conValue3) {
-
-		if (conValue1 != "none" || conValue2 != "none" || conValue3 != "none") {
-			$("#condRisk button.bigfoot-footnote__button").css("background-color", "#f72734");
-			$("#condRisk button.bigfoot-footnote__button").css("color","white");
-
-			if (conValue1 != "none") {
-				$("#humidity, #condRisk1").addClass("alert");
-				$("#condRisk1").val("YES");
-			} else {
-				$("#humidity, #condRisk1").removeClass("alert");
-				$("#condRisk1").val("NO");
-			}
-
-			if (conValue2 != "none") {
-				$("#humidity2, #condRisk2").addClass("alert");
-				$("#condRisk2").val("YES");
-			} else {
-				$("#humidity2, #condRisk2").removeClass("alert");
-				$("#condRisk2").val("NO");
-			}
-
-			if (conValue3 != "none") {
-				$("#humidity3, #condRisk3").addClass("alert");
-				$("#condRisk3").val("YES");
-			} else {
-				$("#humidity3, #condRisk3").removeClass("alert");
-				$("#condRisk3").val("NO");
-			}
-		} 
-
-		if (conValue1 == "none" && conValue2 == "none" && conValue3 == "none") {
-			$("#condRisk button.bigfoot-footnote__button").css("background-color", "rgba(110, 110, 110, 0.2)");
-			$("#condRisk button.bigfoot-footnote__button").css("color","black");
-			$("#humidity, #humidity2, #humidity3, #condRisk1, #condRisk2, #condRisk3").removeClass("alert");
-			$("#condRisk1, #condRisk2, #condRisk3").val("NO");
-		}
-	}
-
-
-	function determineInputProportion() {
-
-		var svgProportionData = {};
-		// maxCeilingCase, maxLengthCase, maxProportion
-
-		// find the max ceiling height and wall length out of the 3 cases
-		var ceilingHeightArray = [case1Data.ceilingHeightValue, case2Data.ceilingHeightValue, case3Data.ceilingHeightValue];
-		var maxCeilingHeight = d3.max(ceilingHeightArray);
-
-		if (maxCeilingHeight == case1Data.ceilingHeightValue) {
-			svgProportionData.maxCeilingCase = case1Data;
-		} else if (maxCeilingHeight == case2Data.ceilingHeightValue) {
-			svgProportionData.maxCeilingCase = case2Data;
-		} else if (maxCeilingHeight == case3Data.ceilingHeightValue) {
-			svgProportionData.maxCeilingCase = case3Data;
-		};
-
-
-		var wallLengthArray = [case1Data.wallLen, case2Data.wallLen, case3Data.wallLen];
-		var maxWallLength = d3.max(wallLengthArray);
-
-		if (maxWallLength == case1Data.wallLen) {
-			svgProportionData.maxLengthCase = case1Data;
-		} else if (maxWallLength == case2Data.wallLen) {
-			svgProportionData.maxLengthCase = case2Data;
-		} else if (maxWallLength == case3Data.wallLen) {
-			svgProportionData.maxLengthCase = case3Data;
-		};
-
-
-		svgProportionData.maxProportion = maxWallLength/maxCeilingHeight;
-
-		return svgProportionData;
-	}
-
-
-	function occupantPositionText(occdata, className, caseName) {
-
-		var text = "";
-		var reason = "";
-
-		if (occdata.govfact == "dwn") {
-			reason = "downdraft discomfort";
-		} else {
-			reason = "radiant discomfort";
-		}
-
-
-		if (Math.round(occdata.ppd) <= ppdValue) {
-			text = "<img src='static/images/check.png' class='icon'><h1 class=" + className + ">" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1><div style='clear:both;'></div>";
-		} else {
-			text = "<img src='static/images/x.png' class='icon'><h1 class=" + className + ">" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1><div style='clear:both;'></div>";
-		}
-
-		return text;
-	}
-
-
-
-	// Display text for occupancy dist from facade
-	function thresholdDataText() {
-
-
-		var totalText = "";
-		$("#thresholdTooltip").empty();
-
-		var case1Text = occupantPositionText(occPointData, "case1Text", "Case 1");
-		var case2Text = occupantPositionText(occPointData2, "case2Text", "Case 2");
-		var case3Text = occupantPositionText(occPointData3, "case3Text", "Case 3");
-
-
-
-		//find min cy of visible occ points
-		var compareOccupantArray = [];
-
-
-		compareOccupantArray.push(occPointData.ppd);
-		if ($("#caseSelection #case2Label").hasClass("unselected") == false ) {
-			compareOccupantArray.push(occPointData2.ppd);
-		}
-		if ($("#caseSelection #case3Label").hasClass("unselected") == false ) {
-			compareOccupantArray.push(occPointData3.ppd);
-		}
-
-
-
-		// put text in correct order
-		var maxCase = d3.max(compareOccupantArray);
-		var minCase = d3.min(compareOccupantArray);
-
-
-		// if only case 1 is shown
-		if ($("#caseSelection #case2Label").hasClass("unselected") == true  && $("#caseSelection #case3Label").hasClass("unselected") == true) {
-			totalText = case1Text;
-		}
-
-		// if only cases 1 and 2
-		if ($("#caseSelection #case2Label").hasClass("unselected") == false  && $("#caseSelection #case3Label").hasClass("unselected") == true) {
-			// determine if case 1 or case 2 is greater
-			if (maxCase == occPointData.ppd) {
-				totalText = case1Text + case2Text;
-			} else {
-				totalText = case2Text + case1Text;
-			}
-		}
-
-
-		// if only cases 1 and 3
-		if ($("#caseSelection #case2Label").hasClass("unselected") == true  && $("#caseSelection #case3Label").hasClass("unselected") == false) {
-			// determine if case 1 or case 3 is greater
-			if (maxCase == occPointData.ppd) {
-				totalText = case1Text + case3Text;
-			} else {
-				totalText = case3Text + case1Text;
-			}
-		}
-
-
-		// if cases 1, 2 and 3
-		if ($("#caseSelection #case2Label").hasClass("unselected") == false  && $("#caseSelection #case3Label").hasClass("unselected") == false) {
-			
-			// if case 1 is greatest...
-			if (maxCase == occPointData.ppd) {
-				// case 1 is first
-				totalText = case1Text;
-
-				// find out what's next 
-				if (occPointData2.ppd >= occPointData3.ppd) {
-					// case 2 is second
-					totalText = totalText + case2Text + case3Text;
-				} else {
-					// case 3 is second
-					totalText = totalText + case3Text + case2Text;
-				}
-			}
-
-			// if case 2 is greatest...
-			else if (maxCase == occPointData2.ppd) {
-				// case 2 is first
-				totalText = case2Text;
-
-				// find out what's next 
-				if (occPointData.ppd >= occPointData3.ppd) {
-					// case 1 is second
-					totalText = totalText + case1Text + case3Text;
-				} else {
-					// case 3 is second
-					totalText = totalText + case3Text + case1Text;
-				}
-			}
-
-			// if case 3 is greatest...
-			else if (maxCase == occPointData3.ppd) {
-				// case 3 is first
-				totalText = case3Text;
-
-				// find out what's next 
-				if (occPointData.ppd >= occPointData2.ppd) {
-					// case 1 is second
-					totalText = totalText + case1Text + case2Text;
-				} else {
-					// case 2 is second
-					totalText = totalText + case2Text + case1Text;
-				}
-			}
-
-		}
-
-
-
-		$("#thresholdTooltip").append(totalText);
-
-		var divHeight = $("div#thresholdTooltip").height() - 10; //10 = padding
-
-		var xPosition;
-		var yPosition;
-		var yPadding;
-
-		// set XPosition for tooltip
-		// change width of tooltip so it doesn't stretch outside wrapper
-		if (x(occPointData.dist) > 190 ) {
-			$("div#thresholdTooltip").css("width","150px");
-			$("div#thresholdTooltip h1").css("width","135px");
-			yPadding = 20;
-
-			// prevent the tooltip from going outside the graph wrapper
-			if (x(occPointData.dist) > 300) {
-				// keep fixed at right edge
-				xPosition = maxContainerWidth - margin.right - $("div#thresholdTooltip").width();
-			} else {
-				// position relative to data point
-				xPosition = x(occPointData.dist) + margin.left + 8;
-			}
-			
-		} else {
-			// full width tooltip
-			$("div#thresholdTooltip").css("width","280px");
-			$("div#thresholdTooltip h1").css("width","auto");
-			xPosition = x(occPointData.dist) + margin.left + 8;
-			yPadding = 10;
-		}
-
-		// set YPosition for tooltip
-		if (d3.max(compareOccupantArray) < 26) {
-			// all ppd values are less than 25
-			yPosition = y(d3.max(compareOccupantArray)) - divHeight + margin.top + yPadding;
-		} else if (d3.max(compareOccupantArray) > 26) {
-			// at least one case is above 25
-			yPosition = margin.top + yPadding + 12;
-		}
-
-
-		d3.select("#thresholdTooltip")
-		.style("left", xPosition + "px")
-		.style("top", yPosition + "px");
-
-
-	} // end thresholdDataText
-
-
-	function drawPPDThreshold(data) {
-
-		//data = PPD threshold (ie 10%)
-
-		// add shaded rectangle
-		graphSvg.append("rect")
-			.attr("class", "thresholdRect")
-			.attr("x", 0)
-			.attr("y", function() { return y(data)})
-			.attr("width", width) //use width of graph
-			.attr("height", function() { return height - y(data)})
-			.attr("transform", function() {
-					return "translate(" + margin.left + "," + margin.top + ")";})
-			.style("fill", "white");
-
-		var ppdLine = graphSvg.append("g")
-			.attr("class", "referenceLineGroup")
-			.attr("transform", function() {
-					return "translate(" + margin.left + "," + margin.top + ")";})
-
-
-		// add line
-		ppdLine.append("line")
-			.attr("class","refLine")
-			.attr("x1", 0)
-			.attr("x2", width)
-			.attr("y1", y(data))
-			.attr("y2", y(data))
-			.style("stroke", "black");
-
-
-		// add symbols
-		ppdLine.append("svg:image")
-			.attr("class", "checkLine")
-			.attr("xlink:href", "static/images/check.png")
-			.attr("x", 4)
-			.attr("y", y(data) + 4)
-			.attr("width", 12)
-			.attr("height", 12);
-
-		var crossLine = ppdLine.append("svg:image")
-			.attr("class", "crossLine")
-			.attr("xlink:href", "static/images/x.png")
-			.attr("x", 4)
-			.attr("y", y(data) - 16)
-			.attr("width", 12)
-			.attr("height", 12);
-
-	}
-
-
-	function updatePPDThreshold(data) {
-		d3.selectAll(".refLine")
-			.transition()
-			.duration(400)
-			.attr("y1", y(data))
-			.attr("y2", y(data));
-
-		d3.selectAll(".thresholdRect")
-			.transition()
-			.duration(400)
-			.attr("y", function() { return y(data)})
-			.attr("height", function() { return height - y(data)});
-
-		// add symbols
-		d3.selectAll(".checkLine")
-			.transition()
-			.duration(400)
-			.attr("y", y(data) + 4);
-
-		d3.selectAll(".crossLine")
-			.transition()
-			.duration(400)
-			.attr("y", y(data) - 16);
-	}
-
-
-	function occupantDistanceRefLine() {
-
-		//find max cy of visible occ points
-		var compareOccupantArray = [occPointData.ppd, occPointData2.ppd, occPointData3.ppd];
-
-
-		var sortedPPD = compareOccupantArray.sort(function(a, b) {
-			return d3.ascending(a, b);
-		});
-
-
-
-		var xPosition = x(occPointData.dist);
-		var yPosition = y(d3.min(compareOccupantArray));
-
-		// add lines between points
-
-		graphSvg.append("line")
-			.attr("class","occupantLine")
-			.attr("id", "occDistLine1")
-			.attr("x1", xPosition)
-			.attr("x2", xPosition)
-			.attr("y1", height)
-			.attr("y2", y(sortedPPD[0]) + 8)
-			.attr("transform", function() {
-				return "translate(" + margin.left + "," + margin.top + ")";
-			});
-
-
-		if ((sortedPPD[1] != sortedPPD[0]) && (sortedPPD[1] != sortedPPD[2])) {
-
-			graphSvg.append("line")
-				.attr("class","occupantLine")
-				.attr("id", "occDistLine2")
-				.attr("x1", xPosition)
-				.attr("x2", xPosition)
-				.attr("y1", y(sortedPPD[0]) - 8)
-				.attr("y2", y(sortedPPD[1]) + 8)
-				.attr("transform", function() {
-					return "translate(" + margin.left + "," + margin.top + ")";
-				});	
-		}
-
-		if ((sortedPPD[2] != sortedPPD[1]) && (sortedPPD[2] != sortedPPD[0])) {
-			graphSvg.append("line")
-			.attr("class","occupantLine")
-			.attr("id", "occDistLine3")
-			.attr("x1", xPosition)
-			.attr("x2", xPosition)
-			.attr("y1", y(sortedPPD[1]) - 8)
-			.attr("y2", y(sortedPPD[2]) + 8)
-			.attr("transform", function() {
-				return "translate(" + margin.left + "," + margin.top + ")";
-			});	
-		}
-		
-		
-	}
-
-
-
-
-/*
-	function addDimensions(glazingData, glazingWidth, glazingHeight) {
-
-		//get position of left-most window
-		var firstWindow = $(".window1:last");
-
-
-		var leftEdgeWindow = parseFloat(firstWindow.attr("x"));
-		var middleWidth = parseFloat(firstWindow.attr("x")) + facadeScaleWidth(glazingWidth/2);
-		var verticalWindowMidpoint = parseFloat(firstWindow.attr("y")) + facadeScaleHeight(glazingHeight/2);
-		var topOfWindow = parseFloat(firstWindow.attr("y"));
-		var bottomOfWindow = parseFloat(firstWindow.attr("y")) + facadeScaleHeight(glazingHeight);
-		var sillHeightPixels = facadeScaleHeight(glazingData[0][0][2]);
-
-		try {
-			var windowSeparationPixels = facadeScaleWidth(glazingData[0][0][0]) - facadeScaleWidth(glazingData[1][0][0]);
-		} catch (err) {
-			var windowSeparationPixels = case1Data.wallLen/2
-		}
-
-
-
-		// window height
-		facadeSvgCase1.append("g")
-			.attr("class", "dimensions")
-			.attr("id", "windowHeightDim")
-			.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case1CeilingDiff)) + ")");
-		var windowHeightDimensions = facadeSvgCase1.selectAll("#windowHeightDim");
-		windowHeightDimensions.append("line")
-		    .attr("class", "dimline")
-		    .attr("x2", middleWidth)
-			.attr("x1", middleWidth)
-			.attr("y1", topOfWindow)
-			.attr("y2", bottomOfWindow)
-			.attr("marker-end", "url(#arrowhead)")
-			.attr("marker-start", "url(#arrowhead)");
-
-
-		//window width
-		facadeSvgCase1.append("g")
-			.attr("class", "dimensions")
-			.attr("id", "windowWidthDim")
-			.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case1CeilingDiff)) + ")");
-		var windowWidthDimensions = facadeSvgCase1.selectAll("#windowWidthDim");
-		windowWidthDimensions.append("line")
-		    .attr("class", "dimline")
-		    .attr("x1", leftEdgeWindow)
-			.attr("x2", leftEdgeWindow + facadeScaleWidth(glazingWidth))
-			.attr("y1", verticalWindowMidpoint)
-			.attr("y2", verticalWindowMidpoint)
-			.attr("marker-start", "url(#arrowhead)")
-			.attr("marker-end", "url(#arrowhead)");
-
-
-		//sill height
-		facadeSvgCase1.append("g")
-			.attr("class", "dimensions")
-			.attr("id", "sillHeightDim")
-			.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case1CeilingDiff)) + ")");
-		var sillHeightDimensions = facadeSvgCase1.selectAll("#sillHeightDim");
-		sillHeightDimensions.append("line")
-		    .attr("class", "dimline")
-		    .attr("x2", middleWidth)
-			.attr("x1", middleWidth)
-			.attr("y1", bottomOfWindow)
-			.attr("y2", bottomOfWindow + sillHeightPixels)
-			.attr("marker-end", "url(#arrowhead)")
-			.attr("marker-start", "url(#arrowhead)");
-
-
-		//window separation
-
-		facadeSvgCase1.append("g")
-			.attr("class", "dimensions")
-			.attr("id", "windowSepDim")
-			.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case1CeilingDiff)) + ")");
-		var windowSepDimensions = facadeSvgCase1.selectAll("#windowSepDim");
-
-		if (case1Data.distanceWindows != case1Data.wallLen) {
-			windowSepDimensions.append("line")
-		    .attr("class", "dimline")
-		    .attr("x1", middleWidth)
-			.attr("x2", middleWidth + windowSeparationPixels)
-			.attr("y1", verticalWindowMidpoint)
-			.attr("y2", verticalWindowMidpoint)
-			.attr("marker-start", "url(#arrowhead)")
-			.attr("marker-end", "url(#arrowhead)");
-		} else {
-			windowSepDimensions.append("line")
-		    .attr("class", "dimline")
-		    .attr("x1", 0)
-			.attr("x2", function() {return facadeScaleWidth(case1Data.wallLen)})
-			.attr("y1", function() {return facadeScaleHeight(case1Data.ceilingHeightValue/2)})
-			.attr("y2", function() {return facadeScaleHeight(case1Data.ceilingHeightValue/2)})
-			.attr("marker-start", "url(#arrowhead)")
-			.attr("marker-end", "url(#arrowhead)");
-		}
-
-
-		// ceiling height
-		facadeSvgCase1.append("g")
-			.attr("class", "dimensions")
-			.attr("id", "facadeHeightDim")
-			.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case1CeilingDiff)) + ")");
-		var facHeightDimensions = facadeSvgCase1.selectAll("#facadeHeightDim");
-		facHeightDimensions.append("line")
-		    .attr("class", "dimline")
-		    .attr("x1", function() {return facadeScaleWidth(case1Data.wallLen/4)})
-			.attr("x2", function() {return facadeScaleWidth(case1Data.wallLen/4)})
-			.attr("y2", 0)
-			.attr("y1", function() {return facadeScaleHeight(case1Data.ceilingHeightValue)})
-			.attr("marker-end", "url(#arrowhead)")
-			.attr("marker-start", "url(#arrowhead)");
-
-		// room length
-		facadeSvgCase1.append("g")
-			.attr("class", "dimensions")
-			.attr("id", "facadeWidthDim")
-			.attr("transform", "translate(" + facMargin.left + "," + (facMargin.top + facadeScaleHeight(case1CeilingDiff)) + ")");
-		var facWidthDimensions = facadeSvgCase1.selectAll("#facadeWidthDim");
-		facWidthDimensions.append("line")
-		    .attr("class", "dimline")
-		    .attr("x1", 0)
-			.attr("x2", function() {return facadeScaleWidth(case1Data.wallLen)})
-			.attr("y1", function() {return facadeScaleHeight(case1Data.ceilingHeightValue/2)})
-			.attr("y2", function() {return facadeScaleHeight(case1Data.ceilingHeightValue/2)})
-			.attr("marker-start", "url(#arrowhead)")
-			.attr("marker-end", "url(#arrowhead)");
-	}
-*/
 
 
 

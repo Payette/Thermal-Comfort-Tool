@@ -7,9 +7,6 @@ var abs = Math.abs
 var geo = geo || {}
 
 
-//Define some default global variables that we do not want to change or expose in the interface.
-var numPts = 12 // The number of points to generate.  They will be generated at each foot.
-
 
 // Function that generates the geometry of the windows based on the input window parameters.
 // Originally developed by Chris Mackey (Chris@MackeyArchitecture.com) for Ladybug + Honeybee (https://github.com/mostaphaRoudsari/Honeybee)
@@ -377,16 +374,17 @@ geo.computeAllViewFac = function(wallCoords, glazingCoords, occDistToWall){
 
 	if (unitSys == "IP"){
 		var seatH = 2 // The average height above the ground that the occupan is located in feet.
+		var numPts = 12 // The number of points to generate.  They will be generated at each foot.
 	} else {
 		var seatH = 0.6096 // The average height above the ground that the occupan is located in meters.
+		var numPts = 8 // The number of points to generate.  They will be generated at 50 cm.
 	}
-
 
 	for (var i = 0; i < numPts; i++) {
 		if (unitSys == "IP"){
 			var dist = i+1
 		} else {
-			var dist = units.Ft2M(i+1)
+			var dist = (i+1)*0.5
 		}
 		facadeDist.push(dist)
 		locationPts.push([parseFloat(occDistToWall),dist,seatH])

@@ -37,5 +37,5 @@ util.secant = function(a, b, fn, epsilon) {
     f1 = f2
     f2 = f3
   }
-  return NaN
+  return 100
 }

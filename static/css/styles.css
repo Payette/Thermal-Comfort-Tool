@@ -57,6 +57,14 @@ body {
 }
 
 
+#graph .creditText {
+	font-family: "museo-sans", sans-serif;
+	font-size: 9px;
+	font-style: italic;
+	display: none;
+}
+
+
 
 #graph .axislabel, #graph .axis text {
 	font-family: "museo-sans", sans-serif;
@@ -152,6 +160,7 @@ body {
 #facadeWrapper {
 	width: 100%
 	overflow: auto;
+	margin-top: 43px;
 	margin-bottom: 25px;
 }
 
@@ -644,8 +653,7 @@ div.inputWrapperRight span {
 	border-top: none;
 	border-right: none;
 	border-left: none;
-	border-bottom-style: solid;
-	border-width: 2px;
+	border-bottom: none;
 }
 
 #inputs input#calcuvalue3, #inputs input.inactive#condRisk3 {
@@ -723,7 +731,6 @@ br.glzBR {
 /* custom checkbox styling */
 #inputs label input.customCheck {
 	width: 15px;
-	vertical-align: middle;
 }
 
 input[type=checkbox] {
@@ -735,16 +742,17 @@ input[type=checkbox] {
 	margin: 0px 5px 0px 20px;
 	position: relative;
 	padding: 0;
-
-	vertical-align: middle;
 }
 
 #inputs div.customCheckStyleCentered {
 	width: 12px;
 	margin: 0;
 	position: relative;
+	padding: 0;
+}
 
-	vertical-align: middle;
+#inputs div.customCheckStyleCentered.case3{
+	margin-left: 15px;
 }
 
 
@@ -761,14 +769,6 @@ input[type=checkbox] {
 	background: rgb(245, 245, 245);
 }
 
-#inputs div#offsetLeft label {
-	top: -5px;
-	left: 19px;
-}
-
-#inputs div#offsetMiddle label {
-	top: -5px;
-}
 
 #inputs div.customCheckStyle label.unselected, #inputs div.customCheckStyleCentered label.unselected {
 	border: 1px solid rgb(235, 235, 235);
@@ -894,7 +894,7 @@ div#units, div#share {
 	font-size: 12px;
 	text-transform: uppercase;
 	padding: 0;
-	margin: 0 5px 0 0;
+	margin: 2px 5px 0 0;
 	display: inline-block;
 	float: left;
 }

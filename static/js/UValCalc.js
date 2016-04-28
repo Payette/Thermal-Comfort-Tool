@@ -79,7 +79,7 @@ uVal.uValFinal = function(opaqueViewFac, winViewFac, distToFacade, dwnPPDFac, wi
     var windowHgtSI = windowHgt;
   	var vel = airSpeed;
   	var opaqueRVal = wallRVal;
-  	var airTemp = indoorTemp;
+  	var airTemp = parseFloat(indoorTemp);
   	var outdoorTemp = outTemp;
     var facadeDist = distToFacade;
   }
