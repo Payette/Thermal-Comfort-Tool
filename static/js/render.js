@@ -1000,7 +1000,6 @@ render.makeGraph = function () {
 			autocalcUValues();
 		});
 
-		// does not work in IE, see Modernizer code above
 		$("#occupantDist").on("change", function(event) {
 			//assign new value
 			case1Data.occDistToWallCenter = $(this).val();
@@ -1094,7 +1093,7 @@ render.makeGraph = function () {
 
 	$("#windowWidthCheck").change(function(event) {
 		if (($("#windowWidthCheck").is(":checked")) == true) {
-			glzOrWidth = false;
+			glzOrWidth = false; // set by width
 			$("#windowWidth, #windowWidth2, #windowWidth3, #windowWidthLabel").removeClass("inactive");
 			$("#glazing, #glazing2, #glazing3, #glazingLabel").addClass("inactive");
 
@@ -1103,9 +1102,14 @@ render.makeGraph = function () {
 
 			$("#glazingRatioCheck").prop(":checked", false);
 
+			$("#windowWidth, #windowWidth2, #windowWidth3").prop("disabled", false);
+			$("#windowWidth, #windowWidth2, #windowWidth3").spinner("enable");
+			$("#glazing, #glazing2, #glazing3").prop("disabled", true);
+			$("#glazing, #glazing2, #glazing3").spinner("disable");
+
 
 		} else if (($("#windowWidthCheck").is(":checked")) == false) {
-			glzOrWidth = true;
+			glzOrWidth = true; // set by ratio
 			$("#windowWidth, #windowWidth2, #windowWidth3, #windowWidthLabel").addClass("inactive");
 			$("#glazing, #glazing2, #glazing3, #glazingLabel").removeClass("inactive");
 
@@ -1113,8 +1117,13 @@ render.makeGraph = function () {
 
 			$("#checkGlzRatio").removeClass("unselected");
 			$("#checkWindWidth").addClass("unselected");
-
+			
 			$("#glazingRatioCheck").prop(":checked", true);
+
+			$("#windowWidth, #windowWidth2, #windowWidth3").prop("disabled", true);
+			$("#windowWidth, #windowWidth2, #windowWidth3").spinner("disable");
+			$("#glazing, #glazing2, #glazing3").prop("disabled", false);
+			$("#glazing, #glazing2, #glazing3").spinner("enable");
 
 		}
 	});
@@ -1126,20 +1135,29 @@ render.makeGraph = function () {
 
 			$("#checkGlzRatio").removeClass("unselected");
 			$("#checkWindWidth").addClass("unselected");
+			$("#windowWidth, #windowWidth2, #windowWidth3").prop("disabled", false);
 
-			$("#windowWidthCheck").prop(":checked", false);
+			$("#windowWidth, #windowWidth2, #windowWidth3").prop("disabled", true);
+			$("#windowWidth, #windowWidth2, #windowWidth3").spinner("disable");
+			$("#glazing, #glazing2, #glazing3").prop("disabled", false);
+			$("#glazing, #glazing2, #glazing3").spinner("enable");
 
 		} else if (($("#glazingRatioCheck").is(":checked")) == false) {
 			glzOrWidth = false;
 			$("#windowWidth, #windowWidth2, #windowWidth3, #windowWidthLabel").removeClass("inactive");
 			$("#glazing, #glazing2, #glazing3, #glazingLabel").addClass("inactive");
 
-
-
-			$("#checkWindWidth").removeClass("unselected");
 			$("#checkGlzRatio").addClass("unselected");
+			$("#checkWindWidth").removeClass("unselected");
 
 			$("#windowWidthCheck").prop(":checked", true);
+
+
+			// disable and enable input boxes
+			$("#windowWidth, #windowWidth2, #windowWidth3").prop("disabled", false);
+			$("#windowWidth, #windowWidth2, #windowWidth3").spinner("enable");
+			$("#glazing, #glazing2, #glazing3").prop("disabled", true);
+			$("#glazing, #glazing2, #glazing3").spinner("disable");
 		}
 	})
 

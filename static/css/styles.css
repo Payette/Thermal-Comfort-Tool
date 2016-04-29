@@ -631,16 +631,11 @@ div.inputWrapperRight span {
 	border-color: rgb(235, 235, 235);
 	border-style: solid;
 	border-width: 1px;
-	color: #ADADAD;
-	font-style: italic;
 	cursor: default;
 	background-color: #fff;
 	padding: 1px 2px 0px 0px;
 }
 
-#inputs input.inactive.alert, #inputs input.alert {
-	color: #f72734;
-}
 
 
 #inputs input.inactive#calcuvalue, #inputs input.inactive#calcuvalue2, #inputs input.inactive#calcuvalue3, #inputs input.inactive#condRisk1, #inputs input.inactive#condRisk2, #inputs input.inactive#condRisk3 {
@@ -650,12 +645,16 @@ div.inputWrapperRight span {
 	border-right: none;
 	border-left: none;
 	border-bottom: none;
+	color: #ADADAD;
 }
 
 #inputs input#calcuvalue3, #inputs input.inactive#condRisk3 {
 	margin: 0 0 0 16px;
 }
 
+#inputs input.inactive#calcuvalue.alert, #inputs input.inactive#calcuvalue2.alert, #inputs input.inactive#calcuvalue3.alert, #inputs input.inactive#condRisk1.alert, #inputs input.inactive#condRisk2.alert, #inputs input.inactive#condRisk3.alert {
+	color: #f72734;
+}
 
 
 
@@ -701,7 +700,7 @@ br.glzBR {
 
 
 #inputs label.inactive {
-	color: #b9b9b9;
+	color: #ADADAD;
 	font-style: italic;
 	font-weight: 300;
 }
