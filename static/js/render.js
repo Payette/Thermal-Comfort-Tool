@@ -999,6 +999,27 @@ render.makeGraph = function () {
 			// update calculated uvalue
 			autocalcUValues();
 		});
+
+		// does not work in IE, see Modernizer code above
+		$("#occupantDist").on("change", function(event) {
+			//assign new value
+			case1Data.occDistToWallCenter = $(this).val();
+			$("#occupantDist").attr("value", case1Data.occDistToWallCenter);
+			updateOccupantImageLocation("#occupantImage", "#occupantDist", case1Data);
+			updateData(case1Data);
+		})
+		$("#occupantDist2").on("change", function(event) {
+			//assign new value
+			case2Data.occDistToWallCenter = $(this).val();
+			updateOccupantImageLocation("#occupantImage2", "#occupantDist2", case2Data);
+			updateData(case2Data);
+		})
+		$("#occupantDist3").on("change", function(event) {
+			//assign new value
+			case3Data.occDistToWallCenter = $(this).val();
+			updateOccupantImageLocation("#occupantImage3", "#occupantDist3", case3Data);
+			updateData(case3Data);
+		})
 	}
 
 	// does not work in IE, see Modernizer code above
@@ -1045,6 +1066,26 @@ render.makeGraph = function () {
 		autocalcUValues();
 	});
 
+	// does not work in IE, see Modernizer code above
+	$("#occupantDist").on("input", function(event) {
+		//assign new value
+		case1Data.occDistToWallCenter = $(this).val();
+		$("#occupantDist").attr("value", case1Data.occDistToWallCenter);
+		updateOccupantImageLocation("#occupantImage", "#occupantDist", case1Data);
+		updateData(case1Data);
+	})
+	$("#occupantDist2").on("input", function(event) {
+		//assign new value
+		case2Data.occDistToWallCenter = $(this).val();
+		updateOccupantImageLocation("#occupantImage2", "#occupantDist2", case2Data);
+		updateData(case2Data);
+	})
+	$("#occupantDist3").on("input", function(event) {
+		//assign new value
+		case3Data.occDistToWallCenter = $(this).val();
+		updateOccupantImageLocation("#occupantImage3", "#occupantDist3", case3Data);
+		updateData(case3Data);
+	})
 
 
 
@@ -1181,28 +1222,6 @@ render.makeGraph = function () {
 	})
 
 
-	$("#occupantDist").change(function(event) {
-		//assign new value
-
-		case1Data.occDistToWallCenter = $(this).val();
-		$("#occupantDist").attr("value", case1Data.occDistToWallCenter);
-
-		updateOccupantImageLocation("#occupantImage", "#occupantDist", case1Data);
-
-		updateData(case1Data);
-	})
-	$("#occupantDist2").change(function(event) {
-		//assign new value
-		case2Data.occDistToWallCenter = $(this).val();
-		updateOccupantImageLocation("#occupantImage2", "#occupantDist2", case2Data);
-		updateData(case2Data);
-	})
-	$("#occupantDist3").change(function(event) {
-		//assign new value
-		case3Data.occDistToWallCenter = $(this).val();
-		updateOccupantImageLocation("#occupantImage3", "#occupantDist3", case3Data);
-		updateData(case3Data);
-	})
 
 
 

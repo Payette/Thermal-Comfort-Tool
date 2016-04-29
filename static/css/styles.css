@@ -287,19 +287,15 @@ rect.blue {
 	margin: 0;
 }
 
-
-#occupantImage, #occupantImage2, #occupantImage3 {
+output #occupantImage, output #occupantImage2, output #occupantImage3 {
 	position: relative;
 	width: 180px; 
   	height: 250px;
-	background-image: url(../../static/images/slider.png);
-	background-size: 180px 250px;
-	display: inline-block;
-	bottom: 500px; /* imageHeight + facMargin.bottom*2*/
+  	display: inline-block;
+  	bottom: 500px; /* imageHeight + facMargin.bottom*2*/
 	left: -15px; /* - imageWidth/2 */
 	opacity: .8;
 }
-
 
 
 
@@ -965,6 +961,11 @@ div#URLpop textarea {
 	color: #000;
 	width: 418px;
 	height: 220px;
+}
+
+div#disclaimer {
+	padding: 20px;
+
 }
 
 div#disclaimer p,  div#disclaimer h1{
