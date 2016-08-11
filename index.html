@@ -64,13 +64,13 @@
 					click: function() {
 						var urlToShorten = $("#URLpop textarea").val();
 
-						shorten(urlToShorten, function(response) { 
+						shorten(urlToShorten, function(response) {
 
 							// replace long url with shortened url
 							$("#URLpop textarea").empty();
 							$("#URLpop textarea").append(response.data.url);
 
-				        }); 
+				        });
 					}},
 					{text: "Close",
 					click: function() {
@@ -104,7 +104,7 @@
 
 	</script>
 
-	
+
 
 
 </head>
@@ -230,7 +230,7 @@
 
 	<div id="inputs">
 
-		<h1>Glazing and Comfort Analysis Tool</h1>
+		<h1>Glazing and Winter Comfort Tool</h1>
 		<hr>
 		<p>This tool evaluates potential thermal discomfort caused by glazing design and properties on occupants in the winter time. To learn more about the principles behind downdraft and radiant discomfort, and how to mitigate them, refer to the resources at the bottom of this page.</p>
 
@@ -426,7 +426,7 @@
 			<p><img src="static/images/dims-sill.png"><a href="#fnref:4" title="return to article"> ↩</a></p>
 	    </li>
 
-	    <li class="footnote" id="fn:5"> <!-- window width -->	
+	    <li class="footnote" id="fn:5"> <!-- window width -->
 	        <p><img src="static/images/dims-width.png"><a href="#fnref:5" title="return to article"> ↩</a></p>
 	    </li>
 
@@ -449,7 +449,7 @@
 	    <li class="footnote" id="fn:10"> <!-- conden risk -->
 	        <p>If there is a risk of condensation, the interior window surface temperature is within 5°F of the space’s dew point temperature. This happens when the indoor relative humidity is high and the outdoor temperature is low.<a href="#fnref:10" title="return to article"> ↩</a></p>
 	    </li>
-	    
+
 	    <li class="footnote" id="fn:11"> <!-- outdoor temp -->
 	        <p>Coldest expected outdoor temperature under which occupant thermal comfort is being evaluated. This varies with the climate of the project and the time of day that the space is expected to be occupied.<a href="#fnref:11" title="return to article"> ↩</a></p>
 	    </li>
