@@ -50,6 +50,7 @@
 		// Increment Buttons
 		$(function(){
 			$("#ceiling, #wallWidth, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowE, #rvalue, #outdoortemp, #airtemp, #humidity, #airspeed, #clothing, #metabolic, #ceiling2, #wallWidth2, #windowHeight2, #windowWidth2, #glazing2, #sill2, #distWindow2, #uvalue2, #lowE2, #rvalue2, #outdoortemp2, #airtemp2, #humidity2, #airspeed2, #clothing2, #metabolic2, #ceiling3, #wallWidth3, #windowHeight3, #windowWidth3, #glazing3, #sill3, #distWindow3, #uvalue3, #lowE3, #rvalue3, #outdoortemp3, #airtemp3, #humidity3, #airspeed3, #clothing3, #metabolic3").spinner();
+			$("#glazing, #glazing2, #glazing3").spinner("disable");
 		});
 
 		// URL Alert
@@ -63,13 +64,13 @@
 					click: function() {
 						var urlToShorten = $("#URLpop textarea").val();
 
-						shorten(urlToShorten, function(response) { 
+						shorten(urlToShorten, function(response) {
 
 							// replace long url with shortened url
 							$("#URLpop textarea").empty();
 							$("#URLpop textarea").append(response.data.url);
 
-				        }); 
+				        });
 					}},
 					{text: "Close",
 					click: function() {
@@ -81,18 +82,40 @@
 			});
 		});
 
-
-
+		$(document).ready($(function() {
+			$("#disclaimer").dialog({
+				autoOpen: true,
+				draggable: false,
+				closeOnEscape: false,
+				modal: true,
+				width: 350,
+				height: 180,
+				buttons: [
+				{text: "Accept",
+				click: function(){
+					$(this).dialog("close");
+				}},
+				{text: "Decline",
+				click: function() {
+					window.location.href="http://www.payette.com/projects/Research-at-Payette/";
+				}}]
+			})
+		}))
 
 	</script>
 
-	
+
 
 
 </head>
 
 
 <body>
+
+	<div id="disclaimer">
+		<h1>Disclaimer</h1>
+		<p>By using the Glazing and Comfort Analysis Tool, you agree to the <a href="" target="_blank">Terms and Conditions.</a></p>
+	</div>
 
 	<div id="header"><img src="static/images/header.png"></div>
 	<div id="wrapper">
@@ -105,7 +128,7 @@
 				<h1 id="case1Heading" class="facadeHeading case1Text">Case 1</h1>
  				<div id="sliderWrapper">
 					<input type="range" name="occupantDist" id="occupantDist" min="0" max="20" value="0" autocomplete="off"/>
-					<output for="occupantDist" id="occupantImage"/></output>
+					<output for="occupantDist"><img src="static/images/slider.png" id="occupantImage"></output>
 				</div>
 			</div>
 			<div id="case2FacadeWrapper">
@@ -113,7 +136,7 @@
 				<h1 id="case2Heading" class="facadeHeading greyText">Case 2</h1>
 	 			<div id="sliderWrapper2">
 					<input type="range" name="occupantDist2" id="occupantDist2" min="0" max="20" value="0" autocomplete="off"/>
-					<output for="occupantDist2" id="occupantImage2"/></output>
+					<output for="occupantDist2"><img src="static/images/slider.png" id="occupantImage2"></output>
 				</div>
 			</div>
 			<div id="case3FacadeWrapper">
@@ -121,7 +144,7 @@
 				<h1 id="case3Heading" class="facadeHeading greyText">Case 3</h1>
  			<div id="sliderWrapper3">
 					<input type="range" name="occupantDist3" id="occupantDist3" min="0" max="20" value="0" autocomplete="off"/>
-					<output for="occupantDist3" id="occupantImage3"/></output>
+					<output for="occupantDist3"><img src="static/images/slider.png" id="occupantImage3"></output>
 				</div>
 			</div>
 			<div style="clear:both;"></div>
@@ -207,9 +230,11 @@
 
 	<div id="inputs">
 
-		<h1>Glazing and Comfort Analysis Tool</h1>
+		<h1>Glazing and Winter Comfort Tool</h1>
 		<hr>
 		<p>This tool evaluates potential thermal discomfort caused by glazing design and properties on occupants in the winter time. To learn more about the principles behind downdraft and radiant discomfort, and how to mitigate them, refer to the resources at the bottom of this page.</p>
+
+		<p class="survey">Read the <a href="/images_research_projects/GlazingSelectionTool/GlazingAndComfortAnalysisToolTermsAndConditions.pdf" target="_blank">Terms &amp; Conditions</a>. Provide feedback or report bugs <a href="https://www.surveymonkey.com/r/83LF73D">here.</a></p>
 
 		<div id="options">
 			<div id="units">
@@ -265,15 +290,15 @@
 
 			<label id="setGlazing">Set Glazing Amount By</label><br class="glzBR">
 
-			<label for="width" id="windowWidthLabel"><div class="customCheckStyle"><input type="checkbox" name="windowWidthCheck" id="windowWidthCheck" class="customCheck" checked><label for="windowWidthCheck" id="checkWindWidth"></label></div>Window Width (<span class="units IP">ft</span>)<sup id="fnref:5"><a href="#fn:5" rel="footnote">?</a></sup></label>
+			<label for="width" id="windowWidthLabel"><div class="customCheckStyle"><input type="radio" name="glazingRadio" value="windowWidthCheck" id="windowWidthCheck" class="customCheck" checked><label for="windowWidthCheck" id="checkWindWidth"></label></div>Window Width (<span class="units IP">ft</span>)<sup id="fnref:5"><a href="#fn:5" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="width" id="windowWidth" value="4.5" step="0.5" class="case1"></div>
 			<div class="inputWrapperCenter"><input type="text" name="width2" id="windowWidth2" value="4.5" step="0.5" class="case2 unselected"></div>
 			<div class="inputWrapperRight"><input type="text" name="width3" id="windowWidth3" value="4.5" step="0.5" class="case3 unselected"></div><br>
 
-			<label for="glazing" class="inactive" id="glazingLabel"><div class="customCheckStyle"><input type="checkbox" name="glazingRatioCheck" class="customCheck" id="glazingRatioCheck"><label for="glazingRatioCheck" id="checkGlzRatio" class="unselected"></label></div>Window-to-Wall Ratio (%)<sup id="fnref:6"><a href="#fn:6" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="glazing" class="inactive case1" id="glazing" value="50" step="1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="glazing2" class="inactive case2 unselected" id="glazing2" value="50" step="1"></div>
-			<div class="inputWrapperRight"><input type="text" name="glazing3" class="inactive case3 unselected" id="glazing3" value="50" step="1"></div><br>
+			<label for="glazing" class="inactive" id="glazingLabel"><div class="customCheckStyle"><input type="radio" name="glazingRadio" value="glazingRatioCheck" class="customCheck" id="glazingRatioCheck"><label for="glazingRatioCheck" id="checkGlzRatio" class="unselected"></label></div>Window-to-Wall Ratio (%)<sup id="fnref:6"><a href="#fn:6" rel="footnote">?</a></sup></label>
+			<div class="inputWrapperLeft"><input type="text" name="glazing" class="inactive case1" id="glazing" value="50" step="1" disabled></div>
+			<div class="inputWrapperCenter"><input type="text" name="glazing2" class="inactive case2 unselected" id="glazing2" value="50" step="1" disabled></div>
+			<div class="inputWrapperRight"><input type="text" name="glazing3" class="inactive case3 unselected" id="glazing3" value="50" step="1" disabled></div><br>
 
 
 			<label for="distWindow">Window Separation (<span class="units IP">ft</span>)<sup id="fnref:7"><a href="#fn:7" rel="footnote">?</a></sup></label>
@@ -401,7 +426,7 @@
 			<p><img src="static/images/dims-sill.png"><a href="#fnref:4" title="return to article"> ↩</a></p>
 	    </li>
 
-	    <li class="footnote" id="fn:5"> <!-- window width -->	
+	    <li class="footnote" id="fn:5"> <!-- window width -->
 	        <p><img src="static/images/dims-width.png"><a href="#fnref:5" title="return to article"> ↩</a></p>
 	    </li>
 
@@ -424,7 +449,7 @@
 	    <li class="footnote" id="fn:10"> <!-- conden risk -->
 	        <p>If there is a risk of condensation, the interior window surface temperature is within 5°F of the space’s dew point temperature. This happens when the indoor relative humidity is high and the outdoor temperature is low.<a href="#fnref:10" title="return to article"> ↩</a></p>
 	    </li>
-	    
+
 	    <li class="footnote" id="fn:11"> <!-- outdoor temp -->
 	        <p>Coldest expected outdoor temperature under which occupant thermal comfort is being evaluated. This varies with the climate of the project and the time of day that the space is expected to be occupied.<a href="#fnref:11" title="return to article"> ↩</a></p>
 	    </li>

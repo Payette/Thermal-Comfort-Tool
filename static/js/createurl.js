@@ -24,7 +24,7 @@ function createURL() {
 
 
 	// values regardless of case
-	var thisDistFromFacade = $('#distFromFacade').val();
+	var thisDistFromFacade = occDistFromFacade;
 	var thisPpd = $("#ppd").val();
 
 	var thisRvalue = $("#rvalue").val();

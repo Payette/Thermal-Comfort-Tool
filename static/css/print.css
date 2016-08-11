@@ -111,9 +111,9 @@ input[type=range]#ppd::-moz-range-progress{
     width: 5px;
 }
 
-#occupantImage, #occupantImage2, #occupantImage3 {
+/*#occupantImage, #occupantImage2, #occupantImage3 {
    border: 2px solid #777;
-}
+}*/
 
 /*#occupantImage:before {
   content: url(/images_research_projects/GlazingSelectionTool/slider.png);

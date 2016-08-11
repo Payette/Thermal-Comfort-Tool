@@ -191,18 +191,7 @@ render.makeGraph = function () {
 	addPayetteText();
 
 
-	// hide or show different cases on the chart
-	if ($("#caseSelection #case2Label").hasClass("unselected") == true) {
-		$(".connectLine2, .dotCase2, .occdot2").css("display","none");
-	} else {
-		$(".connectLine2, .dotCase2, .occdot2").css("display","inline-block");
-	}
-
-	if ($("#caseSelection #case3Label").hasClass("unselected") == true) {
-		$(".connectLine3, .dotCase3, .occdot3").css("display","none");
-	} else {
-		$(".connectLine3, .dotCase3, .occdot3").css("display","inline-block");
-	}
+	
 
 
 	
@@ -803,8 +792,6 @@ render.makeGraph = function () {
     		graphSvg.select("#XAxisLabel")
 	    	.text("Occupant Distance from Façade (ft)");
 
-
-
 			updateData(case1Data);
 			updateData(case2Data);
 			updateData(case3Data);
@@ -1012,6 +999,26 @@ render.makeGraph = function () {
 			// update calculated uvalue
 			autocalcUValues();
 		});
+
+		$("#occupantDist").on("change", function(event) {
+			//assign new value
+			case1Data.occDistToWallCenter = $(this).val();
+			$("#occupantDist").attr("value", case1Data.occDistToWallCenter);
+			updateOccupantImageLocation("#occupantImage", "#occupantDist", case1Data);
+			updateData(case1Data);
+		})
+		$("#occupantDist2").on("change", function(event) {
+			//assign new value
+			case2Data.occDistToWallCenter = $(this).val();
+			updateOccupantImageLocation("#occupantImage2", "#occupantDist2", case2Data);
+			updateData(case2Data);
+		})
+		$("#occupantDist3").on("change", function(event) {
+			//assign new value
+			case3Data.occDistToWallCenter = $(this).val();
+			updateOccupantImageLocation("#occupantImage3", "#occupantDist3", case3Data);
+			updateData(case3Data);
+		})
 	}
 
 	// does not work in IE, see Modernizer code above
@@ -1058,6 +1065,26 @@ render.makeGraph = function () {
 		autocalcUValues();
 	});
 
+	// does not work in IE, see Modernizer code above
+	$("#occupantDist").on("input", function(event) {
+		//assign new value
+		case1Data.occDistToWallCenter = $(this).val();
+		$("#occupantDist").attr("value", case1Data.occDistToWallCenter);
+		updateOccupantImageLocation("#occupantImage", "#occupantDist", case1Data);
+		updateData(case1Data);
+	})
+	$("#occupantDist2").on("input", function(event) {
+		//assign new value
+		case2Data.occDistToWallCenter = $(this).val();
+		updateOccupantImageLocation("#occupantImage2", "#occupantDist2", case2Data);
+		updateData(case2Data);
+	})
+	$("#occupantDist3").on("input", function(event) {
+		//assign new value
+		case3Data.occDistToWallCenter = $(this).val();
+		updateOccupantImageLocation("#occupantImage3", "#occupantDist3", case3Data);
+		updateData(case3Data);
+	})
 
 
 
@@ -1066,7 +1093,7 @@ render.makeGraph = function () {
 
 	$("#windowWidthCheck").change(function(event) {
 		if (($("#windowWidthCheck").is(":checked")) == true) {
-			glzOrWidth = false;
+			glzOrWidth = false; // set by width
 			$("#windowWidth, #windowWidth2, #windowWidth3, #windowWidthLabel").removeClass("inactive");
 			$("#glazing, #glazing2, #glazing3, #glazingLabel").addClass("inactive");
 
@@ -1075,9 +1102,14 @@ render.makeGraph = function () {
 
 			$("#glazingRatioCheck").prop(":checked", false);
 
+			$("#windowWidth, #windowWidth2, #windowWidth3").prop("disabled", false);
+			$("#windowWidth, #windowWidth2, #windowWidth3").spinner("enable");
+			$("#glazing, #glazing2, #glazing3").prop("disabled", true);
+			$("#glazing, #glazing2, #glazing3").spinner("disable");
+
 
 		} else if (($("#windowWidthCheck").is(":checked")) == false) {
-			glzOrWidth = true;
+			glzOrWidth = true; // set by ratio
 			$("#windowWidth, #windowWidth2, #windowWidth3, #windowWidthLabel").addClass("inactive");
 			$("#glazing, #glazing2, #glazing3, #glazingLabel").removeClass("inactive");
 
@@ -1085,8 +1117,13 @@ render.makeGraph = function () {
 
 			$("#checkGlzRatio").removeClass("unselected");
 			$("#checkWindWidth").addClass("unselected");
-
+			
 			$("#glazingRatioCheck").prop(":checked", true);
+
+			$("#windowWidth, #windowWidth2, #windowWidth3").prop("disabled", true);
+			$("#windowWidth, #windowWidth2, #windowWidth3").spinner("disable");
+			$("#glazing, #glazing2, #glazing3").prop("disabled", false);
+			$("#glazing, #glazing2, #glazing3").spinner("enable");
 
 		}
 	});
@@ -1098,20 +1135,29 @@ render.makeGraph = function () {
 
 			$("#checkGlzRatio").removeClass("unselected");
 			$("#checkWindWidth").addClass("unselected");
+			$("#windowWidth, #windowWidth2, #windowWidth3").prop("disabled", false);
 
-			$("#windowWidthCheck").prop(":checked", false);
+			$("#windowWidth, #windowWidth2, #windowWidth3").prop("disabled", true);
+			$("#windowWidth, #windowWidth2, #windowWidth3").spinner("disable");
+			$("#glazing, #glazing2, #glazing3").prop("disabled", false);
+			$("#glazing, #glazing2, #glazing3").spinner("enable");
 
 		} else if (($("#glazingRatioCheck").is(":checked")) == false) {
 			glzOrWidth = false;
 			$("#windowWidth, #windowWidth2, #windowWidth3, #windowWidthLabel").removeClass("inactive");
 			$("#glazing, #glazing2, #glazing3, #glazingLabel").addClass("inactive");
 
-
-
-			$("#checkWindWidth").removeClass("unselected");
 			$("#checkGlzRatio").addClass("unselected");
+			$("#checkWindWidth").removeClass("unselected");
 
 			$("#windowWidthCheck").prop(":checked", true);
+
+
+			// disable and enable input boxes
+			$("#windowWidth, #windowWidth2, #windowWidth3").prop("disabled", false);
+			$("#windowWidth, #windowWidth2, #windowWidth3").spinner("enable");
+			$("#glazing, #glazing2, #glazing3").prop("disabled", true);
+			$("#glazing, #glazing2, #glazing3").spinner("disable");
 		}
 	})
 
@@ -1194,28 +1240,6 @@ render.makeGraph = function () {
 	})
 
 
-	$("#occupantDist").change(function(event) {
-		//assign new value
-
-		case1Data.occDistToWallCenter = $(this).val();
-		$("#occupantDist").attr("value", case1Data.occDistToWallCenter);
-
-		updateOccupantImageLocation("#occupantImage", "#occupantDist", case1Data);
-
-		updateData(case1Data);
-	})
-	$("#occupantDist2").change(function(event) {
-		//assign new value
-		case2Data.occDistToWallCenter = $(this).val();
-		updateOccupantImageLocation("#occupantImage2", "#occupantDist2", case2Data);
-		updateData(case2Data);
-	})
-	$("#occupantDist3").change(function(event) {
-		//assign new value
-		case3Data.occDistToWallCenter = $(this).val();
-		updateOccupantImageLocation("#occupantImage3", "#occupantDist3", case3Data);
-		updateData(case3Data);
-	})
 
 
 
@@ -2023,6 +2047,7 @@ render.makeGraph = function () {
 
 
 
+
 	/* ------ FUNCTIONS TO UPDATE DATA ------ */
 	// Called after adjusting values based on change events
 	function updateData(object) {
@@ -2260,6 +2285,20 @@ render.makeGraph = function () {
 		// EXIT
 		// Remove old elements as needed
 		thesePoints.exit().remove();
+
+
+		// hide or show different cases on the chart
+		if ($("#caseSelection #case2Label").hasClass("unselected") == true) {
+			$(".connectLine2, .dotCase2").css("display","none");
+		} else {
+			$(".connectLine2, .dotCase2").css("display","inline-block");
+		}
+
+		if ($("#caseSelection #case3Label").hasClass("unselected") == true) {
+			$(".connectLine3, .dotCase3").css("display","none");
+		} else {
+			$(".connectLine3, .dotCase3").css("display","inline-block");
+		}
 	}
 
 	function findMaxVisiblePPD() {
@@ -2309,6 +2348,8 @@ render.makeGraph = function () {
 			.attr("transform", function() {
 				return "translate(" + margin.left + "," + margin.top + ")";
 		});
+
+		d3.selectAll(".occupantLine").classed("draggable", true);
 	}
 
 	function updateOccupantDistanceRefLine() {
@@ -2371,6 +2412,20 @@ render.makeGraph = function () {
 		// EXIT
 		// Remove old elements as needed
 		thisOccupantPoint.exit().remove();
+
+
+		// hide or show different cases on the chart
+		if ($("#caseSelection #case2Label").hasClass("unselected") == true) {
+			$(".occdot2").css("display","none");
+		} else {
+			$(".occdot2").css("display","inline-block");
+		}
+
+		if ($("#caseSelection #case3Label").hasClass("unselected") == true) {
+			$(".occdot3").css("display","none");
+		} else {
+			$(".occdot3").css("display","inline-block");
+		}
 	}
 
 
@@ -2582,6 +2637,7 @@ render.makeGraph = function () {
 	} 
 
 
+
 	function drawPPDThreshold(data) {
 
 		//data = PPD threshold (ie 10%)
@@ -2610,8 +2666,10 @@ render.makeGraph = function () {
 			.attr("x2", width)
 			.attr("y1", y(data))
 			.attr("y2", y(data))
-			.style("stroke", "black");
+			.style("stroke", "black")
+			.style("stroke-width", "2");
 
+		d3.selectAll(".refLine").classed("draggable", true);
 
 		// add symbols
 		ppdLine.append("svg:image")
@@ -2622,7 +2680,7 @@ render.makeGraph = function () {
 			.attr("width", 12)
 			.attr("height", 12);
 
-		var crossLine = ppdLine.append("svg:image")
+		ppdLine.append("svg:image")
 			.attr("class", "crossLine")
 			.attr("xlink:href", "static/images/x.png")
 			.attr("x", 4)
@@ -2659,7 +2717,149 @@ render.makeGraph = function () {
 	}
 
 
+	function updateOnlyOccupantPointData() {
+		var newOccData1 = script.computeData(case1Data).occPtInfo;
+		occPointData = newOccData1;
 
+		var newOccData2 = script.computeData(case2Data).occPtInfo;
+		occPointData2 = newOccData2;
+
+		var newOccData3 = script.computeData(case3Data).occPtInfo;
+		occPointData3 = newOccData3;
+
+		thresholdDataText();
+	}
+
+
+	// Draggable occupant and PPD lines on graph
+	var dragPPDLine = d3.behavior.drag()
+		.on("drag", function() {
+
+			var newY = d3.event.y;
+			var oldY = parseFloat(d3.select(".thresholdRect").attr("y"));
+
+			// update value of slider
+			// define scale to map the new Y value
+			ppdSliderDragScale = d3.scale.linear()
+					.domain([0, 260]) //input domain
+					.range([30, 0]); //output range
+
+			var updatedPPD = ppdSliderDragScale(newY);
+
+			// prevent line from sliding beyond bounds of axis
+			if (updatedPPD < 5) {
+				updatedPPD = 5;
+				newY = y(5);
+			}
+			if (updatedPPD > 30) {
+				updatedPPD = 30;
+				newY = y(30);
+			}
+
+			// adjust PPD threshold line
+			d3.select(this)
+				.attr("y1", newY)
+				.attr("y2", newY)
+				.transition();
+
+			// adjust the X and Check Indicators
+			d3.select(".checkLine")
+				.attr("y", newY + 4)
+				.transition();
+			d3.select(".crossLine")
+				.attr("y", newY - 16)
+				.transition();
+
+			var originalRectHeight = parseFloat(d3.select(".thresholdRect").attr("height"));
+			var newRectHeight = originalRectHeight + (oldY - newY);
+
+			// adjust PPD threshold rectangle
+			d3.select(".thresholdRect")
+				.attr("y", newY)
+				.attr("height", newRectHeight)
+				.transition();
+			
+			
+			ppdValue = Math.round(updatedPPD);
+			$("#ppd").attr("value",ppdValue);
+			$("#ppdOutput").text(ppdValue + "%");
+
+			// update occupant position text
+			thresholdDataText();
+			// update calculated uvalue
+			autocalcUValues();
+		});
+
+	var dragOccupantLine = d3.behavior.drag()
+		.on("drag", function() {
+
+			var newX = d3.event.x;
+
+			// define scale to map the new X value
+			if (unitSys == "IP") {
+				var occDistSliderDragScale = d3.scale.linear()
+					.domain([margin.left, width+margin.left]) //input domain
+					.range([0, 13]); //output range
+			} else {
+				var occDistSliderDragScale = d3.scale.linear()
+					.domain([0, width]) //input domain
+					.range([0, 4.5]); //output range
+			}
+
+			var newOccPosition = occDistSliderDragScale(newX);
+
+			// prevent line from sliding beyond boudns of data paints
+			if (unitSys == "IP") {
+				if (newOccPosition < 1) {
+					newOccPosition = 1;
+					newX = x(1) + margin.left;
+				}
+				if (newOccPosition > 12) {
+					newOccPosition = 12;
+					newX = x(12) + margin.left;
+				}
+			} else {
+				if (newOccPosition < 0.5) {
+					newOccPosition = 0.5;
+					newX = x(0.5) + margin.left;
+				}
+				if (newOccPosition > 4) {
+					newOccPosition = 4;
+					newX = x(4) + margin.left;
+				}
+			}
+
+			// update the global value
+			occDistFromFacade = Math.round(newOccPosition*10)/10;
+			// update the slider
+			$("#distFromFacade").attr("value",occDistFromFacade);
+			if (unitSys == "IP") {
+				$("#distOutput").text(occDistFromFacade + " ft");
+			} else {
+				$("#distOutput").text(occDistFromFacade + " m");
+			}
+
+			//update occupant point data
+			updateOnlyOccupantPointData();
+
+			// adjust the occupant point
+			updateOccupantPoint([occPointData], "occdot1", color1);
+			updateOccupantPoint([occPointData2], "occdot2", color2);
+			updateOccupantPoint([occPointData3], "occdot3", color3);
+
+			var newMaxPPD = findMaxVisiblePPD();
+			var newYPosition = y(newMaxPPD);
+
+			// adjust PPD threshold line
+			d3.select(this)
+				.attr("x1", newX - margin.left)
+				.attr("x2", newX - margin.left)
+				.attr("y2", newYPosition)
+				.transition();
+		});
+
+	d3.selectAll(".refLine").call(dragPPDLine);
+	d3.selectAll(".occupantLine").call(dragOccupantLine);
 
 
 

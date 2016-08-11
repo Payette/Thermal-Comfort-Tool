@@ -87,9 +87,9 @@ body {
 
 .occupantLine {
 	stroke: #000;
-	stroke-width: 2;
+	stroke-width: 3;
 	stroke-linecap: round;
-	stroke-dasharray: 0 4;
+	stroke-dasharray: 0 6;
 }
 
 #graph .grid line { /* horizontal reference lines */
@@ -287,19 +287,15 @@ rect.blue {
 	margin: 0;
 }
 
-
-#occupantImage, #occupantImage2, #occupantImage3 {
+output #occupantImage, output #occupantImage2, output #occupantImage3 {
 	position: relative;
 	width: 180px; 
   	height: 250px;
-	background-image: url(../../static/images/slider.png);
-	background-size: 180px 250px;
-	display: inline-block;
-	bottom: 500px; /* imageHeight + facMargin.bottom*2*/
+  	display: inline-block;
+  	bottom: 500px; /* imageHeight + facMargin.bottom*2*/
 	left: -15px; /* - imageWidth/2 */
 	opacity: .8;
 }
-
 
 
 
@@ -635,16 +631,11 @@ div.inputWrapperRight span {
 	border-color: rgb(235, 235, 235);
 	border-style: solid;
 	border-width: 1px;
-	color: #ADADAD;
-	font-style: italic;
 	cursor: default;
 	background-color: #fff;
 	padding: 1px 2px 0px 0px;
 }
 
-#inputs input.inactive.alert, #inputs input.alert {
-	color: #f72734;
-}
 
 
 #inputs input.inactive#calcuvalue, #inputs input.inactive#calcuvalue2, #inputs input.inactive#calcuvalue3, #inputs input.inactive#condRisk1, #inputs input.inactive#condRisk2, #inputs input.inactive#condRisk3 {
@@ -654,12 +645,16 @@ div.inputWrapperRight span {
 	border-right: none;
 	border-left: none;
 	border-bottom: none;
+	color: #ADADAD;
 }
 
 #inputs input#calcuvalue3, #inputs input.inactive#condRisk3 {
 	margin: 0 0 0 16px;
 }
 
+#inputs input.inactive#calcuvalue.alert, #inputs input.inactive#calcuvalue2.alert, #inputs input.inactive#calcuvalue3.alert, #inputs input.inactive#condRisk1.alert, #inputs input.inactive#condRisk2.alert, #inputs input.inactive#condRisk3.alert {
+	color: #f72734;
+}
 
 
 
@@ -705,7 +700,7 @@ br.glzBR {
 
 
 #inputs label.inactive {
-	color: #b9b9b9;
+	color: #ADADAD;
 	font-style: italic;
 	font-weight: 300;
 }
@@ -957,11 +952,6 @@ span.expand {
 
 
 
-
-div#URLpop {
-	
-}
-
 div#URLpop textarea {
 	font-family: "museo-sans", sans-serif;
 	text-align: center;
@@ -972,6 +962,28 @@ div#URLpop textarea {
 	height: 220px;
 }
 
+div#disclaimer {
+	padding: 20px;
+
+}
+
+div#disclaimer p,  div#disclaimer h1{
+	font-family: "museo-sans", sans-serif;
+	text-align: center;
+	font-size: 12px;
+	font-weight: 300;
+	color: #000;
+}
+
+div#disclaimer p {
+	font-size: 12px;
+	font-weight: 300;
+}
+
+div#disclaimer h1{
+	font-size: 16px;
+	font-weight: 700;
+}
 
 
 
@@ -1056,9 +1068,13 @@ div#URLpop textarea {
 	font-size: 12px;
 }
 
+.refLine.draggable {
+	cursor: ns-resize;
+}
 
-
-
+.occupantLine.draggable {
+	cursor: ew-resize;
+}
 
 
 /* -- show cases only when selected -- */
