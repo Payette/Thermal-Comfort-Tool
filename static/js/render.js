@@ -191,10 +191,10 @@ render.makeGraph = function () {
 	addPayetteText();
 
 
-	
 
 
-	
+
+
 
 	// Show text on hover over dot
 	var points = d3.selectAll(".dotCase1, .dotCase2, .dotCase3");
@@ -257,7 +257,7 @@ render.makeGraph = function () {
 
 		} else {
 			// full width tooltip
-			$("div#tooltip").css("width","280px");
+			$("div#tooltip").css("width","290px");
 			$("div#tooltip h1").css("width","auto");
 			xPosition = x(d.dist) + margin.left + 8;
 			yPosition = y(d.ppd) - thisHeight + margin.top + 20;
@@ -1117,7 +1117,7 @@ render.makeGraph = function () {
 
 			$("#checkGlzRatio").removeClass("unselected");
 			$("#checkWindWidth").addClass("unselected");
-			
+
 			$("#glazingRatioCheck").prop(":checked", true);
 
 			$("#windowWidth, #windowWidth2, #windowWidth3").prop("disabled", true);
@@ -2309,13 +2309,13 @@ render.makeGraph = function () {
 		if ($("#caseSelection #case2Label").hasClass("unselected") == true && $("#caseSelection #case3Label").hasClass("unselected") == true) {
 
 			maxPPD = occPointData.ppd;
-			
-		// compare case 1 and case 2 
+
+		// compare case 1 and case 2
 		} else if ($("#caseSelection #case2Label").hasClass("unselected") == false && $("#caseSelection #case3Label").hasClass("unselected") == true) {
 
 			maxPPD = d3.max([occPointData.ppd, occPointData2.ppd]);
 
-		// compare case 1 and case 3 
+		// compare case 1 and case 3
 		} else if ($("#caseSelection #case2Label").hasClass("unselected") == true && $("#caseSelection #case3Label").hasClass("unselected") == false) {
 
 			maxPPD = d3.max([occPointData.ppd, occPointData3.ppd]);
@@ -2613,7 +2613,7 @@ render.makeGraph = function () {
 
 		} else {
 			// full width tooltip
-			$("div#thresholdTooltip").css("width","280px");
+			$("div#thresholdTooltip").css("width","290px");
 			$("div#thresholdTooltip h1").css("width","auto");
 			xPosition = x(occPointData.dist) + margin.left + 8;
 			yPadding = 10;
@@ -2634,7 +2634,7 @@ render.makeGraph = function () {
 		.style("top", yPosition + "px");
 
 
-	} 
+	}
 
 
 
@@ -2778,8 +2778,8 @@ render.makeGraph = function () {
 				.attr("y", newY)
 				.attr("height", newRectHeight)
 				.transition();
-			
-			
+
+
 			ppdValue = Math.round(updatedPPD);
 			$("#ppd").attr("value",ppdValue);
 			$("#ppdOutput").text(ppdValue + "%");
