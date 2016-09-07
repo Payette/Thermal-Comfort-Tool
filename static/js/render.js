@@ -1757,6 +1757,7 @@ render.makeGraph = function () {
 		}
 		else if (triggeredChange == "sill2") {
 			case2Data.sillHeightValue = $(this).val();
+			changedVar = "sillHeightValue"
 		}
 		else if (triggeredChange == "distWindow2") {
 			case2Data.distanceWindows = $(this).val();
@@ -1783,7 +1784,6 @@ render.makeGraph = function () {
 		else {
 			alert("Don't know what changed!");
 		}
-
 
 		updateData(case2Data);
 	})
@@ -1845,7 +1845,7 @@ render.makeGraph = function () {
 
 		$("#sill2").on("spin", function(event, ui) {
 			case2Data.sillHeightValue = ui.value;
-
+			changedVar = "sillHeightValue"
 			updateData(case2Data);
 		})
 
@@ -1913,6 +1913,7 @@ render.makeGraph = function () {
 			case3Data.glzRatioValue = $(this).val();
 		}
 		else if (triggeredChange == "sill3") {
+			changedVar = "sillHeightValue"
 			case3Data.sillHeightValue = $(this).val();
 		}
 		else if (triggeredChange == "distWindow3") {
@@ -2002,7 +2003,7 @@ render.makeGraph = function () {
 
 		$("#sill3").on("spin", function(event, ui) {
 			case3Data.sillHeightValue = ui.value;
-
+			changedVar = "sillHeightValue"
 			updateData(case3Data);
 		})
 
@@ -2078,7 +2079,6 @@ render.makeGraph = function () {
 		object.sillHeightValue = newSillHeight;
 		//update dist btwn windows.
 		object.distanceWindows = newCentLineDist;
-
 
 
 		// Update the PPD graph and facade SVG.
