@@ -2850,6 +2850,9 @@ render.makeGraph = function () {
 			var newMaxPPD = findMaxVisiblePPD();
 			var newYPosition = y(newMaxPPD);
 
+			// update calculated uvalue
+			autocalcUValues();
+
 			// adjust PPD threshold line
 			d3.select(this)
 				.attr("x1", newX - margin.left)
