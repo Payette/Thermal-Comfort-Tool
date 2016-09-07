@@ -1,4 +1,4 @@
-//Assign any parameters from the URL 
+//Assign any parameters from the URL
 
 var thisURL = location.href;
 //call URL parser function
@@ -14,7 +14,7 @@ if (typeof urlParameters.units != 'undefined') {
 		$(".optionButton#IP").addClass("selected");
 		$(".optionButton#SI").removeClass("selected");
 		$(".optionButton#SI").addClass("unselected");
-				
+
 		// change labels to have ft
 		$(".units, .unitsTemp, .unitsUVal, .unitsRVal, .unitsAirSpeed").removeClass("SI");
 		$(".units, .unitsTemp, .unitsUVal, .unitsRVal, .unitsAirSpeed").addClass("IP");
@@ -48,9 +48,15 @@ if (typeof urlParameters.units != 'undefined') {
 //fill form with parameters, but only if values are provided in URL
 if (typeof urlParameters.ppd != 'undefined') {
 	$("#ppd").val(urlParameters.ppd);
+	$("#ppdOutput").text(urlParameters.ppd + "%");
 }
 if (typeof urlParameters.distFromFacade != 'undefined') {
 	$("#distFromFacade").val(urlParameters.distFromFacade);
+	if (unitSys == "IP") {
+		$("#distOutput").text(urlParameters.distFromFacade + " ft");
+	} else {
+		$("#distOutput").text(urlParameters.distFromFacade + " m");
+	}
 }
 
 
@@ -131,7 +137,7 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' && urlParamet
 		$("#lowELabel, #lowELabel2, #lowELabel3").removeClass("inactive");
 		$("#checkLowE, #checkLowE2, #checkLowE3").removeClass("unselected");
 	}
-	
+
 	if (typeof urlParameters.occPosition != 'undefined') {
 		$("#occupantDist, #occupantDist2, #occupantDist3").val(urlParameters.occPosition);
 	}
@@ -235,7 +241,7 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 		$("#lowELabel2").removeClass("inactive");
 		$("#checkLowE2").removeClass("unselected");
 	}
-	
+
 	if (typeof urlParameters.occPosition != 'undefined') {
 		$("#occupantDist, #occupantDist3").val(urlParameters.occPosition);
 	}
@@ -342,7 +348,7 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' &&  urlParame
 		$("#lowELabel3").removeClass("inactive");
 		$("#checkLowE3").removeClass("unselected");
 	}
-	
+
 	if (typeof urlParameters.occPosition != 'undefined') {
 		$("#occupantDist, #occupantDist2").val(urlParameters.occPosition);
 	}
@@ -489,7 +495,7 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 		$("#lowELabel3").removeClass("inactive");
 		$("#checkLowE3").removeClass("unselected");
 	}
-	
+
 	if (typeof urlParameters.occPosition != 'undefined') {
 		$("#occupantDist").val(urlParameters.occPosition);
 	}
