@@ -1737,29 +1737,35 @@ render.makeGraph = function () {
 
 
 		if(triggeredChange == "ceiling2") {
+			changedVar = "ceilingHeightValue";
 			case2Data.ceilingHeightValue = $(this).val();
 
 		}
 		else if(triggeredChange == "wallWidth2") {
+			changedVar = "wallLen";
 			case2Data.wallLen = $(this).val();
 
 			$("#occupantDist2").attr("max", case2Data.wallLen/2);
 		}
 
 		else if (triggeredChange == "windowHeight2") {
+			changedVar = "windowHeightValue";
 			case2Data.windowHeightValue = $(this).val();
 		}
 		else if (triggeredChange == "windowWidth2") {
+			changedVar = "windowWidthValue";
 			case2Data.windowWidthValue = $(this).val();
 		}
 		else if (triggeredChange == "glazing2") {
+			changedVar = "glzRatioValue";
 			case2Data.glzRatioValue = $(this).val();
 		}
 		else if (triggeredChange == "sill2") {
 			case2Data.sillHeightValue = $(this).val();
-			changedVar = "sillHeightValue"
+			changedVar = "sillHeightValue";
 		}
 		else if (triggeredChange == "distWindow2") {
+			changedVar = "distanceWindows";
 			case2Data.distanceWindows = $(this).val();
 		}
 
