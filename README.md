@@ -10,7 +10,7 @@ More specifically, it quantifies thermal discomfort from both overall mean radia
 
 <img src="https://github.com/PayettePeople/Thermal-Comfort-Tool/raw/master/resources/WebInterface.JPG" width="300" align="left">
 
-<img src="https://github.com/chriswmackey/hydra_2/raw/master/Glazing_and_Winter_Comfort_Tool_-_IP/Glazing_and_Winter_Comfort_Tool_-_IP_Rhino.png" width="400">
+<img src="https://github.com/chriswmackey/hydra_2/raw/master/Glazing_and_Winter_Comfort_Tool_-_IP/Glazing_and_Winter_Comfort_Tool_-_IP_Rhino.png" width="500">
 
 
 
