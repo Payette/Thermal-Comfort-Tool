@@ -90,7 +90,11 @@ comf.calcPPDFromDowndraftOLD = function(windSpd, airTemp){
 // This function is taken from this paper:
 // Stefano Schiavon, Donghyun Rim, Wilmer Pasut, William W Nazaroff. “Sensation of draft at uncovered ankles for women exposed to displacement ventilation and underfloor air distribution systems.” Building and Environment, 96 (2016): 228–236.
 comf.calcPPDFromDowndraft = function(airSpd, pmv){
-    return 100 * ((exp(-2.58 + (3.05*airSpd) - (1.06*pmv)))/(1 + (exp(-2.58 + (3.05*airSpd) - (1.06*pmv)))))
+	if (airSpd > 0.7) {
+      return 9999
+    } else {
+	  return 100 * ((exp(-2.58 + (3.05*airSpd) - (1.06*pmv)))/(1 + (exp(-2.58 + (3.05*airSpd) - (1.06*pmv)))))
+	}
 }
 
 

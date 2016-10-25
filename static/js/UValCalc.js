@@ -42,10 +42,11 @@ uVal.uValMRT = function(opaqueViewFac, winViewFac, airTemp, outdoorTemp, opaqueR
 
 
 // FUNCTIONS FOR CALCULATING THE MAX U-VALUE WITH DOWNDRAFT
-uVal.uValDownD = function(PPDAccept, distToFacade, windowHgt, filmCoeff, airTemp, outdoorTemp, dwnPPDFac){
+uVal.uValDownD = function(PPDAccept, distToFacade, windowHgt, filmCoeff, airTemp, outdoorTemp, dwnPPDFac, opaqueViewFac, winViewFac, opaqueRVal, intLowE, lowEmissivity, vel, relHumid, metRate, cloLevel){
 	function uvalclos(target) {
 		return function(uValGuess) {
-			return comf.calcFulldonwDppd(distToFacade, windowHgt, filmCoeff, airTemp, outdoorTemp, uValGuess, dwnPPDFac) - target
+			var startPMV = comf.calcFullMRTppd(winViewFac, opaqueViewFac, filmCoeff, airTemp, outdoorTemp, airTemp, opaqueRVal, uValGuess, intLowE, lowEmissivity, cloLevel, metRate, vel, relHumid).pmv;
+			return comf.calcFulldonwDppd(distToFacade, startPMV, windowHgt, filmCoeff, airTemp, outdoorTemp, uValGuess, dwnPPDFac) - target
 		}
 	}
 	function solve(target) {
@@ -57,6 +58,9 @@ uVal.uValDownD = function(PPDAccept, distToFacade, windowHgt, filmCoeff, airTemp
 		var t = util.secant(a, b, fn, epsilon)
 		if (isNaN(t)) {
 			t = util.bisect(a, b, fn, epsilon, 0)
+		}
+		if (t == 100){
+			t = 0
 		}
 		return t
 	}
@@ -91,12 +95,12 @@ uVal.uValFinal = function(opaqueViewFac, winViewFac, distToFacade, dwnPPDFac, wi
 	} else {
 		var filmCoeff = 8.29
 	}
-
+	
 	//Compute the required U-Value for PMV model.
 	var uValMRT = uVal.uValMRT(opaqueViewFac, winViewFac, airTemp, outdoorTemp, opaqueRVal, filmCoeff, intLowE, lowEmissivity, vel, parseFloat(relHumid), parseFloat(metRate), parseFloat(cloLevel), parseFloat(targetPPD))
-
+	
 	if (dwnPPDFac > 0) {
-		var uValDownD = uVal.uValDownD(targetPPD, facadeDist, windowHgtSI, filmCoeff, airTemp, outdoorTemp, dwnPPDFac)
+		var uValDownD = uVal.uValDownD(targetPPD, facadeDist, windowHgtSI, filmCoeff, airTemp, outdoorTemp, dwnPPDFac, opaqueViewFac, winViewFac, opaqueRVal, intLowE, lowEmissivity, vel, parseFloat(relHumid), parseFloat(metRate), parseFloat(cloLevel))
 	} else {
 		if (unitSys == "IP") {
 			var uValDownD = 567.8263337
