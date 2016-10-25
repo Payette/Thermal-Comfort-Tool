@@ -151,7 +151,6 @@ comf.pmv = function(ta, tr, vel, rh, met, clo, wme) {
         xn = (p5 + p4 * hc - p2 * pow(xf, 4)) / (100 + p3 * hc);
         ++n;
         if (n > 150) {
-            alert('Max iterations exceeded');
             return 1;
         }
     }
