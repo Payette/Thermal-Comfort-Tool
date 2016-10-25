@@ -4,7 +4,7 @@ This tool displays the impact of glazing geometry and U-value on occupant therma
 
 More specifically, it quantifies thermal discomfort from both overall mean radiant heat loss to the cold glass as well as cold downdraft from the glass, which can cause local discomfort
 
-[Use the web version of the tool](http://www.payette.com/building-science/glazing-and-winter-comfort-tool)					[Use the Rhino / Grasshopper plugin of the tool](http://hydrashare.github.io/hydra/viewer?owner=chriswmackey&fork=hydra_2&id=Glazing_and_Winter_Comfort_Tool_-_IP)
+[Use the web version of the tool](http://www.payette.com/building-science/glazing-and-winter-comfort-tool)                     [Use the Rhino / Grasshopper plugin of the tool](http://hydrashare.github.io/hydra/viewer?owner=chriswmackey&fork=hydra_2&id=Glazing_and_Winter_Comfort_Tool_-_IP)
 
 
 
