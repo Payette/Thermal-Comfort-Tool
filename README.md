@@ -46,8 +46,8 @@ Lynn Peterman
 
 Vera Baranova
 
-[The Center for the Built Environment]() including:
+[The Center for the Built Environment](https://github.com/CenterForTheBuiltEnvironment) including:
 
 Stefano Schiavon
 
-Tyler Hoyt
+[Tyler Hoyt](thoyt)
