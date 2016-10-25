@@ -213,9 +213,9 @@ render.makeGraph = function () {
 
     // ppd icon
     if (d.ppd <= ppdValue) {
-      thisIcon = "<img src='/images_research_projects/GlazingSelectionTool/check.png' class='icon'>";
+      thisIcon = "<img src='static/images/check.png' class='icon'>";
     } else {
-      thisIcon = "<img src='/images_research_projects/GlazingSelectionTool/x.png' class='icon'>";
+      thisIcon = "<img src='static/images/x.png' class='icon'>";
     }
 
 
@@ -2481,9 +2481,9 @@ render.makeGraph = function () {
 
 
     if (Math.round(occdata.ppd) <= ppdValue) {
-      text = "<img src='/images_research_projects/GlazingSelectionTool/check.png' class='icon'><h1 class=" + className + ">" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1><div style='clear:both;'></div>";
+      text = "<img src='static/images/check.png' class='icon'><h1 class=" + className + ">" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1><div style='clear:both;'></div>";
     } else {
-      text = "<img src='/images_research_projects/GlazingSelectionTool/x.png' class='icon'><h1 class=" + className + ">" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1><div style='clear:both;'></div>";
+      text = "<img src='static/images/x.png' class='icon'><h1 class=" + className + ">" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1><div style='clear:both;'></div>";
     }
 
     return text;
@@ -2689,7 +2689,7 @@ render.makeGraph = function () {
     // add symbols
     ppdLine.append("svg:image")
       .attr("class", "checkLine")
-      .attr("xlink:href", "/images_research_projects/GlazingSelectionTool/check.png")
+      .attr("xlink:href", "static/images/check.png")
       .attr("x", 4)
       .attr("y", y(data) + 4)
       .attr("width", 12)
@@ -2697,7 +2697,7 @@ render.makeGraph = function () {
 
     ppdLine.append("svg:image")
       .attr("class", "crossLine")
-      .attr("xlink:href", "/images_research_projects/GlazingSelectionTool/x.png")
+      .attr("xlink:href", "static/images/x.png")
       .attr("x", 4)
       .attr("y", y(data) - 16)
       .attr("width", 12)
