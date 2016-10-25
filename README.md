@@ -8,9 +8,9 @@ More specifically, it quantifies thermal discomfort from both overall mean radia
 
 [Use the Rhino / Grasshopper plugin of the tool](http://hydrashare.github.io/hydra/viewer?owner=chriswmackey&fork=hydra_2&id=Glazing_and_Winter_Comfort_Tool_-_IP)
 
-![](https://github.com/PayettePeople/Thermal-Comfort-Tool/raw/master/resources/WebInterface.JPG =200x200)
+![Image of Web Interface](https://github.com/PayettePeople/Thermal-Comfort-Tool/raw/master/resources/WebInterface.JPG)
 
-![](https://github.com/chriswmackey/hydra_2/raw/master/Glazing_and_Winter_Comfort_Tool_-_IP/Glazing_and_Winter_Comfort_Tool_-_IP_Rhino.png =200x200)
+![Image of Grasshopper Plugin](https://github.com/chriswmackey/hydra_2/raw/master/Glazing_and_Winter_Comfort_Tool_-_IP/Glazing_and_Winter_Comfort_Tool_-_IP_Rhino.png)
 
 
 
