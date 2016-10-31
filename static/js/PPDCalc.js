@@ -442,7 +442,7 @@ comf.calcFullMRTppd = function(winView, opaView, winFilmCoeff, airTemp, outdoorT
     r.ppd = finalMRTPPD;
 	r.windowTemp = windowTemp;
 	r.pmv = mrtResult.pmv
-	
+
   return r
 }
 
@@ -607,12 +607,12 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, o
       ptInfo.dist = facadeDistSI[i];
     }
 
-		if (mrtPPD[i] > downDPPD[i]) {
-			ptInfo.ppd = mrtPPD[i];
+		if (mrtPPD[i] > 10) {
 			ptInfo.govfact = "mrt";
+      ptInfo.ppd = mrtPPD[i];
 		} else {
-			ptInfo.ppd = downDPPD[i];
 			ptInfo.govfact = "dwn";
+      ptInfo.ppd = downDPPD[i];
 		}
 		myDataset.push(ptInfo)
 	}
