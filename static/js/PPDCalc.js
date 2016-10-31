@@ -607,12 +607,12 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, o
       ptInfo.dist = facadeDistSI[i];
     }
 
-		if (mrtPPD[i] > 10) {
+		if (mrtPPD[i] > downDPPD[i]) {
+			ptInfo.ppd = mrtPPD[i];
 			ptInfo.govfact = "mrt";
-      ptInfo.ppd = mrtPPD[i];
 		} else {
+			ptInfo.ppd = downDPPD[i];
 			ptInfo.govfact = "dwn";
-      ptInfo.ppd = downDPPD[i];
 		}
 		myDataset.push(ptInfo)
 	}
