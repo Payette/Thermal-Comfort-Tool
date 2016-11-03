@@ -25,14 +25,14 @@ body {
 	margin: 0 20px 0 0;
 }
 
-#graphWrapper {
+#graphWrapper, #graphWrapper2 {
 	height: auto;
 	position: relative;
 	background-color: rgb(240,240,240);
 	overflow: hidden;
 }
 
-#graphWrapper ul {
+#graphWrapper ul, #graphWrapper2 ul {
 	list-style: none;
 	float: right;
 	margin: 15px 20px 10px 10px;
@@ -42,13 +42,13 @@ body {
 	font-weight: 300;
 }
 
-#graphWrapper ul li {
+#graphWrapper ul li, #graphWrapper2 ul li {
 	display: inline;
 	color: #777777;
 	margin: 0 0 0 15px;
 }
 
-#graphWrapper ul li img {
+#graphWrapper ul li img, #graphWrapper2 ul li img{
 	display: inline;
 	width: 9px;
 	height: 9px;
@@ -68,11 +68,11 @@ body {
 
 #graph .axislabel, #graph .axis text {
 	font-family: "museo-sans", sans-serif;
-	font-size: 11px;
+	font-size: 12px;
 }
 
 #graph .axislabel {
-	font-weight: 700;
+	font-weight: 500;
 }
 
 #graph .axis text {
@@ -289,7 +289,7 @@ rect.blue {
 
 output #occupantImage, output #occupantImage2, output #occupantImage3 {
 	position: relative;
-	width: 180px; 
+	width: 180px;
   	height: 250px;
   	display: inline-block;
   	bottom: 500px; /* imageHeight + facMargin.bottom*2*/
@@ -459,10 +459,7 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 
 
 
-
-
-
-#inputs {
+#inputs, #referenceLinks {
 	float: left;
 	width: 390px;
 
@@ -480,6 +477,7 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 	font-family: "museo-sans", sans-serif;
 }
 
+
 #inputs h1, #occupantSliders h1 {
 	font-weight: 700px;
 	font-size: 23px;
@@ -488,7 +486,7 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 	padding-bottom: 18px;
 }
 
-#inputs p, #occupantSliders p {
+#inputs p, #occupantSliders p, #referenceLinks p {
 	font-size: 12px;
 	line-height: 1.4em;
 	font-weight: 100;
@@ -513,7 +511,7 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 	margin-bottom: 20px;
 }
 
-#inputs legend, #occupantSliders legend {
+#inputs legend, #occupantSliders legend, #referenceLinks legend {
 	font-weight: 700;
 	font-size: 12px;
 	text-transform: uppercase;
@@ -522,12 +520,15 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 	width: 190px;
 }
 
+#referenceLinks legend {
+	padding: 5px 0 0 0;
+}
+
 #inputs legend.first {
 	float: left;
 }
 
-
-#inputs ul {
+#inputs ul, #referenceLinks ul, #referenceLinks a {
 	font-family: "museo-sans", sans-serif;
 	color: #b9b9b9;
 	font-weight: 300;
@@ -537,7 +538,9 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 	list-style-type: none;
 }
 
-
+#referenceLinks a:hover {
+	color: #808080
+}
 
 #inputs hr, #occupantSliders hr {
 	padding: 0;
@@ -673,11 +676,11 @@ br.glzBR {
 	margin: 0;
 	padding: 2px 3px 2px 0;
 	float: left;
-	clear: left;	
+	clear: left;
 	text-align: left;
 	display: block;
 
-	
+
 	font-weight: 300;
 	font-size: 12px;
 	height: 16px;
@@ -841,7 +844,7 @@ input[type=checkbox] {
 	padding: 10px;
 	border-radius: 10px;
 	border: 2px solid #f72734;
-	
+
 	display: none;
 }
 
@@ -869,7 +872,7 @@ input[type=checkbox] {
 
 
 
-#options {	
+#options {
 	overflow: auto;
 	width: 100%;
 
@@ -1110,4 +1113,3 @@ div.case2, div.case3, #inputs input.case2, #inputs input.case3, hr.case2, hr.cas
 	font-weight: 900;
 	src: url('../fonts/MuseoSans_1.otf');
 }
-

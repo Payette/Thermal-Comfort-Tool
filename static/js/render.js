@@ -58,9 +58,7 @@ render.makeGraph = function () {
   var xAxis = d3.svg.axis().scale(x).orient("bottom");
   var yAxis = d3.svg.axis().scale(y).orient("left");
 
-
-
-  /* ------------------ MAKE THE GRAPH ------------------ */
+  /* ------------------ MAKE THE GRAPHS ------------------ */
   // Add SVG
   var graphSvg = d3.select("#graphWrapper")
         .append("svg")
@@ -68,113 +66,33 @@ render.makeGraph = function () {
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom);
 
+  var graphSvg2 = d3.select("#graphWrapper2")
+        .append("svg")
+        .attr("id", "graph")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom);
 
   // Draw PPD threshold so that it's behind the data and axes
-  drawPPDThreshold(ppdValue);
+  var ppdLine = drawPPDThreshold(graphSvg, ppdValue);
+  var ppdLine2 = drawPPDThreshold(graphSvg2, ppdValue);
+  drawGraph(graphSvg, "% People Dissatisfied (PPD AD) - Ankle Draft");
+  drawGraph(graphSvg2, "% People Dissatisfied (PPD) - Radiant Loss");
 
 
-  // add axes
-  graphSvg.append("g")
-    .attr("class", "axis")
-    .attr("id", "graphXAxis")
-    .attr("transform", "translate(" + margin.left + "," + (height + margin.top) + ")");
-
-  if (unitSys == "IP") {
-    graphSvg.select("#graphXAxis")
-      .call(xAxis.ticks(6).tickValues([2, 4, 6, 8, 10, 12]));
-    } else if (unitSys == "SI") {
-    graphSvg.select("#graphXAxis")
-      .call(xAxis.ticks(7).tickValues([0.5, 1, 1.5, 2, 2.5, 3, 3.5]));
-    }
-
-  graphSvg.append("g")
-      .attr("class", "axis")
-      .attr("id", "graphYAxis")
-      .attr("transform", "translate(" + (margin.left) + "," + margin.top + ")")
-      .call(yAxis.ticks(4));
-
-  // add horizontal grid
-  graphSvg.append("g")
-        .attr("class", "grid")
-        .attr("transform", "translate(" + (margin.left) + "," + margin.top + ")")
-        .call(yAxis
-            .tickSize(-width, 0, 0)
-            .tickFormat("")
-            .ticks(7)
-        );
-
-    // add axes labels
-     graphSvg.append("text")
-      .attr("class", "axislabel")
-      .attr("id", "XAxisLabel")
-      .attr("text-anchor", "middle")
-      .attr("x", width/2 + margin.left)
-      .attr("y", height + margin.top + margin.bottom - 15);
-
-  if (unitSys == "IP") {
-    graphSvg.select("#XAxisLabel")
-      .text("Occupant Distance from Façade (ft)");
-    } else if (unitSys == "SI") {
-    graphSvg.select("#XAxisLabel")
-      .text("Occupant Distance from Façade (m)");
-    }
-
-
-  graphSvg.append("g")
-  .attr("transform", "translate(25," + (height/2 + margin.top) + ")")
-  .append("text")
-    .attr("class", "axislabel")
-    .attr("text-anchor", "middle")
-    .attr("transform", "rotate(-90)")
-    .text("Percentage of People Dissatisfied from Cold (PPD)");
-
-
-
-
-
-
-    /* ------ PLOT THE DATA ------ */
-    //draw occupant position line so that it's behind the points
-    occupantDistanceRefLine();
-
-
-    // Add line between points
-  var line = d3.svg.line()
-        .x(function(d) {return x(d.dist);})
-        .y(function(d) {return y(d.ppd);});
-
-  graphSvg.append("path")
-      .attr("class", "connectLine")
-      .attr("d", line(dataset))
-      .attr("transform", function() {
-        return "translate(" + margin.left + "," + margin.top + ")";})
-      .style("fill", "none")
-      .style("stroke", color1)
-      .style("stroke-width", .5);
-
-  graphSvg.append("path")
-      .attr("class", "connectLine2")
-      .attr("d", line(dataset2))
-      .attr("transform", function() {
-        return "translate(" + margin.left + "," + margin.top + ")";})
-      .style("fill", "none")
-      .style("stroke", color2)
-      .style("stroke-width", .5);
-
-  graphSvg.append("path")
-      .attr("class", "connectLine3")
-      .attr("d", line(dataset3))
-      .attr("transform", function() {
-        return "translate(" + margin.left + "," + margin.top + ")";})
-      .style("fill", "none")
-      .style("stroke", color3)
-      .style("stroke-width", .5);
+  /* ------ PLOT THE DATA ------ */
+  //draw occupant position line so that it's behind the points
+  occupantDistanceRefLine();
+  defDrawData(graphSvg, "dwn")
+  defDrawData(graphSvg2, "mrt")
 
 
   // call function to initialize all data points
-  updateGraphPoints(dataset, "dotCase1", color1);
-  updateGraphPoints(dataset2, "dotCase2", color2);
-  updateGraphPoints(dataset3, "dotCase3", color3);
+  updateGraphPoints(graphSvg, dataset, "dotCase1", color1, "dwn");
+  updateGraphPoints(graphSvg, dataset2, "dotCase2", color2, "dwn");
+  updateGraphPoints(graphSvg, dataset3, "dotCase3", color3, "dwn");
+  updateGraphPoints(graphSvg2, dataset, "dotCase1", color1, "mrt");
+  updateGraphPoints(graphSvg2, dataset2, "dotCase2", color2, "mrt");
+  updateGraphPoints(graphSvg2, dataset3, "dotCase3", color3, "mrt");
 
   // call function to initialize point at occupant location
   updateOccupantPoint([occPointData], "occdot1", color1);
@@ -2115,7 +2033,8 @@ render.makeGraph = function () {
       checkCondensation(condensation1, condensation2, condensation3);
 
       // update data points
-      updateGraphPoints(newDataset, "dotCase1", color1);
+      updateGraphPoints(graphSvg, newDataset, "dotCase1", color1, "dwn");
+      updateGraphPoints(graphSvg2, newDataset, "dotCase1", color1, "mrt");
       updateOccupantPoint([occPointData], "occdot1", color1);
       updateConnectedLine(newDataset, ".connectLine");
       updateOccupantDistanceRefLine();
@@ -2138,7 +2057,8 @@ render.makeGraph = function () {
       checkCondensation(condensation1, condensation2, condensation3);
 
       // update data points
-      updateGraphPoints(newDataset, "dotCase2", color2);
+      updateGraphPoints(graphSvg, newDataset, "dotCase2", color2, "dwn");
+      updateGraphPoints(graphSvg2, newDataset, "dotCase2", color2, "mrt");
       updateOccupantPoint([occPointData2], "occdot2", color2);
       updateConnectedLine(newDataset, ".connectLine2");
       updateOccupantDistanceRefLine();
@@ -2161,7 +2081,8 @@ render.makeGraph = function () {
       checkCondensation(condensation1, condensation2, condensation3);
 
       // update data points
-      updateGraphPoints(newDataset, "dotCase3", color3);
+      updateGraphPoints(graphSvg, newDataset, "dotCase3", color3, "dwn");
+      updateGraphPoints(graphSvg2, newDataset, "dotCase3", color3, "mrt");
       updateOccupantPoint([occPointData3], "occdot3", color3);
       updateConnectedLine(newDataset, ".connectLine3");
       updateOccupantDistanceRefLine();
@@ -2257,11 +2178,11 @@ render.makeGraph = function () {
 
 
   /* ------ FUNCTIONS TO INITIALIZE AND UPDATE GRAPH ------ */
-  function updateGraphPoints(data, className, color) {
+  function updateGraphPoints(svgToUpdate, data, className, color, param) {
 
     // DATA JOIN
     // Join new data with old elements, if any.
-    var thesePoints = graphSvg.selectAll("." + className)
+    var thesePoints = svgToUpdate.selectAll("." + className)
       .data(data);
 
     // ENTER
@@ -2277,9 +2198,15 @@ render.makeGraph = function () {
         })
         .size("35"))
       .attr("class",className)
-      .attr("transform", function(d) {
-        return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
       .style("fill", color);
+
+    if (param == "dwn") {
+      thesePoints.attr("transform", function(d) {
+        return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
+    } else {
+      thesePoints.attr("transform", function(d) {
+        return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.mrtppd)) + ")";})
+    }
 
     // UPDATE
     // Update old elements as needed.
@@ -2293,9 +2220,15 @@ render.makeGraph = function () {
         })
         .size("35"))
       .attr("class",className)
-      .attr("transform", function(d) {
-        return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
       .style("fill", color);
+
+    if (param == "dwn") {
+      thesePoints.attr("transform", function(d) {
+        return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
+    } else {
+      thesePoints.attr("transform", function(d) {
+        return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.mrtppd)) + ")";})
+    }
 
     // EXIT
     // Remove old elements as needed
@@ -2317,42 +2250,48 @@ render.makeGraph = function () {
   }
 
   function findMaxVisiblePPD() {
-
     var maxPPD;
-
         // if only case 1 is shown:
     if ($("#caseSelection #case2Label").hasClass("unselected") == true && $("#caseSelection #case3Label").hasClass("unselected") == true) {
-
       maxPPD = occPointData.ppd;
-
     // compare case 1 and case 2
     } else if ($("#caseSelection #case2Label").hasClass("unselected") == false && $("#caseSelection #case3Label").hasClass("unselected") == true) {
-
       maxPPD = d3.max([occPointData.ppd, occPointData2.ppd]);
-
     // compare case 1 and case 3
     } else if ($("#caseSelection #case2Label").hasClass("unselected") == true && $("#caseSelection #case3Label").hasClass("unselected") == false) {
-
       maxPPD = d3.max([occPointData.ppd, occPointData3.ppd]);
-
-
     // compare case 1, case 2 and 3
     } else if ($("#caseSelection #case2Label").hasClass("unselected") == false && $("#caseSelection #case3Label").hasClass("unselected") == false) {
-
       maxPPD = d3.max([occPointData.ppd, occPointData2.ppd, occPointData3.ppd]);
-
     }
-
     return maxPPD;
+  }
 
+  function findMaxVisiblePPDmrt() {
+    var maxPPD;
+        // if only case 1 is shown:
+    if ($("#caseSelection #case2Label").hasClass("unselected") == true && $("#caseSelection #case3Label").hasClass("unselected") == true) {
+      maxPPD = occPointData.mrtppd;
+    // compare case 1 and case 2
+    } else if ($("#caseSelection #case2Label").hasClass("unselected") == false && $("#caseSelection #case3Label").hasClass("unselected") == true) {
+      maxPPD = d3.max([occPointData.mrtppd, occPointData2.mrtppd]);
+    // compare case 1 and case 3
+    } else if ($("#caseSelection #case2Label").hasClass("unselected") == true && $("#caseSelection #case3Label").hasClass("unselected") == false) {
+      maxPPD = d3.max([occPointData.mrtppd, occPointData3.mrtppd]);
+    // compare case 1, case 2 and 3
+    } else if ($("#caseSelection #case2Label").hasClass("unselected") == false && $("#caseSelection #case3Label").hasClass("unselected") == false) {
+      maxPPD = d3.max([occPointData.mrtppd, occPointData2.mrtppd, occPointData3.mrtppd]);
+    }
+    return maxPPD;
   }
 
   function occupantDistanceRefLine() {
 
     var maxPPD = findMaxVisiblePPD();
-
+    var maxPPDmrt = findMaxVisiblePPDmrt();
     var xPosition = x(occPointData.dist);
     var yPosition = y(maxPPD);
+    var yPositionmrt = y(maxPPDmrt);
 
     graphSvg.append("line")
       .attr("class","occupantLine")
@@ -2360,6 +2299,16 @@ render.makeGraph = function () {
       .attr("x2", xPosition)
       .attr("y1", height)
       .attr("y2", yPosition)
+      .attr("transform", function() {
+        return "translate(" + margin.left + "," + margin.top + ")";
+    });
+
+    graphSvg2.append("line")
+      .attr("class","occupantLine")
+      .attr("x1", xPosition)
+      .attr("x2", xPosition)
+      .attr("y1", height)
+      .attr("y2", yPositionmrt)
       .attr("transform", function() {
         return "translate(" + margin.left + "," + margin.top + ")";
     });
@@ -2651,14 +2600,106 @@ render.makeGraph = function () {
 
   }
 
+  function drawGraph(thesvg, yAxisTitle) {
+    // add axes
+    thesvg.append("g")
+      .attr("class", "axis")
+      .attr("id", "graphXAxis")
+      .attr("transform", "translate(" + margin.left + "," + (height + margin.top) + ")");
 
+    if (unitSys == "IP") {
+      thesvg.select("#graphXAxis")
+        .call(xAxis.ticks(6).tickValues([2, 4, 6, 8, 10, 12]));
+      } else if (unitSys == "SI") {
+      thesvg.select("#graphXAxis")
+        .call(xAxis.ticks(7).tickValues([0.5, 1, 1.5, 2, 2.5, 3, 3.5]));
+      }
 
-  function drawPPDThreshold(data) {
+    thesvg.append("g")
+        .attr("class", "axis")
+        .attr("id", "graphYAxis")
+        .attr("transform", "translate(" + (margin.left) + "," + margin.top + ")")
+        .call(yAxis.ticks(4));
 
+    // add horizontal grid
+    thesvg.append("g")
+          .attr("class", "grid")
+          .attr("transform", "translate(" + (margin.left) + "," + margin.top + ")")
+          .call(yAxis
+              .tickSize(-width, 0, 0)
+              .tickFormat("")
+              .ticks(7)
+          );
+
+      // add axes labels
+       thesvg.append("text")
+        .attr("class", "axislabel")
+        .attr("id", "XAxisLabel")
+        .attr("text-anchor", "middle")
+        .attr("x", width/2 + margin.left)
+        .attr("y", height + margin.top + margin.bottom - 15);
+
+    if (unitSys == "IP") {
+      thesvg.select("#XAxisLabel")
+        .text("Occupant Distance from Façade (ft)");
+      } else if (unitSys == "SI") {
+      thesvg.select("#XAxisLabel")
+        .text("Occupant Distance from Façade (m)");
+      }
+
+    thesvg.append("g")
+    .attr("transform", "translate(25," + (height/2 + margin.top) + ")")
+    .append("text")
+      .attr("class", "axislabel")
+      .attr("text-anchor", "middle")
+      .attr("transform", "rotate(-90)")
+      .text(yAxisTitle);
+  }
+
+  function defDrawData(gsvg, param) {
+    // Add line between points
+    if (param == "dwn") {
+      var line = d3.svg.line()
+        .x(function(d) {return x(d.dist);})
+        .y(function(d) {return y(d.ppd);});
+    } else {
+      var line = d3.svg.line()
+        .x(function(d) {return x(d.dist);})
+        .y(function(d) {return y(d.mrtppd);});
+    }
+
+    gsvg.append("path")
+        .attr("class", "connectLine")
+        .attr("d", line(dataset))
+        .attr("transform", function() {
+          return "translate(" + margin.left + "," + margin.top + ")";})
+        .style("fill", "none")
+        .style("stroke", color1)
+        .style("stroke-width", .5);
+
+    gsvg.append("path")
+        .attr("class", "connectLine2")
+        .attr("d", line(dataset2))
+        .attr("transform", function() {
+          return "translate(" + margin.left + "," + margin.top + ")";})
+        .style("fill", "none")
+        .style("stroke", color2)
+        .style("stroke-width", .5);
+
+    gsvg.append("path")
+        .attr("class", "connectLine3")
+        .attr("d", line(dataset3))
+        .attr("transform", function() {
+          return "translate(" + margin.left + "," + margin.top + ")";})
+        .style("fill", "none")
+        .style("stroke", color3)
+        .style("stroke-width", .5);
+  }
+
+  function drawPPDThreshold(theGraph, data) {
     //data = PPD threshold (ie 10%)
-
     // add shaded rectangle
-    graphSvg.append("rect")
+    theGraph.append("rect")
       .attr("class", "thresholdRect")
       .attr("x", 0)
       .attr("y", function() { return y(data)})
@@ -2668,14 +2709,14 @@ render.makeGraph = function () {
           return "translate(" + margin.left + "," + margin.top + ")";})
       .style("fill", "white");
 
-    var ppdLine = graphSvg.append("g")
+    var ppdL = theGraph.append("g")
       .attr("class", "referenceLineGroup")
       .attr("transform", function() {
           return "translate(" + margin.left + "," + margin.top + ")";})
 
 
     // add line
-    ppdLine.append("line")
+    ppdL.append("line")
       .attr("class","refLine")
       .attr("x1", 0)
       .attr("x2", width)
@@ -2687,7 +2728,7 @@ render.makeGraph = function () {
     d3.selectAll(".refLine").classed("draggable", true);
 
     // add symbols
-    ppdLine.append("svg:image")
+    ppdL.append("svg:image")
       .attr("class", "checkLine")
       .attr("xlink:href", "static/images/check.png")
       .attr("x", 4)
@@ -2695,7 +2736,7 @@ render.makeGraph = function () {
       .attr("width", 12)
       .attr("height", 12);
 
-    ppdLine.append("svg:image")
+    ppdL.append("svg:image")
       .attr("class", "crossLine")
       .attr("xlink:href", "static/images/x.png")
       .attr("x", 4)
@@ -2703,6 +2744,7 @@ render.makeGraph = function () {
       .attr("width", 12)
       .attr("height", 12);
 
+    return ppdL
   }
 
 

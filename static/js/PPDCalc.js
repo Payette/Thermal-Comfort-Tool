@@ -607,11 +607,11 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, o
       ptInfo.dist = facadeDistSI[i];
     }
 
+    ptInfo.ppd = downDPPD[i];
+    ptInfo.mrtppd = mrtPPD[i];
 		if (mrtPPD[i] > downDPPD[i]) {
-			ptInfo.ppd = mrtPPD[i];
 			ptInfo.govfact = "mrt";
 		} else {
-			ptInfo.ppd = downDPPD[i];
 			ptInfo.govfact = "dwn";
 		}
 		myDataset.push(ptInfo)
@@ -621,12 +621,11 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, o
 	var occPtInfo = {}
 	occPtInfo.dist = facadeDist[facadeDist.length-1]
 
-
+  occPtInfo.ppd = downDPPD[i];
+  occPtInfo.mrtppd = mrtPPD[i];
 	if (mrtPPD[facadeDist.length-1] > downDPPD[facadeDist.length-1]) {
-			occPtInfo.ppd = mrtPPD[i];
 			occPtInfo.govfact = "mrt";
 		} else {
-			occPtInfo.ppd = downDPPD[i];
 			occPtInfo.govfact = "dwn";
 		}
 
