@@ -28,7 +28,7 @@ body {
 #graphWrapper, #graphWrapper2 {
 	height: auto;
 	position: relative;
-	background-color: rgb(235,235,235);
+	background-color: rgb(230,230,230);
 	overflow: hidden;
 }
 
@@ -121,7 +121,7 @@ body {
 
 
 
-#tooltip, #thresholdTooltip {
+#tooltip, #tooltip2, #thresholdTooltip, #thresholdTooltip2 {
 	position: absolute;
 	width: 280px;
 	/*padding: 5px;*/
@@ -132,11 +132,11 @@ body {
 
 
 
-#tooltip.hidden, #thresholdTooltip.hidden {
+#tooltip.hidden, #tooltip2.hidden, #thresholdTooltip.hidden, #thresholdTooltip2.hidden {
 	display: none;
 }
 
-#tooltip h1, #thresholdTooltip h1 {
+#tooltip h1, #tooltip2 h1, #thresholdTooltip h1, #thresholdTooltip2 h1 {
 	font-family: "museo-sans", sans-serif;
 	font-weight: 700;
 	font-size: 12px;
@@ -146,7 +146,7 @@ body {
 	float: left;
 }
 
-#thresholdTooltip img.icon, #tooltip img.icon {
+#thresholdTooltip img.icon, #tooltip img.icon, #tooltip2 img.icon, #thresholdTooltip2 img.icon {
 	display: block;
 	float: left;
 	width: 12px;
@@ -379,13 +379,6 @@ input[type=range]#ppd::-moz-range-progress, input[type=range]#ppd2::-moz-range-p
 
 
 
-
-
-
-
-
-
-
 #caseWrapper {
 	overflow: hidden;
 	width: 100%;
@@ -393,8 +386,6 @@ input[type=range]#ppd::-moz-range-progress, input[type=range]#ppd2::-moz-range-p
 	height: 16px;
 	padding-bottom: 0;
 }
-
-
 
 #caseSelection {
 	display: block;
@@ -465,6 +456,9 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 	/*line-height: 1em;*/
 }
 
+#referenceLinks {
+	margin-top: 25px
+}
 
 #occupantSliders {
 	width: 550px;
@@ -533,7 +527,11 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 	list-style-type: none;
 }
 
-#referenceLinks a:hover {
+#inputs a {
+	color: #000000;
+}
+
+#referenceLinks a:hover, #inputs a:hover {
 	color: #808080
 }
 
@@ -1066,7 +1064,7 @@ div#disclaimer h1{
 	font-size: 12px;
 }
 
-.refLine.draggable {
+.refLine.draggable, .refLine2.draggable {
 	cursor: ns-resize;
 }
 

@@ -33,7 +33,7 @@ render.makeGraph = function () {
   /* ------ SET UP GRAPH VARIABLES AND DATA FUNCTIONS ------ */
   var margin = {top: 15, right: 20, bottom: 40, left: 70},
       width = maxContainerWidth - margin.left - margin.right,
-      height = 300 - margin.top - margin.bottom;
+      height = 290 - margin.top - margin.bottom;
 
 
   // Set up scale functions
@@ -102,7 +102,8 @@ render.makeGraph = function () {
 
 
   // add text at occupanct location
-  thresholdDataText();
+  thresholdDataText("dwn");
+  thresholdDataText("mrt");
 
   // add text for printing
   addPayetteText();
@@ -499,7 +500,8 @@ render.makeGraph = function () {
     }
 
     // Update static tooltip text
-    thresholdDataText();
+    thresholdDataText("dwn");
+    thresholdDataText("mrt");
     updateOccupantDistanceRefLine();
 
     });
@@ -541,7 +543,8 @@ render.makeGraph = function () {
 
 
     // Update static tooltip text
-    thresholdDataText();
+    thresholdDataText("dwn");
+    thresholdDataText("mrt");
     updateOccupantDistanceRefLine();
     });
 
@@ -886,7 +889,8 @@ render.makeGraph = function () {
       updateData(case2Data);
       updateData(case3Data);
 
-      thresholdDataText();
+      thresholdDataText("dwn");
+      thresholdDataText("mrt");
       updateOccupantDistanceRefLine();
     })
     $("#ppd").on("change", function(event) {
@@ -907,7 +911,8 @@ render.makeGraph = function () {
       }
       // Update target PPD threshold line
       updatePPDThreshold(graphSvg, ppdValue);
-      thresholdDataText();
+      thresholdDataText("dwn");
+      thresholdDataText("mrt");
 
       // update calculated uvalue
       autocalcUValues();
@@ -931,7 +936,8 @@ render.makeGraph = function () {
       }
       // Update target PPD threshold line
       updatePPDThreshold(graphSvg2, ppdValue2);
-      thresholdDataText();
+      thresholdDataText("dwn");
+      thresholdDataText("mrt");
 
       // update calculated uvalue
       autocalcUValues();
@@ -973,7 +979,8 @@ render.makeGraph = function () {
     updateData(case2Data);
     updateData(case3Data);
 
-    thresholdDataText();
+    thresholdDataText("dwn");
+    thresholdDataText("mrt");
     updateOccupantDistanceRefLine();
   })
 
@@ -996,7 +1003,8 @@ render.makeGraph = function () {
     }
     // Update target PPD threshold line
     updatePPDThreshold(graphSvg, ppdValue);
-    thresholdDataText();
+    thresholdDataText("dwn");
+    thresholdDataText("mrt");
 
     // update calculated uvalue
     autocalcUValues();
@@ -1021,7 +1029,8 @@ render.makeGraph = function () {
     }
     // Update target PPD threshold line
     updatePPDThreshold(graphSvg2, ppdValue2);
-    thresholdDataText();
+    thresholdDataText("dwn");
+    thresholdDataText("mrt");
 
     // update calculated uvalue
     autocalcUValues();
@@ -2142,7 +2151,8 @@ render.makeGraph = function () {
     updateFacade();
 
     // Update static tooltip text
-    thresholdDataText();
+    thresholdDataText("dwn");
+    thresholdDataText("mrt");
 
   }
 
@@ -2523,22 +2533,20 @@ render.makeGraph = function () {
 
 
   // Display text for occupancy dist from facade
-  function thresholdDataText() {
-
-
+  function thresholdDataText(param) {
     var totalText = "";
-    $("#thresholdTooltip").empty();
+    if (param == "dwn"){
+      $("#thresholdTooltip").empty();
+    } else {
+      $("#thresholdTooltip2").empty();
+    }
 
     var case1Text = occupantPositionText(occPointData, "case1Text", "Case 1");
     var case2Text = occupantPositionText(occPointData2, "case2Text", "Case 2");
     var case3Text = occupantPositionText(occPointData3, "case3Text", "Case 3");
 
-
-
     //find min cy of visible occ points
     var compareOccupantArray = [];
-
-
     compareOccupantArray.push(occPointData.ppd);
     if ($("#caseSelection #case2Label").hasClass("unselected") == false ) {
       compareOccupantArray.push(occPointData2.ppd);
@@ -2547,12 +2555,9 @@ render.makeGraph = function () {
       compareOccupantArray.push(occPointData3.ppd);
     }
 
-
-
     // put text in correct order
     var maxCase = d3.max(compareOccupantArray);
     var minCase = d3.min(compareOccupantArray);
-
 
     // if only case 1 is shown
     if ($("#caseSelection #case2Label").hasClass("unselected") == true  && $("#caseSelection #case3Label").hasClass("unselected") == true) {
@@ -2569,7 +2574,6 @@ render.makeGraph = function () {
       }
     }
 
-
     // if only cases 1 and 3
     if ($("#caseSelection #case2Label").hasClass("unselected") == true  && $("#caseSelection #case3Label").hasClass("unselected") == false) {
       // determine if case 1 or case 3 is greater
@@ -2580,15 +2584,12 @@ render.makeGraph = function () {
       }
     }
 
-
     // if cases 1, 2 and 3
     if ($("#caseSelection #case2Label").hasClass("unselected") == false  && $("#caseSelection #case3Label").hasClass("unselected") == false) {
-
       // if case 1 is greatest...
       if (maxCase == occPointData.ppd) {
         // case 1 is first
         totalText = case1Text;
-
         // find out what's next
         if (occPointData2.ppd >= occPointData3.ppd) {
           // case 2 is second
@@ -2603,7 +2604,6 @@ render.makeGraph = function () {
       else if (maxCase == occPointData2.ppd) {
         // case 2 is first
         totalText = case2Text;
-
         // find out what's next
         if (occPointData.ppd >= occPointData3.ppd) {
           // case 1 is second
@@ -2618,7 +2618,6 @@ render.makeGraph = function () {
       else if (maxCase == occPointData3.ppd) {
         // case 3 is first
         totalText = case3Text;
-
         // find out what's next
         if (occPointData.ppd >= occPointData2.ppd) {
           // case 1 is second
@@ -2631,12 +2630,13 @@ render.makeGraph = function () {
 
     }
 
-
-
-    $("#thresholdTooltip").append(totalText);
-
-    var divHeight = $("div#thresholdTooltip").height() - 10; //10 = padding
-
+    if (param == "dwn"){
+      $("#thresholdTooltip").append(totalText);
+      var divHeight = $("div#thresholdTooltip").height() - 10; //10 = padding
+    } else {
+      $("#thresholdTooltip2").append(totalText);
+      var divHeight = $("div#thresholdTooltip2").height() - 10; //10 = padding
+    }
     var xPosition;
     var yPosition;
     var yPadding;
@@ -2644,8 +2644,13 @@ render.makeGraph = function () {
     // set XPosition for tooltip
     // change width of tooltip so it doesn't stretch outside wrapper
     if (x(occPointData.dist) > 190 ) {
-      $("div#thresholdTooltip").css("width","150px");
-      $("div#thresholdTooltip h1").css("width","135px");
+      if (param == "dwn"){
+        $("div#thresholdTooltip").css("width","150px");
+        $("div#thresholdTooltip h1").css("width","135px");
+      } else {
+        $("div#thresholdTooltip2").css("width","150px");
+        $("div#thresholdTooltip2 h1").css("width","135px");
+      }
       yPadding = 20;
 
       // prevent the tooltip from going outside the graph wrapper
@@ -2659,8 +2664,13 @@ render.makeGraph = function () {
 
     } else {
       // full width tooltip
-      $("div#thresholdTooltip").css("width","290px");
-      $("div#thresholdTooltip h1").css("width","auto");
+      if (param == "dwn"){
+        $("div#thresholdTooltip").css("width","290px");
+        $("div#thresholdTooltip h1").css("width","auto");
+      } else {
+        $("div#thresholdTooltip2").css("width","290px");
+        $("div#thresholdTooltip2 h1").css("width","auto");
+      }
       xPosition = x(occPointData.dist) + margin.left + 8;
       yPadding = 10;
     }
@@ -2674,13 +2684,17 @@ render.makeGraph = function () {
       yPosition = margin.top + yPadding + 12;
     }
 
-
-    d3.select("#thresholdTooltip")
-    .style("left", xPosition + "px")
-    .style("top", yPosition + "px");
-
-
+    if (param == "dwn"){
+      d3.select("#thresholdTooltip")
+      .style("left", xPosition + "px")
+      .style("top", yPosition + "px");
+    } else {
+      d3.select("#thresholdTooltip2")
+      .style("left", xPosition + "px")
+      .style("top", yPosition + "px");
+    }
   }
+
 
   function drawGraph(thesvg, yAxisTitle, drawXLabel) {
     // add axes
@@ -2883,7 +2897,8 @@ render.makeGraph = function () {
     var newOccData3 = script.computeData(case3Data).occPtInfo;
     occPointData3 = newOccData3;
 
-    thresholdDataText();
+    thresholdDataText("dwn");
+    thresholdDataText("mrt");
   }
 
 
@@ -2930,7 +2945,8 @@ render.makeGraph = function () {
       $("#ppd").attr("value",ppdValue);
       $("#ppdOutput").text(ppdValue + "%");
       // update occupant position text
-      thresholdDataText();
+      thresholdDataText("dwn");
+      thresholdDataText("mrt");
       // update calculated uvalue
       autocalcUValues();
     });
@@ -2977,7 +2993,8 @@ render.makeGraph = function () {
         $("#ppd2").attr("value",ppdValue2);
         $("#ppdOutput2").text(ppdValue2 + "%");
         // update occupant position text
-        thresholdDataText();
+        thresholdDataText("dwn");
+        thresholdDataText("mrt");
         // update calculated uvalue
         autocalcUValues();
       });
