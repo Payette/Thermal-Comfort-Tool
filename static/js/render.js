@@ -95,9 +95,12 @@ render.makeGraph = function () {
   updateGraphPoints(graphSvg2, dataset3, "dotCase3", color3, "mrt");
 
   // call function to initialize point at occupant location
-  updateOccupantPoint([occPointData], "occdot1", color1);
-  updateOccupantPoint([occPointData2], "occdot2", color2);
-  updateOccupantPoint([occPointData3], "occdot3", color3);
+  updateOccupantPoint(graphSvg, [occPointData], "occdot1", color1, "dwn");
+  updateOccupantPoint(graphSvg, [occPointData2], "occdot2", color2, "dwn");
+  updateOccupantPoint(graphSvg, [occPointData3], "occdot3", color3, "dwn");
+  updateOccupantPoint(graphSvg2, [occPointData], "occdot1", color1, "mrt");
+  updateOccupantPoint(graphSvg2, [occPointData2], "occdot2", color2, "mrt");
+  updateOccupantPoint(graphSvg2, [occPointData3], "occdot3", color3, "mrt");
 
 
   // add text at occupanct location
@@ -2035,7 +2038,8 @@ render.makeGraph = function () {
       // update data points
       updateGraphPoints(graphSvg, newDataset, "dotCase1", color1, "dwn");
       updateGraphPoints(graphSvg2, newDataset, "dotCase1", color1, "mrt");
-      updateOccupantPoint([occPointData], "occdot1", color1);
+      updateOccupantPoint(graphSvg, [occPointData], "occdot1", color1, "dwn");
+      updateOccupantPoint(graphSvg2, [occPointData], "occdot1", color1, "mrt");
       updateConnectedLine(newDataset, ".connectLine");
       updateOccupantDistanceRefLine();
     }
@@ -2059,7 +2063,8 @@ render.makeGraph = function () {
       // update data points
       updateGraphPoints(graphSvg, newDataset, "dotCase2", color2, "dwn");
       updateGraphPoints(graphSvg2, newDataset, "dotCase2", color2, "mrt");
-      updateOccupantPoint([occPointData2], "occdot2", color2);
+      updateOccupantPoint(graphSvg, [occPointData2], "occdot2", color2, "dwn");
+      updateOccupantPoint(graphSvg2, [occPointData2], "occdot2", color2, "mrt");
       updateConnectedLine(newDataset, ".connectLine2");
       updateOccupantDistanceRefLine();
     }
@@ -2083,7 +2088,8 @@ render.makeGraph = function () {
       // update data points
       updateGraphPoints(graphSvg, newDataset, "dotCase3", color3, "dwn");
       updateGraphPoints(graphSvg2, newDataset, "dotCase3", color3, "mrt");
-      updateOccupantPoint([occPointData3], "occdot3", color3);
+      updateOccupantPoint(graphSvg, [occPointData3], "occdot3", color3, "dwn");
+      pdateOccupantPoint(graphSvg2, [occPointData3], "occdot3", color3, "mrt");
       updateConnectedLine(newDataset, ".connectLine3");
       updateOccupantDistanceRefLine();
     }
@@ -2190,9 +2196,9 @@ render.makeGraph = function () {
     thesePoints.enter().append("path")
       .attr("d", d3.svg.symbol()
         .type(function(d) {
-          if (d.govfact == "dwn") {
+          if (param == "dwn") {
             return "triangle-up";
-          } else if (d.govfact == "mrt") {
+          } else if (param == "mrt") {
             return "circle";
           }
         })
@@ -2212,9 +2218,9 @@ render.makeGraph = function () {
     // Update old elements as needed.
     thesePoints.attr("d", d3.svg.symbol()
         .type(function(d) {
-          if (d.govfact == "dwn") {
+          if (param == "dwn") {
             return "triangle-up";
-          } else if (d.govfact == "mrt") {
+          } else if (param == "mrt") {
             return "circle";
           }
         })
@@ -2304,7 +2310,7 @@ render.makeGraph = function () {
     });
 
     graphSvg2.append("line")
-      .attr("class","occupantLine")
+      .attr("class","occupantLine2")
       .attr("x1", xPosition)
       .attr("x2", xPosition)
       .attr("y1", height)
@@ -2314,12 +2320,12 @@ render.makeGraph = function () {
     });
 
     d3.selectAll(".occupantLine").classed("draggable", true);
+    d3.selectAll(".occupantLine2").classed("draggable", true);
   }
 
   function updateOccupantDistanceRefLine() {
     var newMaxPPD = findMaxVisiblePPD();
     var newYPosition = y(newMaxPPD);
-
     var newXPosition = x(occPointData.dist);
 
     d3.select(".occupantLine")
@@ -2327,14 +2333,24 @@ render.makeGraph = function () {
       .attr("x2", newXPosition)
       .attr("y2", newYPosition)
       .transition();
+
+    var newMaxPPD2 = findMaxVisiblePPDmrt();
+    var newYPosition2 = y(newMaxPPD2);
+    var newXPosition2 = x(occPointData.dist);
+
+    d3.select(".occupantLine2")
+      .attr("x1", newXPosition2)
+      .attr("x2", newXPosition2)
+      .attr("y2", newYPosition2)
+      .transition();
   }
 
 
-  function updateOccupantPoint(data, className, color) {
+  function updateOccupantPoint(chartsvg, data, className, color, param) {
 
     // DATA JOIN
     // Join new data with old elements, if any.
-    var thisOccupantPoint = graphSvg.selectAll("." + className)
+    var thisOccupantPoint = chartsvg.selectAll("." + className)
       .data(data);
 
     // ENTER
@@ -2342,26 +2358,32 @@ render.makeGraph = function () {
     thisOccupantPoint.enter().append("path")
       .attr("d", d3.svg.symbol()
         .type(function(d) {
-          if (d.govfact == "dwn") {
+          if (param == "dwn") {
             return "triangle-up";
-          } else if (d.govfact == "mrt") {
+          } else if (param == "mrt") {
             return "circle";
           }
         })
         .size("35"))
       .attr("class",className)
-      .attr("transform", function(d) {
-        return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
       .style("fill", "#FFF")
       .style("stroke", color);
+
+    if (param == "dwn") {
+      thisOccupantPoint.attr("transform", function(d) {
+        return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
+    } else {
+      thisOccupantPoint.attr("transform", function(d) {
+        return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.mrtppd)) + ")";})
+    }
 
     // UPDATE
     // Update old elements as needed.
     thisOccupantPoint.attr("d", d3.svg.symbol()
         .type(function(d) {
-          if (d.govfact == "dwn") {
+          if (param == "dwn") {
             return "triangle-up";
-          } else if (d.govfact == "mrt") {
+          } else if (param == "mrt") {
             return "circle";
           }
         })
@@ -2372,6 +2394,14 @@ render.makeGraph = function () {
       .style("fill", "#FFF")
       .style("stroke-width", 2)
       .style("stroke", color);
+
+    if (param == "dwn") {
+      thisOccupantPoint.attr("transform", function(d) {
+        return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
+    } else {
+      thisOccupantPoint.attr("transform", function(d) {
+        return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.mrtppd)) + ")";})
+    }
 
     // EXIT
     // Remove old elements as needed
@@ -2900,26 +2930,39 @@ render.makeGraph = function () {
       updateOnlyOccupantPointData();
 
       // adjust the occupant point
-      updateOccupantPoint([occPointData], "occdot1", color1);
-      updateOccupantPoint([occPointData2], "occdot2", color2);
-      updateOccupantPoint([occPointData3], "occdot3", color3);
+      updateOccupantPoint(graphSvg, [occPointData], "occdot1", color1, "dwn");
+      updateOccupantPoint(graphSvg, [occPointData2], "occdot2", color2, "dwn");
+      updateOccupantPoint(graphSvg, [occPointData3], "occdot3", color3, "dwn");
+      updateOccupantPoint(graphSvg2, [occPointData], "occdot1", color1, "mrt");
+      updateOccupantPoint(graphSvg2, [occPointData2], "occdot2", color2, "mrt");
+      updateOccupantPoint(graphSvg2, [occPointData3], "occdot3", color3, "mrt");
 
       var newMaxPPD = findMaxVisiblePPD();
       var newYPosition = y(newMaxPPD);
+      var newMaxPPD2 = findMaxVisiblePPDmrt();
+      var newYPosition2 = y(newMaxPPD2);
 
       // update calculated uvalue
       autocalcUValues();
 
       // adjust PPD threshold line
-      d3.select(this)
+      d3.selectAll(".occupantLine")
         .attr("x1", newX - margin.left)
         .attr("x2", newX - margin.left)
         .attr("y2", newYPosition)
+        .transition();
+
+      // adjust PPD threshold line
+      d3.selectAll(".occupantLine2")
+        .attr("x1", newX - margin.left)
+        .attr("x2", newX - margin.left)
+        .attr("y2", newYPosition2)
         .transition();
     });
 
   d3.selectAll(".refLine").call(dragPPDLine);
   d3.selectAll(".occupantLine").call(dragOccupantLine);
+  d3.selectAll(".occupantLine2").call(dragOccupantLine);
 
 
 

@@ -85,7 +85,7 @@ body {
 }
 
 
-.occupantLine {
+.occupantLine, .occupantLine2 {
 	stroke: #000;
 	stroke-width: 3;
 	stroke-linecap: round;
@@ -1075,7 +1075,7 @@ div#disclaimer h1{
 	cursor: ns-resize;
 }
 
-.occupantLine.draggable {
+.occupantLine.draggable, .occupantLine2.draggable {
 	cursor: ew-resize;
 }
 
