@@ -156,8 +156,11 @@
 					<!-- <legend>Occupancy Thresholds</legend>
 					<hr> -->
 
-					<label for="ppd">Acceptable Percentage of People Dissatisfied from Cold (%)<sup id="fnref:21"><a href="#fn:21" rel="footnote">?</a></sup></label>
-					<div class="occSlider"><input type="range" name="ppd" id="ppd" value="20" min="5" max="30"><p id="ppdOutput">10%</p></div>
+					<label for="ppd">Acceptable % of People Dissatisfied from Ankle Draft <sup id="fnref:21"><a href="#fn:21" rel="footnote">?</a></sup></label>
+					<div class="occSlider"><input type="range" name="ppd" id="ppd" value="20" min="5" max="30"><p id="ppdOutput">20%</p></div>
+
+          <label for="ppd">Acceptable % of People Dissatisfied from Radiant Loss <sup id="fnref:22"><a href="#fn:22" rel="footnote">?</a></sup></label>
+					<div class="occSlider"><input type="range" name="ppd2" id="ppd2" value="10" min="5" max="30"><p id="ppdOutput2">10%</p></div>
 
 					<label for="distFromFacade">Occupant Distance From Fa&ccedil;ade (<span class="units IP">ft</span>)<sup id="fnref:20"><a href="#fn:20" rel="footnote">?</a></sup></label>
 					<div class="occSlider"><input type="range" name="distFromFacade" id="distFromFacade" value="3" min="1" max="12" step="0.25"><p id="distOutput">3 <span class="units IP">ft</span></p></div><br>
@@ -176,7 +179,6 @@
 				</ul>
 			</div>
  			<div id="tooltip" class="hidden"></div>
-
 			<div id="thresholdTooltip"></div>
 		</div>
 
@@ -282,9 +284,9 @@
 			<div class="inputWrapperRight"><input type="text" name="wallWidth3" id="wallWidth3" value="18" step="1" class="case3 unselected"></div><br>
 
 			<label for="windowHeight">Window Height From Sill (<span class="units IP">ft</span>)<sup id="fnref:3"><a href="#fn:3" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="windowHeight" id="windowHeight" value="8" step="0.5" class="case1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="windowHeight2" id="windowHeight2" value="8" step="0.5" class="case2 unselected"></div>
-			<div class="inputWrapperRight"><input type="text" name="windowHeight3" id="windowHeight3" value="8" step="0.5" class="case3 unselected"></div><br>
+			<div class="inputWrapperLeft"><input type="text" name="windowHeight" id="windowHeight" value="7" step="0.5" class="case1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="windowHeight2" id="windowHeight2" value="7" step="0.5" class="case2 unselected"></div>
+			<div class="inputWrapperRight"><input type="text" name="windowHeight3" id="windowHeight3" value="7" step="0.5" class="case3 unselected"></div><br>
 
 			<label for="sill">Sill Height (<span class="units IP">ft</span>)<sup id="fnref:4"><a href="#fn:4" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="sill" id="sill" value="3" step="0.5" class="case1"></div>
@@ -295,14 +297,14 @@
 			<label id="setGlazing">Set Glazing Amount By</label><br class="glzBR">
 
 			<label for="width" id="windowWidthLabel"><div class="customCheckStyle"><input type="radio" name="glazingRadio" value="windowWidthCheck" id="windowWidthCheck" class="customCheck" checked><label for="windowWidthCheck" id="checkWindWidth"></label></div>Window Width (<span class="units IP">ft</span>)<sup id="fnref:5"><a href="#fn:5" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="width" id="windowWidth" value="4.5" step="0.5" class="case1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="width2" id="windowWidth2" value="4.5" step="0.5" class="case2 unselected"></div>
-			<div class="inputWrapperRight"><input type="text" name="width3" id="windowWidth3" value="4.5" step="0.5" class="case3 unselected"></div><br>
+			<div class="inputWrapperLeft"><input type="text" name="width" id="windowWidth" value="4" step="0.5" class="case1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="width2" id="windowWidth2" value="4" step="0.5" class="case2 unselected"></div>
+			<div class="inputWrapperRight"><input type="text" name="width3" id="windowWidth3" value="4" step="0.5" class="case3 unselected"></div><br>
 
 			<label for="glazing" class="inactive" id="glazingLabel"><div class="customCheckStyle"><input type="radio" name="glazingRadio" value="glazingRatioCheck" class="customCheck" id="glazingRatioCheck"><label for="glazingRatioCheck" id="checkGlzRatio" class="unselected"></label></div>Window-to-Wall Ratio (%)<sup id="fnref:6"><a href="#fn:6" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="glazing" class="inactive case1" id="glazing" value="50" step="1" disabled></div>
-			<div class="inputWrapperCenter"><input type="text" name="glazing2" class="inactive case2 unselected" id="glazing2" value="50" step="1" disabled></div>
-			<div class="inputWrapperRight"><input type="text" name="glazing3" class="inactive case3 unselected" id="glazing3" value="50" step="1" disabled></div><br>
+			<div class="inputWrapperLeft"><input type="text" name="glazing" class="inactive case1" id="glazing" value="40" step="1" disabled></div>
+			<div class="inputWrapperCenter"><input type="text" name="glazing2" class="inactive case2 unselected" id="glazing2" value="40" step="1" disabled></div>
+			<div class="inputWrapperRight"><input type="text" name="glazing3" class="inactive case3 unselected" id="glazing3" value="40" step="1" disabled></div><br>
 
 
 			<label for="distWindow">Window Separation (<span class="units IP">ft</span>)<sup id="fnref:7"><a href="#fn:7" rel="footnote">?</a></sup></label>
@@ -327,9 +329,9 @@
 			<div class="inputWrapperRight"><input type="text" name="uvalue3" id="uvalue3" value="0.35" step="0.01" class="case3 unselected"></div><br>
 
 			<label class="grey" id="calcUValQuestion">What U-Value meets the target PPD?<sup id="fnref:9" class="uValAlert"><a href="#fn:9" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="calcuvalue" id="calcuvalue" value="0.5" class="inactive case1"  disabled></div>
-			<div class="inputWrapperCenter"><input type="text" name="calcuvalue2" id="calcuvalue2" value="0.5" class="inactive case2 unselected"  disabled></div>
-			<div class="inputWrapperRight"><input type="text" name="calcuvalue3" id="calcuvalue3" value="0.5" class="inactive case3 unselected"  disabled></div><br>
+			<div class="inputWrapperLeft"><input type="text" name="calcuvalue" id="calcuvalue" value="0.65" class="inactive case1"  disabled></div>
+			<div class="inputWrapperCenter"><input type="text" name="calcuvalue2" id="calcuvalue2" value="0.65" class="inactive case2 unselected"  disabled></div>
+			<div class="inputWrapperRight"><input type="text" name="calcuvalue3" id="calcuvalue3" value="0.65" class="inactive case3 unselected"  disabled></div><br>
 
 			<label class="grey" id="condRisk">Is there a risk of condensation?<sup id="fnref:10"><a href="#fn:10" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="condRisk1" id="condRisk1" value="NO" class="inactive case1"  disabled></div>
@@ -346,9 +348,9 @@
 			<hr>
 
 			<label for="outdoortemp">Outdoor Temperature (<span class="unitsTemp IP">&deg;F</span>)<sup id="fnref:11"><a href="#fn:11" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="outdoortemp" id="outdoortemp" value="15" class="case1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="outdoortemp2" id="outdoortemp2" value="15" class="case2 unselected"></div>
-			<div class="inputWrapperRight"><input type="text" name="outdoortemp3" id="outdoortemp3" value="15" class="case3 unselected"></div><br>
+			<div class="inputWrapperLeft"><input type="text" name="outdoortemp" id="outdoortemp" value="10" class="case1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="outdoortemp2" id="outdoortemp2" value="10" class="case2 unselected"></div>
+			<div class="inputWrapperRight"><input type="text" name="outdoortemp3" id="outdoortemp3" value="10" class="case3 unselected"></div><br>
 
 			<label for="airtemp">Indoor Temperature (<span class="unitsTemp IP">&deg;F</span>)<sup id="fnref:12"><a href="#fn:12" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="airtemp" id="airtemp" value="72" class="case1"></div>
@@ -481,11 +483,14 @@
 	    <li class="footnote" id="fn:19"> <!-- metabolic rate -->
 	        <p>Metabolic rate of the occupants. 1 met = seated resting. 1.2 met = typing or standing.<a href="#fnref:19" title="return to article"> ↩</a></p>
 	    </li>
-		<li class="footnote" id="fn:20"> <!-- distance from facade -->
-	        <p>Expected location of the occupant perpendicular to the fa&ccedil;ade.<a href="#fnref:20" title="return to article"> ↩</a></p>
-	    </li>
+  		<li class="footnote" id="fn:20"> <!-- distance from facade -->
+  	        <p>Expected location of the occupant perpendicular to the fa&ccedil;ade.<a href="#fnref:20" title="return to article"> ↩</a></p>
+  	    </li>
 	    <li class="footnote" id="fn:21"> <!-- ppd -->
-	        <p>The Predicted Percentage of Dissatisfied (PPD) is a common metric to define occupants’ predicted satisfactions with their environment. The industry standard is typically 10%, which means that 90% of occupants are thermally comfortable. It is not possible to get a PPD lower than 5%. Note: This tool only estimates occupant dissatisfaction from cold conditions.<a href="#fnref:21" title="return to article"> ↩</a></p>
+	        <p>Percentage of People Dissatisfied (PPD) is a common metric used to define occupants’ satisfaction with their environment. This particular variable sets the acceptable percent of the polulation experiencing cold feet from downdraft off windows.  The standard set by ASHRAE for ankle draft discomfort in regularly-occupied spaces is 20% of the population.<a href="#fnref:21" title="return to article"> ↩</a></p>
+	    </li>
+      <li class="footnote" id="fn:22"> <!-- ppd -->
+	        <p>This variable sets the acceptable percent of the polulation experiencing full-body sensations of cold as a result of proximity to cool window surfaces. The standard set by ASHRAE for full-body discomfort in regularly-occupied spaces is 10% of the poolulation.  Note that it is not possible to get a full-body PPD lower than 5%.<a href="#fnref:22" title="return to article"> ↩</a></p>
 	    </li>
 	</ol>
 	</div>

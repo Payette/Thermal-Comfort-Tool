@@ -28,8 +28,12 @@ body {
 #graphWrapper, #graphWrapper2 {
 	height: auto;
 	position: relative;
-	background-color: rgb(240,240,240);
+	background-color: rgb(235,235,235);
 	overflow: hidden;
+}
+
+#graphWrapper2 {
+	margin-top: 10px;
 }
 
 #graphWrapper ul, #graphWrapper2 ul {
@@ -152,16 +156,11 @@ body {
 }
 
 
-
-
-
-
-
 #facadeWrapper {
 	width: 100%
 	overflow: auto;
-	margin-top: 43px;
-	margin-bottom: 25px;
+	margin-top: 5px;
+	margin-bottom: 10px;
 }
 
 #case1FacadeWrapper, #case2FacadeWrapper, #case3FacadeWrapper {
@@ -242,12 +241,8 @@ rect.blue {
 	fill: #E1F0FF;
 }
 
-
-
-
-
 #occupancyWrapper {
-	margin: 0 0 30px 0;
+	margin: 0 0 5px 0;
 }
 
 
@@ -265,7 +260,7 @@ rect.blue {
 	padding: 0px;
 }
 
-#ppd, #distFromFacade {
+#ppd, #distFromFacade, #ppd2 {
 	display: inline-block;
 	width: 75%;
 	float: left;
@@ -273,7 +268,7 @@ rect.blue {
 	padding-top: 0;
 }
 
-#ppd p {
+#ppd p, #ppd2 p {
 	margin: 0;
 }
 
@@ -315,7 +310,7 @@ input[type=range]:focus {
   outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
 }
 
-input[type=range]#occupantDist::-ms-track, input[type=range]#occupantDist2::-ms-track, input[type=range]#occupantDist3::-ms-track, input[type=range]#ppd::-ms-track, input[type=range]#distFromFacade::-ms-track {
+input[type=range]#occupantDist::-ms-track, input[type=range]#occupantDist2::-ms-track, input[type=range]#occupantDist3::-ms-track, input[type=range]#ppd::-ms-track, input[type=range]#ppd2::-ms-track, input[type=range]#distFromFacade::-ms-track {
 	-ms-appearance: none;
 	height: 3px;
 	background-color: #d5d5d5;
@@ -326,7 +321,7 @@ input[type=range]#occupantDist::-ms-track, input[type=range]#occupantDist2::-ms-
 	color: transparent;
 }
 
-input[type=range]#ppd::-ms-fill-lower {
+input[type=range]#ppd::-ms-fill-lower, input[type=range]#ppd2::-ms-fill-lower {
 	background: rgb(147,229,0);
 }
 
@@ -335,19 +330,19 @@ input[type=range]#distFromFacade::-ms-fill-lower, input[type=range]#occupantDist
 }
 
 
-#occupantDist::-moz-range-track, #occupantDist2::-moz-range-track, #occupantDist3::-moz-range-track, #ppd::-moz-range-track, #distFromFacade::-moz-range-track {
+#occupantDist::-moz-range-track, #occupantDist2::-moz-range-track, #occupantDist3::-moz-range-track, #ppd::-moz-range-track, #ppd2::-moz-range-track, #distFromFacade::-moz-range-track {
 	-moz-appearance: none;
 	height: 3px;
 	background-color: #d5d5d5;
 	margin-right: 3px;
 }
 
-input[type=range]#ppd::-moz-range-progress{
+input[type=range]#ppd::-moz-range-progress, input[type=range]#ppd2::-moz-range-progress{
 	background-color: rgb(147,229,0);
 }
 
 
-#occupantDist::-webkit-slider-runnable-track, #occupantDist2::-webkit-slider-runnable-track, #occupantDist3::-webkit-slider-runnable-track, #ppd::-webkit-slider-runnable-track, #distFromFacade::-webkit-slider-runnable-track {
+#occupantDist::-webkit-slider-runnable-track, #occupantDist2::-webkit-slider-runnable-track, #occupantDist3::-webkit-slider-runnable-track, #ppd::-webkit-slider-runnable-track, #ppd2::-webkit-slider-runnable-track, #distFromFacade::-webkit-slider-runnable-track {
 	-webkit-appearance: none;
 	height: 3px;
 	background-color: #d5d5d5;
@@ -355,7 +350,7 @@ input[type=range]#ppd::-moz-range-progress{
 }
 
 
-#occupantDist::-ms-thumb, #occupantDist2::-ms-thumb, #occupantDist3::-ms-thumb, #ppd::-ms-thumb, #distFromFacade::-ms-thumb {
+#occupantDist::-ms-thumb, #occupantDist2::-ms-thumb, #occupantDist3::-ms-thumb, #ppd::-ms-thumb, #ppd2::-ms-thumb, #distFromFacade::-ms-thumb {
     background-color: #FFF;
     border: 3px solid rgb(150,150,150);
     border-radius: 5px;
@@ -364,7 +359,7 @@ input[type=range]#ppd::-moz-range-progress{
 }
 
 
-#occupantDist::-moz-range-thumb, #occupantDist2::-moz-range-thumb, #occupantDist3::-moz-range-thumb, #ppd::-moz-range-thumb, #distFromFacade::-moz-range-thumb {
+#occupantDist::-moz-range-thumb, #occupantDist2::-moz-range-thumb, #occupantDist3::-moz-range-thumb, #ppd::-moz-range-thumb, #ppd2::-moz-range-thumb, #distFromFacade::-moz-range-thumb {
 	-moz-appearance: none;
     background-color: #FFF;
     border: 3px solid rgb(150,150,150);
@@ -373,7 +368,7 @@ input[type=range]#ppd::-moz-range-progress{
     width: 5px;
 }
 
-#occupantDist::-webkit-slider-thumb, #occupantDist2::-webkit-slider-thumb, #occupantDist3::-webkit-slider-thumb, #ppd::-webkit-slider-thumb, #distFromFacade::-webkit-slider-thumb {
+#occupantDist::-webkit-slider-thumb, #occupantDist2::-webkit-slider-thumb, #occupantDist3::-webkit-slider-thumb, #ppd::-webkit-slider-thumb, #ppd2::-webkit-slider-thumb, #distFromFacade::-webkit-slider-thumb {
 	-webkit-appearance: none;
     background-color: #FFF;
     border: 3px solid rgb(150,150,150);
@@ -483,7 +478,7 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 	font-size: 23px;
 	line-height: 23px;
 	margin: 0;
-	padding-bottom: 18px;
+	padding-bottom: 5px;
 }
 
 #inputs p, #occupantSliders p, #referenceLinks p {
@@ -967,7 +962,7 @@ div#URLpop textarea {
 
 div#disclaimer {
 	padding: 20px;
-
+	background-color: #ffffff;
 }
 
 div#disclaimer p,  div#disclaimer h1{

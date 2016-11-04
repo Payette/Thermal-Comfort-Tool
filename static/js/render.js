@@ -31,9 +31,9 @@ render.makeGraph = function () {
 
 
   /* ------ SET UP GRAPH VARIABLES AND DATA FUNCTIONS ------ */
-  var margin = {top: 20, right: 20, bottom: 60, left: 70},
+  var margin = {top: 15, right: 20, bottom: 40, left: 70},
       width = maxContainerWidth - margin.left - margin.right,
-      height = 340 - margin.top - margin.bottom;
+      height = 300 - margin.top - margin.bottom;
 
 
   // Set up scale functions
@@ -73,18 +73,16 @@ render.makeGraph = function () {
         .attr("height", height + margin.top + margin.bottom);
 
   // Draw PPD threshold so that it's behind the data and axes
-  var ppdLine = drawPPDThreshold(graphSvg, ppdValue);
-  var ppdLine2 = drawPPDThreshold(graphSvg2, ppdValue);
-  drawGraph(graphSvg, "% People Dissatisfied (PPD AD) - Ankle Draft");
-  drawGraph(graphSvg2, "% People Dissatisfied (PPD) - Radiant Loss");
-
+  var ppdLine = drawPPDThreshold(graphSvg, ppdValue, "dwn");
+  var ppdLine2 = drawPPDThreshold(graphSvg2, ppdValue2, "mrt");
+  drawGraph(graphSvg, "% People Dissatisfied - Ankle Draft", true);
+  drawGraph(graphSvg2, "% People Dissatisfied - Radiant Loss", true);
 
   /* ------ PLOT THE DATA ------ */
   //draw occupant position line so that it's behind the points
   occupantDistanceRefLine();
   defDrawData(graphSvg, "dwn")
   defDrawData(graphSvg2, "mrt")
-
 
   // call function to initialize all data points
   updateGraphPoints(graphSvg, dataset, "dotCase1", color1, "dwn");
@@ -108,10 +106,6 @@ render.makeGraph = function () {
 
   // add text for printing
   addPayetteText();
-
-
-
-
 
 
 
@@ -912,7 +906,31 @@ render.makeGraph = function () {
         $("#ppdOutput").text(ppdValue + "%");
       }
       // Update target PPD threshold line
-      updatePPDThreshold(ppdValue);
+      updatePPDThreshold(graphSvg, ppdValue);
+      thresholdDataText();
+
+      // update calculated uvalue
+      autocalcUValues();
+    });
+
+    $("#ppd2").on("change", function(event) {
+      if ($(this).val() <= 4) {
+        ppdValue2 = 5;
+        $("#ppd2").val(5);
+        $("#ppdOutput2").text("5%");
+      }
+      else if ($(this).val() >30) {
+        ppdValue2 = 30;
+        $("#ppd2").val(30);
+        $("#ppdOutput2").text("30%");
+      }
+      else {
+        ppdValue2 = $(this).val();
+        $("#ppd2").attr("value",ppdValue2);
+        $("#ppdOutput2").text(ppdValue2 + "%");
+      }
+      // Update target PPD threshold line
+      updatePPDThreshold(graphSvg2, ppdValue2);
       thresholdDataText();
 
       // update calculated uvalue
@@ -977,7 +995,32 @@ render.makeGraph = function () {
       $("#ppdOutput").text(ppdValue + "%");
     }
     // Update target PPD threshold line
-    updatePPDThreshold(ppdValue);
+    updatePPDThreshold(graphSvg, ppdValue);
+    thresholdDataText();
+
+    // update calculated uvalue
+    autocalcUValues();
+  });
+
+  // does not work in IE, see Modernizer code above
+  $("#ppd2").on("input", function(event) {
+    if ($(this).val() <= 4) {
+      ppdValue2 = 5;
+      $("#ppd2").val(5);
+      $("#ppdOutput2").text("5%");
+    }
+    else if ($(this).val() >30) {
+      ppdValue2 = 30;
+      $("#ppd2").val(30);
+      $("#ppdOutput2").text("30%");
+    }
+    else {
+      ppdValue2 = $(this).val();
+      $("#ppd2").attr("value",ppdValue2);
+      $("#ppdOutput2").text(ppdValue2 + "%");
+    }
+    // Update target PPD threshold line
+    updatePPDThreshold(graphSvg2, ppdValue2);
     thresholdDataText();
 
     // update calculated uvalue
@@ -2089,7 +2132,7 @@ render.makeGraph = function () {
       updateGraphPoints(graphSvg, newDataset, "dotCase3", color3, "dwn");
       updateGraphPoints(graphSvg2, newDataset, "dotCase3", color3, "mrt");
       updateOccupantPoint(graphSvg, [occPointData3], "occdot3", color3, "dwn");
-      pdateOccupantPoint(graphSvg2, [occPointData3], "occdot3", color3, "mrt");
+      updateOccupantPoint(graphSvg2, [occPointData3], "occdot3", color3, "mrt");
       updateConnectedLine(newDataset, ".connectLine3");
       updateOccupantDistanceRefLine();
     }
@@ -2434,6 +2477,15 @@ render.makeGraph = function () {
       .transition()
       .duration(500);
 
+    var line2 = d3.svg.line()
+      .x(function(d) {return x(d.dist);})
+      .y(function(d) {return y(d.mrtppd);});
+
+    graphSvg2.selectAll(lineClass)
+      .attr("d", line2(data))
+      .transition()
+      .duration(500);
+
   }
 
 
@@ -2630,7 +2682,7 @@ render.makeGraph = function () {
 
   }
 
-  function drawGraph(thesvg, yAxisTitle) {
+  function drawGraph(thesvg, yAxisTitle, drawXLabel) {
     // add axes
     thesvg.append("g")
       .attr("class", "axis")
@@ -2667,15 +2719,17 @@ render.makeGraph = function () {
         .attr("id", "XAxisLabel")
         .attr("text-anchor", "middle")
         .attr("x", width/2 + margin.left)
-        .attr("y", height + margin.top + margin.bottom - 15);
+        .attr("y", height + margin.top + margin.bottom - 5);
 
-    if (unitSys == "IP") {
-      thesvg.select("#XAxisLabel")
-        .text("Occupant Distance from Façade (ft)");
-      } else if (unitSys == "SI") {
-      thesvg.select("#XAxisLabel")
-        .text("Occupant Distance from Façade (m)");
-      }
+    if (drawXLabel == true) {
+      if (unitSys == "IP") {
+        thesvg.select("#XAxisLabel")
+          .text("Occupant Distance from Façade (ft)");
+        } else if (unitSys == "SI") {
+        thesvg.select("#XAxisLabel")
+          .text("Occupant Distance from Façade (m)");
+        }
+    }
 
     thesvg.append("g")
     .attr("transform", "translate(25," + (height/2 + margin.top) + ")")
@@ -2726,7 +2780,7 @@ render.makeGraph = function () {
         .style("stroke-width", .5);
   }
 
-  function drawPPDThreshold(theGraph, data) {
+  function drawPPDThreshold(theGraph, data, param) {
     //data = PPD threshold (ie 10%)
     // add shaded rectangle
     theGraph.append("rect")
@@ -2746,16 +2800,27 @@ render.makeGraph = function () {
 
 
     // add line
-    ppdL.append("line")
-      .attr("class","refLine")
-      .attr("x1", 0)
-      .attr("x2", width)
-      .attr("y1", y(data))
-      .attr("y2", y(data))
-      .style("stroke", "black")
-      .style("stroke-width", "2");
-
-    d3.selectAll(".refLine").classed("draggable", true);
+    if (param == "dwn") {
+      ppdL.append("line")
+        .attr("class","refLine")
+        .attr("x1", 0)
+        .attr("x2", width)
+        .attr("y1", y(data))
+        .attr("y2", y(data))
+        .style("stroke", "black")
+        .style("stroke-width", "2");
+      d3.selectAll(".refLine").classed("draggable", true);
+    } else {
+      ppdL.append("line")
+        .attr("class","refLine2")
+        .attr("x1", 0)
+        .attr("x2", width)
+        .attr("y1", y(data))
+        .attr("y2", y(data))
+        .style("stroke", "black")
+        .style("stroke-width", "2");
+      d3.selectAll(".refLine2").classed("draggable", true);
+    }
 
     // add symbols
     ppdL.append("svg:image")
@@ -2778,26 +2843,32 @@ render.makeGraph = function () {
   }
 
 
-  function updatePPDThreshold(data) {
-    d3.selectAll(".refLine")
+  function updatePPDThreshold(chSvg, data) {
+    chSvg.selectAll(".refLine")
       .transition()
       .duration(400)
       .attr("y1", y(data))
       .attr("y2", y(data));
 
-    d3.selectAll(".thresholdRect")
+    chSvg.selectAll(".refLine2")
+      .transition()
+      .duration(400)
+      .attr("y1", y(data))
+      .attr("y2", y(data));
+
+    chSvg.selectAll(".thresholdRect")
       .transition()
       .duration(400)
       .attr("y", function() { return y(data)})
       .attr("height", function() { return height - y(data)});
 
     // add symbols
-    d3.selectAll(".checkLine")
+    chSvg.selectAll(".checkLine")
       .transition()
       .duration(400)
       .attr("y", y(data) + 4);
 
-    d3.selectAll(".crossLine")
+    chSvg.selectAll(".crossLine")
       .transition()
       .duration(400)
       .attr("y", y(data) - 16);
@@ -2807,10 +2878,8 @@ render.makeGraph = function () {
   function updateOnlyOccupantPointData() {
     var newOccData1 = script.computeData(case1Data).occPtInfo;
     occPointData = newOccData1;
-
     var newOccData2 = script.computeData(case2Data).occPtInfo;
     occPointData2 = newOccData2;
-
     var newOccData3 = script.computeData(case3Data).occPtInfo;
     occPointData3 = newOccData3;
 
@@ -2821,18 +2890,14 @@ render.makeGraph = function () {
   // Draggable occupant and PPD lines on graph
   var dragPPDLine = d3.behavior.drag()
     .on("drag", function() {
-
       var newY = d3.event.y;
-      var oldY = parseFloat(d3.select(".thresholdRect").attr("y"));
-
+      var oldY = parseFloat(graphSvg.select(".thresholdRect").attr("y"));
       // update value of slider
       // define scale to map the new Y value
       ppdSliderDragScale = d3.scale.linear()
           .domain([0, 260]) //input domain
           .range([30, 0]); //output range
-
       var updatedPPD = ppdSliderDragScale(newY);
-
       // prevent line from sliding beyond bounds of axis
       if (updatedPPD < 5) {
         updatedPPD = 5;
@@ -2842,40 +2907,80 @@ render.makeGraph = function () {
         updatedPPD = 30;
         newY = y(30);
       }
-
       // adjust PPD threshold line
       d3.select(this)
         .attr("y1", newY)
         .attr("y2", newY)
         .transition();
-
       // adjust the X and Check Indicators
-      d3.select(".checkLine")
+      graphSvg.select(".checkLine")
         .attr("y", newY + 4)
         .transition();
-      d3.select(".crossLine")
+      graphSvg.select(".crossLine")
         .attr("y", newY - 16)
         .transition();
-
-      var originalRectHeight = parseFloat(d3.select(".thresholdRect").attr("height"));
+      var originalRectHeight = parseFloat(graphSvg.select(".thresholdRect").attr("height"));
       var newRectHeight = originalRectHeight + (oldY - newY);
-
       // adjust PPD threshold rectangle
-      d3.select(".thresholdRect")
+      graphSvg.select(".thresholdRect")
         .attr("y", newY)
         .attr("height", newRectHeight)
         .transition();
-
-
       ppdValue = Math.round(updatedPPD);
       $("#ppd").attr("value",ppdValue);
       $("#ppdOutput").text(ppdValue + "%");
-
       // update occupant position text
       thresholdDataText();
       // update calculated uvalue
       autocalcUValues();
     });
+
+    var dragPPDLineMRT = d3.behavior.drag()
+      .on("drag", function() {
+        var newY = d3.event.y;
+        var oldY = parseFloat(graphSvg2.select(".thresholdRect").attr("y"));
+        // update value of slider
+        // define scale to map the new Y value
+        ppdSliderDragScale = d3.scale.linear()
+            .domain([0, 260]) //input domain
+            .range([30, 0]); //output range
+        var updatedPPD = ppdSliderDragScale(newY);
+        // prevent line from sliding beyond bounds of axis
+        if (updatedPPD < 5) {
+          updatedPPD = 5;
+          newY = y(5);
+        }
+        if (updatedPPD > 30) {
+          updatedPPD = 30;
+          newY = y(30);
+        }
+        // adjust PPD threshold line
+        d3.select(this)
+          .attr("y1", newY)
+          .attr("y2", newY)
+          .transition();
+        // adjust the X and Check Indicators
+        graphSvg2.select(".checkLine")
+          .attr("y", newY + 4)
+          .transition();
+        graphSvg2.select(".crossLine")
+          .attr("y", newY - 16)
+          .transition();
+        var originalRectHeight = parseFloat(graphSvg2.select(".thresholdRect").attr("height"));
+        var newRectHeight = originalRectHeight + (oldY - newY);
+        // adjust PPD threshold rectangle
+        graphSvg2.select(".thresholdRect")
+          .attr("y", newY)
+          .attr("height", newRectHeight)
+          .transition();
+        ppdValue2 = Math.round(updatedPPD);
+        $("#ppd2").attr("value",ppdValue2);
+        $("#ppdOutput2").text(ppdValue2 + "%");
+        // update occupant position text
+        thresholdDataText();
+        // update calculated uvalue
+        autocalcUValues();
+      });
 
   var dragOccupantLine = d3.behavior.drag()
     .on("drag", function() {
@@ -2961,6 +3066,7 @@ render.makeGraph = function () {
     });
 
   d3.selectAll(".refLine").call(dragPPDLine);
+  d3.selectAll(".refLine2").call(dragPPDLineMRT);
   d3.selectAll(".occupantLine").call(dragOccupantLine);
   d3.selectAll(".occupantLine2").call(dragOccupantLine);
 
