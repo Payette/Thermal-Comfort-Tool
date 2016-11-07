@@ -855,7 +855,6 @@ render.makeGraph = function () {
     $("#URLpop textarea").append(urlresult);
 
     $("#URLpop").dialog("open");
-
   })
 
   // print to PDF
@@ -863,7 +862,12 @@ render.makeGraph = function () {
     window.print();
   })
 
-
+  // CSV Download
+  $(".optionButton#CSV").click(function(event) {
+    csvContent = createCSV(dataset, dataset2, dataset3, unitSys)
+    var encodedUri = encodeURI(csvContent);
+    window.open(encodedUri);
+  })
 
 
 
@@ -2166,9 +2170,9 @@ render.makeGraph = function () {
 
     //Compute the U-Value required to make the occupant comfortable.
     var numPtsLen = (fullDataCase1.wallViews.length)-1
-    case1Data.calcUVal = uVal.uValFinal(fullDataCase1.wallViews[numPtsLen], fullDataCase1.glzViews[numPtsLen], fullDataCase1.facadeDist[numPtsLen], fullDataCase1.dwnPPDFac, parseFloat(case1Data.windowHeightValue), case1Data.airtempValue, case1Data.outdoorTempValue, rvalueValue, case1Data.intLowEChecked, case1Data.intLowEEmissivity, airspeedValue, case1Data.humidityValue, metabolic, clothingValue, ppdValue);
-    case2Data.calcUVal = uVal.uValFinal(fullDataCase2.wallViews[numPtsLen], fullDataCase2.glzViews[numPtsLen], fullDataCase2.facadeDist[numPtsLen], fullDataCase2.dwnPPDFac, parseFloat(case2Data.windowHeightValue), case2Data.airtempValue, case2Data.outdoorTempValue, rvalueValue, case2Data.intLowEChecked, case2Data.intLowEEmissivity, airspeedValue, case2Data.humidityValue, metabolic, clothingValue, ppdValue);
-    case3Data.calcUVal = uVal.uValFinal(fullDataCase3.wallViews[numPtsLen], fullDataCase3.glzViews[numPtsLen], fullDataCase3.facadeDist[numPtsLen], fullDataCase3.dwnPPDFac, parseFloat(case3Data.windowHeightValue), case3Data.airtempValue, case3Data.outdoorTempValue, rvalueValue, case3Data.intLowEChecked, case3Data.intLowEEmissivity, airspeedValue, case3Data.humidityValue, metabolic, clothingValue, ppdValue);
+    case1Data.calcUVal = uVal.uValFinal(fullDataCase1.wallViews[numPtsLen], fullDataCase1.glzViews[numPtsLen], fullDataCase1.facadeDist[numPtsLen], fullDataCase1.dwnPPDFac, parseFloat(case1Data.windowHeightValue), case1Data.airtempValue, case1Data.outdoorTempValue, rvalueValue, case1Data.intLowEChecked, case1Data.intLowEEmissivity, airspeedValue, case1Data.humidityValue, metabolic, clothingValue, ppdValue, ppdValue2);
+    case2Data.calcUVal = uVal.uValFinal(fullDataCase2.wallViews[numPtsLen], fullDataCase2.glzViews[numPtsLen], fullDataCase2.facadeDist[numPtsLen], fullDataCase2.dwnPPDFac, parseFloat(case2Data.windowHeightValue), case2Data.airtempValue, case2Data.outdoorTempValue, rvalueValue, case2Data.intLowEChecked, case2Data.intLowEEmissivity, airspeedValue, case2Data.humidityValue, metabolic, clothingValue, ppdValue, ppdValue2);
+    case3Data.calcUVal = uVal.uValFinal(fullDataCase3.wallViews[numPtsLen], fullDataCase3.glzViews[numPtsLen], fullDataCase3.facadeDist[numPtsLen], fullDataCase3.dwnPPDFac, parseFloat(case3Data.windowHeightValue), case3Data.airtempValue, case3Data.outdoorTempValue, rvalueValue, case3Data.intLowEChecked, case3Data.intLowEEmissivity, airspeedValue, case3Data.humidityValue, metabolic, clothingValue, ppdValue, ppdValue2);
 
     // Update the value in the form.
     $("#calcuvalue").val(Math.round(case1Data.calcUVal * 100) / 100);
@@ -2509,22 +2513,30 @@ render.makeGraph = function () {
       .attr("y", height + margin.top - 10);
   }
 
-  function occupantPositionText(occdata, className, caseName) {
+  function occupantPositionText(occdata, className, caseName, param) {
 
     var text = "";
     var reason = "";
 
-    if (occdata.govfact == "dwn") {
+    if (param == "dwn") {
       reason = "downdraft discomfort";
     } else {
       reason = "radiant discomfort";
     }
 
+    if (param == "dwn") {
+      if (occdata.ppd <= ppdValue) {
+        text = "<img src='static/images/check.png' class='icon'><h1 class=" + className + ">" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1><div style='clear:both;'></div>";
+      } else {
+        text = "<img src='static/images/x.png' class='icon'><h1 class=" + className + ">" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1><div style='clear:both;'></div>";
+      }
+    } else if (param == "mrt") {
+      if (occdata.mrtppd <= ppdValue2) {
+        text = "<img src='static/images/check.png' class='icon'><h1 class=" + className + ">" + caseName +": " + Math.round(occdata.mrtppd*10)/10 + "% PPD from " + reason + ".</h1><div style='clear:both;'></div>";
+      } else {
+        text = "<img src='static/images/x.png' class='icon'><h1 class=" + className + ">" + caseName +": " + Math.round(occdata.mrtppd*10)/10 + "% PPD from " + reason + ".</h1><div style='clear:both;'></div>";
+      }
 
-    if (Math.round(occdata.ppd) <= ppdValue) {
-      text = "<img src='static/images/check.png' class='icon'><h1 class=" + className + ">" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1><div style='clear:both;'></div>";
-    } else {
-      text = "<img src='static/images/x.png' class='icon'><h1 class=" + className + ">" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1><div style='clear:both;'></div>";
     }
 
     return text;
@@ -2541,99 +2553,170 @@ render.makeGraph = function () {
       $("#thresholdTooltip2").empty();
     }
 
-    var case1Text = occupantPositionText(occPointData, "case1Text", "Case 1");
-    var case2Text = occupantPositionText(occPointData2, "case2Text", "Case 2");
-    var case3Text = occupantPositionText(occPointData3, "case3Text", "Case 3");
+    var case1Text = occupantPositionText(occPointData, "case1Text", "Case 1", param);
+    var case2Text = occupantPositionText(occPointData2, "case2Text", "Case 2", param);
+    var case3Text = occupantPositionText(occPointData3, "case3Text", "Case 3", param);
 
     //find min cy of visible occ points
     var compareOccupantArray = [];
-    compareOccupantArray.push(occPointData.ppd);
-    if ($("#caseSelection #case2Label").hasClass("unselected") == false ) {
-      compareOccupantArray.push(occPointData2.ppd);
-    }
-    if ($("#caseSelection #case3Label").hasClass("unselected") == false ) {
-      compareOccupantArray.push(occPointData3.ppd);
+    if (param == "dwn") {
+      compareOccupantArray.push(occPointData.ppd);
+      if ($("#caseSelection #case2Label").hasClass("unselected") == false ) {
+        compareOccupantArray.push(occPointData2.ppd);
+      }
+      if ($("#caseSelection #case3Label").hasClass("unselected") == false ) {
+        compareOccupantArray.push(occPointData3.ppd);
+      }
+    } else if (param == "mrt") {
+      compareOccupantArray.push(occPointData.mrtppd);
+      if ($("#caseSelection #case2Label").hasClass("unselected") == false ) {
+        compareOccupantArray.push(occPointData2.mrtppd);
+      }
+      if ($("#caseSelection #case3Label").hasClass("unselected") == false ) {
+        compareOccupantArray.push(occPointData3.mrtppd);
+      }
     }
 
     // put text in correct order
     var maxCase = d3.max(compareOccupantArray);
     var minCase = d3.min(compareOccupantArray);
 
-    // if only case 1 is shown
-    if ($("#caseSelection #case2Label").hasClass("unselected") == true  && $("#caseSelection #case3Label").hasClass("unselected") == true) {
-      totalText = case1Text;
-    }
-
-    // if only cases 1 and 2
-    if ($("#caseSelection #case2Label").hasClass("unselected") == false  && $("#caseSelection #case3Label").hasClass("unselected") == true) {
-      // determine if case 1 or case 2 is greater
-      if (maxCase == occPointData.ppd) {
-        totalText = case1Text + case2Text;
-      } else {
-        totalText = case2Text + case1Text;
-      }
-    }
-
-    // if only cases 1 and 3
-    if ($("#caseSelection #case2Label").hasClass("unselected") == true  && $("#caseSelection #case3Label").hasClass("unselected") == false) {
-      // determine if case 1 or case 3 is greater
-      if (maxCase == occPointData.ppd) {
-        totalText = case1Text + case3Text;
-      } else {
-        totalText = case3Text + case1Text;
-      }
-    }
-
-    // if cases 1, 2 and 3
-    if ($("#caseSelection #case2Label").hasClass("unselected") == false  && $("#caseSelection #case3Label").hasClass("unselected") == false) {
-      // if case 1 is greatest...
-      if (maxCase == occPointData.ppd) {
-        // case 1 is first
+    if (param == "dwn") {
+      // if only case 1 is shown
+      if ($("#caseSelection #case2Label").hasClass("unselected") == true  && $("#caseSelection #case3Label").hasClass("unselected") == true) {
         totalText = case1Text;
-        // find out what's next
-        if (occPointData2.ppd >= occPointData3.ppd) {
-          // case 2 is second
-          totalText = totalText + case2Text + case3Text;
+      }
+      // if only cases 1 and 2
+      if ($("#caseSelection #case2Label").hasClass("unselected") == false  && $("#caseSelection #case3Label").hasClass("unselected") == true) {
+        // determine if case 1 or case 2 is greater
+        if (maxCase == occPointData.ppd) {
+          totalText = case1Text + case2Text;
         } else {
-          // case 3 is second
-          totalText = totalText + case3Text + case2Text;
+          totalText = case2Text + case1Text;
         }
       }
-
-      // if case 2 is greatest...
-      else if (maxCase == occPointData2.ppd) {
-        // case 2 is first
-        totalText = case2Text;
-        // find out what's next
-        if (occPointData.ppd >= occPointData3.ppd) {
-          // case 1 is second
-          totalText = totalText + case1Text + case3Text;
+      // if only cases 1 and 3
+      if ($("#caseSelection #case2Label").hasClass("unselected") == true  && $("#caseSelection #case3Label").hasClass("unselected") == false) {
+        // determine if case 1 or case 3 is greater
+        if (maxCase == occPointData.ppd) {
+          totalText = case1Text + case3Text;
         } else {
-          // case 3 is second
-          totalText = totalText + case3Text + case1Text;
+          totalText = case3Text + case1Text;
         }
       }
-
-      // if case 3 is greatest...
-      else if (maxCase == occPointData3.ppd) {
-        // case 3 is first
-        totalText = case3Text;
-        // find out what's next
-        if (occPointData.ppd >= occPointData2.ppd) {
-          // case 1 is second
-          totalText = totalText + case1Text + case2Text;
-        } else {
-          // case 2 is second
-          totalText = totalText + case2Text + case1Text;
+      // if cases 1, 2 and 3
+      if ($("#caseSelection #case2Label").hasClass("unselected") == false  && $("#caseSelection #case3Label").hasClass("unselected") == false) {
+        // if case 1 is greatest...
+        if (maxCase == occPointData.ppd) {
+          // case 1 is first
+          totalText = case1Text;
+          // find out what's next
+          if (occPointData2.ppd >= occPointData3.ppd) {
+            // case 2 is second
+            totalText = totalText + case2Text + case3Text;
+          } else {
+            // case 3 is second
+            totalText = totalText + case3Text + case2Text;
+          }
+        }
+        // if case 2 is greatest...
+        else if (maxCase == occPointData2.ppd) {
+          // case 2 is first
+          totalText = case2Text;
+          // find out what's next
+          if (occPointData.ppd >= occPointData3.ppd) {
+            // case 1 is second
+            totalText = totalText + case1Text + case3Text;
+          } else {
+            // case 3 is second
+            totalText = totalText + case3Text + case1Text;
+          }
+        }
+        // if case 3 is greatest...
+        else if (maxCase == occPointData3.ppd) {
+          // case 3 is first
+          totalText = case3Text;
+          // find out what's next
+          if (occPointData.ppd >= occPointData2.ppd) {
+            // case 1 is second
+            totalText = totalText + case1Text + case2Text;
+          } else {
+            // case 2 is second
+            totalText = totalText + case2Text + case1Text;
+          }
         }
       }
-
+    } else if (param == "mrt") {
+      // if only case 1 is shown
+      if ($("#caseSelection #case2Label").hasClass("unselected") == true  && $("#caseSelection #case3Label").hasClass("unselected") == true) {
+        totalText = case1Text;
+      }
+      // if only cases 1 and 2
+      if ($("#caseSelection #case2Label").hasClass("unselected") == false  && $("#caseSelection #case3Label").hasClass("unselected") == true) {
+        // determine if case 1 or case 2 is greater
+        if (maxCase == occPointData.mrtppd) {
+          totalText = case1Text + case2Text;
+        } else {
+          totalText = case2Text + case1Text;
+        }
+      }
+      // if only cases 1 and 3
+      if ($("#caseSelection #case2Label").hasClass("unselected") == true  && $("#caseSelection #case3Label").hasClass("unselected") == false) {
+        // determine if case 1 or case 3 is greater
+        if (maxCase == occPointData.mrtppd) {
+          totalText = case1Text + case3Text;
+        } else {
+          totalText = case3Text + case1Text;
+        }
+      }
+      // if cases 1, 2 and 3
+      if ($("#caseSelection #case2Label").hasClass("unselected") == false  && $("#caseSelection #case3Label").hasClass("unselected") == false) {
+        // if case 1 is greatest...
+        if (maxCase == occPointData.mrtppd) {
+          // case 1 is first
+          totalText = case1Text;
+          // find out what's next
+          if (occPointData2.mrtppd >= occPointData3.mrtppd) {
+            // case 2 is second
+            totalText = totalText + case2Text + case3Text;
+          } else {
+            // case 3 is second
+            totalText = totalText + case3Text + case2Text;
+          }
+        }
+        // if case 2 is greatest...
+        else if (maxCase == occPointData2.mrtppd) {
+          // case 2 is first
+          totalText = case2Text;
+          // find out what's next
+          if (occPointData.mrtppd >= occPointData3.mrtppd) {
+            // case 1 is second
+            totalText = totalText + case1Text + case3Text;
+          } else {
+            // case 3 is second
+            totalText = totalText + case3Text + case1Text;
+          }
+        }
+        // if case 3 is greatest...
+        else if (maxCase == occPointData3.mrtppd) {
+          // case 3 is first
+          totalText = case3Text;
+          // find out what's next
+          if (occPointData.mrtppd >= occPointData2.mrtppd) {
+            // case 1 is second
+            totalText = totalText + case1Text + case2Text;
+          } else {
+            // case 2 is second
+            totalText = totalText + case2Text + case1Text;
+          }
+        }
+      }
     }
 
     if (param == "dwn"){
       $("#thresholdTooltip").append(totalText);
       var divHeight = $("div#thresholdTooltip").height() - 10; //10 = padding
-    } else {
+    } else if (param == "mrt") {
       $("#thresholdTooltip2").append(totalText);
       var divHeight = $("div#thresholdTooltip2").height() - 10; //10 = padding
     }
@@ -2675,10 +2758,16 @@ render.makeGraph = function () {
       yPadding = 10;
     }
 
+    if (param == "dwn") {
+      var ppdScaleFac = d3.max(compareOccupantArray) - 2
+    } else if (param == "mrt") {
+      var ppdScaleFac = d3.max(compareOccupantArray) + 4
+    }
+
     // set YPosition for tooltip
     if (d3.max(compareOccupantArray) < 26) {
       // all ppd values are less than 25
-      yPosition = y(d3.max(compareOccupantArray)) - divHeight + margin.top + yPadding;
+      yPosition = y(ppdScaleFac) - divHeight + margin.top + yPadding;
     } else if (d3.max(compareOccupantArray) > 26) {
       // at least one case is above 25
       yPosition = margin.top + yPadding + 12;

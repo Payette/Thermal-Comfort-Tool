@@ -457,7 +457,7 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 }
 
 #referenceLinks {
-	margin-top: 25px
+	margin-top: 50px
 }
 
 #occupantSliders {
@@ -872,12 +872,14 @@ input[type=checkbox] {
 	padding: 10px 0px 15px 0px;
 }
 
-div#units, div#share {
-	margin-right: 30px;
+div#units {
+	margin-right: 20px;
 	float: left;
 }
 
-
+div#share {
+	float: right;
+}
 
 #options h2 {
 	color: #000;
@@ -893,8 +895,8 @@ div#units, div#share {
 
 #options input[type=button].optionButton {
 	padding: 1px 2px;
-	height: 16px;
-	margin: 0 5px;
+	height: 20px;
+	margin: 0 3px;
 	border-radius: 10px;
 	border: 1px solid #777;
 	cursor: pointer;
@@ -915,8 +917,8 @@ div#units, div#share {
 
 
 
-#options input[type=button].optionButton#PDF,  #inputs input[type=button].optionButton#URL{
-	width: 75px;
+#options input[type=button].optionButton#PDF,  #inputs input[type=button].optionButton#URL,  #inputs input[type=button].optionButton#CSV{
+	width: 60px;
 }
 
 #options input[type=button].optionButton:hover {
@@ -959,7 +961,7 @@ div#URLpop textarea {
 }
 
 div#disclaimer {
-	padding: 20px;
+	padding: 10px;
 	background-color: #ffffff;
 }
 

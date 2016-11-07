@@ -478,7 +478,7 @@ comf.getMRTPPD = function(winViewFacs, opaqueViewFacs, winFilmCoeff, airTemp, ou
 		var opaView = opaqueViewFacs[i]
 		var ptValue = comf.calcFullMRTppd(winView, opaView, winFilmCoeff, airTemp, outdoorTemp, indoorSrfTemp, wallRVal, windowUVal, intLowE, lowEmissivity, clo, met, airSpeed, rh)
 		MRT.push(ptValue.mrt)
-		mrtPPD.push(round(ptValue.ppd*10)/10)
+		mrtPPD.push(ptValue.ppd)
 		mrtPMV.push(ptValue.pmv)
 		var windowTemp = ptValue.windowTemp
 	}
@@ -510,7 +510,7 @@ comf.getDowndraftPPD = function(distToFacade, mrtPMV, windowHgt, filmCoeff, airT
 
 /// ***FUNCTION THAT COMPUTE FINAL RESULTS THE INTERFACE.***
 // Constructs a dictionary of PPD and the limiting factors from a given set of interior conditions.
-comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, occDistToWallCenter, windowHgt, glzUVal, intLowE, lowEmissivity, wallRVal, indoorTemp, outTemp, radiantFloor, clo, met, airSpeed, rh){
+comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, occDistToWallCenter, windowHgt, glzUVal, intLowE, lowEmissivity, wallRVal, indoorTemp, outTemp, radiantFloor, clo, met, airSpeed, rh, ppdValue, ppdValue2){
   if (unitSys == "IP") {
   	var windowHgtSI = units.Ft2M(windowHgt)
   	var vel = units.fpm2mps(airSpeed)
@@ -593,7 +593,6 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, o
     var dwnPPDFac = 1
   }
 
-
 	// Get the Downdraft PPD results.
 	downDPPD = comf.getDowndraftPPD(facadeDistSI, mrtPMV, windowHgtSI, winFilmCoeff, airTemp, outdoorTemp, windowUVal, dwnPPDFac)
 
@@ -609,7 +608,13 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, o
 
     ptInfo.ppd = downDPPD[i];
     ptInfo.mrtppd = mrtPPD[i];
-		if (mrtPPD[i] > downDPPD[i]) {
+    if (mrtPPD[i] > ppdValue2 || downDPPD[i] > ppdValue) {
+      ptInfo.comf = "False"
+    } else {
+      ptInfo.comf = "True"
+    }
+
+    if (mrtPPD[i] > downDPPD[i]) {
 			ptInfo.govfact = "mrt";
 		} else {
 			ptInfo.govfact = "dwn";

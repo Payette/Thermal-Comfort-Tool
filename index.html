@@ -28,6 +28,7 @@
 	<script type="text/javascript" charset="utf-8" src="static/js/util.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/units.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/misc.js"></script>
+	<script type="text/javascript" charset="utf-8" src="static/js/createcsv.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/createurl.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/urlobject.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/shortenURL.js"></script>
@@ -103,9 +104,6 @@
 		}))
 
 	</script>
-
-
-
 
 </head>
 
@@ -238,9 +236,9 @@
 
 		<h1>Glazing and Winter Comfort Tool</h1>
 		<hr>
-		<p>This tool displays the impact of glazing geometry and U-value on occupant thermal comfort during winter months. It shows when it is possible to eliminate perimeter heat in cases where U-Value is low enough and windows are small enough.  It quantifies full-body discomfort from cold window surfaces as well as local discomfort from window downdraft.</p>
+		<p>This tool displays the impact of glazing geometry and U-value on occupant thermal comfort during winter months. It shows when it is possible to eliminate perimeter heat in cases where U-Value is low and windows are small.  It quantifies full-body discomfort from cold window surfaces as well as local discomfort from window downdraft.</p>
 
-		<p class="survey">Read the <a href="/images_research_projects/GlazingSelectionTool/GlazingAndComfortAnalysisToolTermsAndConditions.pdf" target="_blank">Terms &amp; Conditions</a>. Provide feedback or report bugs <a href="https://github.com/PayettePeople/Thermal-Comfort-Tool">here.</a></p>
+		<p class="survey">Read the <a href="/images_research_projects/GlazingSelectionTool/GlazingAndComfortAnalysisToolTermsAndConditions.pdf" target="_blank">Terms &amp; Conditions</a>. Provide feedback or report bugs <a href="https://github.com/PayettePeople/Thermal-Comfort-Tool/issues">here.</a></p>
 
 		<div id="options">
 			<div id="units">
@@ -251,7 +249,8 @@
 			</div>
 			<div id="share">
 				<h2>Share</h2>
-				<input type="button" name="PDF" id="PDF" value="Save as PDF" class="optionButton unselected">
+				<input type="button" name="PDF" id="PDF" value="Save PDF" class="optionButton unselected">
+				<input type="button" name="CSV" id="CSV" value="Save CSV" class="optionButton unselected">
 				<input type="button" name="URL" id="URL" value="Copy URL" class="optionButton unselected">
 				<div style="clear:both;"></div>
 			</div>
@@ -329,9 +328,9 @@
 			<div class="inputWrapperRight"><input type="text" name="uvalue3" id="uvalue3" value="0.35" step="0.01" class="case3 unselected"></div><br>
 
 			<label class="grey" id="calcUValQuestion">What U-Value meets the target PPD?<sup id="fnref:9" class="uValAlert"><a href="#fn:9" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="calcuvalue" id="calcuvalue" value="0.65" class="inactive case1"  disabled></div>
-			<div class="inputWrapperCenter"><input type="text" name="calcuvalue2" id="calcuvalue2" value="0.65" class="inactive case2 unselected"  disabled></div>
-			<div class="inputWrapperRight"><input type="text" name="calcuvalue3" id="calcuvalue3" value="0.65" class="inactive case3 unselected"  disabled></div><br>
+			<div class="inputWrapperLeft"><input type="text" name="calcuvalue" id="calcuvalue" value="0.62" class="inactive case1"  disabled></div>
+			<div class="inputWrapperCenter"><input type="text" name="calcuvalue2" id="calcuvalue2" value="0.62" class="inactive case2 unselected"  disabled></div>
+			<div class="inputWrapperRight"><input type="text" name="calcuvalue3" id="calcuvalue3" value="0.62" class="inactive case3 unselected"  disabled></div><br>
 
 			<label class="grey" id="condRisk">Is there a risk of condensation?<sup id="fnref:10"><a href="#fn:10" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="condRisk1" id="condRisk1" value="NO" class="inactive case1"  disabled></div>
@@ -396,7 +395,7 @@
 				<div class="inputWrapperRight"><hr class="case3 unselected"></div><br>
 
 				<label for="clothing">Clothing (clo)<sup id="fnref:18"><a href="#fn:18" rel="footnote">?</a></sup></label>
-				<div class="inputWrapperLeft"><input type="text" name="clothing" id="clothing" value="0.85" step="0.1" class="case1"></div>
+				<div class="inputWrapperLeft"><input type="text" name="clothing" id="clothing" value="0.8" step="0.1" class="case1"></div>
 				<div class="inputWrapperCenter"><hr class="case2 unselected"></div>
 				<div class="inputWrapperRight"><hr class="case3 unselected"></div><br>
 

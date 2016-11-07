@@ -70,7 +70,7 @@ uVal.uValDownD = function(PPDAccept, distToFacade, windowHgt, filmCoeff, airTemp
 
 
 // FUNCTION THAT RETURNS THE LOWEST U-VALUE GIVEN COMFORT CRITERIA
-uVal.uValFinal = function(opaqueViewFac, winViewFac, distToFacade, dwnPPDFac, windowHgt, indoorTemp, outTemp, wallRVal, intLowE, lowEmissivity, airSpeed, relHumid, metRate, cloLevel, targetPPD){
+uVal.uValFinal = function(opaqueViewFac, winViewFac, distToFacade, dwnPPDFac, windowHgt, indoorTemp, outTemp, wallRVal, intLowE, lowEmissivity, airSpeed, relHumid, metRate, cloLevel, targetPPD, targetPPD2){
 	// Convert values to SI if we have to
 	if (unitSys == "IP") {
   	var windowHgtSI = units.Ft2M(windowHgt);
@@ -95,10 +95,10 @@ uVal.uValFinal = function(opaqueViewFac, winViewFac, distToFacade, dwnPPDFac, wi
 	} else {
 		var filmCoeff = 8.29
 	}
-	
+
 	//Compute the required U-Value for PMV model.
-	var uValMRT = uVal.uValMRT(opaqueViewFac, winViewFac, airTemp, outdoorTemp, opaqueRVal, filmCoeff, intLowE, lowEmissivity, vel, parseFloat(relHumid), parseFloat(metRate), parseFloat(cloLevel), parseFloat(targetPPD))
-	
+	var uValMRT = uVal.uValMRT(opaqueViewFac, winViewFac, airTemp, outdoorTemp, opaqueRVal, filmCoeff, intLowE, lowEmissivity, vel, parseFloat(relHumid), parseFloat(metRate), parseFloat(cloLevel), parseFloat(targetPPD2))
+
 	if (dwnPPDFac > 0) {
 		var uValDownD = uVal.uValDownD(targetPPD, facadeDist, windowHgtSI, filmCoeff, airTemp, outdoorTemp, dwnPPDFac, opaqueViewFac, winViewFac, opaqueRVal, intLowE, lowEmissivity, vel, parseFloat(relHumid), parseFloat(metRate), parseFloat(cloLevel))
 	} else {
