@@ -56,7 +56,8 @@ render.makeGraph = function () {
 
   // Define axes
   var xAxis = d3.svg.axis().scale(x).orient("bottom");
-  var yAxis = d3.svg.axis().scale(y).orient("left");
+  var yAxis1 = d3.svg.axis().scale(y).orient("left");
+  var yAxis2 = d3.svg.axis().scale(y).orient("left");
 
   /* ------------------ MAKE THE GRAPHS ------------------ */
   // Add SVG
@@ -75,8 +76,8 @@ render.makeGraph = function () {
   // Draw PPD threshold so that it's behind the data and axes
   var ppdLine = drawPPDThreshold(graphSvg, ppdValue, "dwn");
   var ppdLine2 = drawPPDThreshold(graphSvg2, ppdValue2, "mrt");
-  drawGraph(graphSvg, "% People Dissatisfied - Ankle Draft", true);
-  drawGraph(graphSvg2, "% People Dissatisfied - Radiant Loss", true);
+  drawGraph(graphSvg, "% People Dissatisfied - Ankle Draft", "dwn");
+  drawGraph(graphSvg2, "% People Dissatisfied - Radiant Loss", "mrt");
 
   /* ------ PLOT THE DATA ------ */
   //draw occupant position line so that it's behind the points
@@ -104,99 +105,141 @@ render.makeGraph = function () {
   // add text at occupanct location
   thresholdDataText("dwn");
   thresholdDataText("mrt");
+  setHover(graphSvg, "dwn")
+  setHover(graphSvg2, "mrt")
 
   // add text for printing
   addPayetteText();
 
 
+  function setHover (mySVG, param) {
+    // Show text on hover over dot
+    var points = mySVG.selectAll(".dotCase1, .dotCase2, .dotCase3");
+    points.on("mouseover", function(d) {
 
-  // Show text on hover over dot
-  var points = d3.selectAll(".dotCase1, .dotCase2, .dotCase3");
-  points.on("mouseover", function(d) {
+      var hoverText = "";
+      var thisIcon = "";
 
-    var hoverText = "";
-    var discomfortReason = "";
-    var thisIcon = "";
-
-    $("#tooltip").empty();
-
-    // discomfort reason
-    if (d.govfact == "mrt") {
-      discomfortReason = "radiant discomfort";
-    } else if (d.govfact == "dwn") {
-      discomfortReason = "downdraft discomfort";
-    }
-
-    // ppd icon
-    if (d.ppd <= ppdValue) {
-      thisIcon = "<img src='static/images/check.png' class='icon'>";
-    } else {
-      thisIcon = "<img src='static/images/x.png' class='icon'>";
-    }
-
-
-    if (d3.select(this).attr("class") == "dotCase1") {
-      hoverText = thisIcon + "<h1 class='case1Text'>Case 1: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason + "</h1><div style='clear:both;'></div>";
-
-    } else if (d3.select(this).attr("class") == "dotCase2") {
-      hoverText = thisIcon + "<h1 class='case2Text'>Case 2: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason + "</h1><div style='clear:both;'></div>";
-
-    } else if (d3.select(this).attr("class") == "dotCase3") {
-      hoverText = thisIcon + "<h1 class='case3Text'>Case 3: " + Math.round(d.ppd*10)/10 + "% PPD from " + discomfortReason + "</h1><div style='clear:both;'></div>";
-    }
-
-    $("#tooltip").append(hoverText);
-
-    //Get this dots x/y values, then augment for the tooltip
-    var thisHeight = $("#tooltip").height();
-    var xPosition;
-    var yPosition;
-
-
-    // set XPosition for tooltip
-    // change width of tooltip so it doesn't stretch outside wrapper
-    if (x(d.dist) > 190 ) {
-      $("div#tooltip").css("width","150px");
-      $("div#tooltip h1").css("width","135px");
-      yPosition = y(d.ppd) - thisHeight + margin.top + 30;
-
-      // prevent the tooltip from going outside the graph wrapper
-      if (x(d.dist) > 300) {
-        // keep fixed at right edge
-        xPosition = maxContainerWidth - margin.right - $("div#tooltip").width();
+      if (param == "dwn") {
+        $("#tooltip").empty();
       } else {
-        // position relative to data point
+        $("#tooltip2").empty();
+      }
+
+      // ppd icon
+      if (param == "dwn") {
+        if (d.ppd <= ppdValue) {
+          thisIcon = "<img src='static/images/check.png' class='icon'>";
+        } else {
+          thisIcon = "<img src='static/images/x.png' class='icon'>";
+        }
+      } else {
+        if (d.mrtppd <= ppdValue2) {
+          thisIcon = "<img src='static/images/check.png' class='icon'>";
+        } else {
+          thisIcon = "<img src='static/images/x.png' class='icon'>";
+        }
+      }
+
+      if (param == "dwn") {
+        if (d3.select(this).attr("class") == "dotCase1") {
+          hoverText = thisIcon + "<h1 class='case1Text'>Case 1: " + Math.round(d.ppd*10)/10 + "% PPD." + "</h1><div style='clear:both;'></div>";
+        } else if (d3.select(this).attr("class") == "dotCase2") {
+          hoverText = thisIcon + "<h1 class='case2Text'>Case 2: " + Math.round(d.ppd*10)/10 + "% PPD." + "</h1><div style='clear:both;'></div>";
+        } else if (d3.select(this).attr("class") == "dotCase3") {
+          hoverText = thisIcon + "<h1 class='case3Text'>Case 3: " + Math.round(d.ppd*10)/10 + "% PPD." + "</h1><div style='clear:both;'></div>";
+        }
+      } else {
+        if (d3.select(this).attr("class") == "dotCase1") {
+          hoverText = thisIcon + "<h1 class='case1Text'>Case 1: " + Math.round(d.mrtppd*10)/10 + "% PPD." + "</h1><div style='clear:both;'></div>";
+        } else if (d3.select(this).attr("class") == "dotCase2") {
+          hoverText = thisIcon + "<h1 class='case2Text'>Case 2: " + Math.round(d.mrtppd*10)/10 + "% PPD." + "</h1><div style='clear:both;'></div>";
+        } else if (d3.select(this).attr("class") == "dotCase3") {
+          hoverText = thisIcon + "<h1 class='case3Text'>Case 3: " + Math.round(d.mrtppd*10)/10 + "% PPD." + "</h1><div style='clear:both;'></div>";
+        }
+      }
+
+      if (param == "dwn") {
+        $("#tooltip").append(hoverText);
+      } else {
+        $("#tooltip2").append(hoverText);
+      }
+
+      //Get this dots x/y values, then augment for the tooltip
+      var thisHeight = $("#tooltip").height();
+      var xPosition;
+      var yPosition;
+
+      // set XPosition for tooltip
+      // change width of tooltip so it doesn't stretch outside wrapper
+      if (x(d.dist) > 190 ) {
+        if (param == "dwn") {
+          $("div#tooltip").css("width","150px");
+          $("div#tooltip h1").css("width","135px");
+        } else {
+          $("div#tooltip2").css("width","150px");
+          $("div#tooltip2 h1").css("width","135px");
+        }
+        yPosition = y(d.ppd) - thisHeight + margin.top + 30;
+
+        // prevent the tooltip from going outside the graph wrapper
+        if (x(d.dist) > 300) {
+          // keep fixed at right edge
+          xPosition = maxContainerWidth - margin.right - $("div#tooltip").width();
+        } else {
+          // position relative to data point
+          xPosition = x(d.dist) + margin.left + 8;
+        }
+
+      } else {
+        // full width tooltip
+        if (param == "dwn") {
+          $("div#tooltip").css("width","290px");
+          $("div#tooltip h1").css("width","auto");
+          yPosition = y(d.ppd) - thisHeight + margin.top + 20;
+        } else {
+          $("div#tooltip2").css("width","290px");
+          $("div#tooltip2 h1").css("width","auto");
+          yPosition = y(d.mrtppd) - thisHeight + margin.top + 20;
+        }
         xPosition = x(d.dist) + margin.left + 8;
       }
 
-    } else {
-      // full width tooltip
-      $("div#tooltip").css("width","290px");
-      $("div#tooltip h1").css("width","auto");
-      xPosition = x(d.dist) + margin.left + 8;
-      yPosition = y(d.ppd) - thisHeight + margin.top + 20;
-    }
+      if (param == "dwn") {
+        d3.select("#tooltip")
+        .style("left", xPosition + "px")
+        .style("top", yPosition + "px");
+      } else {
+        d3.select("#tooltip2")
+        .style("left", xPosition + "px")
+        .style("top", yPosition + "px");
+      }
 
+      if (param == "dwn") {
+        //Show the tooltip
+        $("#tooltip").fadeIn(300);
+        //Hide default text
+        $("#thresholdTooltip").fadeOut(300);
+      } else {
+        //Show the tooltip
+        $("#tooltip2").fadeIn(300);
+        //Hide default text
+        $("#thresholdTooltip2").fadeOut(300);
+      }
 
+      })
+       .on("mouseout", function() {
+         //Hide the tooltip
+         if (param == "dwn") {
+           $("#tooltip").fadeOut(300);
+           setTimeout(checkTooltip, 1000);
+         } else {
+           $("#tooltip2").fadeOut(300);
+           setTimeout(checkTooltip2, 1000);
+         }
 
-    d3.select("#tooltip")
-    .style("left", xPosition + "px")
-    .style("top", yPosition + "px");
-
-
-    //Show the tooltip
-    $("#tooltip").fadeIn(300);
-    //Hide default text
-    $("#thresholdTooltip").fadeOut(300);
-
-    })
-     .on("mouseout", function() {
-       //Hide the tooltip
-       $("#tooltip").fadeOut(300);
-       //wait 1sec, then check if 'new' tooltip is present
-       setTimeout(checkTooltip, 1000);
-     })
-
+       })
+  }
 
   function checkTooltip() {
     // if hover tooltip is no longer visible
@@ -206,14 +249,16 @@ render.makeGraph = function () {
     }
   }
 
+  function checkTooltip2() {
+    // if hover tooltip is no longer visible
+    if ($("#tooltip2").css("display") == "none") {
+      //Show default text
+      $("#thresholdTooltip2").fadeIn(300);
+    }
+  }
+
   // check for condensation
   checkCondensation(allData.condensation, allData2.condensation, allData3.condensation);
-
-
-
-
-
-
 
 
 
@@ -704,9 +749,12 @@ render.makeGraph = function () {
 
       graphSvg.select("#graphXAxis")
         .call(xAxis.ticks(6).tickValues([2, 4, 6, 8, 10, 12]));
-
-        graphSvg.select("#XAxisLabel")
-        .text("Occupant Distance from Façade (ft)");
+      graphSvg.select("#XAxisLabel")
+      .text("Occupant Distance from Façade (ft)");
+      graphSvg2.select("#graphXAxis")
+        .call(xAxis.ticks(6).tickValues([2, 4, 6, 8, 10, 12]));
+      graphSvg2.select("#XAxisLabel")
+      .text("Occupant Distance from Façade ft");
 
       updateData(case1Data);
       updateData(case2Data);
@@ -832,10 +880,12 @@ render.makeGraph = function () {
 
       graphSvg.select("#graphXAxis")
         .call(xAxis.ticks(8).tickValues([0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4]));
-
-        graphSvg.select("#XAxisLabel")
-        .text("Occupant Distance from Façade (m)");
-
+      graphSvg.select("#XAxisLabel")
+      .text("Occupant Distance from Façade (m)");
+      graphSvg2.select("#graphXAxis")
+        .call(xAxis.ticks(8).tickValues([0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4]));
+      graphSvg2.select("#XAxisLabel")
+      .text("Occupant Distance from Façade (m)");
 
       updateData(case1Data);
       updateData(case2Data);
@@ -864,7 +914,7 @@ render.makeGraph = function () {
 
   // CSV Download
   $(".optionButton#CSV").click(function(event) {
-    csvContent = createCSV(dataset, dataset2, dataset3, unitSys)
+    csvContent = createCSV(dataset, dataset2, dataset3, occPointData, occPointData2, occPointData3, case1Data, case2Data, case3Data, unitSys)
     var encodedUri = encodeURI(csvContent);
     window.open(encodedUri);
   })
@@ -2037,9 +2087,6 @@ render.makeGraph = function () {
 
 
 
-
-
-
   /* ------ FUNCTIONS TO UPDATE DATA ------ */
   // Called after adjusting values based on change events
   function updateData(object) {
@@ -2098,6 +2145,7 @@ render.makeGraph = function () {
       updateOccupantPoint(graphSvg2, [occPointData], "occdot1", color1, "mrt");
       updateConnectedLine(newDataset, ".connectLine");
       updateOccupantDistanceRefLine();
+      dataset = newDataset
     }
 
     else if (object == case2Data) {
@@ -2123,6 +2171,7 @@ render.makeGraph = function () {
       updateOccupantPoint(graphSvg2, [occPointData2], "occdot2", color2, "mrt");
       updateConnectedLine(newDataset, ".connectLine2");
       updateOccupantDistanceRefLine();
+      dataset2 = newDataset
     }
 
     else if (object == case3Data) {
@@ -2148,6 +2197,7 @@ render.makeGraph = function () {
       updateOccupantPoint(graphSvg2, [occPointData3], "occdot3", color3, "mrt");
       updateConnectedLine(newDataset, ".connectLine3");
       updateOccupantDistanceRefLine();
+      dataset3 = newDataset
     }
 
     autocalcUValues();
@@ -2785,7 +2835,7 @@ render.makeGraph = function () {
   }
 
 
-  function drawGraph(thesvg, yAxisTitle, drawXLabel) {
+  function drawGraph(thesvg, yAxisTitle, param) {
     // add axes
     thesvg.append("g")
       .attr("class", "axis")
@@ -2800,39 +2850,53 @@ render.makeGraph = function () {
         .call(xAxis.ticks(7).tickValues([0.5, 1, 1.5, 2, 2.5, 3, 3.5]));
       }
 
-    thesvg.append("g")
-        .attr("class", "axis")
-        .attr("id", "graphYAxis")
-        .attr("transform", "translate(" + (margin.left) + "," + margin.top + ")")
-        .call(yAxis.ticks(4));
-
-    // add horizontal grid
-    thesvg.append("g")
-          .attr("class", "grid")
+    if (param == "dwn") {
+      thesvg.append("g")
+          .attr("class", "axis")
+          .attr("id", "graphYAxis")
           .attr("transform", "translate(" + (margin.left) + "," + margin.top + ")")
-          .call(yAxis
-              .tickSize(-width, 0, 0)
-              .tickFormat("")
-              .ticks(7)
-          );
-
-      // add axes labels
-       thesvg.append("text")
-        .attr("class", "axislabel")
-        .attr("id", "XAxisLabel")
-        .attr("text-anchor", "middle")
-        .attr("x", width/2 + margin.left)
-        .attr("y", height + margin.top + margin.bottom - 5);
-
-    if (drawXLabel == true) {
-      if (unitSys == "IP") {
-        thesvg.select("#XAxisLabel")
-          .text("Occupant Distance from Façade (ft)");
-        } else if (unitSys == "SI") {
-        thesvg.select("#XAxisLabel")
-          .text("Occupant Distance from Façade (m)");
-        }
+          .call(yAxis1.ticks(4));
+      // add horizontal grid
+      thesvg.append("g")
+            .attr("class", "grid")
+            .attr("transform", "translate(" + (margin.left) + "," + margin.top + ")")
+            .call(yAxis1
+                .tickSize(-width, 0, 0)
+                .tickFormat("")
+                .ticks(7)
+            );
+    } else {
+      thesvg.append("g")
+          .attr("class", "axis")
+          .attr("id", "graphYAxis")
+          .attr("transform", "translate(" + (margin.left) + "," + margin.top + ")")
+          .call(yAxis2.ticks(4));
+      // add horizontal grid
+      thesvg.append("g")
+            .attr("class", "grid")
+            .attr("transform", "translate(" + (margin.left) + "," + margin.top + ")")
+            .call(yAxis2
+                .tickSize(-width, 0, 0)
+                .tickFormat("")
+                .ticks(7)
+            );
     }
+
+    // add axes labels
+     thesvg.append("text")
+      .attr("class", "axislabel")
+      .attr("id", "XAxisLabel")
+      .attr("text-anchor", "middle")
+      .attr("x", width/2 + margin.left)
+      .attr("y", height + margin.top + margin.bottom - 5);
+
+    if (unitSys == "IP") {
+      thesvg.select("#XAxisLabel")
+        .text("Occupant Distance from Façade (ft)");
+      } else if (unitSys == "SI") {
+      thesvg.select("#XAxisLabel")
+        .text("Occupant Distance from Façade (m)");
+      }
 
     thesvg.append("g")
     .attr("transform", "translate(25," + (height/2 + margin.top) + ")")

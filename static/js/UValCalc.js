@@ -46,7 +46,7 @@ uVal.uValDownD = function(PPDAccept, distToFacade, windowHgt, filmCoeff, airTemp
 	function uvalclos(target) {
 		return function(uValGuess) {
 			var startPMV = comf.calcFullMRTppd(winViewFac, opaqueViewFac, filmCoeff, airTemp, outdoorTemp, airTemp, opaqueRVal, uValGuess, intLowE, lowEmissivity, cloLevel, metRate, vel, relHumid).pmv;
-			return comf.calcFulldonwDppd(distToFacade, startPMV, windowHgt, filmCoeff, airTemp, outdoorTemp, uValGuess, dwnPPDFac) - target
+			return comf.calcFulldonwDppd(distToFacade, startPMV, windowHgt, filmCoeff, airTemp, outdoorTemp, uValGuess, dwnPPDFac).ppd - target
 		}
 	}
 	function solve(target) {
