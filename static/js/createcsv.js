@@ -1,5 +1,5 @@
 
-function createCSV(dataset, dataset2, dataset3, occPointData, occPointData2, occPointData3, case1Inputs, case2Inputs, case3Inputs, unitSys) {
+function createCSV(dataset, dataset2, dataset3, occPointData, occPointData2, occPointData3, case1Inputs, case2Inputs, case3Inputs, globInputs, unitSys) {
   // Add the data to a javascript matrix
   var initdata = [[],[],[],[],[],[],[],[],[]];
   appendDataset(initdata, dataset, "Case 1 Line Graph Results", unitSys)
@@ -15,6 +15,7 @@ function createCSV(dataset, dataset2, dataset3, occPointData, occPointData2, occ
     appendDataset(initdata, [occPointData3], "Case 3 Occupant Results", unitSys)
     appendInputs(initdata, case3Inputs, "Case 3 Inputs", unitSys)
   }
+  appendGlobInputs(initdata, globInputs, unitSys)
 
 
   // Transpose the matrix
@@ -37,6 +38,51 @@ function addBlankToMtx (matrix, start, count) {
   for (var i = 0; i < count; i++) {
     matrix[start+i].push("")
   }
+}
+
+function appendGlobInputs(matrix, data, unitSys) {
+  matrix[0].push("Global Inputs")
+  addBlankToMtx(matrix, 1, 8)
+
+  if (unitSys == "IP") {
+    matrix[0].push("Occupant Distance from Facade (ft)")
+  } else {
+    matrix[0].push("Occupant Distance from Facade (m)")
+  }
+  matrix[1].push(data[0])
+  addBlankToMtx(matrix, 2, 7)
+
+  matrix[0].push("Acceptable PPD from Downdraft (%)")
+  matrix[1].push(data[1])
+  addBlankToMtx(matrix, 2, 7)
+
+  matrix[0].push("Acceptable PPD from Radiant Loss (%)")
+  matrix[1].push(data[2])
+  addBlankToMtx(matrix, 2, 7)
+
+  if (unitSys == "IP") {
+    matrix[0].push("Wall R-Value (hr*ft2*F/Btu)")
+  } else {
+    matrix[0].push("Wall R-Value (m²*K/W)")
+  }
+  matrix[1].push(data[3])
+  addBlankToMtx(matrix, 2, 7)
+
+  if (unitSys == "IP") {
+    matrix[0].push("Air Speed (fpm)")
+  } else {
+    matrix[0].push("Air Speed (m/s)")
+  }
+  matrix[1].push(data[4])
+  addBlankToMtx(matrix, 2, 7)
+
+  matrix[0].push("Clothing Insulation (clo)")
+  matrix[1].push(data[5])
+  addBlankToMtx(matrix, 2, 7)
+
+  matrix[0].push("Metabolic Rate (met)")
+  matrix[1].push(data[6])
+  addBlankToMtx(matrix, 2, 7)
 }
 
 function appendDataset(matrix, data, caseName, unitSys) {
@@ -141,7 +187,7 @@ function appendInputs(matrix, data, caseName, unitSys) {
   addBlankToMtx(matrix, 2, 7)
 
   if (unitSys == "IP") {
-    matrix[0].push("Window U-Value (Btu/hr*ft²*°F)")
+    matrix[0].push("Window U-Value (Btu/hr*ft2*F)")
   } else {
     matrix[0].push("Window U-Value (W/m²*K)")
   }
@@ -149,7 +195,7 @@ function appendInputs(matrix, data, caseName, unitSys) {
   addBlankToMtx(matrix, 2, 7)
 
   if (unitSys == "IP") {
-    matrix[0].push("Target U-Value (Btu/hr*ft²*°F)")
+    matrix[0].push("Target U-Value (Btu/hr*ft2*F)")
   } else {
     matrix[0].push("Target U-Value (W/m²*K)")
   }
@@ -180,7 +226,7 @@ function appendInputs(matrix, data, caseName, unitSys) {
   matrix[1].push(data.airtempValue)
   addBlankToMtx(matrix, 2, 7)
 
-  matrix[0].push("Indoor Humidity")
+  matrix[0].push("Indoor Humidity (%)")
   matrix[1].push(data.humidityValue)
   addBlankToMtx(matrix, 2, 7)
 

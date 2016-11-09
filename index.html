@@ -171,10 +171,10 @@
 
 		<div id="graphWrapper">
 			<div id="key">
-				<ul>
+				<!--<ul>
 					<li><img class="discomfortIcon" src="static/images/triangle-grey.png">Downdraft Discomfort</li>
 					<li><img class="discomfortIcon" src="static/images/circle-grey.png">Radiant Discomfort</li>
-				</ul>
+				</ul>-->
 			</div>
  			<div id="tooltip" class="hidden"></div>
 			<div id="thresholdTooltip"></div>
@@ -413,90 +413,10 @@
 
 	</div>
 
-	<div class="footnotes">
-	<ol>
-		<li class="footnote" id="fn:1"> <!-- ceiling height -->
-	        <p><img src="static/images/dims-ceiling.png"><a href="#fnref:1" title="return to article"> ↩</a></p>
-	    </li>
-
-	    <li class="footnote" id="fn:2"> <!-- room length -->
-	        <p><img src="static/images/dims-length.png"><a href="#fnref:2" title="return to article"> ↩</a></p>
-	    </li>
-
-	    <li class="footnote" id="fn:3"> <!-- window height from sill -->
-	    	<p><img src="static/images/dims-height.png"><a href="#fnref:3" title="return to article"> ↩</a></p>
-	    </li>
-
-	    <li class="footnote" id="fn:4"> <!-- sill height -->
-			<p><img src="static/images/dims-sill.png"><a href="#fnref:4" title="return to article"> ↩</a></p>
-	    </li>
-
-	    <li class="footnote" id="fn:5"> <!-- window width -->
-	        <p><img src="static/images/dims-width.png"><a href="#fnref:5" title="return to article"> ↩</a></p>
-	    </li>
-
-	    <li class="footnote" id="fn:6"> <!-- window-to-wall ratio -->
-	    	<p><img src="static/images/dims-ratio.png"><a href="#fnref:6" title="return to article"> ↩</a></p>
-	    </li>
-
-	    <li class="footnote" id="fn:7"> <!-- window separation -->
-	        <p><img src="static/images/dims-sep.png"><a href="#fnref:7" title="return to article"> ↩</a></p>
-	    </li>
-
-	    <li class="footnote" id="fn:8"> <!-- u value -->
-	        <p>Measure of the window’s thermal performance. If the window panes are large (small impact of the frame) use the center of glass U-value. With assemblies where frame elements are prominent, it is recommended to use the assembly U-value. If using a room-side low-e coating, it can be selected under advanced options.<a href="#fnref:8" title="return to article"> ↩</a></p>
-	    </li>
-
-	    <li class="footnote" id="fn:9"> <!-- calculate u value -->
-	        <p>U-value required to meet the PPD threshold at the specified occupant distance from fa&ccedil;ade.<a href="#fnref:9" title="return to article"> ↩</a></p>
-	    </li>
-
-	    <li class="footnote" id="fn:10"> <!-- conden risk -->
-	        <p>If there is a risk of condensation, the interior window surface temperature is within 5°F of the space’s dew point temperature. This happens when the indoor relative humidity is high and the outdoor temperature is low.<a href="#fnref:10" title="return to article"> ↩</a></p>
-	    </li>
-
-	    <li class="footnote" id="fn:11"> <!-- outdoor temp -->
-	        <p>Coldest expected outdoor temperature under which occupant thermal comfort is being evaluated. This varies with the climate of the project and the time of day that the space is expected to be occupied.<a href="#fnref:11" title="return to article"> ↩</a></p>
-	    </li>
-	    <li class="footnote" id="fn:12"> <!-- indoor ambient temp -->
-	        <p>Temperature of the indoor air. For radiant discomfort calculations it is assumed that this also represents the temperature of the indoor surfaces. Low indoor air temperatures may lead to occupant discomfort regardless of the glazing configuration.<a href="#fnref:12" title="return to article"> ↩</a></p>
-	    </li>
-	    <li class="footnote" id="fn:13"> <!-- relative humidity -->
-	        <p>Relative humidity indoors. This factors into to the thermal comfort calculations as well as the potential for condensation. During winter, this is usually around 20% unless the space is humidified.<a href="#fnref:13" title="return to article"> ↩</a></p>
-	    </li>
-	    <li class="footnote" id="fn:14"> <!-- room side low e -->
-	        <p>Select if the U-value entered is achieved by adding a low-e coating on the interior side of the window. Room-side low-e coatings increase the thermal performance of a window, and reduce the potential for radiant discomfort. However, they also increase the potential for downdraft discomfort and condensation.<a href="#fnref:14" title="return to article"> ↩</a></p>
-	     </li>
-	     <li class="footnote" id="fn:15"><!-- emissivity -->
-	        <p>Emissivity of the low-e coating located on the room-side surface of the inner-most pane of glass. This is obtained from the manufacturer. If unknown assume 0.2.<a href="#fnref:15" title="return to article"> ↩</a></p>
-	    </li>
-	    <li class="footnote" id="fn:16"><!-- r value -->
-	        <p>R-Value of the wall assembly, including thermal bridges.<a href="#fnref:16" title="return to article"> ↩</a></p>
-	    </li>
-	    <li class="footnote" id="fn:17"> <!-- air speed -->
-	        <p>Average indoor air speed induced by the mechanical system. Typically ranges from 10-30 fpm.<a href="#fnref:17" title="return to article"> ↩</a></p>
-	    </li>
-	    <li class="footnote" id="fn:18"> <!-- clothing -->
-	        <p>Insulating value of clothing.<i><br>0.6 clo = trousers/knee-length skirt + long sleeved shirt<br>0.8 clo = trousers/knee-length skirt + undershirt + long sleeved shirt<br>1 clo = trousers/knee-length skirt + undershirt + long sleeved shirt + long sleeve sweater</i><a href="#fnref:18" title="return to article"> ↩</a></p>
-	    </li>
-	    <li class="footnote" id="fn:19"> <!-- metabolic rate -->
-	        <p>Metabolic rate of the occupants. 1 met = seated resting. 1.2 met = typing or standing.<a href="#fnref:19" title="return to article"> ↩</a></p>
-	    </li>
-  		<li class="footnote" id="fn:20"> <!-- distance from facade -->
-  	        <p>Expected location of the occupant perpendicular to the fa&ccedil;ade.<a href="#fnref:20" title="return to article"> ↩</a></p>
-  	    </li>
-	    <li class="footnote" id="fn:21"> <!-- ppd -->
-	        <p>Percentage of People Dissatisfied (PPD) is a common metric used to define occupants’ satisfaction with their environment. This particular variable sets the acceptable percent of the polulation experiencing cold feet from downdraft off windows.  The standard set by ASHRAE for ankle draft discomfort in regularly-occupied spaces is 20% of the population.<a href="#fnref:21" title="return to article"> ↩</a></p>
-	    </li>
-      <li class="footnote" id="fn:22"> <!-- ppd -->
-	        <p>This variable sets the acceptable percent of the polulation experiencing full-body sensations of cold as a result of proximity to cool window surfaces. The standard set by ASHRAE for full-body discomfort in regularly-occupied spaces is 10% of the poolulation.  Note that it is not possible to get a full-body PPD lower than 5%.<a href="#fnref:22" title="return to article"> ↩</a></p>
-	    </li>
-	</ol>
-	</div>
-
-
-  <div id="referenceLinks">
-
+	<div id="referenceLinks">
+	<h1 class="expandRef"><span class="expand" id="ref"></span>Related Links</h1>
+	<hr>
+  <div class="refcontent">
   <!-- refernces copied from main Payette site -->
   <legend class="heading">REFERENCES</legend>
   <ul class="grey">
@@ -521,11 +441,91 @@
            <li><span class="post-date">10.18.16</span> <a href="http://www.payette.com/post/3386383-payette-receives-aia-tap-innovation-award">Payette Receives AIA TAP Innovation Award! </a></li>
            <li><span class="post-date">10.12.16</span> <a href="http://www.payette.com/post/3380251-hpb-magazine-features-our-thermal-comfort">HPB Magazine Features our Thermal Comfort Tool  </a></li>
            <li><span class="post-date">09.16.16</span> <a href="http://www.payette.com/post/3345676-announcing-the-new-glazing-and-winter">Announcing the New Glazing and Winter Comfort Tool</a></li>
-
       </ul>
-
   </div>
+	</div>
 
+
+	<div class="footnotes">
+	<ol>
+		<li class="footnote" id="fn:1"> <!-- ceiling height -->
+					<p><img src="static/images/dims-ceiling.png"><a href="#fnref:1" title="return to article"> ↩</a></p>
+			</li>
+
+			<li class="footnote" id="fn:2"> <!-- room length -->
+					<p><img src="static/images/dims-length.png"><a href="#fnref:2" title="return to article"> ↩</a></p>
+			</li>
+
+			<li class="footnote" id="fn:3"> <!-- window height from sill -->
+				<p><img src="static/images/dims-height.png"><a href="#fnref:3" title="return to article"> ↩</a></p>
+			</li>
+
+			<li class="footnote" id="fn:4"> <!-- sill height -->
+			<p><img src="static/images/dims-sill.png"><a href="#fnref:4" title="return to article"> ↩</a></p>
+			</li>
+
+			<li class="footnote" id="fn:5"> <!-- window width -->
+					<p><img src="static/images/dims-width.png"><a href="#fnref:5" title="return to article"> ↩</a></p>
+			</li>
+
+			<li class="footnote" id="fn:6"> <!-- window-to-wall ratio -->
+				<p><img src="static/images/dims-ratio.png"><a href="#fnref:6" title="return to article"> ↩</a></p>
+			</li>
+
+			<li class="footnote" id="fn:7"> <!-- window separation -->
+					<p><img src="static/images/dims-sep.png"><a href="#fnref:7" title="return to article"> ↩</a></p>
+			</li>
+
+			<li class="footnote" id="fn:8"> <!-- u value -->
+					<p>Measure of the window’s thermal performance. If the window panes are large (small impact of the frame) use the center of glass U-value. With assemblies where frame elements are prominent, it is recommended to use the assembly U-value. If using a room-side low-e coating, it can be selected under advanced options.<a href="#fnref:8" title="return to article"> ↩</a></p>
+			</li>
+
+			<li class="footnote" id="fn:9"> <!-- calculate u value -->
+					<p>U-value required to meet the PPD threshold at the specified occupant distance from fa&ccedil;ade.<a href="#fnref:9" title="return to article"> ↩</a></p>
+			</li>
+
+			<li class="footnote" id="fn:10"> <!-- conden risk -->
+					<p>If there is a risk of condensation, the interior window surface temperature is within 5°F of the space’s dew point temperature. This happens when the indoor relative humidity is high and the outdoor temperature is low.<a href="#fnref:10" title="return to article"> ↩</a></p>
+			</li>
+
+			<li class="footnote" id="fn:11"> <!-- outdoor temp -->
+					<p>Coldest expected outdoor temperature under which occupant thermal comfort is being evaluated. This varies with the climate of the project and the time of day that the space is expected to be occupied.<a href="#fnref:11" title="return to article"> ↩</a></p>
+			</li>
+			<li class="footnote" id="fn:12"> <!-- indoor ambient temp -->
+					<p>Temperature of the indoor air. For radiant discomfort calculations it is assumed that this also represents the temperature of the indoor surfaces. Low indoor air temperatures may lead to occupant discomfort regardless of the glazing configuration.<a href="#fnref:12" title="return to article"> ↩</a></p>
+			</li>
+			<li class="footnote" id="fn:13"> <!-- relative humidity -->
+					<p>Relative humidity indoors. This factors into to the thermal comfort calculations as well as the potential for condensation. During winter, this is usually around 20% unless the space is humidified.<a href="#fnref:13" title="return to article"> ↩</a></p>
+			</li>
+			<li class="footnote" id="fn:14"> <!-- room side low e -->
+					<p>Select if the U-value entered is achieved by adding a low-e coating on the interior side of the window. Room-side low-e coatings increase the thermal performance of a window, and reduce the potential for radiant discomfort. However, they also increase the potential for downdraft discomfort and condensation.<a href="#fnref:14" title="return to article"> ↩</a></p>
+			 </li>
+			 <li class="footnote" id="fn:15"><!-- emissivity -->
+					<p>Emissivity of the low-e coating located on the room-side surface of the inner-most pane of glass. This is obtained from the manufacturer. If unknown assume 0.2.<a href="#fnref:15" title="return to article"> ↩</a></p>
+			</li>
+			<li class="footnote" id="fn:16"><!-- r value -->
+					<p>R-Value of the wall assembly, including thermal bridges.<a href="#fnref:16" title="return to article"> ↩</a></p>
+			</li>
+			<li class="footnote" id="fn:17"> <!-- air speed -->
+					<p>Average indoor air speed induced by the mechanical system. Typically ranges from 10-30 fpm.<a href="#fnref:17" title="return to article"> ↩</a></p>
+			</li>
+			<li class="footnote" id="fn:18"> <!-- clothing -->
+					<p>Insulating value of clothing.<i><br>0.6 clo = trousers/knee-length skirt + long sleeved shirt<br>0.8 clo = trousers/knee-length skirt + undershirt + long sleeved shirt<br>1 clo = trousers/knee-length skirt + undershirt + long sleeved shirt + long sleeve sweater</i><a href="#fnref:18" title="return to article"> ↩</a></p>
+			</li>
+			<li class="footnote" id="fn:19"> <!-- metabolic rate -->
+					<p>Metabolic rate of the occupants. 1 met = seated resting. 1.2 met = typing or standing.<a href="#fnref:19" title="return to article"> ↩</a></p>
+			</li>
+			<li class="footnote" id="fn:20"> <!-- distance from facade -->
+						<p>Expected location of the occupant perpendicular to the fa&ccedil;ade.<a href="#fnref:20" title="return to article"> ↩</a></p>
+				</li>
+			<li class="footnote" id="fn:21"> <!-- ppd -->
+					<p>Percentage of People Dissatisfied (PPD) is a common metric used to define occupants’ satisfaction with their environment. This particular variable sets the acceptable percent of the polulation experiencing cold feet from downdraft off windows.  The standard set by ASHRAE for ankle draft discomfort in regularly-occupied spaces is 20% of the population.<a href="#fnref:21" title="return to article"> ↩</a></p>
+			</li>
+			<li class="footnote" id="fn:22"> <!-- ppd -->
+					<p>This variable sets the acceptable percent of the polulation experiencing full-body sensations of cold as a result of proximity to cool window surfaces. The standard set by ASHRAE for full-body discomfort in regularly-occupied spaces is 10% of the poolulation.  Note that it is not possible to get a full-body PPD lower than 5%.<a href="#fnref:22" title="return to article"> ↩</a></p>
+			</li>
+	</ol>
+	</div>
 
 	<!-- Assign any parameters from the URL -->
 	<script type="text/javascript" src="static/js/urlparse.js"></script>

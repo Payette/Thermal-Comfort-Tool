@@ -33,7 +33,7 @@ render.makeGraph = function () {
   /* ------ SET UP GRAPH VARIABLES AND DATA FUNCTIONS ------ */
   var margin = {top: 15, right: 20, bottom: 40, left: 70},
       width = maxContainerWidth - margin.left - margin.right,
-      height = 290 - margin.top - margin.bottom;
+      height = 275 - margin.top - margin.bottom;
 
 
   // Set up scale functions
@@ -180,7 +180,11 @@ render.makeGraph = function () {
           $("div#tooltip2").css("width","150px");
           $("div#tooltip2 h1").css("width","135px");
         }
-        yPosition = y(d.ppd) - thisHeight + margin.top + 30;
+        if (param == "dwn") {
+          yPosition = y(d.ppd) - thisHeight + margin.top - 5;
+        } else {
+          yPosition = y(d.ppd) - thisHeight + margin.top + 40;
+        }
 
         // prevent the tooltip from going outside the graph wrapper
         if (x(d.dist) > 300) {
@@ -196,11 +200,11 @@ render.makeGraph = function () {
         if (param == "dwn") {
           $("div#tooltip").css("width","290px");
           $("div#tooltip h1").css("width","auto");
-          yPosition = y(d.ppd) - thisHeight + margin.top + 20;
+          yPosition = y(d.ppd) - thisHeight + margin.top;
         } else {
           $("div#tooltip2").css("width","290px");
           $("div#tooltip2 h1").css("width","auto");
-          yPosition = y(d.mrtppd) - thisHeight + margin.top + 20;
+          yPosition = y(d.mrtppd) - thisHeight + margin.top;
         }
         xPosition = x(d.dist) + margin.left + 8;
       }
@@ -612,7 +616,6 @@ render.makeGraph = function () {
         $(".expandOptions span.expand").css("backgroundPosition", "0 -12px");
       $(".hideContent").slideDown(400, "swing");
       }
-
   })
 
   // expand explanation
@@ -626,6 +629,20 @@ render.makeGraph = function () {
         $(".expandExplanation").addClass("expanded");
         $(".expandExplanation span.expand").css("backgroundPosition", "0 -12px");
       $(".explanContent").slideDown(400, "swing");
+      }
+  })
+
+  // expand explanation
+    $(".expandRef").on("click", function(){
+
+      if ($(".expandRef").hasClass("expanded")) {
+        $(".expandRef").removeClass("expanded")
+        $(".expandRef span.expand").css("backgroundPosition", "0 0");
+      $(".refcontent").slideUp(400, "swing");
+      } else {
+        $(".expandRef").addClass("expanded");
+        $(".expandRef span.expand").css("backgroundPosition", "0 -12px");
+      $(".refcontent").slideDown(400, "swing");
       }
 
   })
@@ -914,7 +931,8 @@ render.makeGraph = function () {
 
   // CSV Download
   $(".optionButton#CSV").click(function(event) {
-    csvContent = createCSV(dataset, dataset2, dataset3, occPointData, occPointData2, occPointData3, case1Data, case2Data, case3Data, unitSys)
+    globInputs = [occDistFromFacade, ppdValue, ppdValue2, rvalueValue, airspeedValue, clothingValue, metabolic]
+    csvContent = createCSV(dataset, dataset2, dataset3, occPointData, occPointData2, occPointData3, case1Data, case2Data, case3Data, globInputs, unitSys)
     var encodedUri = encodeURI(csvContent);
     window.open(encodedUri);
   })
@@ -2809,9 +2827,9 @@ render.makeGraph = function () {
     }
 
     if (param == "dwn") {
-      var ppdScaleFac = d3.max(compareOccupantArray) - 2
+      var ppdScaleFac = d3.max(compareOccupantArray) + 2.5
     } else if (param == "mrt") {
-      var ppdScaleFac = d3.max(compareOccupantArray) + 4
+      var ppdScaleFac = d3.max(compareOccupantArray) + 4.5
     }
 
     // set YPosition for tooltip
