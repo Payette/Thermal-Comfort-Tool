@@ -25,14 +25,18 @@ body {
 	margin: 0 20px 0 0;
 }
 
-#graphWrapper {
+#graphWrapper, #graphWrapper2 {
 	height: auto;
 	position: relative;
-	background-color: rgb(240,240,240);
+	background-color: rgb(230,230,230);
 	overflow: hidden;
 }
 
-#graphWrapper ul {
+#graphWrapper2 {
+	margin-top: 10px;
+}
+
+#graphWrapper ul, #graphWrapper2 ul {
 	list-style: none;
 	float: right;
 	margin: 15px 20px 10px 10px;
@@ -42,13 +46,13 @@ body {
 	font-weight: 300;
 }
 
-#graphWrapper ul li {
+#graphWrapper ul li, #graphWrapper2 ul li {
 	display: inline;
 	color: #777777;
 	margin: 0 0 0 15px;
 }
 
-#graphWrapper ul li img {
+#graphWrapper ul li img, #graphWrapper2 ul li img{
 	display: inline;
 	width: 9px;
 	height: 9px;
@@ -68,11 +72,11 @@ body {
 
 #graph .axislabel, #graph .axis text {
 	font-family: "museo-sans", sans-serif;
-	font-size: 11px;
+	font-size: 12px;
 }
 
 #graph .axislabel {
-	font-weight: 700;
+	font-weight: 500;
 }
 
 #graph .axis text {
@@ -85,7 +89,7 @@ body {
 }
 
 
-.occupantLine {
+.occupantLine, .occupantLine2 {
 	stroke: #000;
 	stroke-width: 3;
 	stroke-linecap: round;
@@ -117,7 +121,7 @@ body {
 
 
 
-#tooltip, #thresholdTooltip {
+#tooltip, #tooltip2, #thresholdTooltip, #thresholdTooltip2 {
 	position: absolute;
 	width: 280px;
 	/*padding: 5px;*/
@@ -128,11 +132,11 @@ body {
 
 
 
-#tooltip.hidden, #thresholdTooltip.hidden {
+#tooltip.hidden, #tooltip2.hidden, #thresholdTooltip.hidden, #thresholdTooltip2.hidden {
 	display: none;
 }
 
-#tooltip h1, #thresholdTooltip h1 {
+#tooltip h1, #tooltip2 h1, #thresholdTooltip h1, #thresholdTooltip2 h1 {
 	font-family: "museo-sans", sans-serif;
 	font-weight: 700;
 	font-size: 12px;
@@ -142,7 +146,7 @@ body {
 	float: left;
 }
 
-#thresholdTooltip img.icon, #tooltip img.icon {
+#thresholdTooltip img.icon, #tooltip img.icon, #tooltip2 img.icon, #thresholdTooltip2 img.icon {
 	display: block;
 	float: left;
 	width: 12px;
@@ -152,16 +156,11 @@ body {
 }
 
 
-
-
-
-
-
 #facadeWrapper {
 	width: 100%
 	overflow: auto;
-	margin-top: 43px;
-	margin-bottom: 25px;
+	margin-top: 5px;
+	margin-bottom: 10px;
 }
 
 #case1FacadeWrapper, #case2FacadeWrapper, #case3FacadeWrapper {
@@ -242,12 +241,8 @@ rect.blue {
 	fill: #E1F0FF;
 }
 
-
-
-
-
 #occupancyWrapper {
-	margin: 0 0 30px 0;
+	margin: 0 0 5px 0;
 }
 
 
@@ -265,7 +260,7 @@ rect.blue {
 	padding: 0px;
 }
 
-#ppd, #distFromFacade {
+#ppd, #distFromFacade, #ppd2 {
 	display: inline-block;
 	width: 75%;
 	float: left;
@@ -273,7 +268,7 @@ rect.blue {
 	padding-top: 0;
 }
 
-#ppd p {
+#ppd p, #ppd2 p {
 	margin: 0;
 }
 
@@ -289,7 +284,7 @@ rect.blue {
 
 output #occupantImage, output #occupantImage2, output #occupantImage3 {
 	position: relative;
-	width: 180px; 
+	width: 180px;
   	height: 250px;
   	display: inline-block;
   	bottom: 500px; /* imageHeight + facMargin.bottom*2*/
@@ -315,7 +310,7 @@ input[type=range]:focus {
   outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
 }
 
-input[type=range]#occupantDist::-ms-track, input[type=range]#occupantDist2::-ms-track, input[type=range]#occupantDist3::-ms-track, input[type=range]#ppd::-ms-track, input[type=range]#distFromFacade::-ms-track {
+input[type=range]#occupantDist::-ms-track, input[type=range]#occupantDist2::-ms-track, input[type=range]#occupantDist3::-ms-track, input[type=range]#ppd::-ms-track, input[type=range]#ppd2::-ms-track, input[type=range]#distFromFacade::-ms-track {
 	-ms-appearance: none;
 	height: 3px;
 	background-color: #d5d5d5;
@@ -326,7 +321,7 @@ input[type=range]#occupantDist::-ms-track, input[type=range]#occupantDist2::-ms-
 	color: transparent;
 }
 
-input[type=range]#ppd::-ms-fill-lower {
+input[type=range]#ppd::-ms-fill-lower, input[type=range]#ppd2::-ms-fill-lower {
 	background: rgb(147,229,0);
 }
 
@@ -335,19 +330,19 @@ input[type=range]#distFromFacade::-ms-fill-lower, input[type=range]#occupantDist
 }
 
 
-#occupantDist::-moz-range-track, #occupantDist2::-moz-range-track, #occupantDist3::-moz-range-track, #ppd::-moz-range-track, #distFromFacade::-moz-range-track {
+#occupantDist::-moz-range-track, #occupantDist2::-moz-range-track, #occupantDist3::-moz-range-track, #ppd::-moz-range-track, #ppd2::-moz-range-track, #distFromFacade::-moz-range-track {
 	-moz-appearance: none;
 	height: 3px;
 	background-color: #d5d5d5;
 	margin-right: 3px;
 }
 
-input[type=range]#ppd::-moz-range-progress{
+input[type=range]#ppd::-moz-range-progress, input[type=range]#ppd2::-moz-range-progress{
 	background-color: rgb(147,229,0);
 }
 
 
-#occupantDist::-webkit-slider-runnable-track, #occupantDist2::-webkit-slider-runnable-track, #occupantDist3::-webkit-slider-runnable-track, #ppd::-webkit-slider-runnable-track, #distFromFacade::-webkit-slider-runnable-track {
+#occupantDist::-webkit-slider-runnable-track, #occupantDist2::-webkit-slider-runnable-track, #occupantDist3::-webkit-slider-runnable-track, #ppd::-webkit-slider-runnable-track, #ppd2::-webkit-slider-runnable-track, #distFromFacade::-webkit-slider-runnable-track {
 	-webkit-appearance: none;
 	height: 3px;
 	background-color: #d5d5d5;
@@ -355,7 +350,7 @@ input[type=range]#ppd::-moz-range-progress{
 }
 
 
-#occupantDist::-ms-thumb, #occupantDist2::-ms-thumb, #occupantDist3::-ms-thumb, #ppd::-ms-thumb, #distFromFacade::-ms-thumb {
+#occupantDist::-ms-thumb, #occupantDist2::-ms-thumb, #occupantDist3::-ms-thumb, #ppd::-ms-thumb, #ppd2::-ms-thumb, #distFromFacade::-ms-thumb {
     background-color: #FFF;
     border: 3px solid rgb(150,150,150);
     border-radius: 5px;
@@ -364,7 +359,7 @@ input[type=range]#ppd::-moz-range-progress{
 }
 
 
-#occupantDist::-moz-range-thumb, #occupantDist2::-moz-range-thumb, #occupantDist3::-moz-range-thumb, #ppd::-moz-range-thumb, #distFromFacade::-moz-range-thumb {
+#occupantDist::-moz-range-thumb, #occupantDist2::-moz-range-thumb, #occupantDist3::-moz-range-thumb, #ppd::-moz-range-thumb, #ppd2::-moz-range-thumb, #distFromFacade::-moz-range-thumb {
 	-moz-appearance: none;
     background-color: #FFF;
     border: 3px solid rgb(150,150,150);
@@ -373,7 +368,7 @@ input[type=range]#ppd::-moz-range-progress{
     width: 5px;
 }
 
-#occupantDist::-webkit-slider-thumb, #occupantDist2::-webkit-slider-thumb, #occupantDist3::-webkit-slider-thumb, #ppd::-webkit-slider-thumb, #distFromFacade::-webkit-slider-thumb {
+#occupantDist::-webkit-slider-thumb, #occupantDist2::-webkit-slider-thumb, #occupantDist3::-webkit-slider-thumb, #ppd::-webkit-slider-thumb, #ppd2::-webkit-slider-thumb, #distFromFacade::-webkit-slider-thumb {
 	-webkit-appearance: none;
     background-color: #FFF;
     border: 3px solid rgb(150,150,150);
@@ -381,13 +376,6 @@ input[type=range]#ppd::-moz-range-progress{
     height: 5px;
     width: 5px;
 }
-
-
-
-
-
-
-
 
 
 
@@ -398,8 +386,6 @@ input[type=range]#ppd::-moz-range-progress{
 	height: 16px;
 	padding-bottom: 0;
 }
-
-
 
 #caseSelection {
 	display: block;
@@ -457,15 +443,9 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 
 
 
-
-
-
-
-
-#inputs {
+#inputs, #referenceLinks {
 	float: left;
 	width: 390px;
-
 	font-family: "museo-sans", sans-serif;
 	position: relative;
 	z-index: 0;
@@ -473,22 +453,22 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 	/*line-height: 1em;*/
 }
 
-
 #occupantSliders {
 	width: 550px;
 
 	font-family: "museo-sans", sans-serif;
 }
 
+
 #inputs h1, #occupantSliders h1 {
 	font-weight: 700px;
 	font-size: 23px;
 	line-height: 23px;
 	margin: 0;
-	padding-bottom: 18px;
+	padding-bottom: 5px;
 }
 
-#inputs p, #occupantSliders p {
+#inputs p, #occupantSliders p, #referenceLinks p {
 	font-size: 12px;
 	line-height: 1.4em;
 	font-weight: 100;
@@ -513,7 +493,7 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 	margin-bottom: 20px;
 }
 
-#inputs legend, #occupantSliders legend {
+#inputs legend, #occupantSliders legend, #referenceLinks legend {
 	font-weight: 700;
 	font-size: 12px;
 	text-transform: uppercase;
@@ -522,12 +502,15 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 	width: 190px;
 }
 
+#referenceLinks legend {
+	padding: 5px 0 0 0;
+}
+
 #inputs legend.first {
 	float: left;
 }
 
-
-#inputs ul {
+#inputs ul, #referenceLinks ul, #referenceLinks a {
 	font-family: "museo-sans", sans-serif;
 	color: #b9b9b9;
 	font-weight: 300;
@@ -537,7 +520,13 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 	list-style-type: none;
 }
 
+#inputs a {
+	color: #000000;
+}
 
+#referenceLinks a:hover, #inputs a:hover {
+	color: #808080
+}
 
 #inputs hr, #occupantSliders hr {
 	padding: 0;
@@ -673,11 +662,11 @@ br.glzBR {
 	margin: 0;
 	padding: 2px 3px 2px 0;
 	float: left;
-	clear: left;	
+	clear: left;
 	text-align: left;
 	display: block;
 
-	
+
 	font-weight: 300;
 	font-size: 12px;
 	height: 16px;
@@ -841,7 +830,7 @@ input[type=checkbox] {
 	padding: 10px;
 	border-radius: 10px;
 	border: 2px solid #f72734;
-	
+
 	display: none;
 }
 
@@ -869,19 +858,21 @@ input[type=checkbox] {
 
 
 
-#options {	
+#options {
 	overflow: auto;
 	width: 100%;
 
 	padding: 10px 0px 15px 0px;
 }
 
-div#units, div#share {
-	margin-right: 30px;
+div#units {
+	margin-right: 20px;
 	float: left;
 }
 
-
+div#share {
+	float: right;
+}
 
 #options h2 {
 	color: #000;
@@ -897,8 +888,8 @@ div#units, div#share {
 
 #options input[type=button].optionButton {
 	padding: 1px 2px;
-	height: 16px;
-	margin: 0 5px;
+	height: 20px;
+	margin: 0 3px;
 	border-radius: 10px;
 	border: 1px solid #777;
 	cursor: pointer;
@@ -919,8 +910,8 @@ div#units, div#share {
 
 
 
-#options input[type=button].optionButton#PDF,  #inputs input[type=button].optionButton#URL{
-	width: 75px;
+#options input[type=button].optionButton#PDF,  #inputs input[type=button].optionButton#URL,  #inputs input[type=button].optionButton#CSV{
+	width: 60px;
 }
 
 #options input[type=button].optionButton:hover {
@@ -946,7 +937,7 @@ span.expand {
 	top: -2px;
 }
 
-.hideContent, .explanContent {
+.hideContent, .explanContent, .refcontent {
 	display: none;
 }
 
@@ -963,8 +954,8 @@ div#URLpop textarea {
 }
 
 div#disclaimer {
-	padding: 20px;
-
+	padding: 10px;
+	background-color: #ffffff;
 }
 
 div#disclaimer p,  div#disclaimer h1{
@@ -986,6 +977,16 @@ div#disclaimer h1{
 }
 
 
+
+#referenceLinks h1 {
+	margin: 0;
+	padding-bottom: 5px;
+	font-weight: 700;
+	font-size: 12px;
+	text-transform: uppercase;
+
+	font-family: "museo-sans", sans-serif;
+}
 
 #explanation {
 	padding: 0;
@@ -1068,11 +1069,11 @@ div#disclaimer h1{
 	font-size: 12px;
 }
 
-.refLine.draggable {
+.refLine.draggable, .refLine2.draggable {
 	cursor: ns-resize;
 }
 
-.occupantLine.draggable {
+.occupantLine.draggable, .occupantLine2.draggable {
 	cursor: ew-resize;
 }
 
@@ -1110,4 +1111,3 @@ div.case2, div.case3, #inputs input.case2, #inputs input.case3, hr.case2, hr.cas
 	font-weight: 900;
 	src: url('../fonts/MuseoSans_1.otf');
 }
-
