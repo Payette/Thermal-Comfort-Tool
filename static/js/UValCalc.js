@@ -42,11 +42,11 @@ uVal.uValMRT = function(opaqueViewFac, winViewFac, airTemp, outdoorTemp, opaqueR
 
 
 // FUNCTIONS FOR CALCULATING THE MAX U-VALUE WITH DOWNDRAFT
-uVal.uValDownD = function(PPDAccept, distToFacade, windowHgt, filmCoeff, airTemp, outdoorTemp, dwnPPDFac, opaqueViewFac, winViewFac, opaqueRVal, intLowE, lowEmissivity, vel, relHumid, metRate, cloLevel){
+uVal.uValDownD = function(PPDAccept, distToFacade, windowHgt, sillHgt, filmCoeff, airTemp, outdoorTemp, dwnPPDFac, opaqueViewFac, winViewFac, opaqueRVal, intLowE, lowEmissivity, vel, relHumid, metRate, cloLevel){
 	function uvalclos(target) {
 		return function(uValGuess) {
 			var startPMV = comf.calcFullMRTppd(winViewFac, opaqueViewFac, filmCoeff, airTemp, outdoorTemp, airTemp, opaqueRVal, uValGuess, intLowE, lowEmissivity, cloLevel, metRate, vel, relHumid).pmv;
-			return comf.calcFulldonwDppd(distToFacade, startPMV, windowHgt, filmCoeff, airTemp, outdoorTemp, uValGuess, dwnPPDFac).ppd - target
+			return comf.calcFulldonwDppd(distToFacade, startPMV, windowHgt+sillHgt, filmCoeff, airTemp, outdoorTemp, uValGuess, dwnPPDFac).ppd - target
 		}
 	}
 	function solve(target) {
@@ -70,10 +70,11 @@ uVal.uValDownD = function(PPDAccept, distToFacade, windowHgt, filmCoeff, airTemp
 
 
 // FUNCTION THAT RETURNS THE LOWEST U-VALUE GIVEN COMFORT CRITERIA
-uVal.uValFinal = function(opaqueViewFac, winViewFac, distToFacade, dwnPPDFac, windowHgt, indoorTemp, outTemp, wallRVal, intLowE, lowEmissivity, airSpeed, relHumid, metRate, cloLevel, targetPPD, targetPPD2){
+uVal.uValFinal = function(opaqueViewFac, winViewFac, distToFacade, dwnPPDFac, windowHgt, sillHgt, indoorTemp, outTemp, wallRVal, intLowE, lowEmissivity, airSpeed, relHumid, metRate, cloLevel, targetPPD, targetPPD2){
 	// Convert values to SI if we have to
 	if (unitSys == "IP") {
   	var windowHgtSI = units.Ft2M(windowHgt);
+		var sillHgtSI = units.Ft2M(sillHgt)
   	var vel = units.fpm2mps(airSpeed);
   	var opaqueRVal = units.rIP2rSI(wallRVal);
   	var airTemp = units.F2C(indoorTemp);
@@ -81,6 +82,7 @@ uVal.uValFinal = function(opaqueViewFac, winViewFac, distToFacade, dwnPPDFac, wi
     var facadeDist = units.Ft2M(distToFacade);
   } else {
     var windowHgtSI = windowHgt;
+		var sillHgtSI = sillHgt
   	var vel = airSpeed;
   	var opaqueRVal = wallRVal;
   	var airTemp = parseFloat(indoorTemp);
@@ -100,7 +102,7 @@ uVal.uValFinal = function(opaqueViewFac, winViewFac, distToFacade, dwnPPDFac, wi
 	var uValMRT = uVal.uValMRT(opaqueViewFac, winViewFac, airTemp, outdoorTemp, opaqueRVal, filmCoeff, intLowE, lowEmissivity, vel, parseFloat(relHumid), parseFloat(metRate), parseFloat(cloLevel), parseFloat(targetPPD2))
 
 	if (dwnPPDFac > 0) {
-		var uValDownD = uVal.uValDownD(targetPPD, facadeDist, windowHgtSI, filmCoeff, airTemp, outdoorTemp, dwnPPDFac, opaqueViewFac, winViewFac, opaqueRVal, intLowE, lowEmissivity, vel, parseFloat(relHumid), parseFloat(metRate), parseFloat(cloLevel))
+		var uValDownD = uVal.uValDownD(targetPPD, facadeDist, windowHgtSI, sillHgtSI, filmCoeff, airTemp, outdoorTemp, dwnPPDFac, opaqueViewFac, winViewFac, opaqueRVal, intLowE, lowEmissivity, vel, parseFloat(relHumid), parseFloat(metRate), parseFloat(cloLevel))
 	} else {
 		if (unitSys == "IP") {
 			var uValDownD = 567.8263337
