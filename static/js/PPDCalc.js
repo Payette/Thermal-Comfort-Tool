@@ -26,19 +26,21 @@ comf.calcFilmCoeff = function(glzSysEmiss){
 }
 
 // Functions that compute the temperature and speed of air from downdraft.
-// These functions are taken from the following paper:
+// These functions are originally from the following paper:
 // Heiselberg, Per. (1994). Draught Risk From Cold Vertical Surfaces. Building and Envrionment, Vol. 29, No. 3, pp. 297-301.
+//The specific ones here come from CFD validations of the Heiselberg model, published in this paper:
+//Manz, H. and Frank, T. (2003). "Analysis of Thermal Comfort near Cold Vertical Surfaces by Means of Computational Fluid Dynamics." Indoor Built Environment. 13: 233-242.
 comf.calcFloorAirTemp = function(airTemp, dist, deltaT){
     return airTemp - ((0.3-(0.034*dist))*deltaT)
 }
 comf.velMaxClose = function(deltaT, windowHgt){
-    return (0.055*(sqrt(deltaT*windowHgt)))
+    return (0.083*(sqrt(deltaT*windowHgt)))
 }
 comf.velMaxMid = function(dist, deltaT, windowHgt){
-    return (0.095*((sqrt(deltaT*windowHgt))/(dist+1.32)))
+    return (0.143*((sqrt(deltaT*windowHgt))/(dist+1.32)))
 }
 comf.velMaxFar = function(deltaT, windowHgt){
-    return (0.028*(sqrt(deltaT*windowHgt)))
+    return (0.043*(sqrt(deltaT*windowHgt)))
 }
 
 // Function that calculates dewpoint temperature from dry bulb and relative humidity.
@@ -447,17 +449,17 @@ comf.calcFullMRTppd = function(winView, opaView, winFilmCoeff, airTemp, outdoorT
 }
 
 // Function that computes downdraft PPD given window dimensions and properties.
-comf.calcFulldonwDppd = function(distSI, mrtpmv, windowHgt, filmCoeff, airTemp, outdoorTemp, windowUVal, dwnPPDFac){
+comf.calcFulldonwDppd = function(distSI, mrtpmv, windowHeadHgt, filmCoeff, airTemp, outdoorTemp, windowUVal, dwnPPDFac){
   // Get the difference between the surface temperature and the air
 	var glassAirDelta = airTemp - comf.calcInteriorTemp(airTemp, outdoorTemp, 1/windowUVal, filmCoeff)
   // Get the temperature of the downdraft.
   var downDraftTemp = comf.calcFloorAirTemp(airTemp, distSI, glassAirDelta)
   if (distSI < 0.4){
-    var windSpd = comf.velMaxClose(glassAirDelta, windowHgt)
+    var windSpd = comf.velMaxClose(glassAirDelta, windowHeadHgt)
   } else if (distSI < 2){
-    var windSpd = comf.velMaxMid(distSI, glassAirDelta, windowHgt)
+    var windSpd = comf.velMaxMid(distSI, glassAirDelta, windowHeadHgt)
   } else{
-    var windSpd = comf.velMaxFar(glassAirDelta, windowHgt)
+    var windSpd = comf.velMaxFar(glassAirDelta, windowHeadHgt)
   }
   var finalDDppd = comf.calcPPDFromDowndraft(windSpd, mrtpmv) * dwnPPDFac
   r = {}
@@ -500,13 +502,13 @@ comf.getMRTPPD = function(winViewFacs, opaqueViewFacs, winFilmCoeff, airTemp, ou
 
 
 // Calculates the PPD from downdraft given a set of interior conditions.
-comf.getDowndraftPPD = function(distToFacade, mrtPMV, windowHgt, filmCoeff, airTemp, outdoorTemp, windowUVal, dwnPPDFac){
+comf.getDowndraftPPD = function(distToFacade, mrtPMV, windowHgt, sillHgt, filmCoeff, airTemp, outdoorTemp, windowUVal, dwnPPDFac){
 	// Calculate the PPD at each point.
 	var PPD = []
   var DDSpd = []
   var DDTemp = []
 	for (var i = 0; i < distToFacade.length; i++) {
-		var ddPPD = comf.calcFulldonwDppd(distToFacade[i], mrtPMV[i], windowHgt, filmCoeff, airTemp, outdoorTemp, windowUVal, dwnPPDFac)
+		var ddPPD = comf.calcFulldonwDppd(distToFacade[i], mrtPMV[i], windowHgt+sillHgt, filmCoeff, airTemp, outdoorTemp, windowUVal, dwnPPDFac)
 		PPD.push(ddPPD.ppd)
     DDSpd.push(ddPPD.airSpd)
     DDTemp.push(ddPPD.downTemp)
@@ -523,9 +525,10 @@ comf.getDowndraftPPD = function(distToFacade, mrtPMV, windowHgt, filmCoeff, airT
 
 /// ***FUNCTION THAT COMPUTE FINAL RESULTS THE INTERFACE.***
 // Constructs a dictionary of PPD and the limiting factors from a given set of interior conditions.
-comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, occDistToWallCenter, windowHgt, glzUVal, intLowE, lowEmissivity, wallRVal, indoorTemp, outTemp, radiantFloor, clo, met, airSpeed, rh, ppdValue, ppdValue2){
+comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, occDistToWallCenter, windowHgt, sillHgt, glzUVal, intLowE, lowEmissivity, wallRVal, indoorTemp, outTemp, radiantFloor, clo, met, airSpeed, rh, ppdValue, ppdValue2){
   if (unitSys == "IP") {
   	var windowHgtSI = units.Ft2M(windowHgt)
+    var sillHgtSI = units.Ft2M(sillHgt)
   	var vel = units.fpm2mps(airSpeed)
   	var windowUVal = units.uIP2uSI(glzUVal)
   	var opaqueRVal = units.rIP2rSI(wallRVal)
@@ -538,6 +541,7 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, o
     }
   } else {
     var windowHgtSI = windowHgt
+    var sillHgt = sillHgt
   	var vel = airSpeed
   	var windowUVal = glzUVal
   	var opaqueRVal = wallRVal
@@ -607,7 +611,7 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, o
   }
 
 	// Get the Downdraft PPD results.
-	downDresult = comf.getDowndraftPPD(facadeDistSI, mrtPMV, windowHgtSI, winFilmCoeff, airTemp, outdoorTemp, windowUVal, dwnPPDFac)
+	downDresult = comf.getDowndraftPPD(facadeDistSI, mrtPMV, windowHgtSI, sillHgtSI, winFilmCoeff, airTemp, outdoorTemp, windowUVal, dwnPPDFac)
   downDPPD = downDresult.ppd
   downDSpeed = downDresult.ddSpd
   downDTemper = downDresult.ddTemp
