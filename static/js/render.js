@@ -2786,7 +2786,7 @@ render.makeGraph = function () {
       var divHeight = $("div#thresholdTooltip").height() - 10; //10 = padding
     } else if (param == "mrt") {
       $("#thresholdTooltip2").append(totalText);
-      var divHeight = $("div#thresholdTooltip2").height() - 10; //10 = padding
+      var divHeight = $("div#thresholdTooltip2").height() - 20; //10 = padding
     }
     var xPosition;
     var yPosition;
