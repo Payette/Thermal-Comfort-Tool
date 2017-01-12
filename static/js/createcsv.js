@@ -60,29 +60,6 @@ function appendGlobInputs(matrix, data, unitSys) {
   matrix[1].push(data[2])
   addBlankToMtx(matrix, 2, 7)
 
-  if (unitSys == "IP") {
-    matrix[0].push("Wall R-Value (hr*ft2*F/Btu)")
-  } else {
-    matrix[0].push("Wall R-Value (m²*K/W)")
-  }
-  matrix[1].push(data[3])
-  addBlankToMtx(matrix, 2, 7)
-
-  if (unitSys == "IP") {
-    matrix[0].push("Air Speed (fpm)")
-  } else {
-    matrix[0].push("Air Speed (m/s)")
-  }
-  matrix[1].push(data[4])
-  addBlankToMtx(matrix, 2, 7)
-
-  matrix[0].push("Clothing Insulation (clo)")
-  matrix[1].push(data[5])
-  addBlankToMtx(matrix, 2, 7)
-
-  matrix[0].push("Metabolic Rate (met)")
-  matrix[1].push(data[6])
-  addBlankToMtx(matrix, 2, 7)
 }
 
 function appendDataset(matrix, data, caseName, unitSys) {
@@ -228,6 +205,30 @@ function appendInputs(matrix, data, caseName, unitSys) {
 
   matrix[0].push("Indoor Humidity (%)")
   matrix[1].push(data.humidityValue)
+  addBlankToMtx(matrix, 2, 7)
+
+  if (unitSys == "IP") {
+    matrix[0].push("Wall R-Value (hr*ft2*F/Btu)")
+  } else {
+    matrix[0].push("Wall R-Value (m²*K/W)")
+  }
+  matrix[1].push(data.rvalueValue)
+  addBlankToMtx(matrix, 2, 7)
+
+  if (unitSys == "IP") {
+    matrix[0].push("Air Speed (fpm)")
+  } else {
+    matrix[0].push("Air Speed (m/s)")
+  }
+  matrix[1].push(data.airspeedValue)
+  addBlankToMtx(matrix, 2, 7)
+
+  matrix[0].push("Clothing Insulation (clo)")
+  matrix[1].push(data.clothingValue)
+  addBlankToMtx(matrix, 2, 7)
+
+  matrix[0].push("Metabolic Rate (met)")
+  matrix[1].push(data.metabolic)
   addBlankToMtx(matrix, 2, 7)
 
   addBlankToMtx (matrix, 0, 9)

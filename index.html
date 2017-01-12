@@ -83,6 +83,8 @@
 			});
 		});
 
+		/* My gosh, I can't stand this annoying popup every time I refresh the page. */
+		/*
 		$(document).ready($(function() {
 			$("#disclaimer").dialog({
 				autoOpen: true,
@@ -102,6 +104,7 @@
 				}}]
 			})
 		}))
+		*/
 
 	</script>
 
@@ -110,10 +113,12 @@
 
 <body>
 
+	<!--
 	<div id="disclaimer">
 		<h1>Disclaimer</h1>
 		<p>By using the Glazing and Comfort Analysis Tool, you agree to the <a href="" target="_blank">Terms and Conditions.</a></p>
 	</div>
+-->
 
 	<div id="header"><img src="static/images/header.png"></div>
 	<div id="wrapper">
@@ -391,18 +396,18 @@
 
 				<label for="airspeed">Air Speed (<span class="unitsAirSpeed IP">fpm</span>)<sup id="fnref:17"><a href="#fn:17" rel="footnote">?</a></sup></label>
 				<div class="inputWrapperLeft"><input type="text" name="airspeed" id="airspeed" value="10" step="0.5" class="case1"></div>
-				<div class="inputWrapperCenter"><hr class="case2 unselected"></div>
-				<div class="inputWrapperRight"><hr class="case3 unselected"></div><br>
+				<div class="inputWrapperCenter"><input type="text" name="airspeed2" id="airspeed2" value="10" step="0.5" class="case2 unselected"></div>
+				<div class="inputWrapperRight"><input type="text" name="airspeed3" id="airspeed3" value="10" step="0.5" class="case3 unselected"></div><br>
 
 				<label for="clothing">Clothing (clo)<sup id="fnref:18"><a href="#fn:18" rel="footnote">?</a></sup></label>
 				<div class="inputWrapperLeft"><input type="text" name="clothing" id="clothing" value="0.85" step="0.05" class="case1"></div>
-				<div class="inputWrapperCenter"><hr class="case2 unselected"></div>
-				<div class="inputWrapperRight"><hr class="case3 unselected"></div><br>
+				<div class="inputWrapperCenter"><input type="text" name="clothing2" id="clothing2" value="0.85" step="0.05" class="case2 unselected"></div>
+				<div class="inputWrapperRight"><input type="text" name="clothing3" id="clothing3" value="0.85" step="0.05" class="case3 unselected"></div><br>
 
 				<label for="metabolic">Metabolic Rate (met)<sup id="fnref:19"><a href="#fn:19" rel="footnote">?</a></sup></label>
 				<div class="inputWrapperLeft"><input type="text" name="metabolic" id="metabolic" value="1.2" step="0.1" class="case1"></div>
-				<div class="inputWrapperCenter"><hr class="case2 unselected"></div>
-				<div class="inputWrapperRight"><hr class="case3 unselected"></div><br>
+				<div class="inputWrapperCenter"><input type="text" name="metabolic2" id="metabolic2" value="1.2" step="0.1" class="case2 unselected"></div>
+				<div class="inputWrapperRight"><input type="text" name="metabolic3" id="metabolic3" value="1.2" step="0.1" class="case3 unselected"></div><br>
 				<hr class="final">
 
 			</div>

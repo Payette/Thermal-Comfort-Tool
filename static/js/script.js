@@ -17,11 +17,11 @@ var ppdValue2 = $("#ppd2").val();
 
 // need to remove radiant floor from calculation
 var radiantFloorChecked = $("#radiant").is(":checked"); //provides a true/false
+
 var rvalueValue = $("#rvalue").val();
 var airspeedValue = $("#airspeed").val();
 var clothingValue = $("#clothing").val();
 var metabolic = $("#metabolic").val();
-
 
 
 var case1Data = {
@@ -42,7 +42,12 @@ var case1Data = {
 
 	outdoorTempValue: $("#outdoortemp").val(),
 	airtempValue: $("#airtemp").val(),
-	humidityValue: $("#humidity").val()
+	humidityValue: $("#humidity").val(),
+
+	rvalueValue: $("#rvalue").val(),
+	airspeedValue: $("#airspeed").val(),
+	clothingValue: $("#clothing").val(),
+	metabolic: $("#metabolic").val()
 }
 
 
@@ -65,8 +70,12 @@ var case2Data = {
 
 	outdoorTempValue: $("#outdoortemp2").val(),
 	airtempValue: $("#airtemp2").val(),
-	humidityValue: $("#humidity2").val()
+	humidityValue: $("#humidity2").val(),
 
+	rvalueValue: $("#rvalue2").val(),
+	airspeedValue: $("#airspeed2").val(),
+	clothingValue: $("#clothing2").val(),
+	metabolic: $("#metabolic2").val()
 }
 
 
@@ -88,7 +97,12 @@ var case3Data = {
 
 	outdoorTempValue: $("#outdoortemp3").val(),
 	airtempValue: $("#airtemp3").val(),
-	humidityValue: $("#humidity3").val()
+	humidityValue: $("#humidity3").val(),
+
+	rvalueValue: $("#rvalue3").val(),
+	airspeedValue: $("#airspeed3").val(),
+	clothingValue: $("#clothing3").val(),
+	metabolic: $("#metabolic3").val()
 }
 
 var changedVar = "ceilingHeightValue";
@@ -113,12 +127,11 @@ script.computeData = function(object) {
 	// Compute the view factors to make the graph.
 	var viewResult = geo.computeAllViewFac(geoResult.wallCoords, geoResult.glzCoords, object.occDistToWallCenter)
 	// Compute the PPD to make the graph.
-	var comfortResult = comf.getFullPPD(viewResult.wallViews, viewResult.glzViews, viewResult.facadeDist, viewResult.windIntervals, object.occDistToWallCenter, geoResult.windowHeight, geoResult.sillHeight, object.uvalueValue, object.intLowEChecked, object.intLowEEmissivity, rvalueValue, parseFloat(object.airtempValue), parseFloat(object.outdoorTempValue), radiantFloorChecked, parseFloat(clothingValue), parseFloat(metabolic), parseFloat(airspeedValue), parseFloat(object.humidityValue), ppdValue, ppdValue2)
-
+	var comfortResult = comf.getFullPPD(viewResult.wallViews, viewResult.glzViews, viewResult.facadeDist, viewResult.windIntervals, object.occDistToWallCenter, geoResult.windowHeight, geoResult.sillHeight, object.uvalueValue, object.intLowEChecked, object.intLowEEmissivity, parseFloat(object.rvalueValue), parseFloat(object.airtempValue), parseFloat(object.outdoorTempValue), radiantFloorChecked, parseFloat(object.clothingValue), parseFloat(object.metabolic), parseFloat(object.airspeedValue), parseFloat(object.humidityValue), ppdValue, ppdValue2)
 
 	// Return all of the information in one dictionary
 	var r = {}
-	
+
 	r.wallCoords = geoResult.wallCoords;
 	r.glzCoords = geoResult.glzCoords;
 	r.glzRatio = geoResult.glzRatio;

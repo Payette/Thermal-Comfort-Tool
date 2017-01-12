@@ -564,7 +564,7 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, o
 	} else {
 		var winFilmCoeff = 8.29
 	}
-
+  
 	// Get the radiant assymetry PPD results and the MRT values.
 	var mrtPPDResult = comf.getMRTPPD(glzViewFac, wallViewFac, winFilmCoeff, airTemp, outdoorTemp, indoorSrfTemp, opaqueRVal, windowUVal, intLowE, lowEmissivity, clo, met, vel, rh)
 	var windowTemp = mrtPPDResult.windowTemp
