@@ -59,9 +59,7 @@ uVal.uValDownD = function(PPDAccept, distToFacade, windowHgt, sillHgt, filmCoeff
 		if (isNaN(t)) {
 			t = util.bisect(a, b, fn, epsilon, 0)
 		}
-		if (t == 100){
-			t = 0
-		}
+		
 		return t
 	}
 

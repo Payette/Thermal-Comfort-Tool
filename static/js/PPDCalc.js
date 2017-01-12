@@ -564,7 +564,7 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, o
 	} else {
 		var winFilmCoeff = 8.29
 	}
-  
+
 	// Get the radiant assymetry PPD results and the MRT values.
 	var mrtPPDResult = comf.getMRTPPD(glzViewFac, wallViewFac, winFilmCoeff, airTemp, outdoorTemp, indoorSrfTemp, opaqueRVal, windowUVal, intLowE, lowEmissivity, clo, met, vel, rh)
 	var windowTemp = mrtPPDResult.windowTemp
@@ -601,9 +601,9 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, o
     }
 
     if (closestDist < rampDwnDist){
-      var dwnPPDFac = (rampDwnDist - closestDist)/rampDwnDist
+      var dwnPPDFac = 0.75*((rampDwnDist - closestDist)/rampDwnDist) + 0.25
     } else {
-      var dwnPPDFac = 0
+      var dwnPPDFac = 0.25
     }
     //var dwnPPDFac = 0
   } else {
