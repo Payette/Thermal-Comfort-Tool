@@ -109,16 +109,16 @@ $("#occupantDist").attr("max", case1Data.wallLen/2);
 // Main function to run the analysis.
 script.computeData = function(object) {
 	// Compute the window and wall geometry.
-		var geoResult = geo.createGlazingForRect(parseFloat(object.ceilingHeightValue), object.wallLen, object.glzRatioValue/100, parseFloat(object.windowWidthValue), parseFloat(object.windowHeightValue), parseFloat(object.sillHeightValue), parseFloat(object.distanceWindows), glzOrWidth, changedVar);
+	var geoResult = geo.createGlazingForRect(parseFloat(object.ceilingHeightValue), object.wallLen, object.glzRatioValue/100, parseFloat(object.windowWidthValue), parseFloat(object.windowHeightValue), parseFloat(object.sillHeightValue), parseFloat(object.distanceWindows), glzOrWidth, changedVar);
 	// Compute the view factors to make the graph.
 	var viewResult = geo.computeAllViewFac(geoResult.wallCoords, geoResult.glzCoords, object.occDistToWallCenter)
 	// Compute the PPD to make the graph.
-	var comfortResult = comf.getFullPPD(viewResult.wallViews, viewResult.glzViews, viewResult.facadeDist, viewResult.windIntervals, object.occDistToWallCenter, geoResult.windowHeight, parseFloat(object.sillHeightValue), object.uvalueValue, object.intLowEChecked, object.intLowEEmissivity, rvalueValue, parseFloat(object.airtempValue), parseFloat(object.outdoorTempValue), radiantFloorChecked, parseFloat(clothingValue), parseFloat(metabolic), parseFloat(airspeedValue), parseFloat(object.humidityValue), ppdValue, ppdValue2)
+	var comfortResult = comf.getFullPPD(viewResult.wallViews, viewResult.glzViews, viewResult.facadeDist, viewResult.windIntervals, object.occDistToWallCenter, geoResult.windowHeight, geoResult.sillHeight, object.uvalueValue, object.intLowEChecked, object.intLowEEmissivity, rvalueValue, parseFloat(object.airtempValue), parseFloat(object.outdoorTempValue), radiantFloorChecked, parseFloat(clothingValue), parseFloat(metabolic), parseFloat(airspeedValue), parseFloat(object.humidityValue), ppdValue, ppdValue2)
 
 
 	// Return all of the information in one dictionary
 	var r = {}
-
+	
 	r.wallCoords = geoResult.wallCoords;
 	r.glzCoords = geoResult.glzCoords;
 	r.glzRatio = geoResult.glzRatio;

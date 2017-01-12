@@ -5,7 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<meta charset = "UTF-8" />
 
-	<title>Glazing and Comfort Analysis Tool</title>
+	<title>Glazing and Winter Comfort Tool</title>
 
 	<link rel="stylesheet" type="text/css" href="static/css/styles.css" media="screen"/>
 	<link rel="stylesheet" type="text/css" href="static/css/bigfoot-default.css"/>
@@ -238,7 +238,7 @@
 		<hr>
 		<p>This tool displays the impact of glazing geometry and U-value on occupant thermal comfort during winter months. It shows when it is possible to eliminate perimeter heat in cases where U-Value is low and windows are small.  It quantifies full-body discomfort from cold window surfaces as well as local discomfort from window downdraft.</p>
 
-		<p class="survey">Read the <a href="/images_research_projects/GlazingSelectionTool/GlazingAndComfortAnalysisToolTermsAndConditions.pdf" target="_blank">Terms &amp; Conditions</a>. Provide feedback or report bugs <a href="https://github.com/PayettePeople/Thermal-Comfort-Tool/issues">here.</a></p>
+		<p class="survey">Read the <a href="/images_research_projects/GlazingSelectionTool/GlazingAndComfortAnalysisToolTermsAndConditions.pdf" target="_blank">Terms &amp; Conditions</a>. Provide feedback or report bugs <a href="https://github.com/PayettePeople/Thermal-Comfort-Tool/issues">here</a>.</p>
 
 		<div id="options">
 			<div id="units">
@@ -278,38 +278,38 @@
 			<div class="inputWrapperRight"><input type="text" name="ceiling3" id="ceiling3" min="1" max="100"  value="12" step="1" class="case3 unselected"></div><br>
 
 			<label for="wallWidth">Room Length (<span class="units IP">ft</span>)<sup id="fnref:2"><a href="#fn:2" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="wallWidth" id="wallWidth" value="18" step="1" class="case1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="wallWidth2" id="wallWidth2" value="18" step="1" class="case2 unselected"></div>
-			<div class="inputWrapperRight"><input type="text" name="wallWidth3" id="wallWidth3" value="18" step="1" class="case3 unselected"></div><br>
+			<div class="inputWrapperLeft"><input type="text" name="wallWidth" id="wallWidth" min="1" value="18" step="1" class="case1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="wallWidth2" id="wallWidth2" min="1" value="18" step="1" class="case2 unselected"></div>
+			<div class="inputWrapperRight"><input type="text" name="wallWidth3" id="wallWidth3" min="1" value="18" step="1" class="case3 unselected"></div><br>
 
 			<label for="windowHeight">Window Height From Sill (<span class="units IP">ft</span>)<sup id="fnref:3"><a href="#fn:3" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="windowHeight" id="windowHeight" value="7" step="0.5" class="case1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="windowHeight2" id="windowHeight2" value="7" step="0.5" class="case2 unselected"></div>
-			<div class="inputWrapperRight"><input type="text" name="windowHeight3" id="windowHeight3" value="7" step="0.5" class="case3 unselected"></div><br>
+			<div class="inputWrapperLeft"><input type="text" name="windowHeight" id="windowHeight" min="0.1" value="7" step="0.5" class="case1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="windowHeight2" id="windowHeight2" min="0.1" value="7" step="0.5" class="case2 unselected"></div>
+			<div class="inputWrapperRight"><input type="text" name="windowHeight3" id="windowHeight3" min="0.1" value="7" step="0.5" class="case3 unselected"></div><br>
 
 			<label for="sill">Sill Height (<span class="units IP">ft</span>)<sup id="fnref:4"><a href="#fn:4" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="sill" id="sill" value="3" step="0.5" class="case1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="sill2" id="sill2" value="3" step="0.5" class="case2 unselected"></div>
-			<div class="inputWrapperRight"><input type="text" name="sill3" id="sill3" value="3" step="0.5" class="case3 unselected"></div><br>
+			<div class="inputWrapperLeft"><input type="text" name="sill" id="sill" min="0" value="3" step="0.5" class="case1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="sill2" id="sill2" min="0" value="3" step="0.5" class="case2 unselected"></div>
+			<div class="inputWrapperRight"><input type="text" name="sill3" id="sill3" min="0" value="3" step="0.5" class="case3 unselected"></div><br>
 
 
 			<label id="setGlazing">Set Glazing Amount By</label><br class="glzBR">
 
 			<label for="width" id="windowWidthLabel"><div class="customCheckStyle"><input type="radio" name="glazingRadio" value="windowWidthCheck" id="windowWidthCheck" class="customCheck" checked><label for="windowWidthCheck" id="checkWindWidth"></label></div>Window Width (<span class="units IP">ft</span>)<sup id="fnref:5"><a href="#fn:5" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="width" id="windowWidth" value="4" step="0.5" class="case1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="width2" id="windowWidth2" value="4" step="0.5" class="case2 unselected"></div>
-			<div class="inputWrapperRight"><input type="text" name="width3" id="windowWidth3" value="4" step="0.5" class="case3 unselected"></div><br>
+			<div class="inputWrapperLeft"><input type="text" name="width" id="windowWidth" min="0.1" value="4" step="0.5" class="case1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="width2" id="windowWidth2" min="0.1" value="4" step="0.5" class="case2 unselected"></div>
+			<div class="inputWrapperRight"><input type="text" name="width3" id="windowWidth3" min="0.1" value="4" step="0.5" class="case3 unselected"></div><br>
 
 			<label for="glazing" class="inactive" id="glazingLabel"><div class="customCheckStyle"><input type="radio" name="glazingRadio" value="glazingRatioCheck" class="customCheck" id="glazingRatioCheck"><label for="glazingRatioCheck" id="checkGlzRatio" class="unselected"></label></div>Window-to-Wall Ratio (%)<sup id="fnref:6"><a href="#fn:6" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="glazing" class="inactive case1" id="glazing" value="40" step="1" disabled></div>
-			<div class="inputWrapperCenter"><input type="text" name="glazing2" class="inactive case2 unselected" id="glazing2" value="40" step="1" disabled></div>
-			<div class="inputWrapperRight"><input type="text" name="glazing3" class="inactive case3 unselected" id="glazing3" value="40" step="1" disabled></div><br>
+			<div class="inputWrapperLeft"><input type="text" name="glazing" class="inactive case1" id="glazing" min="1" max="95" value="40" step="1" disabled></div>
+			<div class="inputWrapperCenter"><input type="text" name="glazing2" class="inactive case2 unselected" id="glazing2" min="1" max="95" value="40" step="1" disabled></div>
+			<div class="inputWrapperRight"><input type="text" name="glazing3" class="inactive case3 unselected" id="glazing3" min="1" max="95" value="40" step="1" disabled></div><br>
 
 
 			<label for="distWindow">Window Separation (<span class="units IP">ft</span>)<sup id="fnref:7"><a href="#fn:7" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="distWindow" id="distWindow" value="6" step="1" class="case1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="distWindow2" id="distWindow2" value="6" step="1" class="case2 unselected"></div>
-			<div class="inputWrapperRight"><input type="text" name="distWindow3" id="distWindow3" value="6" step="1" class="case3 unselected"></div><br>
+			<div class="inputWrapperLeft"><input type="text" name="distWindow" id="distWindow" min="0" value="6" step="1" class="case1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="distWindow2" id="distWindow2" min="0" value="6" step="1" class="case2 unselected"></div>
+			<div class="inputWrapperRight"><input type="text" name="distWindow3" id="distWindow3" min="0" value="6" step="1" class="case3 unselected"></div><br>
 		</fieldset>
 
 
@@ -324,8 +324,8 @@
 
 			<label for="uvalue">Window U-Value (<span class="unitsUVal IP">Btu/hr*ft&sup2;*&deg;F</span>)<sup id="fnref:8"><a href="#fn:8" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="uvalue" id="uvalue" min="0" value="0.35" step="0.01" class="case1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="uvalue2" id="uvalue2" value="0.35" step="0.01" class="case2 unselected"></div>
-			<div class="inputWrapperRight"><input type="text" name="uvalue3" id="uvalue3" value="0.35" step="0.01" class="case3 unselected"></div><br>
+			<div class="inputWrapperCenter"><input type="text" name="uvalue2" id="uvalue2" min="0" value="0.35" step="0.01" class="case2 unselected"></div>
+			<div class="inputWrapperRight"><input type="text" name="uvalue3" id="uvalue3" min="0" value="0.35" step="0.01" class="case3 unselected"></div><br>
 
 			<label class="grey" id="calcUValQuestion">What U-Value meets the target PPD?<sup id="fnref:9" class="uValAlert"><a href="#fn:9" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="calcuvalue" id="calcuvalue" value="0.29" class="inactive case1"  disabled></div>
@@ -357,9 +357,9 @@
 			<div class="inputWrapperRight"><input type="text" name="airtemp3" id="airtemp3" value="72" class="case3 unselected"></div><br>
 
 			<label for="humidity">Relative Humidity (%)<sup id="fnref:13"><a href="#fn:13" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="humidity" id="humidity" value="20" class="case1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="humidity2" id="humidity2" value="20" class="case2 unselected"></div>
-			<div class="inputWrapperRight"><input type="text" name="humidity3" id="humidity3" value="20" class="case3 unselected"></div><br>
+			<div class="inputWrapperLeft"><input type="text" name="humidity" id="humidity" min="0" max="100" value="20" class="case1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="humidity2" id="humidity2" min="0" max="100" value="20" class="case2 unselected"></div>
+			<div class="inputWrapperRight"><input type="text" name="humidity3" id="humidity3" min="0" max="100" value="20" class="case3 unselected"></div><br>
 		</fieldset>
 
 
@@ -384,9 +384,9 @@
 
 
 				<label for="rvalue">Wall R-Value (<span class="unitsRVal IP">hr*ft&sup2;*&deg;F/Btu</span>)<sup id="fnref:16"><a href="#fn:16" rel="footnote">?</a></sup></label>
-				<div class="inputWrapperLeft"><input type="text" name="rvalue" id="rvalue" value="20" class="case1"></div>
-				<div class="inputWrapperCenter"><hr class="case2 unselected"></div>
-				<div class="inputWrapperRight"><hr class="case3 unselected"></div><br>
+				<div class="inputWrapperLeft"><input type="text" name="rvalue" id="rvalue" min="0" value="15" class="case1"></div>
+				<div class="inputWrapperCenter"><input type="text" name="rvalue2" id="rvalue2" min="0" value="15" class="case2 unselected"></div>
+				<div class="inputWrapperRight"><input type="text" name="rvalue3" id="rvalue3" min="0" value="15" class="case3 unselected"></div><br>
 
 
 				<label for="airspeed">Air Speed (<span class="unitsAirSpeed IP">fpm</span>)<sup id="fnref:17"><a href="#fn:17" rel="footnote">?</a></sup></label>
@@ -409,9 +409,6 @@
 
 		</fieldset>
 		</form>
-	</div>
-
-	</div>
 
 	<div id="referenceLinks">
 	<h1 class="expandRef"><span class="expand" id="ref"></span>Related Links</h1>
@@ -443,6 +440,8 @@
            <li><span class="post-date">09.16.16</span> <a href="http://www.payette.com/post/3345676-announcing-the-new-glazing-and-winter">Announcing the New Glazing and Winter Comfort Tool</a></li>
       </ul>
   </div>
+	</div>
+	</div>
 	</div>
 
 

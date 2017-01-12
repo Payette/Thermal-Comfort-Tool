@@ -32,8 +32,8 @@ geo.createGlazingForRect = function(rectHeight, wallLength, glazingRatio, window
   //If the sill height given from the formulas above is less than 1% of the wall height, set the sill height to be 1% of the wall height.
   if (silHeight < (0.01 * rectHeight)) {
 			var silHeightFinal = 0;
-	} else if (silHeight > rectHeight) {
-			var silHeightFinal = rectHeight;
+	} else if (silHeight > rectHeight-0.1) {
+			var silHeightFinal = rectHeight-0.1;
 	} else {
 			var silHeightFinal = silHeight;
 	}
