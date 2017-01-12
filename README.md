@@ -32,7 +32,7 @@ You should have received a copy of the GNU General Public License along with the
 
 
 
-Contributors(a-z):
+Contributors (A-Z):
 ========================================
 Alejandra Menchaca
 
@@ -48,6 +48,10 @@ Vera Baranova
 
 [The Center for the Built Environment](https://github.com/CenterForTheBuiltEnvironment) including:
 
+Shichao Liu
+
 Stefano Schiavon
+
+Toby Cheung
 
 [Tyler Hoyt](thoyt)
