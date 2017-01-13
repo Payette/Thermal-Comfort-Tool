@@ -749,9 +749,6 @@ render.makeGraph = function () {
       case3Data.rvalueValue = units.rSI2rIP(case3Data.rvalueValue);
       $("#rvalue3").val(round(case3Data.rvalueValue*100)/100);
 
-      rvalueValue = units.rSI2rIP(rvalueValue);
-      $("#rvalue").val(round(rvalueValue*100)/100);
-
       case1Data.airspeedValue = units.mps2fpm(case1Data.airspeedValue);
       $("#airspeed").val(round(case1Data.airspeedValue*10)/10);
       case2Data.airspeedValue = units.mps2fpm(case2Data.airspeedValue);
@@ -759,13 +756,10 @@ render.makeGraph = function () {
       case3Data.airspeedValue = units.mps2fpm(case3Data.airspeedValue);
       $("#airspeed3").val(round(case3Data.airspeedValue*10)/10);
 
-      airspeedValue = units.mps2fpm(airspeedValue);
-      $("#airspeed").val(round(airspeedValue*10)/10);
-
-
       occDistFromFacade = units.M2Ft(occDistFromFacade);
       // update occupant dist from facade slider
-        $("#distFromFacade").attr("max", 12).attr("min", 1);
+      $("#distFromFacade").attr("max", 12).attr("min", 1);
+      $("#distFromFacade").val(occDistFromFacade);
       $("#distFromFacade").attr("value", occDistFromFacade);
       $("#distOutput").empty;
       $("#distOutput").text(round(occDistFromFacade * 10)/10 + " ft");
@@ -894,9 +888,6 @@ render.makeGraph = function () {
       case3Data.rvalueValue = units.rIP2rSI(case3Data.rvalueValue);
       $("#rvalue3").val(round(case3Data.rvalueValue*100)/100);
 
-      rvalueValue = units.rIP2rSI(rvalueValue);
-      $("#rvalue").val(round(rvalueValue*100)/100);
-
       case1Data.airspeedValue = units.fpm2mps(case1Data.airspeedValue);
       $("#airspeed").val(round(case1Data.airspeedValue*10)/10);
       case2Data.airspeedValue = units.fpm2mps(case2Data.airspeedValue);
@@ -904,17 +895,13 @@ render.makeGraph = function () {
       case3Data.airspeedValue = units.fpm2mps(case3Data.airspeedValue);
       $("#airspeed3").val(round(case3Data.airspeedValue*10)/10);
 
-      airspeedValue = units.fpm2mps(airspeedValue);
-      $("#airspeed").val(round(airspeedValue*100)/100);
-
       occDistFromFacade = units.Ft2M(occDistFromFacade);
       // update occupant dist from facade slider
-        $("#distFromFacade").attr("max", 4.5).attr("min", .25);
+      $("#distFromFacade").attr("max", 4).attr("min", .5);
+      $("#distFromFacade").val(occDistFromFacade);
       $("#distFromFacade").attr("value", occDistFromFacade);
       $("#distOutput").empty();
       $("#distOutput").text(round(occDistFromFacade * 10)/10 + " m");
-
-
 
       // update graph axis / scales
       x = d3.scale.linear()
@@ -978,6 +965,7 @@ render.makeGraph = function () {
       $("#distFromFacade").on("change", function(event) {
       occDistFromFacade = $(this).val();
 
+      $("#distFromFacade").val(occDistFromFacade);
       $("#distFromFacade").attr("value",occDistFromFacade);
       if (unitSys == "IP") {
         $("#distOutput").text(occDistFromFacade + " ft");
@@ -1068,6 +1056,7 @@ render.makeGraph = function () {
   $("#distFromFacade").on("input", function(event) {
     occDistFromFacade = $(this).val();
 
+    $("#distFromFacade").val(occDistFromFacade);
     $("#distFromFacade").attr("value",occDistFromFacade);
     if (unitSys == "IP") {
       $("#distOutput").text(occDistFromFacade + " ft");
@@ -1230,100 +1219,13 @@ render.makeGraph = function () {
   })
 
 
-  /*
-  $("#rvalue").focusout(function(event) {
-    rvalueValue = $(this).val();
-    $("#rvalue").val(rvalueValue);
-
-    updateData(case1Data);
-    updateData(case2Data);
-    updateData(case3Data);
-  })
-  $("#rvalue").on("spin", function(event, ui) {
-    rvalueValue = ui.value;
-    $("#rvalue").val(rvalueValue);
-
-    updateData(case1Data);
-    updateData(case2Data);
-    updateData(case3Data);
-  })
-
-  $("#airspeed").focusout(function(event) {
-    airspeedValue = $(this).val();
-
-    $("#airspeed").val(airspeedValue);
-
-    updateData(case1Data);
-    updateData(case2Data);
-    updateData(case3Data);
-  })
-  $("#airspeed").on("spin", function(event, ui) {
-    airspeedValue = ui.value;
-
-    $("#airspeed").val(airspeedValue);
-
-    updateData(case1Data);
-    updateData(case2Data);
-    updateData(case3Data);
-  })
-
-  $("#clothing").focusout(function(event) {
-    clothingValue = $(this).val();
-
-    $("#clothing").val(clothingValue);
-
-    updateData(case1Data);
-    updateData(case2Data);
-    updateData(case3Data);
-  })
-  $("#clothing").on("spin", function(event, ui) {
-    clothingValue = ui.value;
-
-    $("#clothing").val(clothingValue);
-
-    updateData(case1Data);
-    updateData(case2Data);
-    updateData(case3Data);
-  })
-
-  $("#metabolic").focusout(function(event) {
-    metabolic = $(this).val();
-
-    $("#metabolic").val(metabolic);
-
-    updateData(case1Data);
-    updateData(case2Data);
-    updateData(case3Data);
-  })
-  $("#metabolic").on("spin", function(event, ui) {
-    metabolic = ui.value;
-
-    $("#metabolic").val(metabolic);
-
-    updateData(case1Data);
-    updateData(case2Data);
-    updateData(case3Data);
-  })
-  */
-
-
-
-
-
   // prevent enter from trigger footnotes, use enter to update value in field
   $("#ceiling, #wallWidth, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowE, #outdoortemp, #airtemp, #humidity, #ceiling2, #wallWidth2, #windowHeight2, #windowWidth2, #glazing2, #sill2, #distWindow2, #uvalue2, #lowE2, #outdoortemp2, #airtemp2, #humidity2, #ceiling3, #wallWidth3, #windowHeight3, #windowWidth3, #glazing3, #sill3, #distWindow3, #uvalue3, #lowE3, #outdoortemp3, #airtemp3, #humidity3, #rvalue, #airspeed, #clothing, #metabolic, #rvalue2, #airspeed2, #clothing2, #metabolic2, #rvalue3, #airspeed3, #clothing3, #metabolic3").keydown(function(event) {
-
     if (event.keyCode == 13) {
       $(this).blur();
       event.preventDefault();
     }
-
   });
-
-
-
-
-
 
 
   // Case 1 - Changes based on typed inputs
@@ -2414,7 +2316,6 @@ render.makeGraph = function () {
 
 
   function autocalcUValues() {
-
     // Re-run the functions with the new inputs.
     var fullDataCase1 = script.computeData(case1Data);
     var fullDataCase2 = script.computeData(case2Data);
@@ -2431,29 +2332,22 @@ render.makeGraph = function () {
     $("#calcuvalue2").val(Math.round(case2Data.calcUVal * 100) / 100);
     $("#calcuvalue3").val(Math.round(case3Data.calcUVal * 100) / 100);
 
-
-
-
     if (case1Data.calcUVal <= 0.01 || case2Data.calcUVal <= 0.01 || case3Data.calcUVal <= 0.01) {
       $("#uvaluePop").css("display","block");
 
       if (case1Data.calcUVal <= 0.01) {
         $("#calcuvalue").css("color", "#f72734");
       }
-
       if (case2Data.calcUVal <= 0.01) {
         $("#calcuvalue2").css("color", "#f72734");
       }
-
       if (case3Data.calcUVal <= 0.01) {
         $("#calcuvalue3").css("color", "#f72734");
       }
-
     } else {
       $("#uvaluePop").css("display","none");
       $("#calcuvalue, #calcuvalue2, #calcuvalue3").css("color", "#ADADAD");
     }
-
   }
 
   function checkCondensation(conValue1, conValue2, conValue3) {
@@ -2656,7 +2550,6 @@ render.makeGraph = function () {
 
 
   function updateOccupantPoint(chartsvg, data, className, color, param) {
-
     // DATA JOIN
     // Join new data with old elements, if any.
     var thisOccupantPoint = chartsvg.selectAll("." + className)
@@ -3366,7 +3259,7 @@ render.makeGraph = function () {
           .range([0, 13]); //output range
       } else {
         var occDistSliderDragScale = d3.scale.linear()
-          .domain([0, width]) //input domain
+          .domain([margin.left, width+margin.left]) //input domain
           .range([0, 4.5]); //output range
       }
 
@@ -3395,7 +3288,9 @@ render.makeGraph = function () {
 
       // update the global value
       occDistFromFacade = Math.round(newOccPosition*10)/10;
+
       // update the slider
+      $("#distFromFacade").val(occDistFromFacade);
       $("#distFromFacade").attr("value",occDistFromFacade);
       if (unitSys == "IP") {
         $("#distOutput").text(occDistFromFacade + " ft");

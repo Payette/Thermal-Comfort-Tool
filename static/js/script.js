@@ -18,12 +18,6 @@ var ppdValue2 = $("#ppd2").val();
 // need to remove radiant floor from calculation
 var radiantFloorChecked = $("#radiant").is(":checked"); //provides a true/false
 
-var rvalueValue = $("#rvalue").val();
-var airspeedValue = $("#airspeed").val();
-var clothingValue = $("#clothing").val();
-var metabolic = $("#metabolic").val();
-
-
 var case1Data = {
 	ceilingHeightValue: $("#ceiling").val(),
 	wallLen: $("#wallWidth").val(),

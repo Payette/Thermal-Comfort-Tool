@@ -509,7 +509,7 @@ comf.getDowndraftPPD = function(distToFacade, mrtPMV, windowHgt, sillHgt, filmCo
   var DDTemp = []
 	for (var i = 0; i < distToFacade.length; i++) {
 		var ddPPD = comf.calcFulldonwDppd(distToFacade[i], mrtPMV[i], windowHgt+sillHgt, filmCoeff, airTemp, outdoorTemp, windowUVal, dwnPPDFac)
-		PPD.push(ddPPD.ppd)
+    PPD.push(ddPPD.ppd)
     DDSpd.push(ddPPD.airSpd)
     DDTemp.push(ddPPD.downTemp)
 	}
@@ -541,7 +541,7 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, o
     }
   } else {
     var windowHgtSI = windowHgt
-    var sillHgt = sillHgt
+    var sillHgtSI = sillHgt
   	var vel = airSpeed
   	var windowUVal = glzUVal
   	var opaqueRVal = wallRVal

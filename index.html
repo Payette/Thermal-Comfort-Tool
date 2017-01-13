@@ -159,10 +159,10 @@
 					<!-- <legend>Occupancy Thresholds</legend>
 					<hr> -->
 
-					<label for="ppd">Acceptable % of People Dissatisfied from Ankle Draft <sup id="fnref:21"><a href="#fn:21" rel="footnote">?</a></sup></label>
+					<label for="ppd">Acceptable PPD from Ankle Draft <sup id="fnref:21"><a href="#fn:21" rel="footnote">?</a></sup></label>
 					<div class="occSlider"><input type="range" name="ppd" id="ppd" value="20" min="5" max="30"><p id="ppdOutput">20%</p></div>
 
-          <label for="ppd">Acceptable % of People Dissatisfied from Radiant Loss <sup id="fnref:22"><a href="#fn:22" rel="footnote">?</a></sup></label>
+          <label for="ppd">Acceptable PPD from Radiant Loss <sup id="fnref:22"><a href="#fn:22" rel="footnote">?</a></sup></label>
 					<div class="occSlider"><input type="range" name="ppd2" id="ppd2" value="10" min="5" max="30"><p id="ppdOutput2">10%</p></div>
 
 					<label for="distFromFacade">Occupant Distance From Fa&ccedil;ade (<span class="units IP">ft</span>)<sup id="fnref:20"><a href="#fn:20" rel="footnote">?</a></sup></label>
@@ -288,9 +288,9 @@
 			<div class="inputWrapperRight"><input type="text" name="wallWidth3" id="wallWidth3" min="1" value="18" step="1" class="case3 unselected"></div><br>
 
 			<label for="windowHeight">Window Height From Sill (<span class="units IP">ft</span>)<sup id="fnref:3"><a href="#fn:3" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="windowHeight" id="windowHeight" min="0.1" value="7" step="0.5" class="case1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="windowHeight2" id="windowHeight2" min="0.1" value="7" step="0.5" class="case2 unselected"></div>
-			<div class="inputWrapperRight"><input type="text" name="windowHeight3" id="windowHeight3" min="0.1" value="7" step="0.5" class="case3 unselected"></div><br>
+			<div class="inputWrapperLeft"><input type="text" name="windowHeight" id="windowHeight" min="0" value="7" step="0.5" class="case1"></div>
+			<div class="inputWrapperCenter"><input type="text" name="windowHeight2" id="windowHeight2" min="0" value="7" step="0.5" class="case2 unselected"></div>
+			<div class="inputWrapperRight"><input type="text" name="windowHeight3" id="windowHeight3" min="0" value="7" step="0.5" class="case3 unselected"></div><br>
 
 			<label for="sill">Sill Height (<span class="units IP">ft</span>)<sup id="fnref:4"><a href="#fn:4" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="sill" id="sill" min="0" value="3" step="0.5" class="case1"></div>
@@ -523,10 +523,10 @@
 						<p>Expected location of the occupant perpendicular to the fa&ccedil;ade.<a href="#fnref:20" title="return to article"> ↩</a></p>
 				</li>
 			<li class="footnote" id="fn:21"> <!-- ppd -->
-					<p>Percentage of People Dissatisfied (PPD) is a common metric used to define occupants’ satisfaction with their environment. This particular variable sets the acceptable percent of the polulation experiencing cold feet from downdraft off windows.  The standard set by ASHRAE for ankle draft discomfort in regularly-occupied spaces is 20% of the population.<a href="#fnref:21" title="return to article"> ↩</a></p>
+					<p>Percentage of People Dissatisfied (PPD) is a metric used to define occupants’ satisfaction with their environment. This particular variable sets the acceptable percent of the polulation dissatisfied as a result of cold feet from downdraft off windows.  The standard set by ASHRAE for ankle draft discomfort in regularly-occupied spaces is less than 20% PPD.<a href="#fnref:21" title="return to article"> ↩</a></p>
 			</li>
 			<li class="footnote" id="fn:22"> <!-- ppd -->
-					<p>This variable sets the acceptable percent of the polulation experiencing full-body sensations of cold as a result of proximity to cool window surfaces. The standard set by ASHRAE for full-body discomfort in regularly-occupied spaces is 10% of the poolulation.  Note that it is not possible to get a full-body PPD lower than 5%.<a href="#fnref:22" title="return to article"> ↩</a></p>
+					<p>This variable sets the acceptable Percentage of People Dissatisfied (PPD) from full-body sensations of cold as a result of radiant loss to window surfaces. The standard set by ASHRAE for full-body discomfort in regularly-occupied spaces is less than 10% of the population.  Note that it is not possible to get a full-body PPD lower than 5%.<a href="#fnref:22" title="return to article"> ↩</a></p>
 			</li>
 	</ol>
 	</div>
