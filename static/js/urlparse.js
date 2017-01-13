@@ -59,25 +59,6 @@ if (typeof urlParameters.distFromFacade != 'undefined') {
 	}
 }
 
-
-// inputs applied to all cases
-if (typeof urlParameters.rValue != 'undefined') {
-	$("#rvalue").val(urlParameters.rValue);
-}
-/*if (typeof urlParameters.radiant == 'yes') {
-	$("#radiant").attr("checked", "checked");;
-}*/
-if (typeof urlParameters.airspeed != 'undefined') {
-	$("#airspeed").val(urlParameters.airspeed);
-}
-if (typeof urlParameters.clothing != 'undefined') {
-	$("#clothing").val(urlParameters.clothing);
-}
-if (typeof urlParameters.metabolic != 'undefined') {
-	$("#metabolic").val(urlParameters.metabolic);
-}
-
-
 var case1visability = urlParameters.case1;
 var case2visability = urlParameters.case2;
 var case3visability = urlParameters.case3;
@@ -129,6 +110,19 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' && urlParamet
 
 	if (typeof urlParameters.humidity != 'undefined') {
 		$("#humidity, #humidity2, #humidity3").val(urlParameters.humidity);
+	}
+
+	if (typeof urlParameters.rValue != 'undefined') {
+		$("#rvalue, #rvalue2, #rvalue3").val(urlParameters.rValue);
+	}
+	if (typeof urlParameters.airspeed != 'undefined') {
+		$("#airspeed, #airspeed2, #airspeed3").val(urlParameters.airspeed);
+	}
+	if (typeof urlParameters.clothing != 'undefined') {
+		$("#clothing, #clothing2, #clothing3").val(urlParameters.clothing);
+	}
+	if (typeof urlParameters.metabolic != 'undefined') {
+		$("#metabolic, #metabolic2, #metabolic3").val(urlParameters.metabolic);
 	}
 
 	if (urlParameters.lowE != '') {
@@ -227,6 +221,34 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 	}
 	if (typeof urlParameters.humidity2 != 'undefined') {
 		$("#humidity2").val(urlParameters.humidity2);
+	}
+
+	if (typeof urlParameters.rValue != 'undefined') {
+		$("#rvalue, #rvalue3").val(urlParameters.rValue);
+	}
+	if (typeof urlParameters.rValue2 != 'undefined') {
+		$("#rvalue2").val(urlParameters.rValue2);
+	}
+
+	if (typeof urlParameters.airspeed != 'undefined') {
+		$("#airspeed, #airspeed3").val(urlParameters.airspeed);
+	}
+	if (typeof urlParameters.airspeed2 != 'undefined') {
+		$("#airspeed2").val(urlParameters.airspeed2);
+	}
+
+	if (typeof urlParameters.clothing != 'undefined') {
+		$("#clothing, #clothing3").val(urlParameters.clothing);
+	}
+	if (typeof urlParameters.clothing2 != 'undefined') {
+		$("#clothing2").val(urlParameters.clothing2);
+	}
+
+	if (typeof urlParameters.metabolic != 'undefined') {
+		$("#metabolic, #metabolic3").val(urlParameters.metabolic);
+	}
+	if (typeof urlParameters.metabolic2 != 'undefined') {
+		$("#metabolic2").val(urlParameters.metabolic2);
 	}
 
 	if (urlParameters.lowE != '') {
@@ -334,6 +356,34 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' &&  urlParame
 	}
 	if (typeof urlParameters.humidity3 != 'undefined') {
 		$("#humidity3").val(urlParameters.humidity3);
+	}
+
+	if (typeof urlParameters.rValue != 'undefined') {
+		$("#rvalue, #rvalue2").val(urlParameters.rValue);
+	}
+	if (typeof urlParameters.rValue3 != 'undefined') {
+		$("#rvalue3").val(urlParameters.rValue3);
+	}
+
+	if (typeof urlParameters.airspeed != 'undefined') {
+		$("#airspeed, #airspeed2").val(urlParameters.airspeed);
+	}
+	if (typeof urlParameters.airspeed3 != 'undefined') {
+		$("#airspeed3").val(urlParameters.airspeed3);
+	}
+
+	if (typeof urlParameters.clothing != 'undefined') {
+		$("#clothing, #clothing2").val(urlParameters.clothing);
+	}
+	if (typeof urlParameters.clothing3 != 'undefined') {
+		$("#clothing3").val(urlParameters.clothing3);
+	}
+
+	if (typeof urlParameters.metabolic != 'undefined') {
+		$("#metabolic, #metabolic2").val(urlParameters.metabolic);
+	}
+	if (typeof urlParameters.metabolic3 != 'undefined') {
+		$("#metabolic3").val(urlParameters.metabolic3);
 	}
 
 	if (urlParameters.lowE != '') {
@@ -475,6 +525,46 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 	}
 	if (typeof urlParameters.humidity3 != 'undefined') {
 		$("#humidity3").val(urlParameters.humidity3);
+	}
+
+	if (typeof urlParameters.rValue != 'undefined') {
+		$("#rvalue").val(urlParameters.rValue);
+	}
+	if (typeof urlParameters.rValue2 != 'undefined') {
+		$("#rvalue2").val(urlParameters.rValue2);
+	}
+	if (typeof urlParameters.rValue3 != 'undefined') {
+		$("#rvalue3").val(urlParameters.rValue3);
+	}
+
+	if (typeof urlParameters.airspeed != 'undefined') {
+		$("#airspeed").val(urlParameters.airspeed);
+	}
+	if (typeof urlParameters.airspeed2 != 'undefined') {
+		$("#airspeed2").val(urlParameters.airspeed2);
+	}
+	if (typeof urlParameters.airspeed3 != 'undefined') {
+		$("#airspeed3").val(urlParameters.airspeed3);
+	}
+
+	if (typeof urlParameters.clothing != 'undefined') {
+		$("#clothing").val(urlParameters.clothing);
+	}
+	if (typeof urlParameters.clothing2 != 'undefined') {
+		$("#clothing2").val(urlParameters.clothing2);
+	}
+	if (typeof urlParameters.clothing3 != 'undefined') {
+		$("#clothing3").val(urlParameters.clothing3);
+	}
+
+	if (typeof urlParameters.metabolic != 'undefined') {
+		$("#metabolic").val(urlParameters.metabolic);
+	}
+	if (typeof urlParameters.metabolic2 != 'undefined') {
+		$("#metabolic2").val(urlParameters.metabolic2);
+	}
+	if (typeof urlParameters.metabolic3 != 'undefined') {
+		$("#metabolic3").val(urlParameters.metabolic3);
 	}
 
 	if (urlParameters.lowE != '') {
