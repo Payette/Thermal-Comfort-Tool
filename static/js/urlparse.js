@@ -41,6 +41,7 @@ if (typeof urlParameters.units != 'undefined') {
 		$(".unitsUVal").append("W/m&sup2;*K");
 		$(".unitsRVal").append("m&sup2;*K/W");
 		$(".unitsAirSpeed").append("m/s");
+		$("#calcuvalue, #calcuvalue2, #calcuvalue3").val(" ");
 	}
 }
 
