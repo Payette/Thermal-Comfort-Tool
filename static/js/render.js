@@ -46,7 +46,7 @@ render.makeGraph = function () {
   } else if (unitSys == "SI") {
     x = d3.scale.linear()
       .range([0, width]) // value -> display
-      .domain([0, 4]);
+      .domain([0, 4.5]);
   }
 
   // y-axis: PPD
@@ -889,11 +889,11 @@ render.makeGraph = function () {
       $("#rvalue3").val(round(case3Data.rvalueValue*100)/100);
 
       case1Data.airspeedValue = units.fpm2mps(case1Data.airspeedValue);
-      $("#airspeed").val(round(case1Data.airspeedValue*10)/10);
+      $("#airspeed").val(round(case1Data.airspeedValue*100)/100);
       case2Data.airspeedValue = units.fpm2mps(case2Data.airspeedValue);
-      $("#airspeed2").val(round(case2Data.airspeedValue*10)/10);
+      $("#airspeed2").val(round(case2Data.airspeedValue*100)/100);
       case3Data.airspeedValue = units.fpm2mps(case3Data.airspeedValue);
-      $("#airspeed3").val(round(case3Data.airspeedValue*10)/10);
+      $("#airspeed3").val(round(case3Data.airspeedValue*100)/100);
 
       occDistFromFacade = units.Ft2M(occDistFromFacade);
       // update occupant dist from facade slider
@@ -2942,7 +2942,7 @@ render.makeGraph = function () {
         .call(xAxis.ticks(6).tickValues([2, 4, 6, 8, 10, 12]));
       } else if (unitSys == "SI") {
       thesvg.select("#graphXAxis")
-        .call(xAxis.ticks(7).tickValues([0.5, 1, 1.5, 2, 2.5, 3, 3.5]));
+        .call(xAxis.ticks(7).tickValues([0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4.0]));
       }
 
     if (param == "dwn") {

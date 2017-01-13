@@ -50,14 +50,19 @@ if (typeof urlParameters.ppd != 'undefined') {
 	$("#ppd").val(urlParameters.ppd);
 	$("#ppdOutput").text(urlParameters.ppd + "%");
 }
+
 if (typeof urlParameters.distFromFacade != 'undefined') {
 	$("#distFromFacade").val(urlParameters.distFromFacade);
 	if (unitSys == "IP") {
 		$("#distOutput").text(urlParameters.distFromFacade + " ft");
 	} else {
+		$("#distFromFacade").attr("max", 4).attr("min", .5);
+		$("#distFromFacade").val(urlParameters.distFromFacade);
+		$("#distFromFacade").attr("value", urlParameters.distFromFacade);
 		$("#distOutput").text(urlParameters.distFromFacade + " m");
 	}
 }
+
 
 var case1visability = urlParameters.case1;
 var case2visability = urlParameters.case2;
@@ -596,18 +601,6 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 		$("#occupantDist3").val(urlParameters.occPosition3);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -166,7 +166,7 @@
 					<div class="occSlider"><input type="range" name="ppd2" id="ppd2" value="10" min="5" max="30"><p id="ppdOutput2">10%</p></div>
 
 					<label for="distFromFacade">Occupant Distance From Fa&ccedil;ade (<span class="units IP">ft</span>)<sup id="fnref:20"><a href="#fn:20" rel="footnote">?</a></sup></label>
-					<div class="occSlider"><input type="range" name="distFromFacade" id="distFromFacade" value="3" min="1" max="12" step="0.25"><p id="distOutput">3 <span class="units IP">ft</span></p></div><br>
+					<div class="occSlider"><input type="range" name="distFromFacade" id="distFromFacade" value="3" min="1" max="12" step="0.1"><p id="distOutput">3 <span class="units IP">ft</span></p></div><br>
 
 				</fieldset>
 
@@ -395,19 +395,19 @@
 
 
 				<label for="airspeed">Air Speed (<span class="unitsAirSpeed IP">fpm</span>)<sup id="fnref:17"><a href="#fn:17" rel="footnote">?</a></sup></label>
-				<div class="inputWrapperLeft"><input type="text" name="airspeed" id="airspeed" value="10" step="0.5" class="case1"></div>
-				<div class="inputWrapperCenter"><input type="text" name="airspeed2" id="airspeed2" value="10" step="0.5" class="case2 unselected"></div>
-				<div class="inputWrapperRight"><input type="text" name="airspeed3" id="airspeed3" value="10" step="0.5" class="case3 unselected"></div><br>
+				<div class="inputWrapperLeft"><input type="text" name="airspeed" id="airspeed" min="0" value="10" step="0.1" class="case1"></div>
+				<div class="inputWrapperCenter"><input type="text" name="airspeed2" id="airspeed2" min="0" value="10" step="0.1" class="case2 unselected"></div>
+				<div class="inputWrapperRight"><input type="text" name="airspeed3" id="airspeed3" min="0" value="10" step="0.1" class="case3 unselected"></div><br>
 
 				<label for="clothing">Clothing (clo)<sup id="fnref:18"><a href="#fn:18" rel="footnote">?</a></sup></label>
-				<div class="inputWrapperLeft"><input type="text" name="clothing" id="clothing" value="0.85" step="0.05" class="case1"></div>
-				<div class="inputWrapperCenter"><input type="text" name="clothing2" id="clothing2" value="0.85" step="0.05" class="case2 unselected"></div>
-				<div class="inputWrapperRight"><input type="text" name="clothing3" id="clothing3" value="0.85" step="0.05" class="case3 unselected"></div><br>
+				<div class="inputWrapperLeft"><input type="text" name="clothing" id="clothing" min="0" value="0.85" step="0.05" class="case1"></div>
+				<div class="inputWrapperCenter"><input type="text" name="clothing2" id="clothing2" min="0" value="0.85" step="0.05" class="case2 unselected"></div>
+				<div class="inputWrapperRight"><input type="text" name="clothing3" id="clothing3" min="0" value="0.85" step="0.05" class="case3 unselected"></div><br>
 
 				<label for="metabolic">Metabolic Rate (met)<sup id="fnref:19"><a href="#fn:19" rel="footnote">?</a></sup></label>
-				<div class="inputWrapperLeft"><input type="text" name="metabolic" id="metabolic" value="1.2" step="0.1" class="case1"></div>
-				<div class="inputWrapperCenter"><input type="text" name="metabolic2" id="metabolic2" value="1.2" step="0.1" class="case2 unselected"></div>
-				<div class="inputWrapperRight"><input type="text" name="metabolic3" id="metabolic3" value="1.2" step="0.1" class="case3 unselected"></div><br>
+				<div class="inputWrapperLeft"><input type="text" name="metabolic" id="metabolic" min="0" value="1.2" step="0.05" class="case1"></div>
+				<div class="inputWrapperCenter"><input type="text" name="metabolic2" id="metabolic2" min="0" value="1.2" step="0.05" class="case2 unselected"></div>
+				<div class="inputWrapperRight"><input type="text" name="metabolic3" id="metabolic3" min="0" value="1.2" step="0.05" class="case3 unselected"></div><br>
 				<hr class="final">
 
 			</div>

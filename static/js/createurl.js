@@ -24,7 +24,7 @@ function createURL() {
 
 
 	// values regardless of case
-	var thisDistFromFacade = occDistFromFacade;
+	var thisDistFromFacade = round(occDistFromFacade*10)/10;
 	var thisPpd = $("#ppd").val();
 
 	// values for only case 1
@@ -37,7 +37,7 @@ function createURL() {
 	var windowSep1 =  $('#distWindow').val();
 	var uvalue1 = $("#uvalue").val();
 	var outdoorTemp1 = $("#outdoortemp").val();
-	var indoorTemp1 = $("#airtemp").val();
+	var indoorTemp1 = round(case1Data.airtempValue*10)/10;
 	var humid1 = $("#humidity").val();
 	var LowEEmis1 = $("#lowE").val();
 	var occToWallCenter1 = $("#occupantDist").val();
@@ -56,7 +56,7 @@ function createURL() {
 	var windowSep2 =  $('#distWindow2').val();
 	var uvalue2 = $("#uvalue2").val();
 	var outdoorTemp2 = $("#outdoortemp2").val();
-	var indoorTemp2 = $("#airtemp2").val();
+	var indoorTemp2 = round(case2Data.airtempValue*10)/10;
 	var humid2 = $("#humidity2").val();
 	var LowEEmis2 = $("#lowE2").val();
 	var occToWallCenter2 = $("#occupantDist2").val();
@@ -75,7 +75,7 @@ function createURL() {
 	var windowSep3 =  $('#distWindow3').val();
 	var uvalue3 = $("#uvalue3").val();
 	var outdoorTemp3 = $("#outdoortemp3").val();
-	var indoorTemp3 = $("#airtemp3").val();
+	var indoorTemp3 = round(case3Data.airtempValue*10)/10;
 	var humid3 = $("#humidity3").val();
 	var LowEEmis3 = $("#lowE3").val();
 	var occToWallCenter3 = $("#occupantDist3").val();
