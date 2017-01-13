@@ -1,9 +1,9 @@
 //Assign any parameters from the URL
 
 var thisURL = location.href;
+
 //call URL parser function
 var urlParameters = urlObject({'url':thisURL}).parameters;
-
 
 // determine units
 if (typeof urlParameters.units != 'undefined') {
@@ -50,6 +50,10 @@ if (typeof urlParameters.ppd != 'undefined') {
 	$("#ppd").val(urlParameters.ppd);
 	$("#ppdOutput").text(urlParameters.ppd + "%");
 }
+if (typeof urlParameters.ppd2 != 'undefined') {
+	$("#ppd2").val(urlParameters.ppd2);
+	$("#ppdOutput2").text(urlParameters.ppd2 + "%");
+}
 
 if (typeof urlParameters.distFromFacade != 'undefined') {
 	$("#distFromFacade").val(urlParameters.distFromFacade);
@@ -62,7 +66,6 @@ if (typeof urlParameters.distFromFacade != 'undefined') {
 		$("#distOutput").text(urlParameters.distFromFacade + " m");
 	}
 }
-
 
 var case1visability = urlParameters.case1;
 var case2visability = urlParameters.case2;
@@ -130,11 +133,14 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' && urlParamet
 		$("#metabolic, #metabolic2, #metabolic3").val(urlParameters.metabolic);
 	}
 
-	if (urlParameters.lowE != '') {
+	if (urlParameters.lowE != null && urlParameters.lowE != ' ') {
 		$("#lowE, #lowE2, #lowE3").val(urlParameters.lowE);
 		$("#lowE, #lowE2, #lowE3").removeClass("inactive");
 		$("#lowELabel, #lowELabel2, #lowELabel3").removeClass("inactive");
-		$("#checkLowE, #checkLowE2, #checkLowE3").removeClass("unselected");
+		$("#checkLowE1, #checkLowE2, #checkLowE3").removeClass("unselected");
+		document.getElementById("lowECheck").checked = true;
+		document.getElementById("lowECheck2").checked = true;
+		document.getElementById("lowECheck3").checked = true;
 	}
 
 	if (typeof urlParameters.occPosition != 'undefined') {
@@ -256,17 +262,20 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 		$("#metabolic2").val(urlParameters.metabolic2);
 	}
 
-	if (urlParameters.lowE != '') {
+	if (urlParameters.lowE != null && urlParameters.lowE != ' ') {
 		$("#lowE, #lowE3").val(urlParameters.lowE);
 		$("#lowE, #lowE3").removeClass("inactive");
 		$("#lowELabel, #lowELabel3").removeClass("inactive");
-		$("#checkLowE, #checkLowE3").removeClass("unselected");
+		$("#checkLowE1, #checkLowE3").removeClass("unselected");
+		document.getElementById("lowECheck").checked = true;
+		document.getElementById("lowECheck3").checked = true;
 	}
-	if (urlParameters.lowE2 != '') {
+	if (urlParameters.lowE2 != null && urlParameters.lowE2 != ' ') {
 		$("#lowE2").val(urlParameters.lowE2);
 		$("#lowE2").removeClass("inactive");
 		$("#lowELabel2").removeClass("inactive");
 		$("#checkLowE2").removeClass("unselected");
+		document.getElementById("lowECheck2").checked = true;
 	}
 
 	if (typeof urlParameters.occPosition != 'undefined') {
@@ -391,17 +400,20 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' &&  urlParame
 		$("#metabolic3").val(urlParameters.metabolic3);
 	}
 
-	if (urlParameters.lowE != '') {
+	if (urlParameters.lowE != null && urlParameters.lowE != ' ') {
 		$("#lowE, #lowE2").val(urlParameters.lowE);
 		$("#lowE, #lowE2").removeClass("inactive");
 		$("#lowELabel, #lowELabel2").removeClass("inactive");
-		$("#checkLowE, #checkLowE2").removeClass("unselected");
+		$("#checkLowE1, #checkLowE2").removeClass("unselected");
+		document.getElementById("lowECheck").checked = true;
+		document.getElementById("lowECheck2").checked = true;
 	}
-	if (urlParameters.lowE3 != '') {
+	if (urlParameters.lowE3 != null && urlParameters.lowE3 != '') {
 		$("#lowE3").val(urlParameters.lowE3);
 		$("#lowE3").removeClass("inactive");
 		$("#lowELabel3").removeClass("inactive");
 		$("#checkLowE3").removeClass("unselected");
+		document.getElementById("lowECheck3").checked = true;
 	}
 
 	if (typeof urlParameters.occPosition != 'undefined') {
@@ -572,23 +584,26 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 		$("#metabolic3").val(urlParameters.metabolic3);
 	}
 
-	if (urlParameters.lowE != '') {
+	if (urlParameters.lowE != null && urlParameters.lowE != ' '){
 		$("#lowE").val(urlParameters.lowE);
 		$("#lowE").removeClass("inactive");
 		$("#lowELabel").removeClass("inactive");
-		$("#checkLowE").removeClass("unselected");
+		$("#checkLowE1").removeClass("unselected");
+		document.getElementById("lowECheck").checked = true;
 	}
-	if (urlParameters.lowE != '') {
+	if (urlParameters.lowE2 != null && urlParameters.lowE2 != ' ') {
 		$("#lowE2").val(urlParameters.lowE2);
 		$("#lowE2").removeClass("inactive");
 		$("#lowELabel2").removeClass("inactive");
 		$("#checkLowE2").removeClass("unselected");
+		document.getElementById("lowECheck2").checked = true;
 	}
-	if (urlParameters.lowE3 != '') {
+	if (urlParameters.lowE3 != null && urlParameters.lowE3 != '') {
 		$("#lowE3").val(urlParameters.lowE3);
 		$("#lowE3").removeClass("inactive");
 		$("#lowELabel3").removeClass("inactive");
 		$("#checkLowE3").removeClass("unselected");
+		document.getElementById("lowECheck3").checked = true;
 	}
 
 	if (typeof urlParameters.occPosition != 'undefined') {
@@ -601,9 +616,6 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 		$("#occupantDist3").val(urlParameters.occPosition3);
 	}
 }
-
-
-
 
 
 function showCase2() {

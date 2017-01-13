@@ -1,5 +1,33 @@
 function createURL() {
 
+	// create a dictionary of defaults.
+	var defaultSettings = {
+		units: "IP",
+		ppd: "20",
+		ppd2: "10",
+		distFromFacade: "3"
+	}
+
+	var defaultDict = {
+		ceiling: "12",
+		wallWidth: "18",
+		windowHeight: "7",
+		sillHeight: "3",
+		windowWidth: "4",
+		glazingRatio: "39",
+		windowSeparation: "6",
+		uValue: "0.35",
+		outdoorTemp: "10",
+		indoortemp: "72",
+		humidity: "20",
+		lowE: "",
+		occPosition: "0",
+		rValue: "15",
+		airspeed: "10",
+		clothing: "0.85",
+		metabolic: "1.2"
+	}
+
 	// case visibility
 	var case1Vis = "show";
 	var case2Vis, case3Vis;
@@ -22,96 +50,114 @@ function createURL() {
 		var units = "SI";
 	}
 
-
 	// values regardless of case
 	var thisDistFromFacade = round(occDistFromFacade*10)/10;
 	var thisPpd = $("#ppd").val();
+	var thisPpd2 = $("#ppd2").val();
+
+	// check to be sure that this is not already a long URL.
+	locationURL = location.href.split("?")[0]
+
+	// Start the URL and create dictioaries of all values.
+	var paramURL = locationURL + "?case1=show" + "&case2=" + case2Vis + "&case3=" + case3Vis
+
+	var valDictionary = {
+		units: units,
+		ppd: thisPpd,
+		ppd2: thisPpd2,
+		distFromFacade: thisDistFromFacade
+	}
 
 	// values for only case 1
-	var ceiling1 = $("#ceiling").val();
-	var length1 = $("#wallWidth").val();
-	var windowHeight1 = $("#windowHeight").val();
-	var sillHeight1 = $("#sill").val();
-	var windowWidth1 = $("#windowWidth").val();
-	var glzRatio1 = $("#glazing").val();
-	var windowSep1 =  $('#distWindow').val();
-	var uvalue1 = $("#uvalue").val();
-	var outdoorTemp1 = $("#outdoortemp").val();
-	var indoorTemp1 = round(case1Data.airtempValue*10)/10;
-	var humid1 = $("#humidity").val();
-	var LowEEmis1 = $("#lowE").val();
-	var occToWallCenter1 = $("#occupantDist").val();
-	var thisRvalue = $("#rvalue").val();
-	var thisAirspeed = $("#airspeed").val();
-	var thisClothing = $("#clothing").val();
-	var thisMet = $("#metabolic").val();
+	var case1Dict = {
+		ceiling: $("#ceiling").val(),
+		wallWidth: $("#wallWidth").val(),
+		windowHeight: $("#windowHeight").val(),
+		sillHeight: $("#sill").val(),
+		windowWidth: $("#windowWidth").val(),
+		glazingRatio: $("#glazing").val(),
+		windowSeparation: $('#distWindow').val(),
+		uValue: $("#uvalue").val(),
+		outdoorTemp: $("#outdoortemp").val(),
+		indoortemp: round(case1Data.airtempValue*10)/10,
+		humidity: $("#humidity").val(),
+		lowE: $("#lowE").val(),
+		occPosition: $("#occupantDist").val(),
+		rValue: $("#rvalue").val(),
+		airspeed: $("#airspeed").val(),
+		clothing: $("#clothing").val(),
+		metabolic: $("#metabolic").val()
+	}
 
 	// values for only case 2
-	var ceiling2 = $("#ceiling2").val();
-	var length2 = $("#wallWidth2").val();
-	var windowHeight2 = $("#windowHeight2").val();
-	var sillHeight2 = $("#sill2").val();
-	var windowWidth2 = $("#windowWidth2").val();
-	var glzRatio2 = $("#glazing2").val();
-	var windowSep2 =  $('#distWindow2').val();
-	var uvalue2 = $("#uvalue2").val();
-	var outdoorTemp2 = $("#outdoortemp2").val();
-	var indoorTemp2 = round(case2Data.airtempValue*10)/10;
-	var humid2 = $("#humidity2").val();
-	var LowEEmis2 = $("#lowE2").val();
-	var occToWallCenter2 = $("#occupantDist2").val();
-	var thisRvalue2 = $("#rvalue2").val();
-	var thisAirspeed2 = $("#airspeed2").val();
-	var thisClothing2 = $("#clothing2").val();
-	var thisMet2 = $("#metabolic2").val();
+	var case2Dict = {
+		ceiling: $("#ceiling2").val(),
+		wallWidth: $("#wallWidth2").val(),
+		windowHeight: $("#windowHeight2").val(),
+		sillHeight: $("#sill2").val(),
+		windowWidth: $("#windowWidth2").val(),
+		glazingRatio: $("#glazing2").val(),
+		windowSeparation: $('#distWindow2').val(),
+		uValue: $("#uvalue2").val(),
+		outdoorTemp: $("#outdoortemp2").val(),
+		indoortemp: round(case2Data.airtempValue*10)/10,
+		humidity: $("#humidity2").val(),
+		lowE: $("#lowE2").val(),
+		occPosition: $("#occupantDist2").val(),
+		rValue: $("#rvalue2").val(),
+		airspeed: $("#airspeed2").val(),
+		clothing: $("#clothing2").val(),
+		metabolic: $("#metabolic2").val()
+	}
 
 	// values for only case 3
-	var ceiling3 = $("#ceiling3").val();
-	var length3 = $("#wallWidth3").val();
-	var windowHeight3 = $("#windowHeight3").val();
-	var sillHeight3 = $("#sill2").val();
-	var windowWidth3 = $("#windowWidth3").val();
-	var glzRatio3 = $("#glazing3").val();
-	var windowSep3 =  $('#distWindow3').val();
-	var uvalue3 = $("#uvalue3").val();
-	var outdoorTemp3 = $("#outdoortemp3").val();
-	var indoorTemp3 = round(case3Data.airtempValue*10)/10;
-	var humid3 = $("#humidity3").val();
-	var LowEEmis3 = $("#lowE3").val();
-	var occToWallCenter3 = $("#occupantDist3").val();
-	var thisRvalue3 = $("#rvalue3").val();
-	var thisAirspeed3 = $("#airspeed3").val();
-	var thisClothing3 = $("#clothing3").val();
-	var thisMet3 = $("#metabolic3").val();
+	var case3Dict = {
+		ceiling: $("#ceiling3").val(),
+		wallWidth: $("#wallWidth3").val(),
+		windowHeight: $("#windowHeight3").val(),
+		sillHeight: $("#sill3").val(),
+		windowWidth: $("#windowWidth3").val(),
+		glazingRatio: $("#glazing3").val(),
+		windowSeparation: $('#distWindow3').val(),
+		uValue: $("#uvalue3").val(),
+		outdoorTemp: $("#outdoortemp3").val(),
+		indoortemp: round(case3Data.airtempValue*10)/10,
+		humidity: $("#humidity3").val(),
+		lowE: $("#lowE3").val(),
+		occPosition: $("#occupantDist3").val(),
+		rValue: $("#rvalue3").val(),
+		airspeed: $("#airspeed3").val(),
+		clothing: $("#clothing3").val(),
+		metabolic: $("#metabolic3").val()
+	}
 
 
 	// build the URL
-	var startURL = location.href + "?units=" + units + "&case1=" + case1Vis + "&case2=" + case2Vis + "&case3=" + case3Vis + "&ppd=" + thisPpd + "&distFromFacade=" + thisDistFromFacade;
-	var case1URL = "&ceiling=" + ceiling1 + "&wallWidth=" + length1 + "&windowHeight=" + windowHeight1 + "&sillHeight=" + sillHeight1 + "&windowWidth=" + windowWidth1 + "&glazingRatio=" + glzRatio1 + "&windowSeparation=" + windowSep1 + "&uValue=" + uvalue1 + "&outdoorTemp=" + outdoorTemp1 + "&indoortemp=" + indoorTemp1 + "&humidity=" + humid1 + "&lowE=" + LowEEmis1 + "&occPosition=" + occToWallCenter1 + "&rValue=" + thisRvalue + "&airspeed=" + thisAirspeed + "&clothing=" + thisClothing + "&metabolic=" + thisMet;
-	var case2URL = "&ceiling2=" + ceiling2 + "&wallWidth2=" + length2 + "&windowHeight2=" + windowHeight2 + "&sillHeight2=" + sillHeight2 + "&windowWidth2=" + windowWidth2 + "&glazingRatio2=" + glzRatio2 + "&windowSeparation2=" + windowSep2 + "&uValue2=" + uvalue2 + "&outdoorTemp2=" + outdoorTemp2 + "&indoortemp2=" + indoorTemp2 + "&humidity2=" + humid2 + "&lowE2=" + LowEEmis2 + "&occPosition2=" + occToWallCenter2 + "&rValue2=" + thisRvalue2 + "&airspeed2=" + thisAirspeed2 + "&clothing2=" + thisClothing2 + "&metabolic2=" + thisMet2;
-	var case3URL = "&ceiling3=" + ceiling3 + "&wallWidth3=" + length3 + "&windowHeight3=" + windowHeight3 + "&sillHeight3=" + sillHeight3 + "&windowWidth3=" + windowWidth3 + "&glazingRatio3=" + glzRatio3 + "&windowSeparation3=" + windowSep3 + "&uValue3=" + uvalue3 + "&outdoorTemp3=" + outdoorTemp3 + "&indoortemp3=" + indoorTemp3 + "&humidity3=" + humid3 + "&lowE3=" + LowEEmis3 + "&occPosition3=" + occToWallCenter3 + "&rValue3=" + thisRvalue3 + "&airspeed3=" + thisAirspeed3 + "&clothing3=" + thisClothing3 + "&metabolic3=" + thisMet3;
-
-	// if only case 1
-	if ($("#caseSelection #case2Label").hasClass("unselected") == true && $("#caseSelection #case3Label").hasClass("unselected") == true) {
-		var completeURL = startURL + case1URL;
+	for (var key in valDictionary) {
+		if (valDictionary[key] != defaultSettings[key]) {
+			paramURL = paramURL + "&" + key + "=" + valDictionary[key]
+		}
 	}
 
-	// only case 1 and case 2
-	if ($("#caseSelection #case2Label").hasClass("unselected") == false && $("#caseSelection #case3Label").hasClass("unselected") == true) {
-		var completeURL = startURL + case1URL + case2URL;
+	for (var key in case1Dict) {
+		if (case1Dict[key] != defaultDict[key]) {
+			paramURL = paramURL + "&" + key + "=" + case1Dict[key]
+		}
 	}
 
-	// only case 1 and case 3
-	if ($("#caseSelection #case2Label").hasClass("unselected") == true && $("#caseSelection #case3Label").hasClass("unselected") == false) {
-		var completeURL = startURL + case1URL + case3URL;
+	for (var key in case2Dict) {
+		if (case2Dict[key] != defaultDict[key]) {
+			paramURL = paramURL + "&" + key + "2=" + case2Dict[key]
+		}
 	}
 
-	// only all cases
-	if ($("#caseSelection #case2Label").hasClass("unselected") == false && $("#caseSelection #case3Label").hasClass("unselected") == false) {
-		var completeURL = startURL + case1URL + case2URL + case3URL;
+	for (var key in case3Dict) {
+		if (case3Dict[key] != defaultDict[key]) {
+			paramURL = paramURL + "&" + key + "3=" + case3Dict[key]
+		}
 	}
 
 
-	return completeURL;
+	return paramURL;
 
 }
