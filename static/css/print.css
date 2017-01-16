@@ -118,12 +118,12 @@ rect.thresholdRect {
 @media print {
       #graphWrapper h2, #graphWrapper2 h2 {
         color: rgba(0, 0, 0, 0);
-        text-shadow: 0 0 0 rgb(150,150,150);
+        text-shadow: 0 0 0 #777777;
       }
 
       @media print and (-webkit-min-device-pixel-ratio:0) {
         #graphWrapper h2, #graphWrapper2 h2 {
-          color: rgb(150,150,150);
+          color: #777777;
           -webkit-print-color-adjust: exact;
         }
       }
