@@ -937,6 +937,7 @@ render.makeGraph = function () {
     $("#URLpop textarea").append(urlresult);
 
     $("#URLpop").dialog("open");
+    $("#URLpop textarea").select();
   })
 
   // print to PDF
@@ -2326,7 +2327,7 @@ render.makeGraph = function () {
     case1Data.calcUVal = uVal.uValFinal(fullDataCase1.wallViews[numPtsLen], fullDataCase1.glzViews[numPtsLen], fullDataCase1.facadeDist[numPtsLen], fullDataCase1.dwnPPDFac, parseFloat(case1Data.windowHeightValue), parseFloat(case1Data.sillHeightValue), case1Data.airtempValue, case1Data.outdoorTempValue, case1Data.rvalueValue, case1Data.intLowEChecked, case1Data.intLowEEmissivity, case1Data.airspeedValue, case1Data.humidityValue, case1Data.metabolic, case1Data.clothingValue, ppdValue, ppdValue2);
     case2Data.calcUVal = uVal.uValFinal(fullDataCase2.wallViews[numPtsLen], fullDataCase2.glzViews[numPtsLen], fullDataCase2.facadeDist[numPtsLen], fullDataCase2.dwnPPDFac, parseFloat(case2Data.windowHeightValue), parseFloat(case2Data.sillHeightValue), case2Data.airtempValue, case2Data.outdoorTempValue, case2Data.rvalueValue, case2Data.intLowEChecked, case2Data.intLowEEmissivity, case2Data.airspeedValue, case2Data.humidityValue, case2Data.metabolic, case2Data.clothingValue, ppdValue, ppdValue2);
     case3Data.calcUVal = uVal.uValFinal(fullDataCase3.wallViews[numPtsLen], fullDataCase3.glzViews[numPtsLen], fullDataCase3.facadeDist[numPtsLen], fullDataCase3.dwnPPDFac, parseFloat(case3Data.windowHeightValue), parseFloat(case3Data.sillHeightValue), case3Data.airtempValue, case3Data.outdoorTempValue, case3Data.rvalueValue, case3Data.intLowEChecked, case3Data.intLowEEmissivity, case3Data.airspeedValue, case3Data.humidityValue, case3Data.metabolic, case3Data.clothingValue, ppdValue, ppdValue2);
-    
+
     // Update the value in the form.
     $("#calcuvalue").val(Math.round(case1Data.calcUVal * 100) / 100);
     $("#calcuvalue2").val(Math.round(case2Data.calcUVal * 100) / 100);

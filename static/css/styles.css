@@ -845,10 +845,6 @@ input[type=checkbox] {
 	color: #777;
 }
 
-
-
-
-
 #sliderWrapper2, #sliderWrapper3, #occupantImage2, #occupantImage3 {
 	display: none;
 }
@@ -950,7 +946,7 @@ div#URLpop textarea {
 	font-weight: 100;
 	color: #000;
 	width: 418px;
-	height: 220px;
+	height: 150px;
 }
 
 div#disclaimer {
