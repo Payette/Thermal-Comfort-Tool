@@ -76,8 +76,8 @@ render.makeGraph = function () {
   // Draw PPD threshold so that it's behind the data and axes
   var ppdLine = drawPPDThreshold(graphSvg, ppdValue, "dwn");
   var ppdLine2 = drawPPDThreshold(graphSvg2, ppdValue2, "mrt");
-  drawGraph(graphSvg, "% People Dissatisfied - Ankle Draft", "dwn");
-  drawGraph(graphSvg2, "% People Dissatisfied - Radiant Loss", "mrt");
+  drawGraph(graphSvg, "Percent of People Dissatisfied (PPD)", "dwn");
+  drawGraph(graphSvg2, "Percent of People Dissatisfied (PPD)", "mrt");
 
   /* ------ PLOT THE DATA ------ */
   //draw occupant position line so that it's behind the points
@@ -107,9 +107,6 @@ render.makeGraph = function () {
   thresholdDataText("mrt");
   setHover(graphSvg, "dwn")
   setHover(graphSvg2, "mrt")
-
-  // add text for printing
-  addPayetteText();
 
 
   function setHover (mySVG, param) {
@@ -508,10 +505,9 @@ render.makeGraph = function () {
   checkOccupantImageSize(case2Data, "#occupantImage2", "#sliderWrapper2", "#case2Heading");
   checkOccupantImageSize(case3Data, "#occupantImage3", "#sliderWrapper3", "#case3Heading");
 
-
-
-
-
+  // Make sure that the unexpanded classes have a label.
+  $(".expandExplanation").addClass("unexpanded");
+  $(".expandRef").addClass("unexpanded");
 
 
     /* ------ HIDE/SHOW CASES / ALERTS ------ */
@@ -624,24 +620,28 @@ render.makeGraph = function () {
       if ($(".expandExplanation").hasClass("expanded")) {
         $(".expandExplanation").removeClass("expanded")
         $(".expandExplanation span.expand").css("backgroundPosition", "0 0");
+        $(".expandExplanation").addClass("unexpanded");
       $(".explanContent").slideUp(400, "swing");
       } else {
         $(".expandExplanation").addClass("expanded");
         $(".expandExplanation span.expand").css("backgroundPosition", "0 -12px");
+        $(".expandExplanation").removeClass("unexpanded")
       $(".explanContent").slideDown(400, "swing");
       }
   })
 
-  // expand explanation
+  // expand references
     $(".expandRef").on("click", function(){
 
       if ($(".expandRef").hasClass("expanded")) {
         $(".expandRef").removeClass("expanded")
         $(".expandRef span.expand").css("backgroundPosition", "0 0");
+        $(".expandRef").addClass("unexpanded");
       $(".refcontent").slideUp(400, "swing");
       } else {
         $(".expandRef").addClass("expanded");
         $(".expandRef span.expand").css("backgroundPosition", "0 -12px");
+        $(".expandRef").removeClass("unexpanded")
       $(".refcontent").slideDown(400, "swing");
       }
 
@@ -2646,17 +2646,6 @@ render.makeGraph = function () {
       .transition()
       .duration(500);
 
-  }
-
-
-  function addPayetteText() {
-    var creditText = "Glazing and Comfort Analysis Tool created by Payette";
-
-    graphSvg.append("text")
-      .text(creditText)
-      .attr("class", "creditText")
-      .attr("x", width - 165)
-      .attr("y", height + margin.top - 10);
   }
 
   function occupantPositionText(occdata, className, caseName, param) {

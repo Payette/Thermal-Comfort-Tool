@@ -2,51 +2,33 @@
   display: none;
 }
 
-.hideContent, .explanContent {
+.unexpanded {
+  display: none;
+}
+
+.subtext {
+  display: none;
+}
+
+.hideContent {
   display: block;
 }
 
-h2.case1Text, #inputs input.case1, #caseSelection h2#case1Label, #inputs input.inactive.case1#calcuvalue {
+h2.case1Text, #inputs input.case1, #inputs input.inactive case1, #caseSelection h2#case1Label, #inputs input.inactive.case1#calcuvalue, #inputs .hideContent input.case1 {
   color: rgb(0,160,221);
 }
 
-h2.case2Text, #inputs input.case2, #caseSelection h2#case2Label, #inputs input.inactive.case2#calcuvalue2 {
+h2.case2Text, #inputs input.case2, #inputs input.inactive case2, #caseSelection h2#case2Label, #inputs input.inactive.case2#calcuvalue2, #inputs .hideContent input.case2 {
   color: rgb(248,151,29);
 }
 
-h2.case3Text, #inputs input.case3, #caseSelection h2#case3Label, #inputs input.inactive.case3#calcuvalue3 {
+h2.case3Text, #inputs input.case3, #inputs input.inactive case3, #caseSelection h2#case3Label, #inputs input.inactive.case3#calcuvalue3, #inputs .hideContent input.case3 {
   color: rgb(108,28,131);
 }
 
 
-#inputs .hideContent input.case1, #inputs .hideContent input.case2, #inputs .hideContent input.case3 {
-  color: black;
-}
 
-
-#inputs input.case1.unselected, #inputs input.case2.unselected, #inputs input.case3.unselected, #caseSelection h2#case2Label.unselected, #caseSelection h2#case3Label.unselected {
-  color: #ADADAD;
-}
-
-#inputs input.inactive, #inputs input.inactive#calcuvalue, #inputs input.inactive#calcuvalue2, #inputs input.inactive#calcuvalue3, #inputs input.inactive#condRisk1, #inputs input.inactive#condRisk2, #inputs input.inactive#condRisk3 {
-  border-style: none;
-}
-
-
-#graph .creditText {
-  font-family: "museo-sans", sans-serif;
-  font-size: 9px;
-  font-style: italic;
-  display: block;
-}
-
-
-
-
-
-
-
-input[type=range]#occupantDist::-ms-track, input[type=range]#occupantDist2::-ms-track, input[type=range]#occupantDist3::-ms-track, input[type=range]#ppd::-ms-track, input[type=range]#distFromFacade::-ms-track {
+input[type=range]#occupantDist::-ms-track, input[type=range]#occupantDist2::-ms-track, input[type=range]#occupantDist3::-ms-track, input[type=range]#ppd::-ms-track, input[type=range]#ppd2::-ms-track, input[type=range]#distFromFacade::-ms-track {
   -ms-appearance: none;
   height: 1px;
   border: 1px solid #d5d5d5;
@@ -56,18 +38,18 @@ input[type=range]#occupantDist::-ms-track, input[type=range]#occupantDist2::-ms-
   color: transparent;
 }
 
-input[type=range]#ppd::-ms-fill-lower {
+input[type=range]#ppd::-ms-fill-lower, input[type=range]#ppd2::-ms-fill-lower {
   border: 1px solid rgb(147,229,0);
   height: 1px;
 }
 
-input[type=range]#ppd::-moz-range-progress{
+input[type=range]#ppd::-moz-range-progress, input[type=range]#ppd2::-moz-range-progress{
   border: 1px solid rgb(147,229,0);
   height: 1px;
 }
 
 
-#occupantDist::-moz-range-track, #occupantDist2::-moz-range-track, #occupantDist3::-moz-range-track, #ppd::-moz-range-track, #distFromFacade::-moz-range-track {
+#occupantDist::-moz-range-track, #occupantDist2::-moz-range-track, #occupantDist3::-moz-range-track, #ppd::-moz-range-track, #ppd2::-moz-range-track, #distFromFacade::-moz-range-track {
   -moz-appearance: none;
   height: 1px;
   border: 1px solid #d5d5d5;
@@ -76,7 +58,7 @@ input[type=range]#ppd::-moz-range-progress{
 
 
 
-#occupantDist::-webkit-slider-runnable-track, #occupantDist2::-webkit-slider-runnable-track, #occupantDist3::-webkit-slider-runnable-track, #ppd::-webkit-slider-runnable-track, #distFromFacade::-webkit-slider-runnable-track {
+#occupantDist::-webkit-slider-runnable-track, #occupantDist2::-webkit-slider-runnable-track, #occupantDist3::-webkit-slider-runnable-track, #ppd::-webkit-slider-runnable-track, #ppd2::-webkit-slider-runnable-track, #distFromFacade::-webkit-slider-runnable-track {
   -webkit-appearance: none;
   height: 1px;
   border: 1px solid #d5d5d5;
@@ -84,7 +66,7 @@ input[type=range]#ppd::-moz-range-progress{
 }
 
 
-#occupantDist::-ms-thumb, #occupantDist2::-ms-thumb, #occupantDist3::-ms-thumb, #ppd::-ms-thumb, #distFromFacade::-ms-thumb {
+#occupantDist::-ms-thumb, #occupantDist2::-ms-thumb, #occupantDist3::-ms-thumb, #ppd::-ms-thumb, #ppd2::-ms-thumb, #distFromFacade::-ms-thumb {
     background-color: #FFF;
     border: 3px solid rgb(150,150,150);
     border-radius: 5px;
@@ -93,7 +75,7 @@ input[type=range]#ppd::-moz-range-progress{
 }
 
 
-#occupantDist::-moz-range-thumb, #occupantDist2::-moz-range-thumb, #occupantDist3::-moz-range-thumb, #ppd::-moz-range-thumb, #distFromFacade::-moz-range-thumb {
+#occupantDist::-moz-range-thumb, #occupantDist2::-moz-range-thumb, #occupantDist3::-moz-range-thumb, #ppd::-moz-range-thumb, #ppd2::-moz-range-thumb, #distFromFacade::-moz-range-thumb {
   -moz-appearance: none;
     background-color: #FFF;
     border: 3px solid rgb(150,150,150);
@@ -102,31 +84,16 @@ input[type=range]#ppd::-moz-range-progress{
     width: 5px;
 }
 
-#occupantDist::-webkit-slider-thumb, #occupantDist2::-webkit-slider-thumb, #occupantDist3::-webkit-slider-thumb, #ppd::-webkit-slider-thumb, #distFromFacade::-webkit-slider-thumb {
+#occupantDist::-webkit-slider-thumb, #occupantDist2::-webkit-slider-thumb, #occupantDist3::-webkit-slider-thumb, #ppd::-webkit-slider-thumb, #ppd2::-webkit-slider-thumb, #distFromFacade::-webkit-slider-thumb {
   -webkit-appearance: none;
-    background-color: #FFF;
-    border: 3px solid rgb(150,150,150);
-    border-radius: 5px;
-    height: 5px;
-    width: 5px;
+	position: relative;
+  background-color: #FFF;
+	height: 10px;
+  width: 10px;
+  border: 3px solid rgb(150,150,150);
+  border-radius: 5px;
+	margin-top: -5px
 }
-
-/*#occupantImage, #occupantImage2, #occupantImage3 {
-   border: 2px solid #777;
-}*/
-
-/*#occupantImage:before {
-  content: url(/images_research_projects/GlazingSelectionTool/slider.png);
-   width:  20px;
-  height: 20px;
-}*/
-
-img.diagram {
-  border: none;
-  opacity: 1;
-}
-
-
 
 #graph .grid line {
   stroke-width: 1px;
@@ -140,13 +107,28 @@ img.diagram {
   stroke: black;
 }
 
-line.occupantLine {
-  stroke-dasharray: 0 0;
-  stroke-width: 1;
-  stroke-linecap: butt;
-}
-
 rect.thresholdRect {
   fill: #F0F0F0;
 }
 
+#graphWrapper, #graphWrapper2{
+  box-shadow: inset 0 0 0 1000px rgb(230,230,230);
+}
+
+@media print {
+      #graphWrapper h2, #graphWrapper2 h2 {
+        color: rgba(0, 0, 0, 0);
+        text-shadow: 0 0 0 rgb(150,150,150);
+      }
+
+      @media print and (-webkit-min-device-pixel-ratio:0) {
+        #graphWrapper h2, #graphWrapper2 h2 {
+          color: rgb(150,150,150);
+          -webkit-print-color-adjust: exact;
+        }
+      }
+   }
+
+#inputs hr{
+  border-top: 1pt solid #666
+}

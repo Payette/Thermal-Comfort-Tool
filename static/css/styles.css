@@ -52,12 +52,21 @@ body {
 	margin: 0 0 0 15px;
 }
 
-#graphWrapper ul li img, #graphWrapper2 ul li img{
+#graphWrapper ul li img, #graphWrapper2 ul li img, #graphWrapper h2 img, #graphWrapper2 h2 img{
 	display: inline;
 	width: 9px;
 	height: 9px;
 	margin: 0 5px 0 0;
 
+}
+
+#graphWrapper h2, #graphWrapper2 h2 {
+	float: right;
+	margin: 10px 20px 0px 15px;
+	font-family: "museo-sans", sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #777777;
 }
 
 
@@ -115,10 +124,6 @@ body {
 #graph #graphYAxis line {
 	stroke-width: 0;
 }
-
-
-
-
 
 
 #tooltip, #tooltip2, #thresholdTooltip, #thresholdTooltip2 {
@@ -536,11 +541,6 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 	color: #000;
 	height: 1px;
 	width: 100%;
-}
-
-#inputs hr.final {
-	margin: 10px 0 0 0;
-	height: 1px;
 }
 
 
