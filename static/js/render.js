@@ -73,17 +73,26 @@ render.makeGraph = function () {
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom);
 
+  var graphSvg3 = d3.select("#graphWrapper3")
+        .append("svg")
+        .attr("id", "graph")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom);
+
   // Draw PPD threshold so that it's behind the data and axes
   var ppdLine = drawPPDThreshold(graphSvg, ppdValue, "dwn");
   var ppdLine2 = drawPPDThreshold(graphSvg2, ppdValue2, "mrt");
+  var ppdLine3 = drawPPDThreshold(graphSvg3, ppdValue, "dwn");
   drawGraph(graphSvg, "Percent of People Dissatisfied (PPD)", "dwn");
   drawGraph(graphSvg2, "Percent of People Dissatisfied (PPD)", "mrt");
+  drawGraph(graphSvg3, "% of People Dissatisfied from Downdraft", "dwn");
 
   /* ------ PLOT THE DATA ------ */
   //draw occupant position line so that it's behind the points
   occupantDistanceRefLine();
   defDrawData(graphSvg, "dwn")
   defDrawData(graphSvg2, "mrt")
+  defDrawData(graphSvg3, "dwn")
 
   // call function to initialize all data points
   updateGraphPoints(graphSvg, dataset, "dotCase1", color1, "dwn");
@@ -92,6 +101,9 @@ render.makeGraph = function () {
   updateGraphPoints(graphSvg2, dataset, "dotCase1", color1, "mrt");
   updateGraphPoints(graphSvg2, dataset2, "dotCase2", color2, "mrt");
   updateGraphPoints(graphSvg2, dataset3, "dotCase3", color3, "mrt");
+  updateGraphPoints(graphSvg3, dataset, "dotCase1", color1, "dwn");
+  updateGraphPoints(graphSvg3, dataset2, "dotCase2", color2, "dwn");
+  updateGraphPoints(graphSvg3, dataset3, "dotCase3", color3, "dwn");
 
   // call function to initialize point at occupant location
   updateOccupantPoint(graphSvg, [occPointData], "occdot1", color1, "dwn");
@@ -100,6 +112,9 @@ render.makeGraph = function () {
   updateOccupantPoint(graphSvg2, [occPointData], "occdot1", color1, "mrt");
   updateOccupantPoint(graphSvg2, [occPointData2], "occdot2", color2, "mrt");
   updateOccupantPoint(graphSvg2, [occPointData3], "occdot3", color3, "mrt");
+  updateOccupantPoint(graphSvg3, [occPointData], "occdot1", color1, "dwn");
+  updateOccupantPoint(graphSvg3, [occPointData2], "occdot2", color2, "dwn");
+  updateOccupantPoint(graphSvg3, [occPointData3], "occdot3", color3, "dwn");
 
 
   // add text at occupanct location
@@ -107,7 +122,7 @@ render.makeGraph = function () {
   thresholdDataText("mrt");
   setHover(graphSvg, "dwn")
   setHover(graphSvg2, "mrt")
-
+  setHover(graphSvg3, "dwn")
 
   function setHover (mySVG, param) {
     // Show text on hover over dot
@@ -642,24 +657,46 @@ render.makeGraph = function () {
         $(".expandRef").removeClass("unexpanded")
       $(".refcontent").slideDown(400, "swing");
       }
-
   })
 
   /* ------ SWITCH BETWEEN SPLIT AND COMBINED VIEW ------ */
+
+
+  function checkSplitGraph() {
+  // if hover tooltip is no longer visible
+  if ($("#graphWrapper").css("display") == "none") {
+  //Show default text
+  $("#graphWrapper3").slideDown(500);
+  }
+  }
+
+  function checkCombinedGraph() {
+  // if hover tooltip is no longer visible
+  if ($("#graphWrapper3").css("display") == "none") {
+  //Show default text
+  $("#graphWrapper").slideDown(500);
+  $("#graphWrapper2").slideDown(500);
+  }
+  }
+
   $(".viewTypeToggle").click(function(event) {
     if ($("#splitToggle").hasClass("marked") == true) {
       //change to Combined view.
-      $("#splitToggle").removeClass("marked")
+      $("#graphWrapper").slideUp(500);
+      $("#graphWrapper2").slideUp(500);
+      setTimeout(checkSplitGraph, 520);
+      $("#splitToggle").removeClass("marked");
       $("#splitToggle").addClass("unmarked");
-      $("#combinedToggle").removeClass("unmarked")
+      $("#combinedToggle").removeClass("unmarked");
       $("#combinedToggle").addClass("marked");
-
     } else {
       //change to split view.
-      $("#combinedToggle").removeClass("marked")
-      $("#combinedToggle").addClass("unmarked");
-      $("#splitToggle").removeClass("unmarked")
+      $("#graphWrapper3").slideUp(500);
+      setTimeout(checkCombinedGraph, 520);
+      $("#splitToggle").removeClass("unmarked");
       $("#splitToggle").addClass("marked");
+      $("#combinedToggle").removeClass("marked");
+      $("#combinedToggle").addClass("unmarked");
     }
   })
 
@@ -2537,8 +2574,19 @@ render.makeGraph = function () {
         return "translate(" + margin.left + "," + margin.top + ")";
     });
 
+    graphSvg3.append("line")
+      .attr("class","occupantLine3")
+      .attr("x1", xPosition)
+      .attr("x2", xPosition)
+      .attr("y1", height)
+      .attr("y2", yPositionmrt)
+      .attr("transform", function() {
+        return "translate(" + margin.left + "," + margin.top + ")";
+    });
+
     d3.selectAll(".occupantLine").classed("draggable", true);
     d3.selectAll(".occupantLine2").classed("draggable", true);
+    d3.selectAll(".occupantLine3").classed("draggable", true);
   }
 
   function updateOccupantDistanceRefLine() {

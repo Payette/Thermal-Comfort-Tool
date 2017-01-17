@@ -10,6 +10,7 @@ body {
 #wrapper {
 	width: 960px;
 	margin: 0 auto;
+	min-height: 1000px;
 }
 
 
@@ -104,7 +105,15 @@ input:checked + .slider:before {
 		color: #b9b9b9;
 }
 
-#graphWrapper, #graphWrapper2 {
+.hiddenGraph {
+	display: none;
+}
+
+#graphDisplay {
+	min-height: 350px;
+}
+
+#graphWrapper, #graphWrapper2, #graphWrapper3 {
 	height: auto;
 	position: relative;
 	background-color: rgb(230,230,230);
@@ -115,7 +124,7 @@ input:checked + .slider:before {
 	margin-top: 10px;
 }
 
-#graphWrapper ul, #graphWrapper2 ul {
+#graphWrapper ul, #graphWrapper2 ul, #graphWrapper3 ul {
 	list-style: none;
 	float: right;
 	margin: 10px 20px 0px -40px;
@@ -124,13 +133,13 @@ input:checked + .slider:before {
 	font-weight: bold;
 }
 
-#graphWrapper ul li, #graphWrapper2 ul li {
+#graphWrapper ul li, #graphWrapper2 ul li, #graphWrapper3 ul li {
 	display: inline;
 	color: #777777;
 	margin: 0 0 0 15px;
 }
 
-#graphWrapper ul li img, #graphWrapper2 ul li img, #graphWrapper h2 img, #graphWrapper2 h2 img{
+#graphWrapper ul li img, #graphWrapper2 ul li img, #graphWrapper3 ul li img {
 	display: inline;
 	width: 9px;
 	height: 9px;
