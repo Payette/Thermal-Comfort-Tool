@@ -218,25 +218,25 @@ render.makeGraph = function () {
 
       if (param == "dwn") {
         //Show the tooltip
-        $("#tooltip").fadeIn(300);
+        $("#tooltip").fadeIn(100);
         //Hide default text
-        $("#thresholdTooltip").fadeOut(300);
+        $("#thresholdTooltip").fadeOut(100);
       } else {
         //Show the tooltip
-        $("#tooltip2").fadeIn(300);
+        $("#tooltip2").fadeIn(100);
         //Hide default text
-        $("#thresholdTooltip2").fadeOut(300);
+        $("#thresholdTooltip2").fadeOut(100);
       }
 
       })
        .on("mouseout", function() {
          //Hide the tooltip
          if (param == "dwn") {
-           $("#tooltip").fadeOut(300);
-           setTimeout(checkTooltip, 1000);
+           $("#tooltip").fadeOut(0);
+           setTimeout(checkTooltip, 150);
          } else {
-           $("#tooltip2").fadeOut(300);
-           setTimeout(checkTooltip2, 1000);
+           $("#tooltip2").fadeOut(0);
+           setTimeout(checkTooltip2, 150);
          }
 
        })
@@ -246,7 +246,7 @@ render.makeGraph = function () {
     // if hover tooltip is no longer visible
     if ($("#tooltip").css("display") == "none") {
       //Show default text
-      $("#thresholdTooltip").fadeIn(300);
+      $("#thresholdTooltip").fadeIn(100);
     }
   }
 
@@ -254,7 +254,7 @@ render.makeGraph = function () {
     // if hover tooltip is no longer visible
     if ($("#tooltip2").css("display") == "none") {
       //Show default text
-      $("#thresholdTooltip2").fadeIn(300);
+      $("#thresholdTooltip2").fadeIn(100);
     }
   }
 
@@ -377,8 +377,6 @@ render.makeGraph = function () {
 
 
 /* ------ MAKE THE FACADE ------ */
-
-
 
 // Case 1 Facade
   var facadeSvgCase1 = d3.select("#case1Chart")
@@ -647,9 +645,25 @@ render.makeGraph = function () {
 
   })
 
+  /* ------ SWITCH BETWEEN SPLIT AND COMBINED VIEW ------ */
+  $(".viewTypeToggle").click(function(event) {
+    if ($("#splitToggle").hasClass("marked") == true) {
+      //change to Combined view.
+      $("#splitToggle").removeClass("marked")
+      $("#splitToggle").addClass("unmarked");
+      $("#combinedToggle").removeClass("unmarked")
+      $("#combinedToggle").addClass("marked");
 
+    } else {
+      //change to split view.
+      $("#combinedToggle").removeClass("marked")
+      $("#combinedToggle").addClass("unmarked");
+      $("#splitToggle").removeClass("unmarked")
+      $("#splitToggle").addClass("marked");
+    }
+  })
 
-  /* ----- DETECT FORM BUTTONS ----- */
+  /* ----- DETECT CHANGE BETWEEN SI AND IP ----- */
   $(".optionButton#IP").click(function(event) {
     if ($(".optionButton#IP").hasClass("selected") == false) {
       //change to IP
@@ -2850,10 +2864,10 @@ render.makeGraph = function () {
 
     if (param == "dwn"){
       $("#thresholdTooltip").append(totalText);
-      var divHeight = $("div#thresholdTooltip").height() - 10; //10 = padding
+      var divHeight = $("div#thresholdTooltip").height() - 25; //10 = padding
     } else if (param == "mrt") {
       $("#thresholdTooltip2").append(totalText);
-      var divHeight = $("div#thresholdTooltip2").height() - 20; //10 = padding
+      var divHeight = $("div#thresholdTooltip2").height() - 25; //10 = padding
     }
     var xPosition;
     var yPosition;
@@ -2869,7 +2883,6 @@ render.makeGraph = function () {
         $("div#thresholdTooltip2").css("width","150px");
         $("div#thresholdTooltip2 h1").css("width","135px");
       }
-      yPadding = 20;
 
       // prevent the tooltip from going outside the graph wrapper
       if (x(occPointData.dist) > 300) {
@@ -2878,6 +2891,22 @@ render.makeGraph = function () {
       } else {
         // position relative to data point
         xPosition = x(occPointData.dist) + margin.left + 8;
+      }
+      yPadding = 40
+
+      if (param == "dwn") {
+        var ppdScaleFac = d3.max(compareOccupantArray) + 1
+      } else if (param == "mrt") {
+        var ppdScaleFac = d3.max(compareOccupantArray) + 1.5
+      }
+
+      // set YPosition for tooltip
+      if (d3.max(compareOccupantArray) < 17) {
+        // all ppd values are less than 25
+        yPosition = y(ppdScaleFac) - divHeight + margin.top + yPadding - 25;
+      } else if (d3.max(compareOccupantArray) > 17) {
+        // at least one case is above 25
+        yPosition = margin.top + yPadding - 25;
       }
 
     } else {
@@ -2891,21 +2920,21 @@ render.makeGraph = function () {
       }
       xPosition = x(occPointData.dist) + margin.left + 8;
       yPadding = 10;
-    }
 
-    if (param == "dwn") {
-      var ppdScaleFac = d3.max(compareOccupantArray) + 2.5
-    } else if (param == "mrt") {
-      var ppdScaleFac = d3.max(compareOccupantArray) + 4.5
-    }
+      if (param == "dwn") {
+        var ppdScaleFac = d3.max(compareOccupantArray) + 1
+      } else if (param == "mrt") {
+        var ppdScaleFac = d3.max(compareOccupantArray) + 1.5
+      }
 
-    // set YPosition for tooltip
-    if (d3.max(compareOccupantArray) < 26) {
-      // all ppd values are less than 25
-      yPosition = y(ppdScaleFac) - divHeight + margin.top + yPadding;
-    } else if (d3.max(compareOccupantArray) > 26) {
-      // at least one case is above 25
-      yPosition = margin.top + yPadding + 12;
+      // set YPosition for tooltip
+      if (d3.max(compareOccupantArray) < 25) {
+        // all ppd values are less than 25
+        yPosition = y(ppdScaleFac) - divHeight + margin.top + yPadding;
+      } else if (d3.max(compareOccupantArray) > 25) {
+        // at least one case is above 25
+        yPosition = margin.top + yPadding;
+      }
     }
 
     if (param == "dwn"){

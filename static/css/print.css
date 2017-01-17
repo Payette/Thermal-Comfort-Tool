@@ -115,14 +115,18 @@ rect.thresholdRect {
   box-shadow: inset 0 0 0 1000px rgb(230,230,230);
 }
 
+#key {
+  box-shadow: inset 0 0 0 1000px rgb(230,230,230);
+}
+
 @media print {
-      #graphWrapper h2, #graphWrapper2 h2 {
+      #graphWrapper ul li, #graphWrapper2 ul li {
         color: rgba(0, 0, 0, 0);
         text-shadow: 0 0 0 #777777;
       }
 
       @media print and (-webkit-min-device-pixel-ratio:0) {
-        #graphWrapper h2, #graphWrapper2 h2 {
+        #graphWrapper ul li, #graphWrapper2 ul li {
           color: #777777;
           -webkit-print-color-adjust: exact;
         }

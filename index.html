@@ -154,12 +154,23 @@
 			<div style="clear:both;"></div>
 		</div>
 
+
+		<div id="graphViewToggle">
+			<h1 id="viewType" class="heading">Graph Type</h1>
+			<label class="switch">
+				<input type="checkbox" class="viewTypeToggle">
+				<div class="slider round"></div>
+				<p id="splitToggle" class="marked">Split</p>
+				<p id="combinedToggle" class="unmarked">Combined</p>
+			</label>
+		</div>
+
+
 		<div id="occupancyWrapper">
 			<form id="occupantSliders" autocomplete="off">
 				<fieldset class="inputgroup">
 					<!-- <legend>Occupancy Thresholds</legend>
 					<hr> -->
-
 					<label for="ppd">Acceptable PPD from Ankle Draft <sup id="fnref:21"><a href="#fn:21" rel="footnote">?</a></sup></label>
 					<div class="occSlider"><input type="range" name="ppd" id="ppd" value="20" min="5" max="30"><p id="ppdOutput">20%</p></div>
 
@@ -176,12 +187,10 @@
 
 
 		<div id="graphWrapper">
-			<h2>ANKLE DRAFT DISCOMFORT &nbsp <img class="discomfortIcon" src="static/images/triangle-grey.png"> </h2>
 			<div id="key">
-				<!--<ul>
-					<li><img class="discomfortIcon" src="static/images/triangle-grey.png">Downdraft Discomfort</li>
-					<li><img class="discomfortIcon" src="static/images/circle-grey.png">Radiant Discomfort</li>
-				</ul>-->
+				<ul>
+					<li><img class="discomfortIcon" src="static/images/triangle-grey.png">ANKLE DRAFT DISCOMFORT</li>
+				</ul>
 			</div>
  			<div id="tooltip" class="hidden"></div>
 			<div id="thresholdTooltip"></div>
@@ -189,7 +198,11 @@
 
 
     <div id="graphWrapper2">
-			<h2>RADIANT DISCOMFORT &nbsp <img class="discomfortIcon" src="static/images/circle-grey.png"></h2>
+			<div id="key">
+				<ul>
+					<li><img class="discomfortIcon" src="static/images/circle-grey.png">RADIANT DISCOMFORT</li>
+				</ul>
+			</div>
  			<div id="tooltip2" class="hidden"></div>
 			<div id="thresholdTooltip2"></div>
 		</div>
@@ -247,7 +260,7 @@
 		<hr>
 		<p>This tool displays the impact of glazing geometry and U-value on occupant thermal comfort during winter months. It shows when it is possible to eliminate perimeter heat in cases where U-Value is low and windows are small.  It quantifies full-body discomfort from cold window surfaces as well as local discomfort from window downdraft.</p>
 
-		<p class="survey">Read the <a href="http://www.payette.com/images_research_projects/GlazingSelectionTool/GlazingAndComfortAnalysisToolTermsAndConditions.pdf" target="_blank">License</a>, Email the <a href="mailto:cmackey@payette.com?Subject=RE:%20Glazing%20Winter%20Comfort%20Tool" target="_top">Developers</a>, and Visit our <a href="https://github.com/PayettePeople/Thermal-Comfort-Tool/" target="_blank">Github</a>.</p>
+		<p class="survey">Email the <a href="mailto:cmackey@payette.com?Subject=RE:%20Glazing%20Winter%20Comfort%20Tool" target="_top">Developers</a>, Visit our <a href="https://github.com/PayettePeople/Thermal-Comfort-Tool/" target="_blank">Github</a>, or Read the <a href="http://www.payette.com/images_research_projects/GlazingSelectionTool/GlazingAndComfortAnalysisToolTermsAndConditions.pdf" target="_blank">License</a>.</p>
 
 		<div id="options">
 			<div id="units">
@@ -376,8 +389,6 @@
 			<legend class="heading expandOptions"><span class="expand" id="advOptions"></span>Advanced Options</legend>
 			<hr>
 			<div class="hideContent">
-				<p class="subtext">It is recommended to use the default values for these variables unless you have an atypical building program or occupant culture.</p>
-
 				<label for="lowECheck">Room-side Low-E Coating<sup id="fnref:14"><a href="#fn:14" rel="footnote">?</a></sup></label>
 
 				<div class="inputWrapperLeft"><div class="customCheckStyleCentered case1"><input type="checkbox" name="lowECheckThis" id="lowECheck" class="checkbox customCheck"><label for="lowECheck" id="checkLowE1" class="unselected"></label></div></div>
