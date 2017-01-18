@@ -659,6 +659,17 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, o
       ptInfo.comf = "True"
     }
 
+    // Governing factor and distance to PPD Target.
+    var dwnPPDDist = downDPPD[i] - ppdValue
+    var mrtPPDDist = mrtPPD[i] - ppdValue2
+    if (dwnPPDDist > mrtPPDDist) {
+      ptInfo.govFac = "dwn"
+      ptInfo.tarDist = dwnPPDDist
+    } else {
+      ptInfo.govFac = "mrt"
+      ptInfo.tarDist = mrtPPDDist
+    }
+
 		myDataset.push(ptInfo)
 	}
 

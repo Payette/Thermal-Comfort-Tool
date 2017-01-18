@@ -31,10 +31,9 @@ render.makeGraph = function () {
 
 
   /* ------ SET UP GRAPH VARIABLES AND DATA FUNCTIONS ------ */
-  var margin = {top: 15, right: 20, bottom: 40, left: 70},
+  var margin = {top: 17, right: 30, bottom: 40, left: 65},
       width = maxContainerWidth - margin.left - margin.right,
       height = 275 - margin.top - margin.bottom;
-
 
   // Set up scale functions
   // x-axis: distance from facade
@@ -54,10 +53,21 @@ render.makeGraph = function () {
       .range([height, 0])
       .domain([0, 30]);
 
+  // y-axes combined
+  var y3 = d3.scale.linear()
+      .range([height, 0])
+      .domain([parseFloat(ppdValue)-10, parseFloat(ppdValue)+10]);
+  var y4 = d3.scale.linear()
+      .range([height, 0])
+      .domain([parseFloat(ppdValue2)-10, parseFloat(ppdValue2)+10]);
+
   // Define axes
   var xAxis = d3.svg.axis().scale(x).orient("bottom");
   var yAxis1 = d3.svg.axis().scale(y).orient("left");
   var yAxis2 = d3.svg.axis().scale(y).orient("left");
+  var yAxis3 = d3.svg.axis().scale(y3).orient("left");
+  var yAxis4 = d3.svg.axis().scale(y4).orient("right");
+  var yAxis5 = d3.svg.axis().scale(y3).orient("left");
 
   /* ------------------ MAKE THE GRAPHS ------------------ */
   // Add SVG
@@ -82,17 +92,16 @@ render.makeGraph = function () {
   // Draw PPD threshold so that it's behind the data and axes
   var ppdLine = drawPPDThreshold(graphSvg, ppdValue, "dwn");
   var ppdLine2 = drawPPDThreshold(graphSvg2, ppdValue2, "mrt");
-  var ppdLine3 = drawPPDThreshold(graphSvg3, ppdValue, "dwn");
+  var ppdLine3 = drawPPDThreshold(graphSvg3, ppdValue, "comb");
   drawGraph(graphSvg, "Percent of People Dissatisfied (PPD)", "dwn");
   drawGraph(graphSvg2, "Percent of People Dissatisfied (PPD)", "mrt");
-  drawGraph(graphSvg3, "% of People Dissatisfied from Downdraft", "dwn");
+  drawGraph(graphSvg3, "Percent of People Dissatisfied (PPD)", "comb");
 
   /* ------ PLOT THE DATA ------ */
   //draw occupant position line so that it's behind the points
   occupantDistanceRefLine();
   defDrawData(graphSvg, "dwn")
   defDrawData(graphSvg2, "mrt")
-  defDrawData(graphSvg3, "dwn")
 
   // call function to initialize all data points
   updateGraphPoints(graphSvg, dataset, "dotCase1", color1, "dwn");
@@ -101,9 +110,6 @@ render.makeGraph = function () {
   updateGraphPoints(graphSvg2, dataset, "dotCase1", color1, "mrt");
   updateGraphPoints(graphSvg2, dataset2, "dotCase2", color2, "mrt");
   updateGraphPoints(graphSvg2, dataset3, "dotCase3", color3, "mrt");
-  updateGraphPoints(graphSvg3, dataset, "dotCase1", color1, "dwn");
-  updateGraphPoints(graphSvg3, dataset2, "dotCase2", color2, "dwn");
-  updateGraphPoints(graphSvg3, dataset3, "dotCase3", color3, "dwn");
 
   // call function to initialize point at occupant location
   updateOccupantPoint(graphSvg, [occPointData], "occdot1", color1, "dwn");
@@ -112,9 +118,6 @@ render.makeGraph = function () {
   updateOccupantPoint(graphSvg2, [occPointData], "occdot1", color1, "mrt");
   updateOccupantPoint(graphSvg2, [occPointData2], "occdot2", color2, "mrt");
   updateOccupantPoint(graphSvg2, [occPointData3], "occdot3", color3, "mrt");
-  updateOccupantPoint(graphSvg3, [occPointData], "occdot1", color1, "dwn");
-  updateOccupantPoint(graphSvg3, [occPointData2], "occdot2", color2, "dwn");
-  updateOccupantPoint(graphSvg3, [occPointData3], "occdot3", color3, "dwn");
 
 
   // add text at occupanct location
@@ -122,7 +125,6 @@ render.makeGraph = function () {
   thresholdDataText("mrt");
   setHover(graphSvg, "dwn")
   setHover(graphSvg2, "mrt")
-  setHover(graphSvg3, "dwn")
 
   function setHover (mySVG, param) {
     // Show text on hover over dot
@@ -3027,7 +3029,7 @@ render.makeGraph = function () {
                 .tickFormat("")
                 .ticks(7)
             );
-    } else {
+    } else if (param == "mrt"){
       thesvg.append("g")
           .attr("class", "axis")
           .attr("id", "graphYAxis")
@@ -3042,6 +3044,61 @@ render.makeGraph = function () {
                 .tickFormat("")
                 .ticks(7)
             );
+    } else {
+      thesvg.append("g")
+            .attr("class", "axis")
+            .attr("id", "graphYAxis")
+            .attr("transform", "translate(" + (margin.left) + "," + margin.top + ")")
+            .call(yAxis3.ticks(3));
+      thesvg.append("g")
+            .attr("class", "axis")
+            .attr("id", "graphYAxis")
+            .attr("transform", "translate(" + (margin.left + width) + "," + margin.top + ")")
+            .call(yAxis4.ticks(3));
+      // add horizontal grid
+      thesvg.append("g")
+              .attr("class", "grid")
+              .attr("transform", "translate(" + (margin.left) + "," + margin.top + ")")
+              .call(yAxis5
+                  .tickSize(-width, 0, 0)
+                  .tickFormat("")
+                  .ticks(5));
+      thesvg.append("svg:image")
+              .attr("xlink:href", "static/images/triangle-grey.png")
+              .attr("x", margin.left - 20)
+              .attr("y", "0")
+              .attr("width", "9")
+              .attr("height", "9");
+      thesvg.append("svg:image")
+              .attr("xlink:href", "static/images/circle-grey.png")
+              .attr("x", margin.left + width + 12)
+              .attr("y", "0")
+              .attr("width", "9")
+              .attr("height", "9");
+      thesvg.append("svg:image")
+              .attr("xlink:href", "static/images/triangle-grey.png")
+              .attr("x", margin.left - 20)
+              .attr("y", height/2)
+              .attr("width", "9")
+              .attr("height", "9");
+      thesvg.append("svg:image")
+              .attr("xlink:href", "static/images/circle-grey.png")
+              .attr("x", margin.left + width + 12)
+              .attr("y", height/2)
+              .attr("width", "9")
+              .attr("height", "9");
+      thesvg.append("svg:image")
+             .attr("xlink:href", "static/images/triangle-grey.png")
+             .attr("x", margin.left - 20)
+             .attr("y", height)
+             .attr("width", "9")
+             .attr("height", "9");
+     thesvg.append("svg:image")
+            .attr("xlink:href", "static/images/circle-grey.png")
+            .attr("x", margin.left + width + 8)
+            .attr("y", height)
+            .attr("width", "9")
+            .attr("height", "9");
     }
 
     // add axes labels
@@ -3112,15 +3169,27 @@ render.makeGraph = function () {
   function drawPPDThreshold(theGraph, data, param) {
     //data = PPD threshold (ie 10%)
     // add shaded rectangle
-    theGraph.append("rect")
-      .attr("class", "thresholdRect")
-      .attr("x", 0)
-      .attr("y", function() { return y(data)})
-      .attr("width", width) //use width of graph
-      .attr("height", function() { return height - y(data)})
-      .attr("transform", function() {
-          return "translate(" + margin.left + "," + margin.top + ")";})
-      .style("fill", "white");
+    if (param == "comb"){
+      theGraph.append("rect")
+        .attr("class", "thresholdRect")
+        .attr("x", 0)
+        .attr("y", function() { return y3(data)})
+        .attr("width", width) //use width of graph
+        .attr("height", function() { return height - y3(data)})
+        .attr("transform", function() {
+            return "translate(" + margin.left + "," + margin.top + ")";})
+        .style("fill", "white");
+    } else {
+      theGraph.append("rect")
+        .attr("class", "thresholdRect")
+        .attr("x", 0)
+        .attr("y", function() { return y(data)})
+        .attr("width", width) //use width of graph
+        .attr("height", function() { return height - y(data)})
+        .attr("transform", function() {
+            return "translate(" + margin.left + "," + margin.top + ")";})
+        .style("fill", "white");
+    }
 
     var ppdL = theGraph.append("g")
       .attr("class", "referenceLineGroup")
@@ -3139,7 +3208,7 @@ render.makeGraph = function () {
         .style("stroke", "black")
         .style("stroke-width", "2");
       d3.selectAll(".refLine").classed("draggable", true);
-    } else {
+    } else if (param == "mrt") {
       ppdL.append("line")
         .attr("class","refLine2")
         .attr("x1", 0)
@@ -3149,24 +3218,50 @@ render.makeGraph = function () {
         .style("stroke", "black")
         .style("stroke-width", "2");
       d3.selectAll(".refLine2").classed("draggable", true);
+    } else {
+      ppdL.append("line")
+        .attr("class","refLine3")
+        .attr("x1", 0)
+        .attr("x2", width)
+        .attr("y1", y3(data))
+        .attr("y2", y3(data))
+        .style("stroke", "black")
+        .style("stroke-width", "2");
+      d3.selectAll(".refLine3").classed("draggable", false);
     }
 
     // add symbols
-    ppdL.append("svg:image")
-      .attr("class", "checkLine")
-      .attr("xlink:href", "static/images/check.png")
-      .attr("x", 4)
-      .attr("y", y(data) + 4)
-      .attr("width", 12)
-      .attr("height", 12);
-
-    ppdL.append("svg:image")
-      .attr("class", "crossLine")
-      .attr("xlink:href", "static/images/x.png")
-      .attr("x", 4)
-      .attr("y", y(data) - 16)
-      .attr("width", 12)
-      .attr("height", 12);
+    if (param == "comb"){
+      ppdL.append("svg:image")
+        .attr("class", "checkLine")
+        .attr("xlink:href", "static/images/check.png")
+        .attr("x", 4)
+        .attr("y", y3(data) + 4)
+        .attr("width", 12)
+        .attr("height", 12);
+      ppdL.append("svg:image")
+        .attr("class", "crossLine")
+        .attr("xlink:href", "static/images/x.png")
+        .attr("x", 4)
+        .attr("y", y3(data) - 16)
+        .attr("width", 12)
+        .attr("height", 12);
+    } else {
+      ppdL.append("svg:image")
+        .attr("class", "checkLine")
+        .attr("xlink:href", "static/images/check.png")
+        .attr("x", 4)
+        .attr("y", y(data) + 4)
+        .attr("width", 12)
+        .attr("height", 12);
+      ppdL.append("svg:image")
+        .attr("class", "crossLine")
+        .attr("xlink:href", "static/images/x.png")
+        .attr("x", 4)
+        .attr("y", y(data) - 16)
+        .attr("width", 12)
+        .attr("height", 12);
+    }
 
     return ppdL
   }
