@@ -663,10 +663,10 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, o
     var dwnPPDDist = downDPPD[i] - ppdValue
     var mrtPPDDist = mrtPPD[i] - ppdValue2
     if (dwnPPDDist > mrtPPDDist) {
-      ptInfo.govFac = "dwn"
+      ptInfo.govFact = "dwn"
       ptInfo.tarDist = dwnPPDDist
     } else {
-      ptInfo.govFac = "mrt"
+      ptInfo.govFact = "mrt"
       ptInfo.tarDist = mrtPPDDist
     }
 
@@ -695,6 +695,15 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, o
   }
   occPtInfo.ppd = downDPPD[i];
   occPtInfo.mrtppd = mrtPPD[i];
+  var dwnPPDDist = downDPPD[i] - ppdValue
+  var mrtPPDDist = mrtPPD[i] - ppdValue2
+  if (dwnPPDDist > mrtPPDDist) {
+    occPtInfo.govFact = "dwn"
+    occPtInfo.tarDist = dwnPPDDist
+  } else {
+    occPtInfo.govFact = "mrt"
+    occPtInfo.tarDist = mrtPPDDist
+  }
 
 	// Calculate whether there is risk of condensation.
 	var dewPoint = comf.dewptCalc(airTemp, rh)

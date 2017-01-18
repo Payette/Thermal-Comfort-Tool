@@ -127,14 +127,14 @@ input:checked + .slider:before {
 #graphWrapper ul, #graphWrapper2 ul, #graphWrapper3 ul {
 	list-style: none;
 	float: right;
-	margin: 10px 30px 0px -40px;
+	margin: 10px 35px 0px -40px;
 	font-family: "Arial", sans-serif;
 	font-size: 12px;
 	font-weight: bold;
 }
 
-#graphWrapper3 .combined {
-	margin-bottom: 5px;
+#graphWrapper3 {
+	padding-bottom: 15px;
 }
 
 #graphWrapper ul li, #graphWrapper2 ul li, #graphWrapper3 ul li {

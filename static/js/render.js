@@ -31,7 +31,7 @@ render.makeGraph = function () {
 
 
   /* ------ SET UP GRAPH VARIABLES AND DATA FUNCTIONS ------ */
-  var margin = {top: 17, right: 30, bottom: 40, left: 65},
+  var margin = {top: 17, right: 35, bottom: 40, left: 65},
       width = maxContainerWidth - margin.left - margin.right,
       height = 275 - margin.top - margin.bottom;
 
@@ -60,6 +60,9 @@ render.makeGraph = function () {
   var y4 = d3.scale.linear()
       .range([height, 0])
       .domain([parseFloat(ppdValue2)-10, parseFloat(ppdValue2)+10]);
+  var y5 = d3.scale.linear()
+      .range([height, 0])
+      .domain([-10, 10]);
 
   // Define axes
   var xAxis = d3.svg.axis().scale(x).orient("bottom");
@@ -102,6 +105,7 @@ render.makeGraph = function () {
   occupantDistanceRefLine();
   defDrawData(graphSvg, "dwn")
   defDrawData(graphSvg2, "mrt")
+  defDrawData(graphSvg3, "comb")
 
   // call function to initialize all data points
   updateGraphPoints(graphSvg, dataset, "dotCase1", color1, "dwn");
@@ -110,6 +114,9 @@ render.makeGraph = function () {
   updateGraphPoints(graphSvg2, dataset, "dotCase1", color1, "mrt");
   updateGraphPoints(graphSvg2, dataset2, "dotCase2", color2, "mrt");
   updateGraphPoints(graphSvg2, dataset3, "dotCase3", color3, "mrt");
+  updateGraphPoints(graphSvg3, dataset, "dotCase1", color1, "comb");
+  updateGraphPoints(graphSvg3, dataset2, "dotCase2", color2, "comb");
+  updateGraphPoints(graphSvg3, dataset3, "dotCase3", color3, "comb");
 
   // call function to initialize point at occupant location
   updateOccupantPoint(graphSvg, [occPointData], "occdot1", color1, "dwn");
@@ -2442,7 +2449,6 @@ render.makeGraph = function () {
 
   /* ------ FUNCTIONS TO INITIALIZE AND UPDATE GRAPH ------ */
   function updateGraphPoints(svgToUpdate, data, className, color, param) {
-
     // DATA JOIN
     // Join new data with old elements, if any.
     var thesePoints = svgToUpdate.selectAll("." + className)
@@ -2450,47 +2456,43 @@ render.makeGraph = function () {
 
     // ENTER
     // Create new elements as needed
-    thesePoints.enter().append("path")
-      .attr("d", d3.svg.symbol()
-        .type(function(d) {
-          if (param == "dwn") {
-            return "triangle-up";
-          } else if (param == "mrt") {
-            return "circle";
-          }
-        })
-        .size("35"))
-      .attr("class",className)
-      .style("fill", color);
+    if (param == "mrt" || param == "dwn") {
+      thesePoints.enter().append("path")
+        .attr("d", d3.svg.symbol()
+          .type(function(d) {
+            if (param == "dwn") {
+              return "triangle-up";
+            } else if (param == "mrt") {
+              return "circle";
+            }
+          })
+          .size("35"))
+        .attr("class",className)
+        .style("fill", color);
+    } else {
+      thesePoints.enter().append("path")
+        .attr("d", d3.svg.symbol()
+          .type(function(d) {
+              if (d.govFact == "dwn") {
+              return "triangle-up";
+            } else if (d.govFact == "mrt") {
+              return "circle";
+            }
+          })
+          .size("35"))
+        .attr("class",className)
+        .style("fill", color);
+      }
 
     if (param == "dwn") {
       thesePoints.attr("transform", function(d) {
         return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
-    } else {
+    } else if (param == "mrt") {
       thesePoints.attr("transform", function(d) {
         return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.mrtppd)) + ")";})
-    }
-
-    // UPDATE
-    // Update old elements as needed.
-    thesePoints.attr("d", d3.svg.symbol()
-        .type(function(d) {
-          if (param == "dwn") {
-            return "triangle-up";
-          } else if (param == "mrt") {
-            return "circle";
-          }
-        })
-        .size("35"))
-      .attr("class",className)
-      .style("fill", color);
-
-    if (param == "dwn") {
-      thesePoints.attr("transform", function(d) {
-        return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.ppd)) + ")";})
     } else {
       thesePoints.attr("transform", function(d) {
-        return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y(d.mrtppd)) + ")";})
+        return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y5(d.tarDist)) + ")";})
     }
 
     // EXIT
@@ -2514,7 +2516,7 @@ render.makeGraph = function () {
 
   function findMaxVisiblePPD() {
     var maxPPD;
-        // if only case 1 is shown:
+    // if only case 1 is shown:
     if ($("#caseSelection #case2Label").hasClass("unselected") == true && $("#caseSelection #case3Label").hasClass("unselected") == true) {
       maxPPD = occPointData.ppd;
     // compare case 1 and case 2
@@ -2529,21 +2531,29 @@ render.makeGraph = function () {
     }
     return maxPPD;
   }
-
   function findMaxVisiblePPDmrt() {
     var maxPPD;
-        // if only case 1 is shown:
     if ($("#caseSelection #case2Label").hasClass("unselected") == true && $("#caseSelection #case3Label").hasClass("unselected") == true) {
       maxPPD = occPointData.mrtppd;
-    // compare case 1 and case 2
     } else if ($("#caseSelection #case2Label").hasClass("unselected") == false && $("#caseSelection #case3Label").hasClass("unselected") == true) {
       maxPPD = d3.max([occPointData.mrtppd, occPointData2.mrtppd]);
-    // compare case 1 and case 3
     } else if ($("#caseSelection #case2Label").hasClass("unselected") == true && $("#caseSelection #case3Label").hasClass("unselected") == false) {
       maxPPD = d3.max([occPointData.mrtppd, occPointData3.mrtppd]);
-    // compare case 1, case 2 and 3
     } else if ($("#caseSelection #case2Label").hasClass("unselected") == false && $("#caseSelection #case3Label").hasClass("unselected") == false) {
       maxPPD = d3.max([occPointData.mrtppd, occPointData2.mrtppd, occPointData3.mrtppd]);
+    }
+    return maxPPD;
+  }
+  function findMaxVisiblePPDcomb() {
+    var maxPPD;
+    if ($("#caseSelection #case2Label").hasClass("unselected") == true && $("#caseSelection #case3Label").hasClass("unselected") == true) {
+      maxPPD = occPointData.tarDist;
+    } else if ($("#caseSelection #case2Label").hasClass("unselected") == false && $("#caseSelection #case3Label").hasClass("unselected") == true) {
+      maxPPD = d3.max([occPointData.tarDist, occPointData2.tarDist]);
+    } else if ($("#caseSelection #case2Label").hasClass("unselected") == true && $("#caseSelection #case3Label").hasClass("unselected") == false) {
+      maxPPD = d3.max([occPointData.tarDist, occPointData3.tarDist]);
+    } else if ($("#caseSelection #case2Label").hasClass("unselected") == false && $("#caseSelection #case3Label").hasClass("unselected") == false) {
+      maxPPD = d3.max([occPointData.tarDist, occPointData2.tarDist, occPointData3.tarDist]);
     }
     return maxPPD;
   }
@@ -2552,9 +2562,11 @@ render.makeGraph = function () {
 
     var maxPPD = findMaxVisiblePPD();
     var maxPPDmrt = findMaxVisiblePPDmrt();
+    var maxPPDComb = findMaxVisiblePPDcomb();
     var xPosition = x(occPointData.dist);
     var yPosition = y(maxPPD);
     var yPositionmrt = y(maxPPDmrt);
+    var yPositionComb = y5(maxPPDComb);
 
     graphSvg.append("line")
       .attr("class","occupantLine")
@@ -2581,14 +2593,13 @@ render.makeGraph = function () {
       .attr("x1", xPosition)
       .attr("x2", xPosition)
       .attr("y1", height)
-      .attr("y2", yPositionmrt)
+      .attr("y2", yPositionComb)
       .attr("transform", function() {
         return "translate(" + margin.left + "," + margin.top + ")";
     });
 
     d3.selectAll(".occupantLine").classed("draggable", true);
     d3.selectAll(".occupantLine2").classed("draggable", true);
-    d3.selectAll(".occupantLine3").classed("draggable", true);
   }
 
   function updateOccupantDistanceRefLine() {
@@ -3048,12 +3059,12 @@ render.makeGraph = function () {
       thesvg.append("g")
             .attr("class", "axis")
             .attr("id", "graphYAxis")
-            .attr("transform", "translate(" + (margin.left) + "," + margin.top + ")")
+            .attr("transform", "translate(" + (margin.left - 5) + "," + margin.top + ")")
             .call(yAxis3.ticks(3));
       thesvg.append("g")
             .attr("class", "axis")
             .attr("id", "graphYAxis")
-            .attr("transform", "translate(" + (margin.left + width) + "," + margin.top + ")")
+            .attr("transform", "translate(" + (margin.left + width + 5) + "," + margin.top + ")")
             .call(yAxis4.ticks(3));
       // add horizontal grid
       thesvg.append("g")
@@ -3064,41 +3075,41 @@ render.makeGraph = function () {
                   .tickFormat("")
                   .ticks(5));
       thesvg.append("svg:image")
-              .attr("xlink:href", "static/images/triangle-grey.png")
-              .attr("x", margin.left - 20)
-              .attr("y", "0")
-              .attr("width", "9")
-              .attr("height", "9");
-      thesvg.append("svg:image")
-              .attr("xlink:href", "static/images/circle-grey.png")
-              .attr("x", margin.left + width + 12)
-              .attr("y", "0")
-              .attr("width", "9")
-              .attr("height", "9");
-      thesvg.append("svg:image")
-              .attr("xlink:href", "static/images/triangle-grey.png")
-              .attr("x", margin.left - 20)
-              .attr("y", height/2)
-              .attr("width", "9")
-              .attr("height", "9");
-      thesvg.append("svg:image")
-              .attr("xlink:href", "static/images/circle-grey.png")
-              .attr("x", margin.left + width + 12)
-              .attr("y", height/2)
-              .attr("width", "9")
-              .attr("height", "9");
-      thesvg.append("svg:image")
              .attr("xlink:href", "static/images/triangle-grey.png")
-             .attr("x", margin.left - 20)
-             .attr("y", height)
+             .attr("x", margin.left - 12)
+             .attr("y", height +12)
              .attr("width", "9")
              .attr("height", "9");
      thesvg.append("svg:image")
             .attr("xlink:href", "static/images/circle-grey.png")
-            .attr("x", margin.left + width + 8)
-            .attr("y", height)
+            .attr("x", margin.left + width+3)
+            .attr("y", height +12)
             .attr("width", "9")
             .attr("height", "9");
+    thesvg.append("svg:image")
+           .attr("xlink:href", "static/images/triangle-grey.png")
+           .attr("x", margin.left - 12)
+           .attr("y", height/2 +12)
+           .attr("width", "9")
+           .attr("height", "9");
+   thesvg.append("svg:image")
+          .attr("xlink:href", "static/images/circle-grey.png")
+          .attr("x", margin.left + width+3)
+          .attr("y", height/2 +12)
+          .attr("width", "9")
+          .attr("height", "9");
+  thesvg.append("svg:image")
+         .attr("xlink:href", "static/images/triangle-grey.png")
+         .attr("x", margin.left - 12)
+         .attr("y", 12)
+         .attr("width", "9")
+         .attr("height", "9");
+ thesvg.append("svg:image")
+        .attr("xlink:href", "static/images/circle-grey.png")
+        .attr("x", margin.left + width+3)
+        .attr("y", 12)
+        .attr("width", "9")
+        .attr("height", "9");
     }
 
     // add axes labels
@@ -3132,10 +3143,14 @@ render.makeGraph = function () {
       var line = d3.svg.line()
         .x(function(d) {return x(d.dist);})
         .y(function(d) {return y(d.ppd);});
-    } else {
+    } else if (param == "mrt") {
       var line = d3.svg.line()
         .x(function(d) {return x(d.dist);})
         .y(function(d) {return y(d.mrtppd);});
+    } else {
+      var line = d3.svg.line()
+        .x(function(d) {return x(d.dist);})
+        .y(function(d) {return y5(d.tarDist);});
     }
 
     gsvg.append("path")
