@@ -185,7 +185,7 @@ input:checked + .slider:before {
 }
 
 
-.occupantLine, .occupantLine2 {
+.occupantLine, .occupantLine2, .occupantLine3 {
 	stroke: #000;
 	stroke-width: 3;
 	stroke-linecap: round;
@@ -213,7 +213,7 @@ input:checked + .slider:before {
 }
 
 
-#tooltip, #tooltip2, #thresholdTooltip, #thresholdTooltip2 {
+#tooltip, #tooltip2, #tooltip3, #thresholdTooltip, #thresholdTooltip2, #thresholdTooltip3 {
 	position: absolute;
 	width: 280px;
 	/*padding: 5px;*/
@@ -224,11 +224,11 @@ input:checked + .slider:before {
 
 
 
-#tooltip.hidden, #tooltip2.hidden, #thresholdTooltip.hidden, #thresholdTooltip2.hidden {
+#tooltip.hidden, #tooltip2.hidden, #tooltip3.hidden, #thresholdTooltip.hidden, #thresholdTooltip2.hidden, #thresholdTooltip3.hidden {
 	display: none;
 }
 
-#tooltip h1, #tooltip2 h1, #thresholdTooltip h1, #thresholdTooltip2 h1 {
+#tooltip h1, #tooltip2 h1, #tooltip3 h1, #thresholdTooltip h1, #thresholdTooltip2 h1,  #thresholdTooltip3 h1 {
 	font-family: "Arial", sans-serif;
 	font-weight: 700;
 	font-size: 12px;
@@ -237,7 +237,7 @@ input:checked + .slider:before {
 	float: left;
 }
 
-#thresholdTooltip img.icon, #tooltip img.icon, #tooltip2 img.icon, #thresholdTooltip2 img.icon {
+#thresholdTooltip img.icon, #tooltip img.icon, #tooltip2 img.icon, #thresholdTooltip2 img.icon, #tooltip3 img.icon, #thresholdTooltip3 img.icon {
 	display: block;
 	float: left;
 	width: 12px;
@@ -1157,7 +1157,7 @@ div#disclaimer h1{
 	cursor: ns-resize;
 }
 
-.occupantLine.draggable, .occupantLine2.draggable {
+.occupantLine.draggable, .occupantLine2.draggable, .occupantLine3.draggable {
 	cursor: ew-resize;
 }
 

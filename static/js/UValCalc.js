@@ -98,7 +98,6 @@ uVal.uValFinal = function(opaqueViewFac, winViewFac, distToFacade, dwnPPDFac, wi
 
 	//Compute the required U-Value for PMV model.
 	var uValMRT = uVal.uValMRT(opaqueViewFac, winViewFac, airTemp, parseFloat(outdoorTemp), parseFloat(opaqueRVal), filmCoeff, intLowE, lowEmissivity, vel, parseFloat(relHumid), parseFloat(metRate), parseFloat(cloLevel), parseFloat(targetPPD2))
-	console.log(uValMRT)
 	if (dwnPPDFac > 0) {
 		var uValDownD = uVal.uValDownD(parseFloat(targetPPD), facadeDist, windowHgtSI, sillHgtSI, filmCoeff, airTemp, parseFloat(outdoorTemp), dwnPPDFac, opaqueViewFac, winViewFac, parseFloat(opaqueRVal), intLowE, lowEmissivity, vel, parseFloat(relHumid), parseFloat(metRate), parseFloat(cloLevel))
 	} else {
@@ -108,8 +107,6 @@ uVal.uValFinal = function(opaqueViewFac, winViewFac, distToFacade, dwnPPDFac, wi
 			var uValDownD = 100
 		}
 	}
-	console.log(uValDownD)
-	console.log(opaqueRVal)
 
 	if (uValDownD < uValMRT){
 		var uValFinal = uValDownD

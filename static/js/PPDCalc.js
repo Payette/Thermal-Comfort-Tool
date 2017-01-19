@@ -665,9 +665,11 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, o
     if (dwnPPDDist > mrtPPDDist) {
       ptInfo.govFact = "dwn"
       ptInfo.tarDist = dwnPPDDist
+      ptInfo.govPPD = downDPPD[i]
     } else {
       ptInfo.govFact = "mrt"
       ptInfo.tarDist = mrtPPDDist
+      ptInfo.govPPD = mrtPPD[i]
     }
 
 		myDataset.push(ptInfo)
@@ -695,14 +697,21 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, o
   }
   occPtInfo.ppd = downDPPD[i];
   occPtInfo.mrtppd = mrtPPD[i];
+  if (mrtPPD[i] > ppdValue2 || downDPPD[i] > ppdValue) {
+    occPtInfo.comf = "False"
+  } else {
+    occPtInfo.comf = "True"
+  }
   var dwnPPDDist = downDPPD[i] - ppdValue
   var mrtPPDDist = mrtPPD[i] - ppdValue2
   if (dwnPPDDist > mrtPPDDist) {
     occPtInfo.govFact = "dwn"
     occPtInfo.tarDist = dwnPPDDist
+    occPtInfo.govPPD = downDPPD[i]
   } else {
     occPtInfo.govFact = "mrt"
     occPtInfo.tarDist = mrtPPDDist
+    occPtInfo.govPPD = mrtPPD[i]
   }
 
 	// Calculate whether there is risk of condensation.
