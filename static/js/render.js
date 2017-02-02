@@ -31,7 +31,7 @@ render.makeGraph = function () {
 
 
   /* ------ SET UP GRAPH VARIABLES AND DATA FUNCTIONS ------ */
-  var margin = {top: 17, right: 35, bottom: 40, left: 65},
+  var margin = {top: 20, right: 45, bottom: 40, left: 55},
       width = maxContainerWidth - margin.left - margin.right,
       height = 275 - margin.top - margin.bottom;
 
@@ -96,9 +96,9 @@ render.makeGraph = function () {
   var ppdLine = drawPPDThreshold(graphSvg, ppdValue, "dwn");
   var ppdLine2 = drawPPDThreshold(graphSvg2, ppdValue2, "mrt");
   var ppdLine3 = drawPPDThreshold(graphSvg3, ppdValue, "comb");
-  drawGraph(graphSvg, "Percent of People Dissatisfied (PPD)", "dwn");
-  drawGraph(graphSvg2, "Percent of People Dissatisfied (PPD)", "mrt");
-  drawGraph(graphSvg3, "Percent of People Dissatisfied (PPD)", "comb");
+  drawGraph(graphSvg, "Downdraft Discomfort (PPD) - ", "dwn");
+  drawGraph(graphSvg2, "Radiant Discomfort (PPD) - ", "mrt");
+  drawGraph(graphSvg3, "Downdraft Discomfort (PPD) - ", "comb");
 
   /* ------ PLOT THE DATA ------ */
   //draw occupant position line so that it's behind the points
@@ -3170,6 +3170,13 @@ render.makeGraph = function () {
                 .tickFormat("")
                 .ticks(7)
             );
+      thesvg.append("svg:image")
+           .attr("xlink:href", "static/images/triangle-grey.png")
+           .attr("x", 15)
+           .attr("y", 30)
+           .attr("width", "9")
+           .attr("height", "9");
+
     } else if (param == "mrt"){
       thesvg.append("g")
           .attr("class", "axis")
@@ -3185,16 +3192,22 @@ render.makeGraph = function () {
                 .tickFormat("")
                 .ticks(7)
             );
+      thesvg.append("svg:image")
+           .attr("xlink:href", "static/images/circle-grey.png")
+           .attr("x", 15)
+           .attr("y", 37)
+           .attr("width", "9")
+           .attr("height", "9");
     } else {
       thesvg.append("g")
             .attr("class", "axis")
             .attr("id", "graphYAxis")
-            .attr("transform", "translate(" + (margin.left - 5) + "," + margin.top + ")")
+            .attr("transform", "translate(" + (margin.left) + "," + margin.top + ")")
             .call(yAxis3.ticks(3));
       thesvg.append("g")
             .attr("class", "axis")
             .attr("id", "graphYAxis")
-            .attr("transform", "translate(" + (margin.left + width + 5) + "," + margin.top + ")")
+            .attr("transform", "translate(" + (margin.left + width - 5) + "," + margin.top + ")")
             .call(yAxis4.ticks(3));
       // add horizontal grid
       thesvg.append("g")
@@ -3205,41 +3218,17 @@ render.makeGraph = function () {
                   .tickFormat("")
                   .ticks(5));
       thesvg.append("svg:image")
-             .attr("xlink:href", "static/images/triangle-grey.png")
-             .attr("x", margin.left - 12)
-             .attr("y", height +12)
-             .attr("width", "9")
-             .attr("height", "9");
-     thesvg.append("svg:image")
-            .attr("xlink:href", "static/images/circle-grey.png")
-            .attr("x", margin.left + width+3)
-            .attr("y", height +12)
-            .attr("width", "9")
-            .attr("height", "9");
-    thesvg.append("svg:image")
            .attr("xlink:href", "static/images/triangle-grey.png")
-           .attr("x", margin.left - 12)
-           .attr("y", height/2 +12)
+           .attr("x", 15)
+           .attr("y", 30)
            .attr("width", "9")
            .attr("height", "9");
-   thesvg.append("svg:image")
+     thesvg.append("svg:image")
           .attr("xlink:href", "static/images/circle-grey.png")
-          .attr("x", margin.left + width+3)
-          .attr("y", height/2 +12)
+          .attr("x", margin.left + width + margin.right - 22)
+          .attr("y", 37)
           .attr("width", "9")
           .attr("height", "9");
-  thesvg.append("svg:image")
-         .attr("xlink:href", "static/images/triangle-grey.png")
-         .attr("x", margin.left - 12)
-         .attr("y", 12)
-         .attr("width", "9")
-         .attr("height", "9");
- thesvg.append("svg:image")
-        .attr("xlink:href", "static/images/circle-grey.png")
-        .attr("x", margin.left + width+3)
-        .attr("y", 12)
-        .attr("width", "9")
-        .attr("height", "9");
     }
 
     // add axes labels
@@ -3259,12 +3248,22 @@ render.makeGraph = function () {
       }
 
     thesvg.append("g")
-    .attr("transform", "translate(25," + (height/2 + margin.top) + ")")
+    .attr("transform", "translate(23," + (height/2 + margin.top) + ")")
     .append("text")
-      .attr("class", "axislabel")
+      .attr("class", "yaxislabel")
       .attr("text-anchor", "middle")
       .attr("transform", "rotate(-90)")
       .text(yAxisTitle);
+
+    if (param == "comb") {
+      thesvg.append("g")
+      .attr("transform", "translate(" + (margin.left + width + margin.right - 14) + "," + (height/2 + margin.top) + ")")
+      .append("text")
+        .attr("class", "yaxislabel")
+        .attr("text-anchor", "middle")
+        .attr("transform", "rotate(-90)")
+        .text("Radiant Discomfort (PPD) - ");
+    }
   }
 
   function defDrawData(gsvg, param) {

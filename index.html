@@ -171,7 +171,7 @@
 				<fieldset class="inputgroup">
 					<!-- <legend>Occupancy Thresholds</legend>
 					<hr> -->
-					<label for="ppd">Acceptable PPD from Ankle Draft <sup id="fnref:21"><a href="#fn:21" rel="footnote">?</a></sup></label>
+					<label for="ppd">Acceptable PPD from Downdraft <sup id="fnref:21"><a href="#fn:21" rel="footnote">?</a></sup></label>
 					<div class="occSlider"><input type="range" name="ppd" id="ppd" value="20" min="5" max="30"><p id="ppdOutput">20%</p></div>
 
           <label for="ppd">Acceptable PPD from Radiant Loss <sup id="fnref:22"><a href="#fn:22" rel="footnote">?</a></sup></label>
@@ -187,33 +187,39 @@
 
 		<div id="graphDisplay">
 		<div id="graphWrapper" style="display: block;">
+			<!--
 			<div id="key">
 				<ul>
 					<li><img class="discomfortIcon" src="static/images/triangle-grey.png">ANKLE DRAFT DISCOMFORT</li>
 				</ul>
 			</div>
+			-->
  			<div id="tooltip" class="hidden"></div>
 			<div id="thresholdTooltip"></div>
 		</div>
 
 
     <div id="graphWrapper2" style="display: block;">
+			<!--
 			<div id="key">
 				<ul>
 					<li><img class="discomfortIcon" src="static/images/circle-grey.png">RADIANT DISCOMFORT</li>
 				</ul>
 			</div>
+			-->
  			<div id="tooltip2" class="hidden"></div>
 			<div id="thresholdTooltip2"></div>
 		</div>
 
 		<div id="graphWrapper3" class="hiddenGraph">
+			<!--
 			<div id="key">
 				<ul class="combined">
 					<li><img class="discomfortIcon" src="static/images/triangle-grey.png">ANKLE DRAFT DISCOMFORT</li>
 					<li><img class="discomfortIcon" src="static/images/circle-grey.png">RADIANT DISCOMFORT</li>
 				</ul>
 			</div>
+			-->
  			<div id="tooltip3" class="hidden"></div>
 			<div id="thresholdTooltip3"></div>
 		</div>
@@ -222,7 +228,7 @@
 
 
 		<div id="explanation">
-			<h1 class="expandExplanation"><span class="expand" id="explainer"></span>Understanding Discomfort and How to Minimize It</h1>
+			<h1 class="expandExplanation"><span class="expand" id="explainer"></span>Understanding Discomfort and How to Use This Tool</h1>
 			<hr>
 
 			<div class="explanContent">
@@ -271,7 +277,7 @@
 
 		<h1>Glazing and Winter Comfort Tool</h1>
 		<hr>
-		<p>This tool displays the impact of glazing geometry and U-value on occupant thermal comfort during winter months. It shows when it is possible to eliminate perimeter heat in cases where U-Value is low and windows are small.  It quantifies full-body discomfort from cold window surfaces as well as local discomfort from window downdraft.</p>
+		<p>This tool displays the impact of glazing geometry and U-value on occupant thermal comfort during winter months. It shows when it is possible to eliminate perimeter heat in cases where U-Value is low and windows are small.  It quantifies full-body discomfort from radiant loss to cold window surfaces as well as local discomfort from downdraft.</p>
 
 		<p class="survey">Email the <a href="mailto:cmackey@payette.com?Subject=RE:%20Glazing%20Winter%20Comfort%20Tool" target="_top">Developers</a>, Visit our <a href="https://github.com/PayettePeople/Thermal-Comfort-Tool/" target="_blank">Github</a>, or Read the <a href="http://www.payette.com/images_research_projects/GlazingSelectionTool/GlazingAndComfortAnalysisToolTermsAndConditions.pdf" target="_blank">License</a>.</p>
 

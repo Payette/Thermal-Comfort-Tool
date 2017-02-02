@@ -133,10 +133,6 @@ input:checked + .slider:before {
 	font-weight: bold;
 }
 
-#graphWrapper3 {
-	padding-bottom: 15px;
-}
-
 #graphWrapper ul li, #graphWrapper2 ul li, #graphWrapper3 ul li {
 	display: inline;
 	color: #777777;
@@ -175,8 +171,11 @@ input:checked + .slider:before {
 	font-weight: 500;
 }
 
-#graph .axis text {
-	font-weight: 300;
+#graph .yaxislabel {
+	font-weight: bold;
+	font-family: "Arial", sans-serif;
+	font-size: 12px;
+	fill: #777777;
 }
 
 #graph .axis path,
