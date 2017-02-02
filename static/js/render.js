@@ -2639,6 +2639,7 @@ render.makeGraph = function () {
 
     d3.selectAll(".occupantLine").classed("draggable", true);
     d3.selectAll(".occupantLine2").classed("draggable", true);
+    d3.selectAll(".occupantLine3").classed("draggable", true);
   }
 
   function updateOccupantDistanceRefLine() {
@@ -3633,11 +3634,16 @@ render.makeGraph = function () {
       updateOccupantPoint(graphSvg2, [occPointData], "occdot1", color1, "mrt");
       updateOccupantPoint(graphSvg2, [occPointData2], "occdot2", color2, "mrt");
       updateOccupantPoint(graphSvg2, [occPointData3], "occdot3", color3, "mrt");
+      updateOccupantPoint(graphSvg3, [occPointData], "occdot1", color1, "comb");
+      updateOccupantPoint(graphSvg3, [occPointData2], "occdot2", color2, "comb");
+      updateOccupantPoint(graphSvg3, [occPointData3], "occdot3", color3, "comb");
 
       var newMaxPPD = findMaxVisiblePPD();
       var newYPosition = y(newMaxPPD);
       var newMaxPPD2 = findMaxVisiblePPDmrt();
       var newYPosition2 = y(newMaxPPD2);
+      var newMaxPPD3 = findMaxVisiblePPDcomb();
+      var newYPosition3 = y5(newMaxPPD3);
 
       // update calculated uvalue
       autocalcUValues();
@@ -3655,12 +3661,20 @@ render.makeGraph = function () {
         .attr("x2", newX - margin.left)
         .attr("y2", newYPosition2)
         .transition();
+
+      // adjust PPD threshold line
+      d3.selectAll(".occupantLine3")
+        .attr("x1", newX - margin.left)
+        .attr("x2", newX - margin.left)
+        .attr("y2", newYPosition3)
+        .transition();
     });
 
   d3.selectAll(".refLine").call(dragPPDLine);
   d3.selectAll(".refLine2").call(dragPPDLineMRT);
   d3.selectAll(".occupantLine").call(dragOccupantLine);
   d3.selectAll(".occupantLine2").call(dragOccupantLine);
+  d3.selectAll(".occupantLine3").call(dragOccupantLine);
 
 
 
