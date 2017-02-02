@@ -111,7 +111,7 @@ rect.thresholdRect {
   fill: #F0F0F0;
 }
 
-#graphWrapper, #graphWrapper2{
+#graphWrapper, #graphWrapper2, #graphWrapper3{
   box-shadow: inset 0 0 0 1000px rgb(230,230,230);
 }
 
@@ -120,13 +120,13 @@ rect.thresholdRect {
 }
 
 @media print {
-      #graphWrapper ul li, #graphWrapper2 ul li {
+      #graphWrapper ul li, #graphWrapper2 ul li, #graphWrapper3 ul li {
         color: rgba(0, 0, 0, 0);
         text-shadow: 0 0 0 #777777;
       }
 
       @media print and (-webkit-min-device-pixel-ratio:0) {
-        #graphWrapper ul li, #graphWrapper2 ul li {
+        #graphWrapper ul li, #graphWrapper2 ul li, #graphWrapper3 ul li {
           color: #777777;
           -webkit-print-color-adjust: exact;
         }

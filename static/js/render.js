@@ -129,7 +129,6 @@ render.makeGraph = function () {
   updateOccupantPoint(graphSvg3, [occPointData2], "occdot2", color2, "comb");
   updateOccupantPoint(graphSvg3, [occPointData3], "occdot3", color3, "comb");
 
-
   // add text at occupanct location
   thresholdDataText("dwn");
   thresholdDataText("mrt");
@@ -202,49 +201,30 @@ render.makeGraph = function () {
 
       // set XPosition for tooltip
       // change width of tooltip so it doesn't stretch outside wrapper
-      if (x(d.dist) > 190 ) {
-        if (param == "dwn") {
-          $("div#tooltip").css("width","150px");
-          $("div#tooltip h1").css("width","135px");
-        } else if (param == "mrt") {
-          $("div#tooltip2").css("width","150px");
-          $("div#tooltip2 h1").css("width","135px");
-        } else {
-          $("div#tooltip3").css("width","150px");
-          $("div#tooltip3 h1").css("width","135px");
-        }
-        if (param == "dwn") {
-          yPosition = y(d.ppd) - thisHeight + margin.top - 5;
-        } else if (param == "mrt") {
-          yPosition = y(d.mrtppd) - thisHeight + margin.top -5;
-        } else {
-          yPosition = y5(d.tarDist) - thisHeight + margin.top -5;
-        }
-
-        // prevent the tooltip from going outside the graph wrapper
-        if (x(d.dist) > 300) {
-          // keep fixed at right edge
-          xPosition = maxContainerWidth - margin.right - $("div#tooltip").width();
-        } else {
-          // position relative to data point
-          xPosition = x(d.dist) + margin.left + 8;
-        }
-
+      if (param == "dwn") {
+        $("div#tooltip").css("width","150px");
+        $("div#tooltip h1").css("width","135px");
+      } else if (param == "mrt") {
+        $("div#tooltip2").css("width","150px");
+        $("div#tooltip2 h1").css("width","135px");
       } else {
-        // full width tooltip
-        if (param == "dwn") {
-          $("div#tooltip").css("width","290px");
-          $("div#tooltip h1").css("width","auto");
-          yPosition = y(d.ppd) - thisHeight + margin.top;
-        } else if (param == "mrt") {
-          $("div#tooltip2").css("width","290px");
-          $("div#tooltip2 h1").css("width","auto");
-          yPosition = y(d.mrtppd) - thisHeight + margin.top;
-        } else {
-          $("div#tooltip3").css("width","290px");
-          $("div#tooltip3 h1").css("width","auto");
-          yPosition = y5(d.tarDist) - thisHeight + margin.top;
-        }
+        $("div#tooltip3").css("width","150px");
+        $("div#tooltip3 h1").css("width","135px");
+      }
+      if (param == "dwn") {
+        yPosition = y(d.ppd) - thisHeight + margin.top - 5;
+      } else if (param == "mrt") {
+        yPosition = y(d.mrtppd) - thisHeight + margin.top -5;
+      } else {
+        yPosition = y5(d.tarDist) - thisHeight + margin.top -20;
+      }
+
+      // prevent the tooltip from going outside the graph wrapper
+      if (x(d.dist) > 300) {
+        // keep fixed at right edge
+        xPosition = maxContainerWidth - margin.right - $("div#tooltip").width();
+      } else {
+        // position relative to data point
         xPosition = x(d.dist) + margin.left + 8;
       }
 
@@ -2537,6 +2517,17 @@ render.makeGraph = function () {
     } else {
       thesePoints.attr("transform", function(d) {
         return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y5(d.tarDist)) + ")";})
+      thesePoints.attr("d", d3.svg.symbol()
+        .type(function(d) {
+          if (d.govFact == "dwn") {
+            return "triangle-up";
+          } else if (d.govFact == "mrt") {
+            return "circle";
+          }
+        })
+        .size("35"))
+      .attr("class",className)
+      .style("fill", color);
     }
 
     // EXIT
@@ -2696,7 +2687,8 @@ render.makeGraph = function () {
           .size("35"))
         .attr("class",className)
         .style("fill", "#FFF")
-        .style("stroke", color);
+        .style("stroke", color)
+        .style("stroke-width", 2);
     } else {
       thisOccupantPoint.enter().append("path")
         .attr("d", d3.svg.symbol()
@@ -2710,7 +2702,9 @@ render.makeGraph = function () {
           .size("35"))
         .attr("class",className)
         .style("fill", "#FFF")
-        .style("stroke", color);
+        .style("stroke-width", 2)
+        .style("stroke", color)
+        .style("stroke-width", 2);
     }
 
     if (param == "dwn") {
@@ -2722,6 +2716,19 @@ render.makeGraph = function () {
     }  else {
       thisOccupantPoint.attr("transform", function(d) {
         return "translate(" + (margin.left + x(d.dist)) + "," + (margin.top + y5(d.tarDist)) + ")";})
+      thisOccupantPoint.attr("d", d3.svg.symbol()
+        .type(function(d) {
+          if (d.govFact == "dwn") {
+            return "triangle-up";
+          } else if (d.govFact == "mrt") {
+            return "circle";
+          }
+        })
+        .size("35"))
+      .attr("class",className)
+      .style("fill", "#FFF")
+      .style("stroke-width", 2)
+      .style("stroke", color);
     }
 
     // EXIT
@@ -2781,28 +2788,28 @@ render.makeGraph = function () {
     var reason = "";
 
     if (param == "dwn") {
-      reason = "downdraft discomfort";
+      reason = "downdraft";
     } else if (param == "mrt") {
-      reason = "radiant discomfort";
+      reason = "radiant";
     } else {
       if (occdata.govFact == "dwn") {
-        reason = "downdraft discomfort";
+        reason = "downdraft";
       } else {
-        reason = "radiant discomfort";
+        reason = "radiant";
       }
     }
 
     if (param == "dwn") {
       if (occdata.ppd <= ppdValue) {
-        text = "<img src='static/images/check.png' class='icon'><h1 class=" + className + ">" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1><div style='clear:both;'></div>";
+        text = "<img src='static/images/check.png' class='icon'><h1 class=" + className + ">" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD</h1><div style='clear:both;'></div>";
       } else {
-        text = "<img src='static/images/x.png' class='icon'><h1 class=" + className + ">" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD from " + reason + ".</h1><div style='clear:both;'></div>";
+        text = "<img src='static/images/x.png' class='icon'><h1 class=" + className + ">" + caseName +": " + Math.round(occdata.ppd*10)/10 + "% PPD</h1><div style='clear:both;'></div>";
       }
     } else if (param == "mrt") {
       if (occdata.mrtppd <= ppdValue2) {
-        text = "<img src='static/images/check.png' class='icon'><h1 class=" + className + ">" + caseName +": " + Math.round(occdata.mrtppd*10)/10 + "% PPD from " + reason + ".</h1><div style='clear:both;'></div>";
+        text = "<img src='static/images/check.png' class='icon'><h1 class=" + className + ">" + caseName +": " + Math.round(occdata.mrtppd*10)/10 + "% PPD</h1><div style='clear:both;'></div>";
       } else {
-        text = "<img src='static/images/x.png' class='icon'><h1 class=" + className + ">" + caseName +": " + Math.round(occdata.mrtppd*10)/10 + "% PPD from " + reason + ".</h1><div style='clear:both;'></div>";
+        text = "<img src='static/images/x.png' class='icon'><h1 class=" + className + ">" + caseName +": " + Math.round(occdata.mrtppd*10)/10 + "% PPD</h1><div style='clear:both;'></div>";
       }
     } else {
       if (occdata.govFact == "dwn"){
@@ -2811,9 +2818,9 @@ render.makeGraph = function () {
         var govPPD = Math.round(occdata.mrtppd*10)/10
       }
       if (occdata.comf == "True") {
-        text = "<img src='static/images/check.png' class='icon'><h1 class=" + className + ">" + caseName +": " + govPPD + "% PPD from " + reason + ".</h1><div style='clear:both;'></div>";
+        text = "<img src='static/images/check.png' class='icon'><h1 class=" + className + ">" + caseName +": " + govPPD + "% PPD - " + reason + "</h1><div style='clear:both;'></div>";
       } else {
-        text = "<img src='static/images/x.png' class='icon'><h1 class=" + className + ">" + caseName +": " + govPPD + "% PPD from " + reason + ".</h1><div style='clear:both;'></div>";
+        text = "<img src='static/images/x.png' class='icon'><h1 class=" + className + ">" + caseName +": " + govPPD + "% PPD - " + reason + "</h1><div style='clear:both;'></div>";
       }
     }
 
@@ -3024,16 +3031,21 @@ render.makeGraph = function () {
       }
     }
 
+
     if (param == "dwn"){
       $("#thresholdTooltip").append(totalText);
-      var divHeight = $("div#thresholdTooltip").height() - 25;
     } else if (param == "mrt") {
       $("#thresholdTooltip2").append(totalText);
-      var divHeight = $("div#thresholdTooltip2").height() - 25;
     } else {
       $("#thresholdTooltip3").append(totalText);
-      var divHeight = $("div#thresholdTooltip2").height() - 25;
     }
+
+    if ($("#splitToggle").hasClass("marked") == true) {
+      var divHeight = $("div#thresholdTooltip").height() - 25;
+    } else {
+      var divHeight = $("div#thresholdTooltip3").height() - 25;
+    }
+
 
     var xPosition;
     var yPosition;
@@ -3041,86 +3053,46 @@ render.makeGraph = function () {
 
     // set XPosition for tooltip
     // change width of tooltip so it doesn't stretch outside wrapper
-    if (x(occPointData.dist) > 190 ) {
-      if (param == "dwn"){
-        $("div#thresholdTooltip").css("width","150px");
-        $("div#thresholdTooltip h1").css("width","135px");
-      } else if (param == "mrt") {
-        $("div#thresholdTooltip2").css("width","150px");
-        $("div#thresholdTooltip2 h1").css("width","135px");
-      } else {
-        $("div#thresholdTooltip3").css("width","150px");
-        $("div#thresholdTooltip3 h1").css("width","135px");
-      }
+    yPadding = -15;
 
-      // prevent the tooltip from going outside the graph wrapper
-      if (x(occPointData.dist) > 300) {
-        // keep fixed at right edge
-        xPosition = maxContainerWidth - margin.right - $("div#thresholdTooltip").width();
-      } else {
-        // position relative to data point
-        xPosition = x(occPointData.dist) + margin.left + 8;
-      }
-      yPadding = 40
-
-      if (param == "dwn") {
-        var ppdScaleFac = d3.max(compareOccupantArray) + 1
-      } else if (param == "mrt") {
-        var ppdScaleFac = d3.max(compareOccupantArray) + 1.5
-      } else {
-        var ppdScaleFac = d3.max(compareOccupantArray) + 1
-      }
-
-      if (param == "comb") {
-        if (d3.max(compareOccupantArray) < 2) {
-          yPosition = y5(ppdScaleFac) - divHeight + margin.top + yPadding - 25;
-        } else if (d3.max(compareOccupantArray) > 2) {
-          yPosition = margin.top + yPadding - 25;
-      } else {
-        if (d3.max(compareOccupantArray) < 17) {
-          yPosition = y(ppdScaleFac) - divHeight + margin.top + yPadding - 25;
-        } else if (d3.max(compareOccupantArray) > 17) {
-          yPosition = margin.top + yPadding - 25;
-        }
-      }
-    }
+    if (param == "dwn") {
+      var ppdScaleFac = d3.max(compareOccupantArray) + 1
+    } else if (param == "mrt") {
+      var ppdScaleFac = d3.max(compareOccupantArray) + 1.5
     } else {
-      // full width tooltip
-      if (param == "dwn"){
-        $("div#thresholdTooltip").css("width","290px");
-        $("div#thresholdTooltip h1").css("width","auto");
-      } else if (param == "mrt") {
-        $("div#thresholdTooltip2").css("width","290px");
-        $("div#thresholdTooltip2 h1").css("width","auto");
-      } else {
-        $("div#thresholdTooltip3").css("width","290px");
-        $("div#thresholdTooltip3 h1").css("width","auto");
-      }
+      var ppdScaleFac = d3.max(compareOccupantArray) + 1
+    }
 
+    // full width tooltip
+    if (param == "dwn"){
+      $("div#thresholdTooltip").css("width","190px");
+      $("div#thresholdTooltip h1").css("width","auto");
+    } else if (param == "mrt") {
+      $("div#thresholdTooltip2").css("width","190px");
+      $("div#thresholdTooltip2 h1").css("width","auto");
+    } else {
+      $("div#thresholdTooltip3").css("width","200px");
+      $("div#thresholdTooltip3 h1").css("width","auto");
+    }
+
+    if (x(occPointData.dist) < 250) {
       xPosition = x(occPointData.dist) + margin.left + 8;
-      yPadding = 10;
+    } else {
+      xPosition = maxContainerWidth - margin.right - $("div#thresholdTooltip").width();
+    }
 
-      if (param == "dwn") {
-        var ppdScaleFac = d3.max(compareOccupantArray) + 1
-      } else if (param == "mrt") {
-        var ppdScaleFac = d3.max(compareOccupantArray) + 1.5
+    // set YPosition for tooltip
+    if (param == "comb"){
+      if (y5(ppdScaleFac) - divHeight + yPadding > 0) {
+        yPosition = y5(ppdScaleFac) - divHeight + margin.top + yPadding;
       } else {
-        var ppdScaleFac = d3.max(compareOccupantArray) + 1
+        yPosition = margin.top;
       }
-
-      // set YPosition for tooltip
-      if (param == "comb") {
-        if (d3.max(compareOccupantArray) < 6) {
-          yPosition = y5(ppdScaleFac) - divHeight + margin.top + yPadding;
-        } else if (d3.max(compareOccupantArray) > 6) {
-          yPosition = margin.top + yPadding;
-        }
+    } else {
+      if (y(ppdScaleFac) - divHeight + yPadding > 0) {
+        yPosition = y(ppdScaleFac) - divHeight + margin.top + yPadding;
       } else {
-        if (d3.max(compareOccupantArray) < 25) {
-          yPosition = y(ppdScaleFac) - divHeight + margin.top + yPadding;
-        } else if (d3.max(compareOccupantArray) > 25) {
-          yPosition = margin.top + yPadding;
-        }
+        yPosition = margin.top;
       }
     }
 
