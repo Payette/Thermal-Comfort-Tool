@@ -14,16 +14,30 @@
   display: block;
 }
 
-h2.case1Text, #inputs input.case1, #inputs input.inactive case1, #caseSelection h2#case1Label, #inputs input.inactive.case1#calcuvalue, #inputs .hideContent input.case1 {
-  color: rgb(0,160,221);
+@media print {
+      #inputs label.grey {
+        color: rgba(0, 0, 0, 0);
+        text-shadow: 0 0 0 #ADADAD;
+      }
+
+      @media print and (-webkit-min-device-pixel-ratio:0) {
+        #inputs label.grey {
+          color: #ADADAD;
+          -webkit-print-color-adjust: exact;
+        }
+      }
+   }
+
+h2.case1Text, #inputs input.case1, #inputs input.inactive case1, #caseSelection h2#case1Label, #inputs input.inactive#calcuvalue, #inputs .hideContent input.case1, #inputs input.inactive#condRisk1 {
+  color: rgb(0,160,221) !important;
 }
 
-h2.case2Text, #inputs input.case2, #inputs input.inactive case2, #caseSelection h2#case2Label, #inputs input.inactive.case2#calcuvalue2, #inputs .hideContent input.case2 {
-  color: rgb(248,151,29);
+h2.case2Text, #inputs input.case2, #inputs input.inactive case2, #caseSelection h2#case2Label, #inputs input.inactive#calcuvalue2, #inputs .hideContent input.case2, #inputs input.inactive#condRisk2 {
+  color: rgb(248,151,29) !important;
 }
 
-h2.case3Text, #inputs input.case3, #inputs input.inactive case3, #caseSelection h2#case3Label, #inputs input.inactive.case3#calcuvalue3, #inputs .hideContent input.case3 {
-  color: rgb(108,28,131);
+h2.case3Text, #inputs input.case3, #inputs input.inactive case3, #caseSelection h2#case3Label, #inputs input.inactive#calcuvalue3, #inputs .hideContent input.case3, #inputs input.inactive#condRisk3 {
+  color: rgb(108,28,131) !important;
 }
 
 
