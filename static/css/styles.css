@@ -124,6 +124,10 @@ input:checked + .slider:before {
 	margin-top: 10px;
 }
 
+#graphWrapper3 {
+	padding-bottom: 10px;
+}
+
 #graphWrapper ul, #graphWrapper2 ul, #graphWrapper3 ul {
 	list-style: none;
 	float: right;

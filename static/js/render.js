@@ -1073,6 +1073,7 @@ render.makeGraph = function () {
       }
       // Update target PPD threshold line
       updatePPDThreshold(graphSvg, ppdValue);
+      updateCombPPDThreshold(graphSvg3, ppdValue, "dwn");
       thresholdDataText("dwn");
       thresholdDataText("mrt");
       thresholdDataText("comb");
@@ -1098,6 +1099,7 @@ render.makeGraph = function () {
       }
       // Update target PPD threshold line
       updatePPDThreshold(graphSvg2, ppdValue2);
+      updateCombPPDThreshold(graphSvg3, ppdValue, "mrt");
       thresholdDataText("dwn");
       thresholdDataText("mrt");
       thresholdDataText("comb");
@@ -1168,6 +1170,7 @@ render.makeGraph = function () {
     }
     // Update target PPD threshold line
     updatePPDThreshold(graphSvg, ppdValue);
+    updateCombPPDThreshold(graphSvg3, ppdValue, "dwn");
     thresholdDataText("dwn");
     thresholdDataText("mrt");
     thresholdDataText("comb");
@@ -1195,6 +1198,7 @@ render.makeGraph = function () {
     }
     // Update target PPD threshold line
     updatePPDThreshold(graphSvg2, ppdValue2);
+    updateCombPPDThreshold(graphSvg3, ppdValue, "mrt");
     thresholdDataText("dwn");
     thresholdDataText("mrt");
     thresholdDataText("comb");
@@ -3412,6 +3416,46 @@ render.makeGraph = function () {
       .transition()
       .duration(400)
       .attr("y", y(data) - 16);
+  }
+
+  function updateCombPPDThreshold(chSvg, data, threshType) {
+    // Calculate where the new points should be for the sake of the combined chart.
+    updateData(case1Data);
+    updateData(case2Data);
+    updateData(case3Data);
+
+    // Update the graph points and occupant point of the combined chart.
+    updateGraphPoints(chSvg, dataset, "dotCase1", color1, "comb");
+    updateGraphPoints(chSvg, dataset2, "dotCase2", color2, "comb");
+    updateGraphPoints(chSvg, dataset3, "dotCase3", color3, "comb");
+
+    updateOccupantPoint(chSvg, [occPointData], "occdot1", color1, "comb");
+    updateOccupantPoint(chSvg, [occPointData2], "occdot2", color2, "comb");
+    updateOccupantPoint(chSvg, [occPointData3], "occdot3", color3, "comb");
+
+    // Update the axes labes with the new threshold information.
+    y3 = d3.scale.linear()
+        .range([height, 0])
+        .domain([parseFloat(ppdValue)-10, parseFloat(ppdValue)+10]);
+    y4 = d3.scale.linear()
+        .range([height, 0])
+        .domain([parseFloat(ppdValue2)-10, parseFloat(ppdValue2)+10]);
+    yAxis3 = d3.svg.axis().scale(y3).orient("left");
+    yAxis4 = d3.svg.axis().scale(y4).orient("right");
+
+    chSvg.selectAll("#graphYAxis").remove();
+
+    chSvg.append("g")
+          .attr("class", "axis")
+          .attr("id", "graphYAxis")
+          .attr("transform", "translate(" + (margin.left) + "," + margin.top + ")")
+          .call(yAxis3.ticks(3));
+    chSvg.append("g")
+          .attr("class", "axis")
+          .attr("id", "graphYAxis")
+          .attr("transform", "translate(" + (margin.left + width - 5) + "," + margin.top + ")")
+          .call(yAxis4.ticks(3));
+
   }
 
 
