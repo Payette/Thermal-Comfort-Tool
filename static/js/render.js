@@ -1022,7 +1022,13 @@ render.makeGraph = function () {
     globInputs = [occDistFromFacade, ppdValue, ppdValue2]
     csvContent = createCSV(dataset, dataset2, dataset3, occPointData, occPointData2, occPointData3, case1Data, case2Data, case3Data, globInputs, unitSys)
     var encodedUri = encodeURI(csvContent);
-    window.open(encodedUri);
+    downloadLink=document.createElement('a');
+    downloadLink.textContent='download';
+    downloadLink.download="GlazingWinterComfort.csv";
+    downloadLink.href='data:text/csv;charset=utf-8,'+encodedUri;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
   })
 
 

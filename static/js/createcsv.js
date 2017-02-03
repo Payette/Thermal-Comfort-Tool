@@ -16,6 +16,7 @@ function createCSV(dataset, dataset2, dataset3, occPointData, occPointData2, occ
     appendInputs(initdata, case3Inputs, "Case 3 Inputs", unitSys)
   }
   appendGlobInputs(initdata, globInputs, unitSys)
+  appendURLS(initdata)
 
 
   // Transpose the matrix
@@ -26,7 +27,7 @@ function createCSV(dataset, dataset2, dataset3, occPointData, occPointData2, occ
   });
 
   // Write the matrix to a csv.
-  var csvContent = "data:text/csv;charset=utf-8,";
+  var csvContent = "";
   data.forEach(function(infoArray, index){
      dataString = infoArray.join(",");
      csvContent += index < data.length ? dataString+ "\n" : dataString;
@@ -38,6 +39,18 @@ function addBlankToMtx (matrix, start, count) {
   for (var i = 0; i < count; i++) {
     matrix[start+i].push("")
   }
+}
+
+function appendURLS(matrix) {
+  addBlankToMtx (matrix, 0, 9)
+  var standardURL = urlGenerate.createURL(false)
+  var fullURL = urlGenerate.createURL(true)
+  matrix[0].push("Standard URL")
+  matrix[1].push(standardURL)
+  addBlankToMtx(matrix, 2, 7)
+  matrix[0].push("Full URL")
+  matrix[1].push(fullURL)
+  addBlankToMtx(matrix, 2, 7)
 }
 
 function appendGlobInputs(matrix, data, unitSys) {

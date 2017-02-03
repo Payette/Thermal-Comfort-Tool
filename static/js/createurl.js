@@ -1,4 +1,6 @@
-function createURL() {
+var urlGenerate = urlGenerate || {}
+
+function createURL(fullURL=false) {
 
 	// create a dictionary of defaults.
 	var defaultSettings = {
@@ -163,56 +165,72 @@ function createURL() {
 
 
 	// build the URL
-	for (var key in valDictionary) {
-		if (units == "SI" && key == "distFromFacade") {
-			if (round(occDistFromFacade*100)/100 != 0.91) {
-				paramURL = paramURL + "&" + key + "=" + valDictionary[key]
-			}
-		} else {
-			if (valDictionary[key] != defaultSettings[key]) {
-				paramURL = paramURL + "&" + key + "=" + valDictionary[key]
-			}
+	if (fullURL == true) {
+		for (var key in valDictionary) {
+			paramURL = paramURL + "&" + key + "=" + valDictionary[key]
 		}
-	}
-
-	// Write in values for the cases that do not meet the defaults.
-	if (units == "IP") {
 		for (var key in case1Dict) {
-			if (case1Dict[key] != defaultDict[key]) {
-				paramURL = paramURL + "&" + key + "=" + case1Dict[key]
-			}
+			paramURL = paramURL + "&" + key + "=" + case1Dict[key]
 		}
-
 		for (var key in case2Dict) {
-			if (case2Dict[key] != defaultDict[key]) {
-				paramURL = paramURL + "&" + key + "2=" + case2Dict[key]
-			}
+			paramURL = paramURL + "&" + key + "=" + case2Dict[key]
 		}
-
 		for (var key in case3Dict) {
-			if (case3Dict[key] != defaultDict[key]) {
-				paramURL = paramURL + "&" + key + "3=" + case3Dict[key]
-			}
+			paramURL = paramURL + "&" + key + "=" + case3Dict[key]
 		}
 	} else {
-		for (var key in case1Dict) {
-			if (case1Dict[key] != defaultDictSI[key]) {
-				paramURL = paramURL + "&" + key + "=" + case1Dict[key]
+		for (var key in valDictionary) {
+			if (units == "SI" && key == "distFromFacade") {
+				if (round(occDistFromFacade*100)/100 != 0.91) {
+					paramURL = paramURL + "&" + key + "=" + valDictionary[key]
+				}
+			} else {
+				if (valDictionary[key] != defaultSettings[key]) {
+					paramURL = paramURL + "&" + key + "=" + valDictionary[key]
+				}
 			}
 		}
 
-		for (var key in case2Dict) {
-			if (case2Dict[key] != defaultDictSI[key]) {
-				paramURL = paramURL + "&" + key + "2=" + case2Dict[key]
+		// Write in values for the cases that do not meet the defaults.
+		if (units == "IP") {
+			for (var key in case1Dict) {
+				if (case1Dict[key] != defaultDict[key]) {
+					paramURL = paramURL + "&" + key + "=" + case1Dict[key]
+				}
 			}
-		}
 
-		for (var key in case3Dict) {
-			if (case3Dict[key] != defaultDictSI[key]) {
-				paramURL = paramURL + "&" + key + "3=" + case3Dict[key]
+			for (var key in case2Dict) {
+				if (case2Dict[key] != defaultDict[key]) {
+					paramURL = paramURL + "&" + key + "2=" + case2Dict[key]
+				}
+			}
+
+			for (var key in case3Dict) {
+				if (case3Dict[key] != defaultDict[key]) {
+					paramURL = paramURL + "&" + key + "3=" + case3Dict[key]
+				}
+			}
+		} else {
+			for (var key in case1Dict) {
+				if (case1Dict[key] != defaultDictSI[key]) {
+					paramURL = paramURL + "&" + key + "=" + case1Dict[key]
+				}
+			}
+
+			for (var key in case2Dict) {
+				if (case2Dict[key] != defaultDictSI[key]) {
+					paramURL = paramURL + "&" + key + "2=" + case2Dict[key]
+				}
+			}
+
+			for (var key in case3Dict) {
+				if (case3Dict[key] != defaultDictSI[key]) {
+					paramURL = paramURL + "&" + key + "3=" + case3Dict[key]
+				}
 			}
 		}
 	}
+
 
 
 	return paramURL;

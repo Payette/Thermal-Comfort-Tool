@@ -74,9 +74,24 @@
 				        });
 					}},
 
+					{text: "Standard URL",
+					click: function() {
+						var standardURL = createURL(false)
+
+							// replace long url with shortened url
+							$("#URLpop textarea").empty();
+							$("#URLpop textarea").append(standardURL);
+							$("#URLpop textarea").select();
+					}},
+
 					{text: "Full URL",
 					click: function() {
-						$(this).dialog("close");
+						var fullURL = createURL(true)
+
+							// replace long url with shortened url
+							$("#URLpop textarea").empty();
+							$("#URLpop textarea").append(fullURL);
+							$("#URLpop textarea").select();
 					}},
 
 					{text: "Close",
@@ -284,7 +299,7 @@
 		<hr>
 		<p>This tool displays the impact of glazing geometry and U-value on occupant thermal comfort during winter months. It shows when it is possible to eliminate perimeter heat in cases where U-Value is low and windows are small.  It quantifies full-body discomfort from radiant loss to cold window surfaces as well as local discomfort from downdraft.</p>
 
-		<p class="survey">Email the <a href="mailto:cmackey@payette.com?Subject=RE:%20Glazing%20Winter%20Comfort%20Tool" target="_top">Developers</a>, Visit our <a href="https://github.com/PayettePeople/Thermal-Comfort-Tool/" target="_blank">Github</a>, or Read the <a href="http://www.payette.com/images_research_projects/GlazingSelectionTool/GlazingAndComfortAnalysisToolTermsAndConditions.pdf" target="_blank">License</a>.</p>
+		<p class="survey">Email the <a href="mailto:cmackey@payette.com?Subject=RE:%20Glazing%20Winter%20Comfort%20Tool" target="_top">Developers</a>, Visit our <a href="https://github.com/PayettePeople/Thermal-Comfort-Tool/" target="_blank">Github</a>, and Read the <a href="http://www.payette.com/images_research_projects/GlazingSelectionTool/GlazingAndComfortAnalysisToolTermsAndConditions.pdf" target="_blank">License</a>.</p>
 
 		<div id="options">
 			<div id="units">
@@ -389,7 +404,7 @@
 
 
 		<fieldset class="inputgroup">
-			<legend class="heading">Environmental Conditions</legend>
+			<legend class="heading">Indoor Conditions</legend>
 			<hr>
 
 			<label for="outdoortemp">Outdoor Temperature (<span class="unitsTemp IP">&deg;F</span>)<sup id="fnref:11"><a href="#fn:11" rel="footnote">?</a></sup></label>
