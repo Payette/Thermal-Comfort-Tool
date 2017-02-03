@@ -30,7 +30,7 @@ function createCSV(dataset, dataset2, dataset3, occPointData, occPointData2, occ
   var csvContent = "";
   data.forEach(function(infoArray, index){
      dataString = infoArray.join(",");
-     csvContent += index < data.length ? dataString+ "\n" : dataString;
+     csvContent += index < data.length ? dataString+ "\r\n" : dataString;
   });
   return csvContent
 }
@@ -43,8 +43,8 @@ function addBlankToMtx (matrix, start, count) {
 
 function appendURLS(matrix) {
   addBlankToMtx (matrix, 0, 9)
-  var standardURL = urlGenerate.createURL(false)
-  var fullURL = urlGenerate.createURL(true)
+  var standardURL = createURL(false)
+  var fullURL = createURL(true)
   matrix[0].push("Standard URL")
   matrix[1].push(standardURL)
   addBlankToMtx(matrix, 2, 7)

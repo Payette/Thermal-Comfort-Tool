@@ -1,6 +1,4 @@
-var urlGenerate = urlGenerate || {}
-
-function createURL(fullURL=false) {
+function createURL(fullURL) {
 
 	// create a dictionary of defaults.
 	var defaultSettings = {

@@ -1003,7 +1003,7 @@ render.makeGraph = function () {
 
   // show URL in modal alert
     $(".optionButton#URL").click(function(event) {
-    var urlresult = createURL();
+    var urlresult = createURL(false);
 
     $("#URLpop textarea").empty();
     $("#URLpop textarea").append(urlresult);
@@ -1021,14 +1021,25 @@ render.makeGraph = function () {
   $(".optionButton#CSV").click(function(event) {
     globInputs = [occDistFromFacade, ppdValue, ppdValue2]
     csvContent = createCSV(dataset, dataset2, dataset3, occPointData, occPointData2, occPointData3, case1Data, case2Data, case3Data, globInputs, unitSys)
-    var encodedUri = encodeURI(csvContent);
-    downloadLink=document.createElement('a');
-    downloadLink.textContent='download';
-    downloadLink.download="GlazingWinterComfort.csv";
-    downloadLink.href='data:text/csv;charset=utf-8,'+encodedUri;
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
+
+    var fileName = "GlazingWinterComfort"
+    if (navigator.userAgent.search("MSIE") >= 0) {
+      var IEwindow = window.open();
+      IEwindow.document.write('sep=,\r\n' + csvContent);
+      IEwindow.document.close();
+      IEwindow.document.execCommand('SaveAs', true, fileName + ".csv");
+      IEwindow.close();
+    } else {
+      var encodedUri = encodeURI(csvContent);
+      downloadLink=document.createElement('a');
+      downloadLink.textContent='download';
+      downloadLink.download= fileName+".csv";
+      downloadLink.href='data:text/csv;charset=utf-8,'+ encodedUri;
+      downloadLink.target = "_blank"
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    }
   })
 
 
