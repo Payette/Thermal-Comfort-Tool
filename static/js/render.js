@@ -1021,16 +1021,18 @@ render.makeGraph = function () {
   $(".optionButton#CSV").click(function(event) {
     globInputs = [occDistFromFacade, ppdValue, ppdValue2]
     csvContent = createCSV(dataset, dataset2, dataset3, occPointData, occPointData2, occPointData3, case1Data, case2Data, case3Data, globInputs, unitSys)
-
+    var encodedUri = encodeURI(csvContent);
     var fileName = "GlazingWinterComfort"
-    if (navigator.userAgent.search("MSIE") >= 0) {
+
+    if(msieversion()) {
+      var blob = new Blob([csvContent],{type: "text/csv;charset=utf-8;"});
+      navigator.msSaveOrOpenBlob(blob, fileName+".csv")
+      /*
       var IEwindow = window.open();
-      IEwindow.document.write('sep=,\r\n' + csvContent);
-      IEwindow.document.close();
+      IEwindow.document.write('sep=,\r\n' + encodedUri);
       IEwindow.document.execCommand('SaveAs', true, fileName + ".csv");
-      IEwindow.close();
+      */
     } else {
-      var encodedUri = encodeURI(csvContent);
       downloadLink=document.createElement('a');
       downloadLink.textContent='download';
       downloadLink.download= fileName+".csv";

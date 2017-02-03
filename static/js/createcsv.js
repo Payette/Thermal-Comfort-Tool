@@ -1,3 +1,13 @@
+function msieversion() {
+  var ua = window.navigator.userAgent;
+  var msie = ua.indexOf("MSIE ");
+  if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+    return true;
+  } else { // If another browser,
+    return false;
+  }
+}
+
 
 function createCSV(dataset, dataset2, dataset3, occPointData, occPointData2, occPointData3, case1Inputs, case2Inputs, case3Inputs, globInputs, unitSys) {
   // Add the data to a javascript matrix
