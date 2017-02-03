@@ -1026,12 +1026,7 @@ render.makeGraph = function () {
 
     if(msieversion()) {
       var blob = new Blob([csvContent],{type: "text/csv;charset=utf-8;"});
-      navigator.msSaveOrOpenBlob(blob, fileName+".csv")
-      /*
-      var IEwindow = window.open();
-      IEwindow.document.write('sep=,\r\n' + encodedUri);
-      IEwindow.document.execCommand('SaveAs', true, fileName + ".csv");
-      */
+      navigator.msSaveBlob(blob, fileName+".csv")
     } else {
       downloadLink=document.createElement('a');
       downloadLink.textContent='download';
