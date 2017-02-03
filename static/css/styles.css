@@ -29,6 +29,7 @@ body {
 #graphViewToggle {
 	padding-top: 3px;
 	width: 90px;
+	display: block;
 	float: right;
 	margin-left: 15px;
 	padding-left: 15px;
@@ -352,11 +353,12 @@ rect.blue {
 	overflow: visible;
 }
 
-.occSlider {
+form#occupantSliders div.occSlider {
 	width: 193px;
 	height: 20px;
 	float: left;
 	padding: 0px;
+	display: inline-block;
 }
 
 #ppd, #distFromFacade, #ppd2 {
@@ -392,6 +394,9 @@ output #occupantImage, output #occupantImage2, output #occupantImage3 {
 
 input[type=range]#ppd, input[type=range]#ppd2, input[type=range]#distFromFacade {
 	-webkit-appearance: none;
+	-ms-appearance: none;
+	position: absolute;
+	width: 160px
 }
 
 input[type=range]#occupantDist, input[type=range]#occupantDist2, input[type=range]#occupantDist3 {
@@ -418,6 +423,7 @@ input[type=range]#occupantDist::-ms-track, input[type=range]#occupantDist2::-ms-
 	margin-bottom: 5px;
 	border:0;
 	color: transparent;
+	width: 100%;
 }
 
 input[type=range]#ppd::-ms-fill-lower, input[type=range]#ppd2::-ms-fill-lower {
