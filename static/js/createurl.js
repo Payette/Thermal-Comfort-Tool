@@ -5,7 +5,8 @@ function createURL() {
 		units: "IP",
 		ppd: "20",
 		ppd2: "10",
-		distFromFacade: "3"
+		distFromFacade: "3",
+		graphType: "split"
 	}
 
 	var defaultDict = {
@@ -24,6 +25,26 @@ function createURL() {
 		occPosition: "0",
 		rValue: "15",
 		airspeed: "10",
+		clothing: "0.85",
+		metabolic: "1.2"
+	}
+
+	var defaultDictSI = {
+		ceiling: "3.66",
+		wallWidth: "5.49",
+		windowHeight: "2.13",
+		sillHeight: "0.91",
+		windowWidth: "1.22",
+		glazingRatio: "39",
+		windowSeparation: "1.83",
+		uValue: "1.99",
+		outdoorTemp: "-12",
+		indoortemp: "22.2",
+		humidity: "20",
+		lowE: "",
+		occPosition: "0",
+		rValue: "2.64",
+		airspeed: "0.05",
 		clothing: "0.85",
 		metabolic: "1.2"
 	}
@@ -55,6 +76,14 @@ function createURL() {
 	var thisPpd = $("#ppd").val();
 	var thisPpd2 = $("#ppd2").val();
 
+	// Graph View type
+	if ($("#splitToggle").hasClass("marked") == true) {
+		var thisGraphType = "split";
+	} else {
+		var thisGraphType = "combined";
+	}
+
+
 	// check to be sure that this is not already a long URL.
 	locationURL = location.href.split("?")[0]
 
@@ -65,7 +94,8 @@ function createURL() {
 		units: units,
 		ppd: thisPpd,
 		ppd2: thisPpd2,
-		distFromFacade: thisDistFromFacade
+		distFromFacade: thisDistFromFacade,
+		graphType: thisGraphType
 	}
 
 	// values for only case 1
@@ -134,26 +164,53 @@ function createURL() {
 
 	// build the URL
 	for (var key in valDictionary) {
-		if (valDictionary[key] != defaultSettings[key]) {
-			paramURL = paramURL + "&" + key + "=" + valDictionary[key]
+		if (units == "SI" && key == "distFromFacade") {
+			if (round(occDistFromFacade*100)/100 != 0.91) {
+				paramURL = paramURL + "&" + key + "=" + valDictionary[key]
+			}
+		} else {
+			if (valDictionary[key] != defaultSettings[key]) {
+				paramURL = paramURL + "&" + key + "=" + valDictionary[key]
+			}
 		}
 	}
 
-	for (var key in case1Dict) {
-		if (case1Dict[key] != defaultDict[key]) {
-			paramURL = paramURL + "&" + key + "=" + case1Dict[key]
+	// Write in values for the cases that do not meet the defaults.
+	if (units == "IP") {
+		for (var key in case1Dict) {
+			if (case1Dict[key] != defaultDict[key]) {
+				paramURL = paramURL + "&" + key + "=" + case1Dict[key]
+			}
 		}
-	}
 
-	for (var key in case2Dict) {
-		if (case2Dict[key] != defaultDict[key]) {
-			paramURL = paramURL + "&" + key + "2=" + case2Dict[key]
+		for (var key in case2Dict) {
+			if (case2Dict[key] != defaultDict[key]) {
+				paramURL = paramURL + "&" + key + "2=" + case2Dict[key]
+			}
 		}
-	}
 
-	for (var key in case3Dict) {
-		if (case3Dict[key] != defaultDict[key]) {
-			paramURL = paramURL + "&" + key + "3=" + case3Dict[key]
+		for (var key in case3Dict) {
+			if (case3Dict[key] != defaultDict[key]) {
+				paramURL = paramURL + "&" + key + "3=" + case3Dict[key]
+			}
+		}
+	} else {
+		for (var key in case1Dict) {
+			if (case1Dict[key] != defaultDictSI[key]) {
+				paramURL = paramURL + "&" + key + "=" + case1Dict[key]
+			}
+		}
+
+		for (var key in case2Dict) {
+			if (case2Dict[key] != defaultDictSI[key]) {
+				paramURL = paramURL + "&" + key + "2=" + case2Dict[key]
+			}
+		}
+
+		for (var key in case3Dict) {
+			if (case3Dict[key] != defaultDictSI[key]) {
+				paramURL = paramURL + "&" + key + "3=" + case3Dict[key]
+			}
 		}
 	}
 

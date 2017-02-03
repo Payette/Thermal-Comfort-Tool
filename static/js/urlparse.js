@@ -42,6 +42,24 @@ if (typeof urlParameters.units != 'undefined') {
 		$(".unitsRVal").append("m&sup2;*K/W");
 		$(".unitsAirSpeed").append("m/s");
 		$("#calcuvalue, #calcuvalue2, #calcuvalue3").val(" ");
+
+		// set default values for SI.
+		$("#ceiling, #ceiling2, #ceiling3").val(3.66);
+		$("#wallWidth, #wallWidth2, #wallWidth3").val(5.49);
+		$("#windowHeight, #windowHeight2, #windowHeight3").val(2.13);
+		$("#sill, #sill2, #sill3").val(0.91);
+		$("#windowWidth, #windowWidth2, #windowWidth3").val(1.22);
+		$("#glazing, #glazing2, #glazing3").val(39);
+		$("#distWindow, #distWindow2, #distWindow3").val(1.83);
+		$("#uvalue, #uvalue2, #uvalue3").val(1.99);
+		$("#outdoortemp, #outdoortemp2, #outdoortemp3").val(-12);
+		$("#airtemp, #airtemp2, #airtemp3").val(22.2);
+		$("#rvalue, #rvalue2, #rvalue3").val(2.64);
+		$("#airspeed, #airspeed2, #airspeed3").val(0.05);
+		$("#distFromFacade").attr("max", 4).attr("min", .5);
+		$("#distFromFacade").val(0.914);
+		$("#distFromFacade").attr("value", 0.914);
+		$("#distOutput").text(0.9 + " m");
 	}
 }
 
@@ -68,6 +86,21 @@ if (typeof urlParameters.distFromFacade != 'undefined') {
 	}
 }
 
+function checkSplitGraph() {
+	if ($("#graphWrapper").css("display") == "none") {
+		$("#graphWrapper3").slideDown(50);
+	}
+}
+if (typeof urlParameters.graphType != 'undefined') {
+	$("#graphWrapper").slideUp(50);
+	$("#graphWrapper2").slideUp(50);
+	setTimeout(checkSplitGraph, 70);
+	$("#splitToggle").removeClass("marked");
+	$("#splitToggle").addClass("unmarked");
+	$("#combinedToggle").removeClass("unmarked");
+	$("#combinedToggle").addClass("marked");
+}
+
 var case1visability = urlParameters.case1;
 var case2visability = urlParameters.case2;
 var case3visability = urlParameters.case3;
@@ -84,43 +117,33 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' && urlParamet
 	if (typeof urlParameters.wallWidth != 'undefined') {
 		$("#wallWidth, #wallWidth2, #wallWidth3").val(urlParameters.wallWidth);
 	}
-
 	if (typeof urlParameters.windowHeight != 'undefined') {
 		$("#windowHeight, #windowHeight2, #windowHeight3").val(urlParameters.windowHeight);
 	}
-
 	if (typeof urlParameters.sillHeight != 'undefined') {
 		$("#sill, #sill2, #sill3").val(urlParameters.sillHeight);
 	}
-
 	if (typeof urlParameters.windowWidth != 'undefined') {
 		$("#windowWidth, #windowWidth2, #windowWidth3").val(urlParameters.windowWidth);
 	}
-
 	if (typeof urlParameters.glazingRatio != 'undefined') {
 		$("#glazing, #glazing2, #glazing3").val(urlParameters.glazingRatio);
 	}
-
 	if (typeof urlParameters.windowSeparation != 'undefined') {
 		$("#distWindow, #distWindow2, #distWindow3").val(urlParameters.windowSeparation);
 	}
-
 	if (typeof urlParameters.uValue != 'undefined') {
 		$("#uvalue, #uvalue2, #uvalue3").val(urlParameters.uValue);
 	}
-
 	if (typeof urlParameters.outdoorTemp != 'undefined') {
 		$("#outdoortemp, #outdoortemp2, #outdoortemp3").val(urlParameters.outdoorTemp);
 	}
-
 	if (typeof urlParameters.indoortemp != 'undefined') {
 		$("#airtemp, #airtemp2, #airtemp3").val(urlParameters.indoortemp);
 	}
-
 	if (typeof urlParameters.humidity != 'undefined') {
 		$("#humidity, #humidity2, #humidity3").val(urlParameters.humidity);
 	}
-
 	if (typeof urlParameters.rValue != 'undefined') {
 		$("#rvalue, #rvalue2, #rvalue3").val(urlParameters.rValue);
 	}

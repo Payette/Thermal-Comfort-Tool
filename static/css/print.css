@@ -15,13 +15,13 @@
 }
 
 @media print {
-      #inputs label.grey {
+      #inputs label.grey, #graphViewToggle .unmarked{
         color: rgba(0, 0, 0, 0);
         text-shadow: 0 0 0 #ADADAD;
       }
 
       @media print and (-webkit-min-device-pixel-ratio:0) {
-        #inputs label.grey {
+        #inputs label.grey, #graphViewToggle .unmarked {
           color: #ADADAD;
           -webkit-print-color-adjust: exact;
         }

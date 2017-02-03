@@ -3051,6 +3051,16 @@ render.makeGraph = function () {
       var divHeight = $("div#thresholdTooltip3").height() - 25;
     }
 
+    if (divHeight == -25) {
+      divHeight = -7
+      if ($("#caseSelection #case2Label").hasClass("unselected") == false) {
+        divHeight = divHeight + 18
+      }
+      if ($("#caseSelection #case3Label").hasClass("unselected") == false) {
+        divHeight = divHeight + 18
+      }
+    }
+
 
     var xPosition;
     var yPosition;
