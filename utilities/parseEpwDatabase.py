@@ -1,0 +1,92 @@
+import os
+
+"""Parse the heating design temperature out of all epw files.
+
+Args:
+    directory : A directory that contains the extracted epw database.
+    heatingDDYFileName: A json file name into which all heating design temperatures will be written.
+Returns:
+    A json file name into which all heating design temperatures
+"""
+
+directory  = "E:\epwDatabase\\"
+heatingDDYFileName = "Heatingddy.json"
+
+extractDir = directory + "extracted\\"
+ddyjson = directory + "refined\\" + heatingDDYFileName
+
+
+fd = open(ddyjson,'w')
+fd.write("{\n")
+fd.close()
+
+startTrigger = True
+
+fd = open(ddyjson,'a')
+for folder in os.listdir(extractDir):
+    fd.write("\t" + folder + ":{\n")
+    totalDir = extractDir + folder + "\\"
+    allNations = os.listdir(totalDir)
+    allNations.sort()
+    nationList = []
+    privonceList = ['None']
+    cityList = []
+    for location in allNations:
+        # pull the information out of the ddy file
+        try:
+            ddyFile = totalDir + location + "\\" + location + ".ddy"
+            ddy = open(ddyFile, 'r')
+            locList = location.split("_")
+            nation = locList[0]
+            city = " ".join(locList[-2].split('.')[:-1])
+
+
+            if len(locList) > 3:
+                province = locList[1]
+            elif nation == "AUS":
+                province = city.split(' ')[0]
+                city = " ".join(city.split(' ')[1:])
+            elif nation == "CHN":
+                province = city.split(' ')[0].upper()
+                city = " ".join(city.split(' ')[1:])
+            else:
+                province = 'None'
+
+            for line in ddy:
+                if "Annual Heating 99%," in line:
+                    designTemp = line.split('=')[-1]
+                    designTemp = designTemp[:-3]
+            ddy.close()
+
+            # Write the information into the json.
+            if nation not in nationList:
+                if startTrigger == True:
+                    startTrigger = False
+                else:
+                    fd.write("\t\t\t},\n")
+                    fd.write("\t\t},\n")
+                fd.write("\t\t" + nation + " : {\n")
+                fd.write("\t\t\t" + province + " : {\n")
+                fd.write("\t\t\t\t" + city + " : " + designTemp + ",\n")
+                nationList.append(nation)
+                privonceList.append(province)
+                cityList.append(city)
+            elif province not in privonceList:
+                fd.write("\t\t\t},\n")
+                fd.write("\t\t\t" + province + " : {\n")
+                fd.write("\t\t\t\t" + city + " : " + designTemp + ",\n")
+                privonceList.append(province)
+                cityList.append(city)
+            elif city not in cityList:
+                fd.write("\t\t\t\t" + city + " : " + designTemp + ",\n")
+                cityList.append(city)
+
+            print nation + " " + province + " " + city + " - " + designTemp
+        except:
+            pass
+
+    fd.write("\t\t\t},\n")
+    fd.write("\t\t},\n")
+    fd.write("\t}\n")
+fd.write("}")
+fd.close()
