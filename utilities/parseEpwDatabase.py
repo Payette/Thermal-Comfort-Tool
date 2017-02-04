@@ -20,14 +20,16 @@ fd = open(ddyjson,'w')
 fd.write("{\n")
 fd.close()
 
-startTrigger = True
 
 fd = open(ddyjson,'a')
 for folder in os.listdir(extractDir):
-    fd.write("\t" + folder + ":{\n")
+    continentTrigger = True
+    continentStr = "'" + folder + "'"
+    fd.write("\t" + continentStr + ":{\n")
     totalDir = extractDir + folder + "\\"
     allNations = os.listdir(totalDir)
     allNations.sort()
+
     nationList = []
     privonceList = ['None']
     cityList = []
@@ -39,7 +41,6 @@ for folder in os.listdir(extractDir):
             locList = location.split("_")
             nation = locList[0]
             city = " ".join(locList[-2].split('.')[:-1])
-
 
             if len(locList) > 3:
                 province = locList[1]
@@ -58,35 +59,40 @@ for folder in os.listdir(extractDir):
                     designTemp = designTemp[:-3]
             ddy.close()
 
+            # Format variables to be written into a dictionary.
+            nation = "'" + nation + "'"
+            province = "'" + province + "'"
+            city = "'" + city + "'"
+
             # Write the information into the json.
             if nation not in nationList:
-                if startTrigger == True:
-                    startTrigger = False
+                if continentTrigger == True:
+                    continentTrigger = False
                 else:
-                    fd.write("\t\t\t},\n")
+                    fd.write("\n\t\t\t}\n")
                     fd.write("\t\t},\n")
                 fd.write("\t\t" + nation + " : {\n")
                 fd.write("\t\t\t" + province + " : {\n")
-                fd.write("\t\t\t\t" + city + " : " + designTemp + ",\n")
+                fd.write("\t\t\t\t" + city + ": " + designTemp)
                 nationList.append(nation)
                 privonceList.append(province)
                 cityList.append(city)
             elif province not in privonceList:
-                fd.write("\t\t\t},\n")
+                fd.write("\n\t\t\t},\n")
                 fd.write("\t\t\t" + province + " : {\n")
-                fd.write("\t\t\t\t" + city + " : " + designTemp + ",\n")
+                fd.write("\t\t\t\t" + city + ": " + designTemp)
                 privonceList.append(province)
                 cityList.append(city)
             elif city not in cityList:
-                fd.write("\t\t\t\t" + city + " : " + designTemp + ",\n")
+                fd.write(",\n\t\t\t\t" + city + ": " + designTemp)
                 cityList.append(city)
 
             print nation + " " + province + " " + city + " - " + designTemp
         except:
             pass
 
-    fd.write("\t\t\t},\n")
-    fd.write("\t\t},\n")
-    fd.write("\t}\n")
+    fd.write("\t\t\t}\n")
+    fd.write("\t\t}\n")
+    fd.write("\t},\n")
 fd.write("}")
 fd.close()
