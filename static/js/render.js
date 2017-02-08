@@ -3506,7 +3506,7 @@ render.makeGraph = function () {
       // update value of slider
       // define scale to map the new Y value
       ppdSliderDragScale = d3.scale.linear()
-          .domain([0, 260]) //input domain
+          .domain([0, 275 - margin.top - margin.bottom]) //input domain
           .range([30, 0]); //output range
       var updatedPPD = ppdSliderDragScale(newY);
       // prevent line from sliding beyond bounds of axis
@@ -3539,6 +3539,7 @@ render.makeGraph = function () {
         .transition();
       ppdValue = Math.round(updatedPPD);
       $("#ppd").attr("value",ppdValue);
+      $("#ppd").val(parseFloat(ppdValue));
       $("#ppdOutput").text(ppdValue + "%");
       // update occupant position text
       thresholdDataText("dwn");
@@ -3555,7 +3556,7 @@ render.makeGraph = function () {
         // update value of slider
         // define scale to map the new Y value
         ppdSliderDragScale = d3.scale.linear()
-            .domain([0, 260]) //input domain
+            .domain([0, 275 - margin.top - margin.bottom]) //input domain
             .range([30, 0]); //output range
         var updatedPPD = ppdSliderDragScale(newY);
         // prevent line from sliding beyond bounds of axis
@@ -3588,6 +3589,7 @@ render.makeGraph = function () {
           .transition();
         ppdValue2 = Math.round(updatedPPD);
         $("#ppd2").attr("value",ppdValue2);
+        $("#ppd2").val(parseFloat(ppdValue2));
         $("#ppdOutput2").text(ppdValue2 + "%");
         // update occupant position text
         thresholdDataText("dwn");

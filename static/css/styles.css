@@ -90,7 +90,7 @@ input:checked + .slider:before {
 }
 
 #graphViewToggle p {
-		font-family: "Arial", sans-serif;
+		font-family: "museo-sans", sans-serif;
 		font-weight: 700;
 		font-size: 12px;
 		padding: 4px 0 0px 26px;
@@ -133,7 +133,7 @@ input:checked + .slider:before {
 	list-style: none;
 	float: right;
 	margin: 10px 35px 0px -40px;
-	font-family: "Arial", sans-serif;
+	font-family: "museo-sans", sans-serif;
 	font-size: 12px;
 	font-weight: bold;
 }
@@ -159,7 +159,7 @@ input:checked + .slider:before {
 
 
 #graph .creditText {
-	font-family: "Arial", sans-serif;
+	font-family: "museo-sans", sans-serif;
 	font-size: 9px;
 	font-style: italic;
 	display: none;
@@ -168,7 +168,7 @@ input:checked + .slider:before {
 
 
 #graph .axislabel, #graph .axis text {
-	font-family: "Arial", sans-serif;
+	font-family: "museo-sans", sans-serif;
 	font-size: 12px;
 }
 
@@ -178,7 +178,7 @@ input:checked + .slider:before {
 
 #graph .yaxislabel {
 	font-weight: bold;
-	font-family: "Arial", sans-serif;
+	font-family: "museo-sans", sans-serif;
 	font-size: 12px;
 	fill: #777777;
 }
@@ -233,7 +233,7 @@ input:checked + .slider:before {
 }
 
 #tooltip h1, #tooltip2 h1, #tooltip3 h1, #thresholdTooltip h1, #thresholdTooltip2 h1,  #thresholdTooltip3 h1 {
-	font-family: "Arial", sans-serif;
+	font-family: "museo-sans", sans-serif;
 	font-weight: 700;
 	font-size: 12px;
 	padding: 0 0 3px 0;
@@ -264,7 +264,7 @@ input:checked + .slider:before {
 
 
 .facadeHeading {
-	font-family: "Arial", sans-serif;
+	font-family: "museo-sans", sans-serif;
 	font-weight: 500;
 	font-size: 11px;
 	margin: 0;
@@ -273,7 +273,7 @@ input:checked + .slider:before {
 }
 
 #graphViewToggle .heading {
-	font-family: "Arial", sans-serif;
+	font-family: "museo-sans", sans-serif;
 	font-weight: 700;
 	font-size: 12px;
 	text-transform: uppercase;
@@ -302,7 +302,7 @@ input:checked + .slider:before {
 
 
 .facadelabel {
-	font-family: "Arial", sans-serif;
+	font-family: "museo-sans", sans-serif;
 	font-size: 12px;
 	font-weight: 300;
 	fill: #000;
@@ -549,16 +549,20 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 #inputs, #referenceLinks {
 	float: right;
 	width: 390px;
-	font-family: "Arial", sans-serif;
+	font-family: "museo-sans", sans-serif;
 	position: relative;
 	z-index: 0;
 
 	/*line-height: 1em;*/
 }
 
+#inputs strong {
+	font-weight: bold;
+}
+
 #occupantSliders {
 	width: 550px;
-	font-family: "Arial", sans-serif;
+	font-family: "museo-sans", sans-serif;
 }
 
 
@@ -613,7 +617,7 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 }
 
 #inputs ul, #referenceLinks ul, #referenceLinks a {
-	font-family: "Arial", sans-serif;
+	font-family: "museo-sans", sans-serif;
 	color: #b9b9b9;
 	font-weight: 300;
 	font-size: 12px;
@@ -706,7 +710,7 @@ div.inputWrapperRight span {
 
 	border: none;
 
-	font-family: "Arial", sans-serif;
+	font-family: "museo-sans", sans-serif;
 	font-weight: 300;
 	font-size: 10px;
 	text-align: right;
@@ -1037,7 +1041,7 @@ span.expand {
 
 
 div#URLpop textarea {
-	font-family: "Arial", sans-serif;
+	font-family: "museo-sans", sans-serif;
 	text-align: center;
 	font-size: 12px;
 	font-weight: 100;
@@ -1052,7 +1056,7 @@ div#disclaimer {
 }
 
 div#disclaimer p,  div#disclaimer h1{
-	font-family: "Arial", sans-serif;
+	font-family: "museo-sans", sans-serif;
 	text-align: center;
 	font-size: 12px;
 	font-weight: 300;
@@ -1078,7 +1082,7 @@ div#disclaimer h1{
 	font-size: 12px;
 	text-transform: uppercase;
 
-	font-family: "Arial", sans-serif;
+	font-family: "museo-sans", sans-serif;
 }
 
 #explanation {
@@ -1107,7 +1111,7 @@ div#disclaimer h1{
 	font-size: 12px;
 	text-transform: uppercase;
 
-	font-family: "Arial", sans-serif;
+	font-family: "museo-sans", sans-serif;
 }
 
 #explanation h2 {
@@ -1115,11 +1119,11 @@ div#disclaimer h1{
 	font-weight: 700;
 	font-size: 12px;
 
-	font-family: "Arial", sans-serif;
+	font-family: "museo-sans", sans-serif;
 }
 
 #explanation h3 {
-	font-family: "Arial", sans-serif;
+	font-family: "museo-sans", sans-serif;
 	font-size: 12px;
 	font-weight: 300;
 	line-height: 1.5;
@@ -1127,7 +1131,7 @@ div#disclaimer h1{
 }
 
 #explanation p {
-	font-family: "Arial", sans-serif;
+	font-family: "museo-sans", sans-serif;
 	font-size: 12px;
 	line-height: 1.5;
 	margin: 0;
@@ -1158,7 +1162,7 @@ div#disclaimer h1{
 #explanation ul {
 	margin: 0;
 	padding: 0 0 0 10px;
-	font-family: "Arial", sans-serif;
+	font-family: "museo-sans", sans-serif;
 	font-size: 12px;
 }
 
@@ -1180,28 +1184,27 @@ div.case2, div.case3, #inputs input.case2, #inputs input.case3, hr.case2, hr.cas
 
 
 
-/*
 @font-face {
-	font-family: "Arial";
+	font-family: "museo-sans";
 	font-weight: 100;
 	src: url('../fonts/MuseoSans-100.otf');
 }
 
 @font-face {
-	font-family: "Arial";
+	font-family: "museo-sans";
 	font-weight: 300;
 	src: url('../fonts/MuseoSans-300.otf');
 }
 
 @font-face {
-	font-family: "Arial";
+	font-family: "museo-sans";
 	font-weight: 700;
-	src: url('../fonts/MuseoSans_0.otf');
+	/*src: url('../fonts/MuseoSans_0.otf');*/
+
 }
 
 @font-face {
-	font-family: "Arial";
+	font-family: "museo-sans";
 	font-weight: 900;
 	src: url('../fonts/MuseoSans_1.otf');
 }
-*/

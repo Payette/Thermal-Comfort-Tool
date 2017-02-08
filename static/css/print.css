@@ -1,3 +1,11 @@
+#inputs, #occupantSliders, #explanation, #graphWrapper ul, #graphWrapper2 ul, #graphWrapper3 ul, #graph .creditText, #graph .axislabel, #graph .axis text, #graph .yaxislabel, #tooltip h1, #tooltip2 h1, #tooltip3 h1, #thresholdTooltip h1, #thresholdTooltip2 h1,  #thresholdTooltip3 h1, .facadeHeading, .facadelabel, #graphViewToggle .heading, #graphViewToggle .marked {
+  font-family: "Arial", sans-serif;
+}
+
+#graphViewToggle .unmarked, #referenceLinks ul, #referenceLinks a, #referenceLinks .heading {
+  font-family: "Arial", sans-serif;
+}
+
 #options, .alert, label#setGlazing, br.glzBR, input#windowWidthCheck, label#checkWindWidth, input#glazingRatioCheck, label#checkGlzRatio, span.expand, #projectList {
   display: none;
 }
