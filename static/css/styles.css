@@ -1074,6 +1074,11 @@ div#disclaimer p {
 	font-weight: 300;
 }
 
+div#disclaimer a {
+	color: grey;
+	border: none;
+}
+
 div#disclaimer h1{
 	font-size: 16px;
 	font-weight: 700;
