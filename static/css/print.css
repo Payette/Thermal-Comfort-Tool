@@ -6,8 +6,18 @@
   font-family: "Arial", sans-serif;
 }
 
-#options, .alert, label#setGlazing, br.glzBR, input#windowWidthCheck, label#checkWindWidth, input#glazingRatioCheck, label#checkGlzRatio, span.expand, #projectList {
+#options, #city, .alert, label#setGlazing, br.glzBR, input#windowWidthCheck, label#checkWindWidth, input#glazingRatioCheck, label#checkGlzRatio, span.expand, #projectList {
   display: none;
+}
+
+#inputs #designConditWrapper label {
+	width: 226px;
+}
+
+#graph .creditText {
+  font-size: 9px;
+  font-style: italic;
+  display: block;
 }
 
 .unexpanded {
@@ -23,7 +33,7 @@
 }
 
 @media print {
-      #inputs label.grey, #graphViewToggle .unmarked{
+      #inputs label.grey, #graphViewToggle .unmarked {
         color: rgba(0, 0, 0, 0);
         text-shadow: 0 0 0 #ADADAD;
       }

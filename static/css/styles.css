@@ -754,9 +754,13 @@ br.glzBR {
 	clear: both;
 }
 
+#city {
+	float: left;
+}
 
-
-
+#inputs #designConditWrapper label {
+	width: 160px;
+}
 
 
 #inputs label, #occupantSliders label {
@@ -983,7 +987,7 @@ div#share {
 }
 
 
-#options input[type=button].optionButton {
+#options input[type=button].optionButton, #city input[type=button].optionButton {
 	padding: 1px 2px;
 	height: 20px;
 	margin: 0 3px;
@@ -995,23 +999,25 @@ div#share {
 	float: left;
 }
 
-#options input[type=button].optionButton.unselected {
+#options input[type=button].optionButton.unselected, #city input[type=button].optionButton.unselected{
 	color: #777;
 	background-color: #fff;
 }
 
-#options input[type=button].optionButton.selected {
+#options input[type=button].optionButton.selected, #city input[type=button].optionButton.selected {
 	color: #fff;
 	background-color: #777;
 }
 
-
-
-#options input[type=button].optionButton#PDF,  #inputs input[type=button].optionButton#URL,  #inputs input[type=button].optionButton#CSV{
+#options input[type=button].optionButton#PDF, #inputs input[type=button].optionButton#URL,  #inputs input[type=button].optionButton#CSV{
 	width: 60px;
 }
 
-#options input[type=button].optionButton:hover {
+#inputs input[type=button].optionButton#City{
+	width:50px;
+}
+
+#options input[type=button].optionButton:hover, #city input[type=button].optionButton:hover {
 	color: #fff;
 	background-color: #777;
 }

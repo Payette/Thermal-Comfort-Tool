@@ -137,6 +137,12 @@ render.makeGraph = function () {
   setHover(graphSvg2, "mrt");
   setHover(graphSvg3, "comb");
 
+  // Add annoying text to credit Payette.
+  // Because you gotta annoy those content theifs (sarcasm).
+  addPayetteText(graphSvg);
+  addPayetteText(graphSvg2);
+  addPayetteText(graphSvg3);
+
   function setHover (mySVG, param) {
     // Show text on hover over dot
     var points = mySVG.selectAll(".dotCase1, .dotCase2, .dotCase3");
@@ -2254,22 +2260,22 @@ render.makeGraph = function () {
     $("#outdoortemp3").on("spin", function(event, ui) {
       case3Data.outdoorTempValue = ui.value;
 
-      updateData(case2Data);
+      updateData(case3Data);
     })
 
     $("#airtemp3").on("spin", function(event, ui) {
       case3Data.airtempValue = ui.value;
 
-      updateData(case2Data);
+      updateData(case3Data);
     })
     $("#humidity3").on("spin", function(event, ui) {
       case3Data.humidityValue = ui.value;
 
-      updateData(case2Data);
+      updateData(case3Data);
     })
     $("#rvalue3").on("spin", function(event, ui) {
       case3Data.rvalueValue = ui.value;
-      updateData(case2Data);
+      updateData(case3Data);
     })
     $("#airspeed3").on("spin", function(event, ui) {
       case3Data.airspeedValue = ui.value;
@@ -2277,11 +2283,11 @@ render.makeGraph = function () {
     })
     $("#clothing2").on("spin", function(event, ui) {
       case3Data.clothingValue = ui.value;
-      updateData(case2Data);
+      updateData(case3Data);
     })
     $("#metabolic2").on("spin", function(event, ui) {
       case3Data.metabolic = ui.value;
-      updateData(case2Data);
+      updateData(case3Data);
     })
 
 
@@ -2799,6 +2805,17 @@ render.makeGraph = function () {
       .transition()
       .duration(500);
 
+  }
+
+  function addPayetteText(theGraph) {
+    var creditText = "Payette Glazing and Winter Comfort Tool";
+
+    theGraph.append("text")
+      .text(creditText)
+      .attr("class", "creditText")
+      .attr("fill", "#D3D3D3")
+      .attr("x", width - 130)
+      .attr("y", height + margin.top - 10);
   }
 
   function occupantPositionText(occdata, className, caseName, param) {
