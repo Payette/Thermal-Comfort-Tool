@@ -1007,6 +1007,16 @@ render.makeGraph = function () {
     }
   })
 
+  // show Outdoor Temprature in modal alert
+    $(".optionButton#City").click(function(event) {
+    var searchedTemperature = $("#outdoortemp").val();
+
+    $("#Outdoorpop textarea").empty();
+    $("#Outdoorpop textarea").append(searchedTemperature);
+
+    $("#Outdoorpop").dialog("open");
+  })
+
   // show URL in modal alert
     $(".optionButton#URL").click(function(event) {
     var urlresult = createURL(false);
@@ -1017,6 +1027,7 @@ render.makeGraph = function () {
     $("#URLpop").dialog("open");
     $("#URLpop textarea").select();
   })
+
 
   // print to PDF
   $(".optionButton#PDF").click(function(event) {

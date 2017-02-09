@@ -1045,6 +1045,34 @@ span.expand {
 }
 
 
+div#Outdoorpop textarea {
+	font-family: "museo-sans", sans-serif;
+	text-align: center;
+	font-size: 12px;
+	font-weight: 100;
+	color: #000;
+	width: 100px;
+	height: 20px;
+}
+div#Outdoorpop .temperature{
+	width:100px;
+	left:155px;
+	position: relative;
+	padding-top: 5px;
+	padding-bottom: 15px;
+}
+
+div#Outdoorpop .dropdown{
+	width:200px;
+  left: 105px;
+  position: relative;
+	padding-top: 5px;
+	padding-bottom: 15px;
+}
+
+div#Outdoorpop select{
+	width:200px;
+}
 
 div#URLpop textarea {
 	font-family: "museo-sans", sans-serif;
@@ -1061,7 +1089,7 @@ div#disclaimer {
 	background-color: #ffffff;
 }
 
-div#disclaimer p,  div#disclaimer h1{
+div#disclaimer p,  div#disclaimer h1, div#Outdoorpop p, div#Outdoorpop h1, div#Outdoorpop legend{
 	font-family: "museo-sans", sans-serif;
 	text-align: center;
 	font-size: 12px;
@@ -1069,7 +1097,7 @@ div#disclaimer p,  div#disclaimer h1{
 	color: #000;
 }
 
-div#disclaimer p {
+div#disclaimer p, div#Outdoorpop p{
 	font-size: 12px;
 	font-weight: 300;
 }
@@ -1079,7 +1107,7 @@ div#disclaimer a {
 	border: none;
 }
 
-div#disclaimer h1{
+div#disclaimer h1, div#Outdoorpop h1{
 	font-size: 16px;
 	font-weight: 700;
 }

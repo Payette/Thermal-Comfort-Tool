@@ -2,9 +2,6 @@ var script = script || {}
 
 
 //Pull the individual values from the form.
-
-
-
 if ($("#windowWidthCheck").is(":checked")) {
 	glzOrWidth = false;
 } else {
@@ -108,9 +105,11 @@ if ($(".optionButton#IP").hasClass("selected") == true) {
 	unitSys = "SI";
 }
 
-
-//ensure slider has correct max value
+// ensure slider has correct max value
 $("#occupantDist").attr("max", case1Data.wallLen/2);
+
+
+// Load up the json with all of the design temperatures.
 
 
 

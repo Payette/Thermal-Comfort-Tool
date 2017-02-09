@@ -104,8 +104,28 @@
 			});
 		});
 
-		/* I can't stand this annoying popup every time I refresh the page. */
+		// Select Outdoor Temperature Dialog
+		$(function() {
+			$("#Outdoorpop").dialog({
+				autoOpen: false,
+				draggable: false,
+				closeOnEscape: true,
+				buttons: [
+					{text: "Apply Temperature",
+					click: function() {
+						$(this).dialog("close");
+					}},
+					{text: "Close",
+					click: function() {
+						$(this).dialog("close");
+					}},
+					],
+				modal: true,
+				width: 450,
+			});
+		});
 
+		/* I can't stand this annoying popup every time I refresh the page. */
 		$(document).ready($(function() {
 			$("#disclaimer").dialog({
 				autoOpen: true,
@@ -288,6 +308,48 @@
 
 	<div id="URLpop">
 		<textarea>the link</textarea>
+	</div>
+
+	<div id="Outdoorpop">
+		<h1>Search for Outdoor Design Temperature</h1>
+		<div class="dropdown">
+			<legend>Continent</legend>
+				<select id="continent">
+					<option>Select One</option>
+					<option>AFRICA</option>
+					<option>ASIA</option>
+					<option>EUROPE</option>
+					<option>NORTH AMERICA</option>
+					<option>SOUTH AMERICA</option>
+					<option>SOUTH PACIFIC</option>
+				</select>
+			</div>
+
+			<div class="dropdown">
+			<legend>Country</legend>
+				<select id="continent">
+					<option> </option>
+				</select>
+			</div>
+
+			<div class="dropdown">
+			<legend>State/Province</legend>
+				<select id="continent">
+					<option> </option>
+				</select>
+			</div>
+
+			<div class="dropdown">
+			<legend>City</legend>
+				<select id="continent">
+					<option> </option>
+				</select>
+			</div>
+
+		<div class="temperature">
+		<legend>Temperature (<span class="unitsTemp IP">&deg;F</span>)</legend>
+		<textarea>the link</textarea>
+		</div>
 	</div>
 
 	<div id="inputs">
@@ -559,7 +621,7 @@
 					<p>A value represenintg one of the coldest expected outdoor temperatures during the annual occupancy period. ASHRAE recommends using a temperature at 1 percentile of the year (where only 1% of hours are colder than this temperature). This value varies with the climate of the project and you can search for your climate's temperature to the right.<a href="#fnref:11" title="return to article"> ↩</a></p>
 			</li>
 			<li class="footnote" id="fn:12"> <!-- indoor ambient temp -->
-					<p>Temperature of the indoor air. For radiant discomfort calculations it is assumed that this also represents the temperature of the indoor surfaces. Low indoor air temperatures may lead to occupant discomfort regardless of the glazing configuration.<a href="#fnref:12" title="return to article"> ↩</a></p>
+					<p>Temperature of the indoor air (or the indoor thermostat set point). For radiant discomfort calculations it is assumed that this also represents the temperature of the indoor surfaces. Low indoor air temperatures can cause occupant discomfort regardless of the glazing configuration.<a href="#fnref:12" title="return to article"> ↩</a></p>
 			</li>
 			<li class="footnote" id="fn:13"> <!-- relative humidity -->
 					<p>Relative humidity indoors. This factors into to the thermal comfort calculations as well as the potential for condensation. During winter, this is usually around 20% unless the space is humidified.<a href="#fnref:13" title="return to article"> ↩</a></p>

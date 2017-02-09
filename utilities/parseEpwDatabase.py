@@ -60,9 +60,9 @@ for folder in os.listdir(extractDir):
             ddy.close()
 
             # Format variables to be written into a dictionary.
-            nation = "'" + nation + "'"
-            province = "'" + province + "'"
-            city = "'" + city + "'"
+            nation = '"' + nation + '"'
+            province = '"' + province + '"'
+            city = '"' + city + '"'
 
             # Write the information into the json.
             if nation not in nationList:
