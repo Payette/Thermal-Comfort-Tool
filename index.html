@@ -135,7 +135,7 @@
 
 	<div id="disclaimer">
 		<h1>Disclaimer</h1>
-		<p>By using the Glazing and Comfort Analysis Tool, you agree to the <a href="" target="_blank">Terms and Conditions.</a></p>
+		<p>By using the Glazing and Winter Comfort Tool, you agree to the <a href="" target="_blank">Terms and Conditions.</a></p>
 	</div>
 
 	<div id="header"><img src="static/images/header.png"></div>
@@ -291,13 +291,15 @@
 	</div>
 
 	<div id="inputs">
-
+		<div id="description">
 		<h1>Glazing and Winter Comfort Tool</h1>
 		<hr>
-		<p>This tool displays the impact of glazing geometry and U-value on occupant thermal comfort during winter months. It shows when it is possible to eliminate perimeter heat in cases where U-Value is low and windows are small.  It quantifies full-body discomfort from radiant loss to cold window surfaces as well as local discomfort from downdraft.</p>
+		<p>This tool displays the impact of glazing geometry and U-value on occupant thermal comfort during winter months. It shows when it is possible to eliminate perimeter heat in cases where the U-Value is low and windows are small.</p>
 
 		<p class="survey">Email the <a href="mailto:cmackey@payette.com?Subject=RE:%20Glazing%20Winter%20Comfort%20Tool" target="_top">developers</a>, visit our <a href="https://github.com/PayettePeople/Thermal-Comfort-Tool/" target="_blank">github</a>, and read the <a href="http://www.payette.com/images_research_projects/GlazingSelectionTool/GlazingAndComfortAnalysisToolTermsAndConditions.pdf" target="_blank">license</a>.</p>
-		<p><strong>We've updated!</strong> See the <a href="https://github.com/PayettePeople/Thermal-Comfort-Tool/blob/master/resources/ReleaseNotes_Feb2017.md" target="_blank">Release Notes,</a> to learn about this tool's new downdraft comfort model and interface updates.</p>
+		<p><strong>We've updated!</strong> See the <a href="https://github.com/PayettePeople/Thermal-Comfort-Tool/blob/master/resources/ReleaseNotes_Feb2017.md" target="_blank">release notes,</a> to learn about this tool's improved downdraft comfort model and interface updates.</p>
+		<hr>
+		</div>
 
 		<div id="options">
 			<div id="units">
@@ -401,7 +403,7 @@
 			<div class="inputWrapperCenter"><input type="text" name="uvalue2" id="uvalue2" min="0" value="0.35" step="0.01" class="case2 unselected"></div>
 			<div class="inputWrapperRight"><input type="text" name="uvalue3" id="uvalue3" min="0" value="0.35" step="0.01" class="case3 unselected"></div><br>
 
-			<label class="grey" id="calcUValQuestion">What U-Value meets the target PPD?<sup id="fnref:9" class="uValAlert"><a href="#fn:9" rel="footnote">?</a></sup></label>
+			<label class="grey" id="calcUValQuestion">U-Value that meets the target PPD<sup id="fnref:9" class="uValAlert"><a href="#fn:9" rel="footnote">?</a></sup></label>
 			<div class="inputWrapperLeft"><input type="text" name="calcuvalue" id="calcuvalue" value="0.29" class="inactive case1"  disabled></div>
 			<div class="inputWrapperCenter"><input type="text" name="calcuvalue2" id="calcuvalue2" value="0.29" class="inactive case2 unselected"  disabled></div>
 			<div class="inputWrapperRight"><input type="text" name="calcuvalue3" id="calcuvalue3" value="0.29" class="inactive case3 unselected"  disabled></div><br>

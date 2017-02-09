@@ -135,7 +135,7 @@ input:checked + .slider:before {
 	margin: 10px 35px 0px -40px;
 	font-family: "museo-sans", sans-serif;
 	font-size: 12px;
-	font-weight: bold;
+	font-weight: 700;
 }
 
 #graphWrapper ul li, #graphWrapper2 ul li, #graphWrapper3 ul li {
@@ -177,7 +177,7 @@ input:checked + .slider:before {
 }
 
 #graph .yaxislabel {
-	font-weight: bold;
+	font-weight: 700;
 	font-family: "museo-sans", sans-serif;
 	font-size: 12px;
 	fill: #777777;
@@ -557,7 +557,7 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 }
 
 #inputs strong {
-	font-weight: bold;
+	font-weight: 700;
 }
 
 #occupantSliders {
@@ -1180,6 +1180,10 @@ div#disclaimer h1{
 	cursor: ew-resize;
 }
 
+#description p {
+	margin-top: 5px;
+	margin-bottom: 8px;
+}
 
 /* -- show cases only when selected -- */
 div.case2, div.case3, #inputs input.case2, #inputs input.case3, hr.case2, hr.case3 {
@@ -1193,7 +1197,7 @@ div.case2, div.case3, #inputs input.case2, #inputs input.case3, hr.case2, hr.cas
 @font-face {
 	font-family: "museo-sans";
 	font-weight: 100;
-	src: url('../fonts/MuseoSans-100.otf');
+	src: url('../fonts/MuseoSans-300.otf');
 }
 
 @font-face {
@@ -1205,7 +1209,7 @@ div.case2, div.case3, #inputs input.case2, #inputs input.case3, hr.case2, hr.cas
 @font-face {
 	font-family: "museo-sans";
 	font-weight: 700;
-	/*src: url('../fonts/MuseoSans_0.otf');*/
+	src: url('../fonts/MuseoSans_0.otf');
 
 }
 
