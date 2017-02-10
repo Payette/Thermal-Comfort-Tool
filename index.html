@@ -33,7 +33,7 @@
 	<script type="text/javascript" charset="utf-8" src="static/js/urlobject.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/shortenURL.js"></script>
 
-	<script type="text/javascript" src="static/json/test.json"></script>
+	<script type="text/javascript" src="static/json/Heatingddy1.json"></script>
 
 
 	<!-- Make Chart -->
@@ -147,7 +147,6 @@
 				}}]
 			})
 		}))
-
 	</script>
 
 </head>
@@ -317,40 +316,40 @@
 		<div class="dropdown">
 			<legend>Continent</legend>
 				<select id="continent">
-					<option>Select One</option>
-					<option>AFRICA</option>
-					<option>ASIA</option>
-					<option>EUROPE</option>
-					<option>NORTH AMERICA</option>
-					<option>SOUTH AMERICA</option>
-					<option>SOUTH PACIFIC</option>
+					<option>Select</option>
+					<option>Africa</option>
+					<option>Asia</option>
+					<option>Europe</option>
+					<option>North America</option>
+					<option>South America</option>
+					<option>South Pacific</option>
 				</select>
 			</div>
 
-			<div class="dropdown">
+			<div id="countryDiv" class="empty">
 			<legend>Country Code</legend>
-				<select id="continent">
+				<select id="country" disabled>
 					<option> </option>
 				</select>
 			</div>
 
-			<div class="dropdown">
+			<div id="stateDiv" class="empty">
 			<legend>State/Province</legend>
-				<select id="continent">
+				<select id="state" disabled>
 					<option> </option>
 				</select>
 			</div>
 
-			<div class="dropdown">
+			<div id="cityDiv" class="empty">
 			<legend>City</legend>
-				<select id="continent">
+				<select id="city" disabled>
 					<option> </option>
 				</select>
 			</div>
 
-		<div class="temperature">
+		<div id="outTempDiv" class="temperatureEmpty">
 		<legend>Temperature (<span class="unitsTemp IP">&deg;F</span>)</legend>
-		<textarea>the link</textarea>
+		<textarea id="outTempTextArea" disabled>the link</textarea>
 		</div>
 	</div>
 

@@ -1054,13 +1054,31 @@ div#Outdoorpop textarea {
 	width: 100px;
 	height: 20px;
 }
+
 div#Outdoorpop .temperature{
 	width:100px;
 	left:155px;
 	position: relative;
-	padding-top: 5px;
-	padding-bottom: 15px;
+	padding-top: 25px;
+	padding-bottom: 5px;
 }
+
+div#Outdoorpop .temperatureEmpty{
+	width:100px;
+	left:155px;
+	position: relative;
+	padding-top: 25px;
+	padding-bottom: 5px;
+}
+
+div#Outdoorpop .temperatureEmpty legend{
+	color: grey;
+}
+
+div#Outdoorpop .temperatureEmpty textarea{
+	color: grey;
+}
+
 
 div#Outdoorpop .dropdown{
 	width:200px;
@@ -1070,9 +1088,22 @@ div#Outdoorpop .dropdown{
 	padding-bottom: 15px;
 }
 
+div#Outdoorpop .empty {
+	width:200px;
+  left: 105px;
+  position: relative;
+	padding-top: 5px;
+	padding-bottom: 15px;
+}
+
+div#Outdoorpop .empty legend{
+	color: grey;
+}
+
 div#Outdoorpop select{
 	width:200px;
 }
+
 
 div#URLpop textarea {
 	font-family: "museo-sans", sans-serif;
@@ -1094,7 +1125,6 @@ div#disclaimer p,  div#disclaimer h1, div#Outdoorpop p, div#Outdoorpop h1, div#O
 	text-align: center;
 	font-size: 12px;
 	font-weight: 300;
-	color: #000;
 }
 
 div#disclaimer p, div#Outdoorpop p{

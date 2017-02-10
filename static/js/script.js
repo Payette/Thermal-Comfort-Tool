@@ -108,10 +108,10 @@ if ($(".optionButton#IP").hasClass("selected") == true) {
 // ensure slider has correct max value
 $("#occupantDist").attr("max", case1Data.wallLen/2);
 
-
 // Load up the json with all of the design temperatures.
-var jsonObj = JSON.parse(test);
-console.log(jsonObj)
+var jsonObj = JSON.parse(Heatingddy);
+
+
 
 // Main function to run the analysis.
 script.computeData = function(object) {

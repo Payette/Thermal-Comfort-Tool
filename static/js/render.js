@@ -1017,6 +1017,48 @@ render.makeGraph = function () {
     $("#Outdoorpop").dialog("open");
   })
 
+  // Progressively fill in the form as location data is entered.
+  $("#continent").on("input", function(event) {
+    // Grab the  dropdown menus.
+    var contryDropdown = document.getElementById("country")
+
+    // Disable and enable the right form elements.
+    contryDropdown.disabled=false
+    document.getElementById("state").disabled=true
+    document.getElementById("city").disabled=true
+    document.getElementById("outTempTextArea").disabled=true
+    if ($("#countryDiv").hasClass("empty") == true) {
+      $("#countryDiv").removeClass("empty");
+      $("#countryDiv").addClass("dropdown");
+    }
+    if ($("#stateDiv").hasClass("empty") == false) {
+      $("#stateDiv").removeClass("dropdown");
+      $("#stateDiv").addClass("empty");
+    }
+    if ($("#cityDiv").hasClass("empty") == false) {
+      $("#cityDiv").removeClass("dropdown");
+      $("#cityDiv").addClass("empty");
+    }
+    if ($("#outTempDiv").hasClass("temperatureEmpty") == false) {
+      $("#outTempDiv").removeClass("temperature");
+      $("#outTempDiv").addClass("temperatureEmpty");
+    }
+
+    // Clear out any old values.
+    for(var i = contryDropdown.options.length - 1 ; i >= 0 ; i--) {
+        contryDropdown.remove(i);
+    }
+
+    // Add values for the current continent.
+    var selNation = $(this).val();
+    var contSubset = jsonObj[selNation.toUpperCase()]
+    for (var countr in contSubset) {
+      var option = document.createElement("option");
+      option.text = countr;
+      contryDropdown.add(option);
+    }
+  })
+
   // show URL in modal alert
     $(".optionButton#URL").click(function(event) {
     var urlresult = createURL(false);

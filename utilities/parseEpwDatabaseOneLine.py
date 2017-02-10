@@ -17,7 +17,7 @@ ddyjson = directory + "refined\\" + heatingDDYFileName
 
 
 fd = open(ddyjson,'w')
-fd.write("{\n")
+fd.write("{")
 fd.close()
 
 
@@ -70,7 +70,7 @@ for folder in os.listdir(extractDir):
                     continentTrigger = False
                 else:
                     fd.write("}")
-                    fd.write(",")
+                    fd.write("},")
                 fd.write(nation + " : {")
                 fd.write(province + " : {")
                 fd.write(city + ": " + designTemp)
