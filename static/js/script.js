@@ -110,30 +110,8 @@ $("#occupantDist").attr("max", case1Data.wallLen/2);
 
 
 // Load up the json with all of the design temperatures.
-try {
-	function readJsonFile (file){
-		var allText = ""
-		var rawFile = new XMLHttpRequest();
-	  rawFile.open("GET", file, false);
-		rawFile.onreadystatechange = function ()
-	    {
-	        if(rawFile.readyState === 4)
-	        {
-	            if(rawFile.status === 200 || rawFile.status == 0)
-	            {
-	                var allText = rawFile.responseText;
-	            }
-	        }
-	    }
-	    rawFile.send(null);
-		console.log(allText)
-		//var jsonObj = JSON.parse(allText);
-		//return jsonObj
-	}
-	var jsonData = readJsonFile('https://raw.githubusercontent.com/PayettePeople/Thermal-Comfort-Tool/master/static/json/test.json')
-} catch(err) {
-    var jsonData = ""
-}
+var jsonObj = JSON.parse(test);
+console.log(jsonObj)
 
 // Main function to run the analysis.
 script.computeData = function(object) {
