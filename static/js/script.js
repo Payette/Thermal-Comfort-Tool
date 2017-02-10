@@ -110,27 +110,30 @@ $("#occupantDist").attr("max", case1Data.wallLen/2);
 
 
 // Load up the json with all of the design temperatures.
-script.readJsonFile = function(file){
-	var allText = ""
-	var rawFile = new XMLHttpRequest();
-  rawFile.open("GET", file, false);
-	rawFile.onreadystatechange = function ()
-    {
-        if(rawFile.readyState === 4)
-        {
-            if(rawFile.status === 200 || rawFile.status == 0)
-            {
-                var allText = rawFile.responseText;
-            }
-        }
-    }
-    rawFile.send(null);
-	console.log(allText)
-	//var jsonObj = JSON.parse(allText);
-	//return jsonObj
+try {
+	function readJsonFile (file){
+		var allText = ""
+		var rawFile = new XMLHttpRequest();
+	  rawFile.open("GET", file, false);
+		rawFile.onreadystatechange = function ()
+	    {
+	        if(rawFile.readyState === 4)
+	        {
+	            if(rawFile.status === 200 || rawFile.status == 0)
+	            {
+	                var allText = rawFile.responseText;
+	            }
+	        }
+	    }
+	    rawFile.send(null);
+		console.log(allText)
+		//var jsonObj = JSON.parse(allText);
+		//return jsonObj
+	}
+	var jsonData = readJsonFile('../Thermal-Comfort-Tool/static/json/test.json')
+} catch(err) {
+    var jsonData = ""
 }
-
-var jsonData = script.readJsonFile('../Thermal-Comfort-Tool/static/json/test.json')
 
 // Main function to run the analysis.
 script.computeData = function(object) {
