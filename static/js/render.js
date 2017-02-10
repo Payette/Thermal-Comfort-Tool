@@ -1008,7 +1008,7 @@ render.makeGraph = function () {
   })
 
   // show Outdoor Temprature in modal alert
-    $(".optionButton#City").click(function(event) {
+    $(".optionButton#CitySearch").click(function(event) {
     var searchedTemperature = $("#outdoortemp").val();
 
     $("#Outdoorpop textarea").empty();
@@ -1018,14 +1018,28 @@ render.makeGraph = function () {
   })
 
   // Progressively fill in the form as location data is entered.
+  // Detect when a continent is selected.
   $("#continent").on("input", function(event) {
     // Grab the  dropdown menus.
     var contryDropdown = document.getElementById("country")
+    var stateDropdown = document.getElementById("state")
+    var cityDropdown = document.getElementById("city")
+
+    // Clear out any old values.
+    for(var i = contryDropdown.options.length - 1 ; i >= 0 ; i--) {
+        contryDropdown.remove(i);
+    }
+    for(var i = stateDropdown.options.length - 1 ; i >= 0 ; i--) {
+        stateDropdown.remove(i);
+    }
+    for(var i = cityDropdown.options.length - 1 ; i >= 0 ; i--) {
+        cityDropdown.remove(i);
+    }
 
     // Disable and enable the right form elements.
     contryDropdown.disabled=false
-    document.getElementById("state").disabled=true
-    document.getElementById("city").disabled=true
+    stateDropdown.disabled=true
+    cityDropdown.disabled=true
     document.getElementById("outTempTextArea").disabled=true
     if ($("#countryDiv").hasClass("empty") == true) {
       $("#countryDiv").removeClass("empty");
@@ -1044,18 +1058,83 @@ render.makeGraph = function () {
       $("#outTempDiv").addClass("temperatureEmpty");
     }
 
-    // Clear out any old values.
-    for(var i = contryDropdown.options.length - 1 ; i >= 0 ; i--) {
-        contryDropdown.remove(i);
-    }
-
     // Add values for the current continent.
-    var selNation = $(this).val();
-    var contSubset = jsonObj[selNation.toUpperCase()]
+    var selCont = $(this).val();
+    var contSubset = jsonObj[selCont.toUpperCase()]
     for (var countr in contSubset) {
       var option = document.createElement("option");
       option.text = countr;
       contryDropdown.add(option);
+    }
+  })
+
+  // Detect when a country is selected.
+  $("#country").on("input", function(event) {
+    // Grab the  dropdown menus.
+    var stateDropdown = document.getElementById("state")
+    var cityDropdown = document.getElementById("city")
+
+    // Clear out any old values.
+    for(var i = stateDropdown.options.length - 1 ; i >= 0 ; i--) {
+        stateDropdown.remove(i);
+    }
+    for(var i = cityDropdown.options.length - 1 ; i >= 0 ; i--) {
+        cityDropdown.remove(i);
+    }
+
+    // Check to see if there are any provinces/states in the country.
+    var selCont = $("#continent").val();
+    var selNation = $(this).val();
+    var countSubset = jsonObj[selCont.toUpperCase()][selNation]
+    
+    if (Object.keys(countSubset).length == 1){
+      var theState = Object.keys(countSubset)[0];
+      var option = document.createElement("option");
+      option.text = theState;
+      stateDropdown.add(option);
+      stateDropdown.disabled=true
+      if ($("#stateDiv").hasClass("empty") == false) {
+        $("#stateDiv").removeClass("dropdown");
+        $("#stateDiv").addClass("empty");
+      }
+
+      cityDropdown.disabled=false
+      if ($("#cityDiv").hasClass("empty") == true) {
+        $("#cityDiv").removeClass("empty");
+        $("#cityDiv").addClass("dropdown");
+      }
+      var stateSubset = countSubset[theState]
+      for (var city in stateSubset) {
+        var option = document.createElement("option");
+        option.text = city;
+        cityDropdown.add(option);
+      }
+
+    } else {
+      var stateDropdown = document.getElementById("state")
+      stateDropdown.disabled=false
+      if ($("#stateDiv").hasClass("empty") == true) {
+        $("#stateDiv").removeClass("empty");
+        $("#stateDiv").addClass("dropdown");
+      }
+      document.getElementById("city").disabled=true
+      if ($("#cityDiv").hasClass("empty") == false) {
+        $("#cityDiv").removeClass("dropdown");
+        $("#cityDiv").addClass("empty");
+      }
+      // Clear out any old values.
+      for(var i = stateDropdown.options.length - 1 ; i >= 0 ; i--) {
+          stateDropdown.remove(i);
+      }
+      for (var state in countSubset) {
+        var option = document.createElement("option");
+        option.text = state;
+        stateDropdown.add(option);
+      }
+    }
+    if ($("#outTempDiv").hasClass("temperatureEmpty") == false) {
+      $("#outTempDiv").removeClass("temperature");
+      $("#outTempDiv").addClass("temperatureEmpty");
     }
   })
 

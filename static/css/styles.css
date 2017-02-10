@@ -754,7 +754,7 @@ br.glzBR {
 	clear: both;
 }
 
-#city {
+#citySearch {
 	float: left;
 }
 
@@ -987,7 +987,7 @@ div#share {
 }
 
 
-#options input[type=button].optionButton, #city input[type=button].optionButton {
+#options input[type=button].optionButton, #citySearch input[type=button].optionButton {
 	padding: 1px 2px;
 	height: 20px;
 	margin: 0 3px;
@@ -999,12 +999,12 @@ div#share {
 	float: left;
 }
 
-#options input[type=button].optionButton.unselected, #city input[type=button].optionButton.unselected{
+#options input[type=button].optionButton.unselected, #citySearch input[type=button].optionButton.unselected{
 	color: #777;
 	background-color: #fff;
 }
 
-#options input[type=button].optionButton.selected, #city input[type=button].optionButton.selected {
+#options input[type=button].optionButton.selected, #citySearch input[type=button].optionButton.selected {
 	color: #fff;
 	background-color: #777;
 }
@@ -1013,11 +1013,11 @@ div#share {
 	width: 60px;
 }
 
-#inputs input[type=button].optionButton#City{
+#inputs input[type=button].optionButton#CitySearch{
 	width:50px;
 }
 
-#options input[type=button].optionButton:hover, #city input[type=button].optionButton:hover {
+#options input[type=button].optionButton:hover, #citySearch input[type=button].optionButton:hover {
 	color: #fff;
 	background-color: #777;
 }
