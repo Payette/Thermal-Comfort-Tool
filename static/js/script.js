@@ -111,6 +111,7 @@ $("#occupantDist").attr("max", case1Data.wallLen/2);
 
 // Load up the json with all of the design temperatures.
 script.readJsonFile = function(file){
+	var allText = ""
 	var rawFile = new XMLHttpRequest();
   rawFile.open("GET", file, false);
 	rawFile.onreadystatechange = function ()
