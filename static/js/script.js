@@ -110,7 +110,6 @@ $("#occupantDist").attr("max", case1Data.wallLen/2);
 
 
 // Load up the json with all of the design temperatures.
-/*
 try {
 	function readJsonFile (file){
 		var allText = ""
@@ -131,11 +130,10 @@ try {
 		//var jsonObj = JSON.parse(allText);
 		//return jsonObj
 	}
-	var jsonData = readJsonFile('../Thermal-Comfort-Tool/static/json/test.json')
+	var jsonData = readJsonFile('https://raw.githubusercontent.com/PayettePeople/Thermal-Comfort-Tool/master/static/json/test.json')
 } catch(err) {
     var jsonData = ""
 }
-*/
 
 // Main function to run the analysis.
 script.computeData = function(object) {
