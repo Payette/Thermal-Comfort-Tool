@@ -130,7 +130,7 @@ script.readJsonFile = function(file){
 	return jsonObj
 }
 
-var jsonData = script.readJsonFile('../static/json/test.json')
+//var jsonData = script.readJsonFile('../static/json/test.json')
 
 // Main function to run the analysis.
 script.computeData = function(object) {
