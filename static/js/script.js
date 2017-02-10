@@ -127,7 +127,7 @@ script.readJsonFile = function(file){
     rawFile.send(null);
 	console.log(allText)
 	//var jsonObj = JSON.parse(allText);
-	return jsonObj
+	//return jsonObj
 }
 
 var jsonData = script.readJsonFile('../Thermal-Comfort-Tool/static/json/test.json')
