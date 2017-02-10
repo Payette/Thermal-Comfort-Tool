@@ -126,11 +126,11 @@ script.readJsonFile = function(file){
     }
     rawFile.send(null);
 	console.log(allText)
-	var jsonObj = JSON.parse(allText);
+	//var jsonObj = JSON.parse(allText);
 	return jsonObj
 }
 
-//var jsonData = script.readJsonFile('../static/json/test.json')
+var jsonData = script.readJsonFile('../Thermal-Comfort-Tool/static/json/test.json')
 
 // Main function to run the analysis.
 script.computeData = function(object) {
