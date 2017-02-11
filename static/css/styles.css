@@ -756,6 +756,7 @@ br.glzBR {
 
 #citySearch {
 	float: left;
+	width: 65px;
 }
 
 #inputs #designConditWrapper label {
@@ -999,6 +1000,19 @@ div#share {
 	float: left;
 }
 
+#Outdoorpop input[type=button] {
+	font-family: "museo-sans", sans-serif;
+	font-size: 12px;
+	padding: 1px 2px;
+	height: 22px;
+	width:125px;
+	margin: 0 3px;
+	border-radius: 10px;
+	border: 1px solid #777;
+	cursor: pointer;
+	text-align: center;
+}
+
 #options input[type=button].optionButton.unselected, #citySearch input[type=button].optionButton.unselected{
 	color: #777;
 	background-color: #fff;
@@ -1017,7 +1031,7 @@ div#share {
 	width:50px;
 }
 
-#options input[type=button].optionButton:hover, #citySearch input[type=button].optionButton:hover {
+#options input[type=button].optionButton:hover, #citySearch input[type=button].optionButton:hover, #Outdoorpop input[type=button].activeButton:hover{
 	color: #fff;
 	background-color: #777;
 }
@@ -1053,11 +1067,12 @@ div#Outdoorpop textarea {
 	color: #000;
 	width: 100px;
 	height: 20px;
+	resize: none;
 }
 
 div#Outdoorpop .temperature{
 	width:100px;
-	left:155px;
+	left:152px;
 	position: relative;
 	padding-top: 25px;
 	padding-bottom: 5px;
@@ -1065,7 +1080,7 @@ div#Outdoorpop .temperature{
 
 div#Outdoorpop .temperatureEmpty{
 	width:100px;
-	left:155px;
+	left:152px;
 	position: relative;
 	padding-top: 25px;
 	padding-bottom: 5px;
@@ -1088,6 +1103,20 @@ div#Outdoorpop .dropdown{
 	padding-bottom: 15px;
 }
 
+div#Outdoorpop .dropdown legend, div#Outdoorpop .empty legend, div#Outdoorpop .temperatureEmpty legend, div#Outdoorpop .temperature legend{
+	padding-bottom: 3px;
+}
+
+
+div#Outdoorpop .desButton{
+	width:200px;
+  left: 105px;
+  position: relative;
+	padding-top: 5px;
+	padding-bottom: 15px;
+	text-align: center;
+}
+
 div#Outdoorpop .empty {
 	width:200px;
   left: 105px;
@@ -1103,7 +1132,6 @@ div#Outdoorpop .empty legend{
 div#Outdoorpop select{
 	width:200px;
 }
-
 
 div#URLpop textarea {
 	font-family: "museo-sans", sans-serif;

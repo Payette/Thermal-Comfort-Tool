@@ -1057,9 +1057,17 @@ render.makeGraph = function () {
       $("#outTempDiv").removeClass("temperature");
       $("#outTempDiv").addClass("temperatureEmpty");
     }
+    document.getElementById("Apply").disabled=true
+    if ($("#Apply").hasClass("activeButton") == true) {
+      $("#Apply").removeClass("activeButton");
+    }
+    document.getElementById("outTempTextArea").disabled=true
 
     // Add values for the current continent.
     var selCont = $(this).val();
+    var option = document.createElement("option");
+    option.text = "Select";
+    contryDropdown.add(option);
     var contSubset = jsonObj[selCont.toUpperCase()]
     for (var countr in contSubset) {
       var option = document.createElement("option");
@@ -1086,7 +1094,7 @@ render.makeGraph = function () {
     var selCont = $("#continent").val();
     var selNation = $(this).val();
     var countSubset = jsonObj[selCont.toUpperCase()][selNation]
-    
+
     if (Object.keys(countSubset).length == 1){
       var theState = Object.keys(countSubset)[0];
       var option = document.createElement("option");
@@ -1103,6 +1111,10 @@ render.makeGraph = function () {
         $("#cityDiv").removeClass("empty");
         $("#cityDiv").addClass("dropdown");
       }
+
+      var option = document.createElement("option");
+      option.text = "Select";
+      cityDropdown.add(option);
       var stateSubset = countSubset[theState]
       for (var city in stateSubset) {
         var option = document.createElement("option");
@@ -1126,17 +1138,118 @@ render.makeGraph = function () {
       for(var i = stateDropdown.options.length - 1 ; i >= 0 ; i--) {
           stateDropdown.remove(i);
       }
+
+      var option = document.createElement("option");
+      option.text = "Select";
+      stateDropdown.add(option);
       for (var state in countSubset) {
         var option = document.createElement("option");
         option.text = state;
         stateDropdown.add(option);
       }
     }
+    document.getElementById("outTempTextArea").disabled=true
     if ($("#outTempDiv").hasClass("temperatureEmpty") == false) {
       $("#outTempDiv").removeClass("temperature");
       $("#outTempDiv").addClass("temperatureEmpty");
     }
+    document.getElementById("Apply").disabled=true
+    if ($("#Apply").hasClass("activeButton") == true) {
+      $("#Apply").removeClass("activeButton");
+    }
   })
+
+
+  // Detect when a state is selected.
+  $("#state").on("input", function(event) {
+    // Grab the  dropdown menus.
+    var cityDropdown = document.getElementById("city")
+
+    // Clear out any old values.
+    for(var i = cityDropdown.options.length - 1 ; i >= 0 ; i--) {
+        cityDropdown.remove(i);
+    }
+
+    // Check to see if there are any provinces/states in the country.
+    var selCont = $("#continent").val();
+    var selNation = $("#country").val();
+    var selState = $(this).val();
+    var stateSubset = jsonObj[selCont.toUpperCase()][selNation][selState]
+
+    cityDropdown.disabled=false
+    if ($("#cityDiv").hasClass("empty") == true) {
+      $("#cityDiv").removeClass("empty");
+      $("#cityDiv").addClass("dropdown");
+    }
+
+    var option = document.createElement("option");
+    option.text = "Select";
+    cityDropdown.add(option);
+
+    for (var city in stateSubset) {
+      var option = document.createElement("option");
+      option.text = city;
+      cityDropdown.add(option);
+    }
+    document.getElementById("outTempTextArea").disabled=true
+    if ($("#outTempDiv").hasClass("temperatureEmpty") == false) {
+      $("#outTempDiv").removeClass("temperature");
+      $("#outTempDiv").addClass("temperatureEmpty");
+    }
+    document.getElementById("Apply").disabled=true
+    if ($("#Apply").hasClass("activeButton") == true) {
+      $("#Apply").removeClass("activeButton");
+    }
+  })
+
+  // Detect when a city is selected.
+  $("#city").on("input", function(event) {
+    // Find the design temperature.
+    var selCont = $("#continent").val();
+    var selNation = $("#country").val();
+    var selState = $("#state").val();
+    var selCity = $(this).val();
+    var designTemp = jsonObj[selCont.toUpperCase()][selNation][selState][selCity]
+    if (unitSys == "IP"){
+      designTemp = (Math.round(units.C2F(designTemp)* 10) / 10)
+    }
+
+    // Grab the temperature text menu.
+    var designTempTexArea = document.getElementById("outTempTextArea")
+    designTempTexArea.disabled=false
+    if ($("#outTempDiv").hasClass("temperatureEmpty") == true) {
+      $("#outTempDiv").removeClass("temperatureEmpty");
+      $("#outTempDiv").addClass("temperature");
+    }
+    document.getElementById("Apply").disabled=false
+    if ($("#Apply").hasClass("activeButton") == false) {
+      $("#Apply").addClass("activeButton");
+    }
+
+    // Clear out any old values and add the correct temperature.
+    $("#Outdoorpop textarea").empty();
+    $("#Outdoorpop textarea").append(designTemp);
+    $("#Outdoorpop textarea").select();
+  })
+
+
+  $("#Apply").click(function(event) {
+    // Detect the final selection of the design temperature.
+    // Load the temperature from the dialog into the form.
+    var finalDesignTemp = $("#outTempTextArea").val()
+    $("#outdoortemp").val(finalDesignTemp)
+    $("#outdoortemp2").val(finalDesignTemp)
+    $("#outdoortemp3").val(finalDesignTemp)
+    case1Data.outdoorTempValue = parseFloat(finalDesignTemp)
+    case2Data.outdoorTempValue = parseFloat(finalDesignTemp)
+    case3Data.outdoorTempValue = parseFloat(finalDesignTemp)
+
+    updateData(case1Data);
+    updateData(case2Data);
+    updateData(case3Data);
+    $("#Outdoorpop").dialog("close");
+  })
+
 
   // show URL in modal alert
     $(".optionButton#URL").click(function(event) {
@@ -4040,6 +4153,4 @@ render.makeGraph = function () {
          left: newLeftPosition,
     })
   }
-
-
 } //end makeGraph()

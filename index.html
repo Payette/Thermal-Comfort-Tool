@@ -113,10 +113,6 @@
 				draggable: false,
 				closeOnEscape: true,
 				buttons: [
-					{text: "Apply Temperature",
-					click: function() {
-						$(this).dialog("close");
-					}},
 					{text: "Close",
 					click: function() {
 						$(this).dialog("close");
@@ -351,6 +347,11 @@
 		<legend>Temperature (<span class="unitsTemp IP">&deg;F</span>)</legend>
 		<textarea id="outTempTextArea" disabled>the link</textarea>
 		</div>
+
+		<div id="applyTempDiv" class="desButton">
+		<input type="button" name="Apply" id="Apply" value="Apply Temperature" disabled>
+		</div>
+
 	</div>
 
 	<div id="inputs">
