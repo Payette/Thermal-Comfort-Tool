@@ -1,8 +1,9 @@
-Glazing and Winter Comfort Tool:
+Glazing and Winter Comfort Tool
 ========================================
 **A Web Tool for Glazing Selection**
 
 Copyright © 2016, Payette Associates Inc.
+
 
 **ABOUT YOUR RIGHTS**
 
