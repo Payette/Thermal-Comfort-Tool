@@ -1,6 +1,7 @@
 RELEASE NOTES
 ========================================
-**February, 2017**
+**Glazing and Winter Comfort Tool**
+February, 2017
 
 ###1) New Model for Downdraft Discomfort###
 
