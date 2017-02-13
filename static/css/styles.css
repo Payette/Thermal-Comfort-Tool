@@ -450,6 +450,7 @@ input[type=range]#ppd::-moz-range-progress, input[type=range]#ppd2::-moz-range-p
 	height: 3px;
 	background-color: #d5d5d5;
 	margin-right: 3px;
+	margin-top: 7px;
 }
 
 #occupantDist::-ms-thumb, #occupantDist2::-ms-thumb, #occupantDist3::-ms-thumb, #ppd::-ms-thumb, #ppd2::-ms-thumb, #distFromFacade::-ms-thumb {
@@ -963,8 +964,7 @@ input[type=checkbox] {
 #options {
 	overflow: auto;
 	width: 100%;
-
-	padding: 10px 0px 15px 0px;
+	padding: 15px 0px 20px 0px;
 }
 
 div#units {

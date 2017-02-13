@@ -749,13 +749,12 @@ render.makeGraph = function () {
       $(".unitsAirSpeed").append("fpm");
 
       // change values in form.
-      case1Data.occDistToWallCenter = units.M2Ft(case1Data.occDistToWallCenter);
-      $("#occupantDist").attr("value", case1Data.occDistToWallCenter);
       updateOccupantImageLocation("#occupantImage", "#occupantDist", case1Data);
-      case2Data.occDistToWallCenter = units.M2Ft(case2Data.occDistToWallCenter);
       updateOccupantImageLocation("#occupantImage2", "#occupantDist2", case2Data);
-      case3Data.occDistToWallCenter = units.M2Ft(case3Data.occDistToWallCenter);
       updateOccupantImageLocation("#occupantImage3", "#occupantDist3", case3Data);
+      case1Data.occDistToWallCenter = units.M2Ft(case1Data.occDistToWallCenter);
+      case2Data.occDistToWallCenter = units.M2Ft(case2Data.occDistToWallCenter);
+      case3Data.occDistToWallCenter = units.M2Ft(case3Data.occDistToWallCenter);
 
       case1Data.ceilingHeightValue = units.M2Ft(case1Data.ceilingHeightValue);
       $("#ceiling").val(round(case1Data.ceilingHeightValue*10)/10);
@@ -892,13 +891,12 @@ render.makeGraph = function () {
 
 
       // change values in form.
-      case1Data.occDistToWallCenter = units.Ft2M(case1Data.occDistToWallCenter);
-      $("#occupantDist").attr("value", case1Data.occDistToWallCenter);
       updateOccupantImageLocation("#occupantImage", "#occupantDist", case1Data);
-      case2Data.occDistToWallCenter = units.Ft2M(case2Data.occDistToWallCenter);
       updateOccupantImageLocation("#occupantImage2", "#occupantDist2", case2Data);
-      case3Data.occDistToWallCenter = units.Ft2M(case3Data.occDistToWallCenter);
       updateOccupantImageLocation("#occupantImage3", "#occupantDist3", case3Data);
+      case1Data.occDistToWallCenter = units.Ft2M(case1Data.occDistToWallCenter);
+      case2Data.occDistToWallCenter = units.Ft2M(case2Data.occDistToWallCenter);
+      case3Data.occDistToWallCenter = units.Ft2M(case3Data.occDistToWallCenter);
 
       case1Data.ceilingHeightValue = units.Ft2M(case1Data.ceilingHeightValue);
       $("#ceiling").val(round(case1Data.ceilingHeightValue*100)/100);
@@ -2818,7 +2816,6 @@ render.makeGraph = function () {
     object.distanceWindows = newCentLineDist;
 
 
-
     // Update the PPD graph and facade SVG.
     // Update the geometry values in the form.
     if (object == case1Data) {
@@ -4321,8 +4318,6 @@ render.makeGraph = function () {
 
 
 
-
-
     checkOccupantImageSize(case1Data, "#occupantImage", "#occupantDist", "#case1Heading");
     checkOccupantImageSize(case2Data, "#occupantImage2", "#occupantDist2", "#case2Heading");
     checkOccupantImageSize(case3Data, "#occupantImage3", "#occupantDist3", "#case3Heading");
@@ -4350,10 +4345,7 @@ render.makeGraph = function () {
     }
 
 
-
-
     var resizeWidth = Math.round((resizeHeight/originalHeight)*originalWidth);
-
     var diffBtwSVGandFacade = facWidth - facadeScaleWidth(caseName.wallLen);
 
 
@@ -4379,21 +4371,22 @@ render.makeGraph = function () {
       width: facadeScaleWidth(caseName.wallLen)/2,
     })
     $(sliderID).attr("max", (caseName.wallLen)/2);
+    $(sliderID).attr("value", caseName.occDistToWallCenter)
 
   }
 
   function updateOccupantImageLocation(imageID, sliderID, caseName) {
 
     var slider = $(sliderID);
-     var width = slider.width();
-     var imageWidth = parseFloat($(imageID).css("width"));
+
+    var width = slider.width();
+    var imageWidth = parseFloat($(imageID).css("width"));
 
     var sliderScale = d3.scale.linear()
       .domain([slider.attr("min"), slider.attr("max")])
       .range([0, width]);
 
     var newPosition = sliderScale(caseName.occDistToWallCenter);
-
     var newLeftPosition = (0 - imageWidth/2 + newPosition) + "px";
 
        // Move occupant image
