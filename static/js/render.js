@@ -744,8 +744,8 @@ render.makeGraph = function () {
       $(".units, .unitsTemp, .unitsUVal, .unitsRVal, .unitsAirSpeed").empty();
       $(".units").append("ft");
       $(".unitsTemp").append("&deg;F");
-      $(".unitsUVal").append("Btu/hr*ft&sup2;*&deg;F");
-      $(".unitsRVal").append("hr*ft&sup2;*&deg;F/Btu");
+      $(".unitsUVal").append("Btu/ft&sup2;hr&deg;F");
+      $(".unitsRVal").append("ft&sup2;hr&deg;F/Btu");
       $(".unitsAirSpeed").append("fpm");
 
       // change values in form.
@@ -886,8 +886,8 @@ render.makeGraph = function () {
       $(".units, .unitsTemp, .unitsUVal, .unitsRVal, .unitsAirSpeed").empty();
       $(".units").append("m");
       $(".unitsTemp").append("&deg;C");
-      $(".unitsUVal").append("W/m&sup2;*K");
-      $(".unitsRVal").append("m&sup2;*K/W");
+      $(".unitsUVal").append("W/m&sup2;K");
+      $(".unitsRVal").append("m&sup2;K/W");
       $(".unitsAirSpeed").append("m/s");
 
 
