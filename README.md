@@ -25,7 +25,7 @@ The Glazing and Winter Comfort Tool is free software; you can redistribute it an
 
 The Glazing and Winter Comfort Tool is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with the Glazing and Winter Comfort Tool; If not, see [here](http://www.payette.com/images_research_projects/GlazingSelectionTool/GlazingAndComfortAnalysisToolTermsAndConditions.pdf) or <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with the Glazing and Winter Comfort Tool; If not, see [here](https://github.com/PayettePeople/Thermal-Comfort-Tool/blob/master/License_GPL.md) or <http://www.gnu.org/licenses/>.
 
 @license GPL-3.0+ <http://spdx.org/licenses/GPL-3.0+>
 
