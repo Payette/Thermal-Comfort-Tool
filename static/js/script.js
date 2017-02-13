@@ -112,7 +112,6 @@ $("#occupantDist").attr("max", case1Data.wallLen/2);
 var jsonObj = JSON.parse(Heatingddy);
 
 
-
 // Main function to run the analysis.
 script.computeData = function(object) {
 	// Compute the window and wall geometry.
