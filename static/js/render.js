@@ -738,8 +738,6 @@ render.makeGraph = function () {
       $(".optionButton#SI").removeClass("selected");
       $(".optionButton#SI").addClass("unselected");
 
-
-
       // change labels to have ft
       $(".units, .unitsTemp, .unitsUVal, .unitsRVal, .unitsAirSpeed").removeClass("SI");
       $(".units, .unitsTemp, .unitsUVal, .unitsRVal, .unitsAirSpeed").addClass("IP");
@@ -859,6 +857,10 @@ render.makeGraph = function () {
       graphSvg2.select("#graphXAxis")
         .call(xAxis.ticks(6).tickValues([2, 4, 6, 8, 10, 12]));
       graphSvg2.select("#XAxisLabel")
+      .text("Occupant Distance from Façade ft");
+      graphSvg3.select("#graphXAxis")
+        .call(xAxis.ticks(6).tickValues([2, 4, 6, 8, 10, 12]));
+      graphSvg3.select("#XAxisLabel")
       .text("Occupant Distance from Façade ft");
 
       updateData(case1Data);
@@ -997,6 +999,10 @@ render.makeGraph = function () {
       graphSvg2.select("#graphXAxis")
         .call(xAxis.ticks(8).tickValues([0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4]));
       graphSvg2.select("#XAxisLabel")
+      .text("Occupant Distance from Façade (m)");
+      graphSvg3.select("#graphXAxis")
+        .call(xAxis.ticks(8).tickValues([0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4]));
+      graphSvg3.select("#XAxisLabel")
       .text("Occupant Distance from Façade (m)");
 
       updateData(case1Data);
@@ -2399,7 +2405,7 @@ render.makeGraph = function () {
 
 
   // Case 2 - Changes based on typed inputs
-  $("#ceiling2, #wallWidth2, #windowHeight2, #windowWidth2, #glazing2, #sill2, #distWindow2, #uvalue2, #lowE2, #outdoortemp2, #airtemp2, #humidity2").focusout(function(event) {
+  $("#ceiling2, #wallWidth2, #windowHeight2, #windowWidth2, #glazing2, #sill2, #distWindow2, #uvalue2, #lowE2, #outdoortemp2, #airtemp2, #humidity2, #airspeed2, #clothing2, #metabolic2, #rvalue2").focusout(function(event) {
 
     //figure out what input changed
     var triggeredChange = event.target.id;
@@ -2589,7 +2595,7 @@ render.makeGraph = function () {
 
 
   // Case 3 - Changes based on typed inputs
-  $("#ceiling3, #wallWidth3, #windowHeight3, #windowWidth3, #glazing3, #sill3, #distWindow3, #uvalue3, #lowE3, #outdoortemp3, #airtemp3, #humidity3").focusout(function(event) {
+  $("#ceiling3, #wallWidth3, #windowHeight3, #windowWidth3, #glazing3, #sill3, #distWindow3, #uvalue3, #lowE3, #outdoortemp3, #airtemp3, #humidity3, #airspeed3, #clothing3, #metabolic3, #rvalue3").focusout(function(event) {
 
     //figure out what input changed
     var triggeredChange = event.target.id;
@@ -2697,10 +2703,7 @@ render.makeGraph = function () {
     $("#wallWidth3").on("spin", function(event, ui) {
       case3Data.wallLen = ui.value;
       changedVar = "wallLen";
-
       $("#occupantDist3").attr("max", case3Data.wallLen/2);
-
-
       updateData(case3Data);
     })
 
@@ -2771,11 +2774,11 @@ render.makeGraph = function () {
       case3Data.airspeedValue = ui.value;
       updateData(case3Data);
     })
-    $("#clothing2").on("spin", function(event, ui) {
+    $("#clothing3").on("spin", function(event, ui) {
       case3Data.clothingValue = ui.value;
       updateData(case3Data);
     })
-    $("#metabolic2").on("spin", function(event, ui) {
+    $("#metabolic3").on("spin", function(event, ui) {
       case3Data.metabolic = ui.value;
       updateData(case3Data);
     })
