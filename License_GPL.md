@@ -1,9 +1,11 @@
 Glazing and Winter Comfort Tool:
-A Web Tool for Glazing Selection
 ========================================
+**A Web Tool for Glazing Selection**
+
 Copyright © 2016, Payette Associates Inc.
 
 **ABOUT YOUR RIGHTS**
+
 Certain components and source code of the Glazing and Comfort Analysis Tool (“Tool”) are free software as
 published by the Free Software Foundation, and modified by a community of developers. Certain components
 of the tool may contain copyrighted material of Payette Associates, Inc. (“Payette”) that may be subject to an
