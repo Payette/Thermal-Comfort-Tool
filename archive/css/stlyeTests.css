@@ -559,7 +559,6 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 
 #inputs p, #occupantSliders p, #referenceLinks p {
   font-size: 12px;
-  line-height: 1.4em;
   font-weight: 300;
 }
 
@@ -607,7 +606,8 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 }
 
 #referenceLinks li {
-  padding: 0 0 1px 0;
+  line-height: 12px;
+  padding: 0 0 8px 0;
 }
 
 #inputs a {
@@ -616,6 +616,10 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 
 #referenceLinks a:hover, #inputs a:hover {
   color: #808080
+}
+
+#referenceLinks a:hover {
+	color: black;
 }
 
 #inputs hr, #occupantSliders hr {
