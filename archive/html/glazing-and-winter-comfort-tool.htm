@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <link rel="shortcut icon" type="image/x-icon"  href="/favicon.ico"  />
+<meta charset="utf-8">
+<title>Glazing and Winter Comfort Tool</title>    <!--  title tag pulled from CMS -->
+<meta name="description" content="This tool evaluates potential thermal discomfort caused by glazing design and properties on occupants in the winter time. To learn more about the principles behind downdraft and radiant discomfort, and how to mitigate them, refer to the resources at t" /><meta name="keywords" content="" />                         <!-- keyword and description from CMS -->
+
+<link rel="stylesheet" type="text/css" href="/all_v2.css" />
+<!--[if lt IE 8]><link rel="stylesheet" type="text/css" href="/ie.css" /><![endif]-->
+<!--link rel="stylesheet" type="text/css" href="/galleriffic.css" / -->
+
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="http://feeds.feedburner.com/Payette" />
+
+<!-- fonts from Typekit -->
+<script type="text/javascript" src="http://use.typekit.com/lyb7ldb.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27830668-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+
+
+  <style>
+.twoCol .right .full-list {
+    border-bottom: none;
+  }
+  .twoCol .right ul {
+    margin-bottom: 7px;
+  }
+  
+  .expandable h3 { line-height:12px; font-size: 12px; margin-bottom: 10px; padding-bottom: 0; }
+  .expandable h3 a { line-height:12px; font-size: 12px; text-decoration:none; }
+  .expandable h3 a:hover { color:#555; }
+  .expandable h3 a span { display:block; float:left; height:12px; width:12px; margin: 2px 5px 0 0; background:url(/images/expand-small.png) 0 0 no-repeat; overflow:hidden; }
+  .expanded h3 a span { background-position:0 -12px; }
+  
+  .expandable {margin-bottom:15px}
+  </style>
+  <!-- jquery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> 
+<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.13.0/jquery.validate.min.js"></script>
+<script src="https://assets-production-webvanta-com.s3-us-west-2.amazonaws.com/000000/40/00/original/js/jquery.form.min.js"></script>
+<script src="/form.js" type="text/javascript"></script>
+<script src="https://assets-production-webvanta-com.s3-us-west-2.amazonaws.com/000000/40/00/original/js/superfish-master/dist/js/hoverIntent.js"></script>
+<script src="https://assets-production-webvanta-com.s3-us-west-2.amazonaws.com/000000/40/00/original/js/superfish-master/dist/js/superfish.min.js"></script>
+<script type="text/javascript" src="/jquery.twitter.js"></script>
+<script type="text/javascript" src="/jquery.cookie.js"></script>
+
+<!-- initialize Superfish and pngfix-->
+<script type="text/javascript">
+ 
+$(document).ready(function(){
+  
+    $('ul.sf-menu').superfish({
+      autoArrows:  false,                // disable generation of arrow mark-up
+      dropShadows: true
+    });
+    if($('#twitterContainer')){
+    $("#twitterContainer").tweet({
+      username: "payettepeople",
+      count: 6,        
+      loading_text: "loading tweets..."     
+    });        
+    }
+    $("a[href^='http']:not([href*='payette.com'])").addClass("external").attr({ target: "_blank" });
+});
+ 
+</script>
+
+  <!--CSS: -->
+<link rel="stylesheet" type="text/css" href="/comfort-styles.css" />
+<link rel="stylesheet" type="text/css" href="/comfort-print.css" media="print"/>
+<link rel="stylesheet" type="text/css" href="/comfort-bigfoot.css" />
+<link rel="stylesheet" type="text/css" href="/comfort-custom-jquery-ui.css" />
+
+
+<!--General Javascript Libraries: -->
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script> 
+<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+<!-- Back End Functions for Geometry/Building Physics: -->
+<script type="text/javascript" src="/comfort-PPDCalc.js"></script> 
+<script type="text/javascript" src="/comfort-geo.js"></script>
+<script type="text/javascript" src="/comfort-UValCalc.js"></script>
+<script type="text/javascript" src="/comfort-util.js"></script>
+<script type="text/javascript" src="/comfort-units.js"></script>
+
+<!--Functions for custom interaction: -->
+<script type="text/javascript" src="/comfort-misc.js"></script>
+<script type="text/javascript" src="/comfort-createurl.js"></script>
+<script type="text/javascript" src="/comfort-urlobject.js"></script>
+<script type="text/javascript" src="/comfort-bigfoot.js"></script>
+<script type="text/javascript" src="/comfort-shortenURL.js"></script>
+<script type="text/javascript" src="/comfort-modernizr.js"></script>
+
+<!-- Functions That Generate the Graphic Content of the Tool: -->
+<script type="text/javascript" src="/comfort-render.js"></script>
+
+<!-- Functions for custom display interactions: -->
+<script type="text/javascript">
+    // Footnote Options
+    $.bigfoot({
+          activateOnHover: false,
+            deleteOnUnhover: false,
+            popoverDeleteDelay: 250,
+      buttonMarkup: "<div class=\"bigfoot-footnote__container\"> <button class=\"bigfoot-footnote__button\" rel=\"footnote\" id=\"{{SUP:data-footnote-backlink-ref}}\" data-footnote-number=\"{{FOOTNOTENUM}}\" data-footnote-identifier=\"{{FOOTNOTEID}}\" alt=\"See Footnote {{FOOTNOTENUM}}\" data-bigfoot-footnote=\"{{FOOTNOTECONTENT}}\">?</button></div>"
+
+        });
+
+    // Increment Buttons
+    $(function(){
+      $("#ceiling, #wallWidth, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowE, #rvalue, #outdoortemp, #airtemp, #humidity, #airspeed, #clothing, #metabolic, #ceiling2, #wallWidth2, #windowHeight2, #windowWidth2, #glazing2, #sill2, #distWindow2, #uvalue2, #lowE2, #rvalue2, #outdoortemp2, #airtemp2, #humidity2, #airspeed2, #clothing2, #metabolic2, #ceiling3, #wallWidth3, #windowHeight3, #windowWidth3, #glazing3, #sill3, #distWindow3, #uvalue3, #lowE3, #rvalue3, #outdoortemp3, #airtemp3, #humidity3, #airspeed3, #clothing3, #metabolic3").spinner();
+      $("#glazing, #glazing2, #glazing3").spinner("disable");
+    });
+
+    // URL Alert
+    $(function() {
+      $("#URLpop").dialog({
+        autoOpen: false,
+        draggable: false,
+        closeOnEscape: true,
+        buttons: [
+          {text: "Shorten URL",
+          click: function() {
+            var urlToShorten = $("#URLpop textarea").val();
+
+            shorten(urlToShorten, function(response) { 
+
+              // replace long url with shortened url
+              $("#URLpop textarea").empty();
+              $("#URLpop textarea").append(response.data.url);
+
+                }); 
+          }},
+          {text: "Close",
+          click: function() {
+            $(this).dialog("close");
+          }},
+          ],
+        modal: true,
+        width: 450,
+      });
+    });
+          
+          
+    // Disclaimer text      
+    $(document).ready($(function() {
+      $("#disclaimer").dialog({
+        autoOpen: true,
+        draggable: false,
+        closeOnEscape: false,
+        modal: true,
+        width: 350,
+        height: 140,
+        buttons: [
+        {text: "Accept",
+        click: function(){
+          $(this).dialog("close");
+        }},
+        {text: "Decline",
+        click: function() {
+          window.location.href="http://www.payette.com/projects/Research-at-Payette/";
+        }}]
+      })
+    }))
+</script>
+
+  
+</head>
+<body>
+  <div id="header" class="clearfix">
+     <div class="left">
+   <a href="/" id="logo"><img src="https://assets-production-webvanta-com.s3-us-west-2.amazonaws.com/000000/40/00/original/images/logo.png" alt="Payette" /></a>
+   
+  <ul class="sf-menu">
+    
+      <li><a href='/projects' >Projects</a>
+        <ul>
+                 
+              
+                
+                
+                  <li><a href='/projects-by-category/64285-college-university'>Academic Science</a></li>
+                
+              
+                
+                
+                  <li><a href='http://www.payette.com/projects-by-category/200960-adaptive-reuse'>Adaptive Reuse</a></li>
+                
+              
+                
+                
+                  <li><a href='/projects-by-category/64286-corporate'>Corporate</a></li>
+                
+              
+                
+                
+                  <li><a href='/projects-by-category/64629-health-care'>Healthcare</a></li>
+                
+              
+                
+                
+                  <li><a href='/projects-by-category/64630-health-science'>Health Science</a></li>
+                
+              
+                
+                
+                  <li><a href='/projects-by-category/200961-international'>International</a></li>
+                
+                           
+           
+           
+          
+        </ul>
+     </li>
+    
+      <li><a href='/people' >People</a>
+        <ul>
+                 
+              
+                
+                
+                  <li><a href='/people/practice/'>Practice</a></li>
+                
+              
+                
+                
+                  <li><a href='/people/culture/'>Culture</a></li>
+                
+              
+                
+                
+                  <li><a href='/people/leadership'>Leadership</a></li>
+                
+              
+                
+                
+                  <li><a href='/people/legacy'>Legacy</a></li>
+                
+                           
+           
+           
+        </ul>
+     </li>
+    
+      <li><a href='/building-science' >Building Science</a>
+        <ul>
+                 
+              
+                
+                
+                  <li><a href='/building-science/2030-commitment'>2030 Commitment</a></li>
+                
+              
+                
+                
+                  <li><a href='/building-science/glazing-and-winter-comfort-tool'>Glazing and Winter Comfort Tool</a></li>
+                
+              
+                
+                
+                  <li><a href='/building-science/research-at-payette'>Research at Payette</a></li>
+                
+              
+                
+                
+                  <li><a href='/building-science/sustainability'>Sustainability</a></li>
+                
+              
+                
+                
+                  <li><a href='/building-science/sustainable-action-plan'>Sustainable Action Plan</a></li>
+                
+                           
+           
+           
+        </ul>
+     </li>
+    
+  </ul>  
+
+    </div>
+    <div class="right">
+      <form action="/search" method="post">
+          <div>
+            <input class="searchBtn" type="image" src="/images/searchBtn.png" alt="Search" />
+                <input class="searchBox" type="text" name="search_text" />
+            </div>
+        </form>
+        <div id="headerNav">
+          <a href="/blog">Blog</a>
+          <a href="/careers">Careers</a>
+          <a href="/awards">Awards</a>
+        </div>
+    </div>
+  </div>
+  <div class="wrapper twoCol clearfix content">
+    
+    
+    <div class="left">
+      <!-- start of Payette custom content -->
+      <div id="disclaimer">
+        <h1>Disclaimer</h1>
+        <p>By using the Glazing and Comfort Analysis Tool, you agree to the <a href="/images_research_projects/GlazingSelectionTool/GlazingAndComfortAnalysisToolTermsAndConditions.pdf" target="_blank">Terms and Conditions</a>.</p>
+      </div>
+
+      <div id="facadeWrapper">
+      <div id="case1FacadeWrapper">
+        <div id="case1Chart"></div>
+        <h1 id="case1Heading" class="facadeHeading case1Text">Case 1</h1>
+         <div id="sliderWrapper">
+          <input type="range" name="occupantDist" id="occupantDist" min="0" max="20" value="0" autocomplete="off"/>
+          <output for="occupantDist"><img src="https://assets-production-webvanta-com.s3-us-west-2.amazonaws.com/000000/40/00/original/images_research_projects/GlazingSelectionTool/slider.png" id="occupantImage"></output>
+        </div>
+      </div>
+      <div id="case2FacadeWrapper">
+        <div id="case2Chart"></div>
+        <h1 id="case2Heading" class="facadeHeading greyText">Case 2</h1>
+         <div id="sliderWrapper2">
+          <input type="range" name="occupantDist2" id="occupantDist2" min="0" max="20" value="0" autocomplete="off"/>
+          <output for="occupantDist2"><img src="https://assets-production-webvanta-com.s3-us-west-2.amazonaws.com/000000/40/00/original/images_research_projects/GlazingSelectionTool/slider.png" id="occupantImage2"></output>
+        </div>
+      </div>
+      <div id="case3FacadeWrapper">
+        <div id="case3Chart"></div>
+        <h1 id="case3Heading" class="facadeHeading greyText">Case 3</h1>
+       <div id="sliderWrapper3">
+          <input type="range" name="occupantDist3" id="occupantDist3" min="0" max="20" value="0" autocomplete="off"/>
+          <output for="occupantDist3"><img src="https://assets-production-webvanta-com.s3-us-west-2.amazonaws.com/000000/40/00/original/images_research_projects/GlazingSelectionTool/slider.png" id="occupantImage3"></output>
+        </div>
+      </div>
+      <div style="clear:both;"></div>
+    </div>
+
+    <div id="occupancyWrapper">
+      <form id="occupantSliders" autocomplete="off">
+        <fieldset class="inputgroup">
+          <label for="ppd">Acceptable Percentage of People Dissatisfied from Cold (%)<sup id="fnref:21"><a href="#fn:21" rel="footnote">?</a></sup></label>
+          <div class="occSlider"><input type="range" name="ppd" id="ppd" value="10" min="5" max="30"><p id="ppdOutput">10%</p></div>
+          
+          <label for="distFromFacade">Occupant Distance From Fa&ccedil;ade (<span class="units IP">ft</span>)<sup id="fnref:20"><a href="#fn:20" rel="footnote">?</a></sup></label>
+          <div class="occSlider"><input type="range" name="distFromFacade" id="distFromFacade" value="3" min="1" max="12" step="0.25"><p id="distOutput">3 <span class="units IP">ft</span></p></div><br>
+
+        </fieldset>
+      </form>
+    </div>
+
+    <div id="graphWrapper">
+      <div id="key">
+        <ul>
+          <li><img class="discomfortIcon" src="https://assets-production-webvanta-com.s3-us-west-2.amazonaws.com/000000/40/00/original/images_research_projects/GlazingSelectionTool/triangle-grey.png">Downdraft Discomfort</li>
+          <li><img class="discomfortIcon" src="https://assets-production-webvanta-com.s3-us-west-2.amazonaws.com/000000/40/00/original/images_research_projects/GlazingSelectionTool/circle-grey.png">Radiant Discomfort</li>
+        </ul>
+      </div>
+      
+      <div id="tooltip" class="hidden"></div>
+
+      <div id="thresholdTooltip"></div>
+    </div>
+
+
+
+
+    <div id="explanation">
+      <h1 class="expandExplanation"><span class="expand" id="explainer"></span>Understanding Discomfort and How to Minimize It</h1>
+      <hr>
+      
+      <div class="explanContent">
+      <div class="keepTogether">
+        <img class="diagram" src="https://assets-production-webvanta-com.s3-us-west-2.amazonaws.com/000000/40/00/original/images_research_projects/GlazingSelectionTool/discomfort-downdraft.png">
+        <div class="descripText">
+          <h2><img class="discomfortIcon" src="https://assets-production-webvanta-com.s3-us-west-2.amazonaws.com/000000/40/00/original/images_research_projects/GlazingSelectionTool/triangle-black.png">Downdraft Discomfort</h2>
+          <p>Cold convective air currents, formed by warm room air hitting the cold window surface, create discomfort at the occupant’s feet and ankles. The strength of these currents depends on the height of the window pane, as well as the interior temperature of the glass.</p>
+          <h3>To minimize downdraft discomfort, try:</h3>
+          <ul>
+            <li>decreasing the window height</li>
+            <li>decreasing the window U-Value</li>
+            <li>using a glazing assembly without a room-side low-e coating</li>
+          </ul>
+        </div>
+        <div style="clear:both;"></div>
+      </div>
+
+      <div class="keepTogether">
+        <img class="diagram" src="https://assets-production-webvanta-com.s3-us-west-2.amazonaws.com/000000/40/00/original/images_research_projects/GlazingSelectionTool/discomfort-radiant.png">
+        <div class="descripText">
+          <h2><img class="discomfortIcon" src="https://assets-production-webvanta-com.s3-us-west-2.amazonaws.com/000000/40/00/original/images_research_projects/GlazingSelectionTool/circle-black.png">Radiant Discomfort</h2>
+          <p>Cold interior glass surfaces affect the mean radiant temperature of occupants, and in turn make them feel cold. This discomfort depends on how much the occupant “sees” of the glass, how cold the interior glass surface is and the emissivity of the glass. If the glass has a room-side low-e coating the radiant discomfort will be greatly reduced.</p>
+          <h3>To minimize radiant discomfort, try:</h3>
+          <ul>
+            <li>decreasing the total amount of glazing</li>
+            <li>decreasing the window U-Value</li>
+            <li>increasing the sill height</li>
+            <li>using a glazing assembly with a room-side low-e coating</li>
+          </ul>
+        </div>
+        <div style="clear:both;"></div>
+      </div>
+      </div>
+    </div>
+
+      
+    </div> <!-- end of div left -->
+    
+    
+    <div class="right">
+      <div class="pageIntro">
+    <!-- begin code region 'pod_3378609' -->
+<div class=' wv-code-region-pod_3378609'>
+<h1>Glazing and Winter Comfort Tool</h1>
+<hr>
+<p>This tool displays the impact of glazing geometry and U-value on occupant thermal comfort during winter months. It shows when it is possible to eliminate perimeter heat in cases where the glazing is ratio is small enough and U-Value is low enough to ensure warm interior glass temperature and thermally comfortable occupants.  It quantifies both the overall radiant heat loss to the cold glass as well as cold downdraft from the glass, which can cause local discomfort on bare ankles.</p>
+</div>
+<!-- end code region pod_3378609 -->
+        <p class="survey">Provide feedback, report bugs or sign up for updates <a href="https://www.surveymonkey.com/r/83LF73D">here.</a><br>Read the <a href="/images_research_projects/GlazingSelectionTool/GlazingAndComfortAnalysisToolTermsAndConditions.pdf" target="_blank">Terms &amp; Conditions</a>.</p>
+       </div>
+    <!-- start of Payette custom content -->
+      <div id="inputs">
+    <div id="options">
+      <div id="units">
+        <h2>Units</h2>
+        <input type="button" name="IP" id="IP" value="IP" class="optionButton selected">
+        <input type="button" name="SI" id="SI" value="SI" class="optionButton unselected">
+        <div style="clear:both;"></div>
+      </div>
+      <div id="share">
+        <h2>Share</h2>
+        <input type="button" name="PDF" id="PDF" value="Save as PDF" class="optionButton unselected">
+        <input type="button" name="URL" id="URL" value="Copy URL" class="optionButton unselected">
+        <div style="clear:both;"></div>
+      </div>
+    </div>
+
+
+
+    <form id="form" autocomplete="off">
+
+    <fieldset class="inputgroup">
+
+      <div id="caseWrapper">
+        <legend class="heading first">Fa&ccedil;ade Geometry</legend>
+        <div id="caseSelection">
+          <h2 id="case1Label"><span id="case1Button"></span>Case 1</h2>
+          <h2 id="case2Label" class="unselected"><span id="case2Button" class="unselected"></span>Case 2</h2>
+          <h2 id="case3Label" class="unselected"><span id="case3Button" class="unselected"></span>Case 3</h2>
+        </div>
+      </div>
+      <hr>
+
+      <label for="ceiling">Ceiling Height (<span class="units IP">ft</span>)<sup id="fnref:1"><a href="#fn:1" rel="footnote">?</a></sup></label>
+      <div class="inputWrapperLeft"><input type="text" name="ceiling" id="ceiling" min="1" max="100"  value="12" step="1" class="case1"></div>
+      <div class="inputWrapperCenter"><input type="text" name="ceiling2" id="ceiling2" min="1" max="100"  value="12" step="1" class="case2 unselected"></div>
+      <div class="inputWrapperRight"><input type="text" name="ceiling3" id="ceiling3" min="1" max="100"  value="12" step="1" class="case3 unselected"></div><br>
+
+      <label for="wallWidth">Room Length (<span class="units IP">ft</span>)<sup id="fnref:2"><a href="#fn:2" rel="footnote">?</a></sup></label>
+      <div class="inputWrapperLeft"><input type="text" name="wallWidth" id="wallWidth" value="18" step="1" class="case1"></div>
+      <div class="inputWrapperCenter"><input type="text" name="wallWidth2" id="wallWidth2" value="18" step="1" class="case2 unselected"></div>
+      <div class="inputWrapperRight"><input type="text" name="wallWidth3" id="wallWidth3" value="18" step="1" class="case3 unselected"></div><br>
+
+      <label for="windowHeight">Window Height From Sill (<span class="units IP">ft</span>)<sup id="fnref:3"><a href="#fn:3" rel="footnote">?</a></sup></label>
+      <div class="inputWrapperLeft"><input type="text" name="windowHeight" id="windowHeight" value="8" step="0.5" class="case1"></div>
+      <div class="inputWrapperCenter"><input type="text" name="windowHeight2" id="windowHeight2" value="8" step="0.5" class="case2 unselected"></div>
+      <div class="inputWrapperRight"><input type="text" name="windowHeight3" id="windowHeight3" value="8" step="0.5" class="case3 unselected"></div><br>
+
+      <label for="sill">Sill Height (<span class="units IP">ft</span>)<sup id="fnref:4"><a href="#fn:4" rel="footnote">?</a></sup></label>
+      <div class="inputWrapperLeft"><input type="text" name="sill" id="sill" value="3" step="0.5" class="case1"></div>
+      <div class="inputWrapperCenter"><input type="text" name="sill2" id="sill2" value="3" step="0.5" class="case2 unselected"></div>
+      <div class="inputWrapperRight"><input type="text" name="sill3" id="sill3" value="3" step="0.5" class="case3 unselected"></div><br>
+
+
+      <label id="setGlazing">Set Glazing Amount By</label><br class="glzBR">
+
+      <label for="width" id="windowWidthLabel"><div class="customCheckStyle"><input type="radio" name="glazingRadio" value="windowWidthCheck" id="windowWidthCheck" class="customCheck" checked><label for="windowWidthCheck" id="checkWindWidth"></label></div>Window Width (<span class="units IP">ft</span>)<sup id="fnref:5"><a href="#fn:5" rel="footnote">?</a></sup></label>
+      <div class="inputWrapperLeft"><input type="text" name="width" id="windowWidth" value="4.5" step="0.5" class="case1"></div>
+      <div class="inputWrapperCenter"><input type="text" name="width2" id="windowWidth2" value="4.5" step="0.5" class="case2 unselected"></div>
+      <div class="inputWrapperRight"><input type="text" name="width3" id="windowWidth3" value="4.5" step="0.5" class="case3 unselected"></div><br>
+
+      <label for="glazing" class="inactive" id="glazingLabel"><div class="customCheckStyle"><input type="radio" name="glazingRadio" value="glazingRatioCheck" class="customCheck" id="glazingRatioCheck"><label for="glazingRatioCheck" id="checkGlzRatio" class="unselected"></label></div>Window-to-Wall Ratio (%)<sup id="fnref:6"><a href="#fn:6" rel="footnote">?</a></sup></label>
+      <div class="inputWrapperLeft"><input type="text" name="glazing" class="inactive case1" id="glazing" value="50" step="1"></div>
+      <div class="inputWrapperCenter"><input type="text" name="glazing2" class="inactive case2 unselected" id="glazing2" value="50" step="1"></div>
+      <div class="inputWrapperRight"><input type="text" name="glazing3" class="inactive case3 unselected" id="glazing3" value="50" step="1"></div><br>
+
+
+      <label for="distWindow">Window Separation (<span class="units IP">ft</span>)<sup id="fnref:7"><a href="#fn:7" rel="footnote">?</a></sup></label>
+      <div class="inputWrapperLeft"><input type="text" name="distWindow" id="distWindow" value="6" step="1" class="case1"></div>
+      <div class="inputWrapperCenter"><input type="text" name="distWindow2" id="distWindow2" value="6" step="1" class="case2 unselected"></div>
+      <div class="inputWrapperRight"><input type="text" name="distWindow3" id="distWindow3" value="6" step="1" class="case3 unselected"></div><br>
+    </fieldset>
+
+
+    <fieldset class="inputgroup">
+      <legend class="heading">Facade Performance</legend>
+      <hr>
+
+      <div id="uvaluePop" class="alert">
+        <img src="https://assets-production-webvanta-com.s3-us-west-2.amazonaws.com/000000/40/00/original/images_research_projects/GlazingSelectionTool/close.png" alt="close" class="close">
+        <p><b>Warning!</b> Thermal comfort cannot be achieved given the current glazing geometry and space/occupancy conditions, regardless of glazing performance. This is commonly due to low indoor air temperatures or low clothing values.</p>
+      </div>
+      
+      <label for="uvalue">Window U-Value (<span class="unitsUVal IP">Btu/hr*ft&sup2;*&deg;F</span>)<sup id="fnref:8"><a href="#fn:8" rel="footnote">?</a></sup></label>
+      <div class="inputWrapperLeft"><input type="text" name="uvalue" id="uvalue" min="0" value="0.35" step="0.01" class="case1"></div>
+      <div class="inputWrapperCenter"><input type="text" name="uvalue2" id="uvalue2" value="0.35" step="0.01" class="case2 unselected"></div>
+      <div class="inputWrapperRight"><input type="text" name="uvalue3" id="uvalue3" value="0.35" step="0.01" class="case3 unselected"></div><br>
+
+      <label class="grey" id="calcUValQuestion">What U-Value meets the target PPD?<sup id="fnref:9" class="uValAlert"><a href="#fn:9" rel="footnote">?</a></sup></label>
+      <div class="inputWrapperLeft"><input type="text" name="calcuvalue" id="calcuvalue" value="0.26" class="inactive case1"  disabled></div>
+      <div class="inputWrapperCenter"><input type="text" name="calcuvaluel2" id="calcuvalue2" value="0.26" class="inactive case2 unselected"  disabled></div>
+      <div class="inputWrapperRight"><input type="text" name="calcuvalue3" id="calcuvalue3" value="0.26" class="inactive case3 unselected"  disabled></div><br>
+
+       <label class="grey" id="condRisk">Is there a risk of condensation?<sup id="fnref:10"><a href="#fn:10" rel="footnote">?</a></sup></label>
+      <div class="inputWrapperLeft"><input type="text" name="condRisk1" id="condRisk1" value="NO" class="inactive case1"  disabled></div>
+      <div class="inputWrapperCenter"><input type="text" name="condRisk2" id="condRisk2" value="NO" class="inactive case2 unselected"  disabled></div>
+      <div class="inputWrapperRight"><input type="text" name="condRisk3" id="condRisk3" value="NO" class="inactive case3 unselected"  disabled></div><br>
+  
+  
+  
+      </fieldset>
+
+
+
+    <fieldset class="inputgroup">
+      <legend class="heading">Environmental Conditions</legend>
+      <hr>
+
+      <label for="outdoortemp">Outdoor Temperature (<span class="unitsTemp IP">&deg;F</span>)<sup id="fnref:11"><a href="#fn:11" rel="footnote">?</a></sup></label>
+      <div class="inputWrapperLeft"><input type="text" name="outdoortemp" id="outdoortemp" value="25" class="case1"></div>
+      <div class="inputWrapperCenter"><input type="text" name="outdoortemp2" id="outdoortemp2" value="25" class="case2 unselected"></div>
+      <div class="inputWrapperRight"><input type="text" name="outdoortemp3" id="outdoortemp3" value="25" class="case3 unselected"></div><br>
+
+      <label for="airtemp">Indoor Temperature (<span class="unitsTemp IP">&deg;F</span>)<sup id="fnref:12"><a href="#fn:12" rel="footnote">?</a></sup></label>
+      <div class="inputWrapperLeft"><input type="text" name="airtemp" id="airtemp" value="72" class="case1"></div>
+      <div class="inputWrapperCenter"><input type="text" name="airtemp2" id="airtemp2" value="72" class="case2 unselected"></div>
+      <div class="inputWrapperRight"><input type="text" name="airtemp3" id="airtemp3" value="72" class="case3 unselected"></div><br>
+
+
+      <label for="humidity">Relative Humidity (%)<sup id="fnref:13"><a href="#fn:13" rel="footnote">?</a></sup></label>
+      <div class="inputWrapperLeft"><input type="text" name="humidity" id="humidity" value="20" class="case1"></div>
+      <div class="inputWrapperCenter"><input type="text" name="humidity2" id="humidity2" value="20" class="case2 unselected"></div>
+      <div class="inputWrapperRight"><input type="text" name="humidity3" id="humidity3" value="20" class="case3 unselected"></div><br>
+    </fieldset>
+
+
+    <fieldset class="inputgroup">
+      <legend class="heading expandOptions"><span class="expand" id="advOptions"></span>Advanced Options</legend>
+      <hr>
+      <div class="hideContent">
+        <p class="subtext">It is recommended to use the default values for these variables unless you have an atypical building program and are familiar with their impact on Fanger’s thermal comfort and risk of downdraft models. Note, that the tool will maintain most of these values constant across all cases.</p>
+
+        <label for="lowECheck">Room-side Low-E Coating<sup id="fnref:14"><a href="#fn:14" rel="footnote">?</a></sup></label>
+
+        <div class="inputWrapperLeft"><div class="customCheckStyleCentered case1"><input type="checkbox" name="lowECheckThis" id="lowECheck" class="checkbox customCheck"><label for="lowECheck" id="checkLowE1" class="unselected"></label></div></div>
+
+        <div class="inputWrapperCenter"><div class="customCheckStyleCentered case2"><input type="checkbox" name="lowECheck2" id="lowECheck2" class="checkbox customCheck"><label for="lowECheck2" id="checkLowE2" class="unselected unselected"></label></div></div>
+
+        <div class="inputWrapperRight"><div class="customCheckStyleCentered case3"><input type="checkbox" name="lowECheck3" id="lowECheck3" class="checkbox customCheck"><label for="lowECheck3" id="checkLowE3" class="unselected unselected"></label></div></div><br>
+
+        <label for="lowE" class="inactive" id="lowELabel">Emissivity<sup id="fnref:15"><a href="#fn:15" rel="footnote">?</a></sup></label>
+        <div class="inputWrapperLeft"><input type="text" name="lowE" id="lowE" value="" class="inactive case1" step="0.1"></div>
+        <div class="inputWrapperCenter"><input type="text" name="lowE2" id="lowE2" value="" class="inactive case2 unselected" step="0.1"></div>
+        <div class="inputWrapperRight"><input type="text" name="lowE3" id="lowE3" value="" class="inactive case3 unselected" step="0.1"></div><br>
+
+
+        <label for="rvalue">Wall R-Value (<span class="unitsRVal IP">hr*ft&sup2;*&deg;F/Btu</span>)<sup id="fnref:16"><a href="#fn:16" rel="footnote">?</a></sup></label>
+        <div class="inputWrapperLeft"><input type="text" name="rvalue" id="rvalue" value="20" class="case1"></div>
+        <div class="inputWrapperCenter"><hr class="case2 unselected"></div>
+        <div class="inputWrapperRight"><hr class="case3 unselected"></div><br>
+
+
+        <label for="airspeed">Air Speed (<span class="unitsAirSpeed IP">fpm</span>)<sup id="fnref:17"><a href="#fn:17" rel="footnote">?</a></sup></label>
+        <div class="inputWrapperLeft"><input type="text" name="airspeed" id="airspeed" value="10" step="0.5" class="case1"></div>
+        <div class="inputWrapperCenter"><hr class="case2 unselected"></div>
+        <div class="inputWrapperRight"><hr class="case3 unselected"></div><br>
+
+        <label for="clothing">Clothing (clo)<sup id="fnref:18"><a href="#fn:18" rel="footnote">?</a></sup></label>
+        <div class="inputWrapperLeft"><input type="text" name="clothing" id="clothing" value="0.8" step="0.1" class="case1"></div>
+        <div class="inputWrapperCenter"><hr class="case2 unselected"></div>
+        <div class="inputWrapperRight"><hr class="case3 unselected"></div><br>
+
+        <label for="metabolic">Metabolic Rate (met)<sup id="fnref:19"><a href="#fn:19" rel="footnote">?</a></sup></label>
+        <div class="inputWrapperLeft"><input type="text" name="metabolic" id="metabolic" value="1.2" step="0.1" class="case1"></div>
+        <div class="inputWrapperCenter"><hr class="case2 unselected"></div>
+        <div class="inputWrapperRight"><hr class="case3 unselected"></div><br>
+
+        <hr class="final">
+      </div>
+
+    </fieldset>
+    </form>
+  </div>
+
+<div class="footnotes">
+  <ol>
+    <li class="footnote" id="fn:1"> <!-- ceiling height -->
+          <p><img src="https://assets-production-webvanta-com.s3-us-west-2.amazonaws.com/000000/40/00/original/images_research_projects/GlazingSelectionTool/dims-ceiling.png"><a href="#fnref:1" title="return to article"> ↩</a></p>
+      </li>
+
+      <li class="footnote" id="fn:2"> <!-- room length -->
+          <p><img src="https://assets-production-webvanta-com.s3-us-west-2.amazonaws.com/000000/40/00/original/images_research_projects/GlazingSelectionTool/dims-length.png"><a href="#fnref:2" title="return to article"> ↩</a></p>
+      </li>
+
+      <li class="footnote" id="fn:3"> <!-- window height from sill -->
+        <p><img src="https://assets-production-webvanta-com.s3-us-west-2.amazonaws.com/000000/40/00/original/images_research_projects/GlazingSelectionTool/dims-height.png"><a href="#fnref:3" title="return to article"> ↩</a></p>
+      </li>
+
+      <li class="footnote" id="fn:4"> <!-- sill height -->
+      <p><img src="https://assets-production-webvanta-com.s3-us-west-2.amazonaws.com/000000/40/00/original/images_research_projects/GlazingSelectionTool/dims-sill.png"><a href="#fnref:4" title="return to article"> ↩</a></p>
+      </li>
+
+      <li class="footnote" id="fn:5"> <!-- window width -->  
+          <p><img src="https://assets-production-webvanta-com.s3-us-west-2.amazonaws.com/000000/40/00/original/images_research_projects/GlazingSelectionTool/dims-width.png"><a href="#fnref:5" title="return to article"> ↩</a></p>
+      </li>
+
+      <li class="footnote" id="fn:6"> <!-- window-to-wall ratio -->
+        <p><img src="https://assets-production-webvanta-com.s3-us-west-2.amazonaws.com/000000/40/00/original/images_research_projects/GlazingSelectionTool/dims-ratio.png"><a href="#fnref:6" title="return to article"> ↩</a></p>
+      </li>
+
+      <li class="footnote" id="fn:7"> <!-- window separation -->
+          <p><img src="https://assets-production-webvanta-com.s3-us-west-2.amazonaws.com/000000/40/00/original/images_research_projects/GlazingSelectionTool/dims-sep.png"><a href="#fnref:7" title="return to article"> ↩</a></p>
+      </li>
+
+      <li class="footnote" id="fn:8"> <!-- u value -->
+          <p>Measure of the window’s thermal performance. If the window panes are large (small impact of the frame) use the center of glass U-value. With assemblies where frame elements are prominent, it is recommended to use the assembly U-value. If using a room-side low-e coating, it can be selected under advanced options.<a href="#fnref:8" title="return to article"> ↩</a></p>
+      </li>
+
+      <li class="footnote" id="fn:9"> <!-- calculate u value -->
+          <p>U-value required to meet the PPD threshold at the specified occupant distance from fa&ccedil;ade.<a href="#fnref:9" title="return to article"> ↩</a></p>
+      </li>
+
+      <li class="footnote" id="fn:10"> <!-- conden risk -->
+          <p>If there is a risk of condensation, the interior window surface temperature is within 5°F of the space’s dew point temperature. This happens when the indoor relative humidity is high and the outdoor temperature is low.<a href="#fnref:10" title="return to article"> ↩</a></p>
+      </li>
+      
+      <li class="footnote" id="fn:11"> <!-- outdoor temp -->
+          <p>Coldest expected outdoor temperature under which occupant thermal comfort is being evaluated. This varies with the climate of the project and the time of day that the space is expected to be occupied.<a href="#fnref:11" title="return to article"> ↩</a></p>
+      </li>
+      <li class="footnote" id="fn:12"> <!-- indoor ambient temp -->
+          <p>Temperature of the indoor air. For radiant discomfort calculations it is assumed that this also represents the temperature of the indoor surfaces. Low indoor air temperatures may lead to occupant discomfort regardless of the glazing configuration.<a href="#fnref:12" title="return to article"> ↩</a></p>
+      </li>
+      <li class="footnote" id="fn:13"> <!-- relative humidity -->
+          <p>Relative humidity indoors. This factors into to the thermal comfort calculations as well as the potential for condensation. During winter, this is usually around 20% unless the space is humidified.<a href="#fnref:13" title="return to article"> ↩</a></p>
+      </li>
+      <li class="footnote" id="fn:14"> <!-- room side low e -->
+          <p>Select if the U-value entered is achieved by adding a low-e coating on the interior side of the window. Room-side low-e coatings increase the thermal performance of a window, and reduce the potential for radiant discomfort. However, they also increase the potential for downdraft discomfort and condensation.<a href="#fnref:14" title="return to article"> ↩</a></p>
+       </li>
+       <li class="footnote" id="fn:15"><!-- emissivity -->
+          <p>Emissivity of the low-e coating located on the room-side surface of the inner-most pane of glass. This is obtained from the manufacturer. If unknown assume 0.2.<a href="#fnref:15" title="return to article"> ↩</a></p>
+      </li>
+      <li class="footnote" id="fn:16"><!-- r value -->
+          <p>R-Value of the wall assembly, including thermal bridges.<a href="#fnref:16" title="return to article"> ↩</a></p>
+      </li>
+      <li class="footnote" id="fn:17"> <!-- air speed -->
+          <p>Average indoor air speed induced by the mechanical system. Typically ranges from 10-30 fpm.<a href="#fnref:17" title="return to article"> ↩</a></p>
+      </li>
+      <li class="footnote" id="fn:18"> <!-- clothing -->
+          <p>Insulating value of clothing.<i><br>0.6 clo = trousers/knee-length skirt + long sleeved shirt<br>0.8 clo = trousers/knee-length skirt + undershirt + long sleeved shirt<br>1 clo = trousers/knee-length skirt + undershirt + long sleeved shirt + long sleeve sweater</i><a href="#fnref:18" title="return to article"> ↩</a></p>
+      </li>
+      <li class="footnote" id="fn:19"> <!-- metabolic rate -->
+          <p>Metabolic rate of the occupants. 1 met = seated resting. 1.2 met = typing or standing.<a href="#fnref:19" title="return to article"> ↩</a></p>
+      </li>
+    <li class="footnote" id="fn:20"> <!-- distance from facade -->
+          <p>Expected location of the occupant perpendicular to the fa&ccedil;ade.<a href="#fnref:20" title="return to article"> ↩</a></p>
+      </li>
+      <li class="footnote" id="fn:21"> <!-- ppd -->
+          <p>The Predicted Percentage of Dissatisfied (PPD) is a common metric to define occupants’ predicted satisfactions with their environment. The industry standard is typically 10%, which means that 90% of occupants are thermally comfortable. It is not possible to get a PPD lower than 5%. Note: This tool only estimates occupant dissatisfaction from cold conditions.<a href="#fnref:21" title="return to article"> ↩</a></p>
+      </li>
+  </ol>
+  </div>
+
+      
+      <div class="referenceLinks">
+    <!-- begin code region 'pod_3378611' -->
+<div class=' wv-code-region-pod_3378611'><div class="comfortRight">
+
+  
+    
+    <h2>REFERENCES</h2>  
+    <ul class="grey">
+      
+        <li><a href="http://comfort.cbe.berkeley.edu/">CBE Thermal Comfort Tool</a></li>
+      
+        <li><a href="http://www.sciencedirect.com/science/article/pii/0360132394900264">Heiselberg, Draft Risk From Cold Vertical Surfaces</a></li>
+      
+        <li><a href="http://www.sciencedirect.com/science/article/pii/0378778888900539">Fanger, Air Turbulence and Sensation of Draught</a></li>
+      
+        <li><a href="https://www.ashrae.org/resources--publications/bookstore/standard-55">ASHRAE Standard 55-2013 – Thermal Environmental Conditions for Human Occupancy</a></li>
+      
+        <li><a href="http://www.jstor.org/stable/27722011?seq=1#page_scan_tab_contents ">Tredre, Assessment of Mean Radiant Temperature in Indoor Environments</a></li>
+      
+    </ul>
+      
+
+
+       <h2>ARTICLES &amp; PRESENTATIONS</h2>
+          <ul class="grey">
+            
+              <li><span class="article-date">2016</span>   <span class="award"><a href="http://www.payette.com/post/3060717-payette-people-at-buildingenergy-16">Room-side low-e coating, as good as it sounds?</a></span></li>
+            
+              <li><span class="article-date">2016</span>   <span class="award"><a href="http://www.payette.com/post/3064353-thermal-comfort-and-glazing-design">Thermal Comfort and Glazing Design</a></span></li>
+            
+              <li><span class="article-date">2015</span>   <span class="award"><a href="http://www.labdesignnews.com/articles/2015/10/new-frontier-glazing-room-side-low-e-coatings">The new frontier in glazing: Room-side low-e coatings?</a></span></li>
+            
+              <li><span class="article-date">2014</span>   <span class="award"><a href="http://www.labdesignnews.com/articles/2014/08/glazing-design-and-thermal-comfort-its-more-being-cool">Glazing design and thermal comfort: It's more than being cool</a></span></li>
+            
+              <li><span class="article-date">2014</span>   <span class="award"><a href="http://www.payette.com/post/2361383-cut-your-losses-envelope-performance-and">Cut Your Losses: Envelope Performance and Thermal Comfort</a></span></li>
+            
+          </ul>  
+    
+    <div class="expandable">
+
+       <h2>RELATED BLOG POSTS</h2>
+          <ul class="grey relatedComfort">
+            
+               <li><span class="post-date">10.18.16</span> <a href="/post/3386383-payette-receives-aia-tap-innovation-award">Payette Receives AIA TAP Innovation Award! </a></li>
+            
+               <li><span class="post-date">10.12.16</span> <a href="/post/3380251-hpb-magazine-features-our-thermal-comfort">HPB Magazine Features our Thermal Comfort Tool  </a></li>
+            
+               <li><span class="post-date">09.16.16</span> <a href="/post/3345676-announcing-the-new-glazing-and-winter">Announcing the New Glazing and Winter Comfort Tool</a></li>
+            
+          </ul>  
+    
+    
+      <h3 class="full-list"><a href="#"><span>&nbsp;</span>More Related Blog Posts</a></h3>
+      <ul class="clearfix expander grey relatedComfort" style="display: none;">
+            
+               <li><span class="post-date">02.09.16</span> <a href="/post/3060717-payette-people-at-buildingenergy-16">Payette People at BuildingEnergy 16</a></li>
+            
+               <li><span class="post-date">02.08.16</span> <a href="/post/3064353-thermal-comfort-and-glazing-design">Thermal Comfort and Glazing Design</a></li>
+            
+               <li><span class="post-date">10.23.15</span> <a href="/post/2894869-new-frontier-in-glazing-room-side-low-e">New Frontier in Glazing: room-side low-e coatings?</a></li>
+            
+               <li><span class="post-date">09.23.14</span> <a href="/post/2361383-cut-your-losses-envelope-performance-and">Cut Your Losses: Envelope Performance and Thermal Comfort</a></li>
+            
+               <li><span class="post-date">08.11.14</span> <a href="/post/2335422-thermal-comfort-and-glazing-design">Thermal Comfort and Glazing Design</a></li>
+            
+          </ul>  
+      
+      </div>
+  
+
+  </div></div>
+<!-- end code region pod_3378611 -->
+        </div>
+    </div> <!-- end of right div -->
+  <div id="URLpop">
+    <textarea>the link</textarea>
+  </div>
+  
+    
+  </div>
+  <div class="wrapper">
+      <!-- begin code region 'pod_3378607' -->
+<div class=' wv-code-region-pod_3378607'><div style='clear:left; padding-top: 12px'>
+  <hr /><br />
+  <ul id="projectList" class="dbList3Col clearfix">  
+  
+      <li>
+        <a href="/research-project/chilled-beams" class="thumb"><img alt="" src="/rendition.large_thumb/images_research_projects/ChilledBeams/000.jpg" /></a>
+           <h2><a href="/research-project/chilled-beams">Chilled Beams</a></h2>
+      </li>
+  
+      <li>
+        <a href="/research-project/collaboration-spaces" class="thumb"><img alt="" src="/rendition.large_thumb/images_research_projects/CollaborationSpaces/01.jpg" /></a>
+           <h2><a href="/research-project/collaboration-spaces">Collaboration Spaces</a></h2>
+      </li>
+  
+      <li>
+        <a href="/research-project/fume-hood-selection" class="thumb"><img alt="" src="/rendition.large_thumb/images_research_projects/FumeHoodSelection/01.jpg" /></a>
+           <h2><a href="/research-project/fume-hood-selection">Fume Hood Selection</a></h2>
+      </li>
+  
+      <li>
+        <a href="/research-project/led-lighting" class="thumb"><img alt="" src="/rendition.large_thumb/images_research_projects/LED/000.jpg" /></a>
+           <h2><a href="/research-project/led-lighting">LED Lighting of Lab Benches</a></h2>
+      </li>
+  
+      <li>
+        <a href="/research-project/natural-ventilation" class="thumb"><img alt="" src="/rendition.large_thumb/images_research_projects/NaturalVentilation/01.jpg" /></a>
+           <h2><a href="/research-project/natural-ventilation">Natural Ventilation</a></h2>
+      </li>
+  
+      <li>
+        <a href="/research-project/naturally-ventilated-healthcare-1" class="thumb"><img alt="" src="/rendition.large_thumb/images_research_projects/NaturallyVentilatedHC/000.jpg" /></a>
+           <h2><a href="/research-project/naturally-ventilated-healthcare-1">Naturally Ventilated Healthcare</a></h2>
+      </li>
+  
+      <li>
+        <a href="/research-project/reducing-hvac-energy-consumption-in-labs" class="thumb"><img alt="" src="/rendition.large_thumb/images_research_projects/VentilationReduction/000.jpg" /></a>
+           <h2><a href="/research-project/reducing-hvac-energy-consumption-in-labs">Reducing HVAC Energy Consumption</a></h2>
+      </li>
+  
+      <li>
+        <a href="/research-project/shadow-studies" class="thumb"><img alt="" src="/rendition.large_thumb/images_research_projects/ShadowStudies/000.jpg" /></a>
+           <h2><a href="/research-project/shadow-studies">Shadow Studies</a></h2>
+      </li>
+  
+      <li>
+        <a href="/research-project/sun-shading-performance-retrospective" class="thumb"><img alt="" src="/rendition.large_thumb/images_research_projects/Sun-Shading/000.jpg" /></a>
+           <h2><a href="/research-project/sun-shading-performance-retrospective">Sun-shading Performance Retrospective</a></h2>
+      </li>
+  
+      <li>
+        <a href="/research-project/thermal-comfort" class="thumb"><img alt="" src="/rendition.large_thumb/images_research_projects/ThermalComfort/000.jpg" /></a>
+           <h2><a href="/research-project/thermal-comfort">Thermal Comfort and Glazing</a></h2>
+      </li>
+  
+      <li>
+        <a href="/research-project/thermal-performance-of-facades-1" class="thumb"><img alt="" src="/rendition.large_thumb/images_research_projects/ThermalPerformance/000.jpg" /></a>
+           <h2><a href="/research-project/thermal-performance-of-facades-1">Thermal Performance of Facades</a></h2>
+      </li>
+  
+</ul>
+</div></div>
+<!-- end code region pod_3378607 -->
+    </div>
+  <div id="footer" class="clearfix">
+    <div class="socialLinks">
+  <a href="/feed.xml"><img src="https://assets-production-webvanta-com.s3-us-west-2.amazonaws.com/000000/40/00/original/images/rssIcon.png" alt="RSS" /></a>
+  <a href="http://www.twitter.com/payettepeople"><img src="https://assets-production-webvanta-com.s3-us-west-2.amazonaws.com/000000/40/00/original/images/twitterIcon.png" alt="Twitter" /></a>
+  <a href="http://www.linkedin.com/company/payette"><img src="https://assets-production-webvanta-com.s3-us-west-2.amazonaws.com/000000/40/00/original/images/linkedinIcon.png" alt="LinkedIn" /></a>
+  <a href="http://www.architizer.com/en_us/firms/view/payette/5050/"><img src="https://assets-production-webvanta-com.s3-us-west-2.amazonaws.com/000000/40/00/original/images/socialIcon04.png" alt="Architizer" /></a>
+  <a href="http://www.vimeo.com/payette"><img src="https://assets-production-webvanta-com.s3-us-west-2.amazonaws.com/000000/40/00/original/images/vimeoIcon.png" alt="Vimeo" /></a>
+  <a href="http://www.flickr.com/photos/60439318@N04/"><img src="https://assets-production-webvanta-com.s3-us-west-2.amazonaws.com/000000/40/00/original/images/flickrIcon.png" alt="Flickr" /></a>
+  <br> 
+<script src="//static.getclicky.com/js" type="text/javascript"></script>
+<script type="text/javascript">try
+{ clicky.init(100889699); }
+catch(e){}</script>
+  <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/100889699ns.gif" /></p></noscript>
+  
+    </div>
+<p><strong>290 Congress Street, Fifth Floor, Boston, MA 02210-1005</strong>  | © 2015 Payette  |  <a href="/site-map">Site Map</a>  |  <a href="/contact">Contact</a>  |  <a href="/client-login">Login</a></p>
+  </div>
+    
+  <script type="text/javascript">
+$(".expandable h3 a").click(function(e){
+      e.preventDefault();
+      var parent = $(this).parent().parent();
+      parent.find(".expander").slideToggle();
+      if(parent.hasClass('expanded')){
+        parent.removeClass('expanded');
+      } else {
+        parent.addClass('expanded');
+      }      
+    });
+  </script>
+
+  <!-- Assign any parameters from the URL -->
+  <script type="text/javascript" src="/comfort-urlparse.js"></script>
+  <!-- Compute Data -->
+  <script type="text/javascript" src="/comfort-script.js"></script> 
+  <div id="webvanta-features" class="wvif" data-page-id="293914">
+  <script type="text/javascript" src="/webvanta/admin/v2/js/webvanta-bootstrap-2.0.0.js"></script>
+</div></body>
+</html>

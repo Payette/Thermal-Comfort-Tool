@@ -1,0 +1,30 @@
+<!-- jquery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.13.0/jquery.validate.min.js"></script>
+<script src="/js/jquery.form.min.js"></script>
+<script src="/form.js" type="text/javascript"></script>
+<script src="/js/superfish-master/dist/js/hoverIntent.js"></script>
+<script src="/js/superfish-master/dist/js/superfish.min.js"></script>
+<script type="text/javascript" src="/jquery.twitter.js"></script>
+<script type="text/javascript" src="/jquery.cookie.js"></script>
+
+<!-- initialize Superfish and pngfix-->
+<script type="text/javascript">
+ 
+$(document).ready(function(){
+  
+    $('ul.sf-menu').superfish({
+      autoArrows:  false,                // disable generation of arrow mark-up
+      dropShadows: true
+    });
+    if($('#twitterContainer')){
+    $("#twitterContainer").tweet({
+      username: "<w:data name='twitter-account' />",
+      count: 6,        
+      loading_text: "loading tweets..."     
+    });        
+    }
+    $("a[href^='http']:not([href*='payette.com'])").addClass("external").attr({ target: "_blank" });
+});
+ 
+</script>

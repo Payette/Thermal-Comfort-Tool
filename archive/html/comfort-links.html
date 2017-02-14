@@ -1,0 +1,97 @@
+<!--CSS: -->
+<link rel="stylesheet" type="text/css" href="/comfort-styles.css" />
+<link rel="stylesheet" type="text/css" href="/comfort-print.css" media="print"/>
+<link rel="stylesheet" type="text/css" href="/comfort-bigfoot.css" />
+<link rel="stylesheet" type="text/css" href="/comfort-custom-jquery-ui.css" />
+
+
+<!--General Javascript Libraries: -->
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+<!-- Back End Functions for Geometry/Building Physics: -->
+<script type="text/javascript" src="/comfort-PPDCalc.js"></script>
+<script type="text/javascript" src="/comfort-geo.js"></script>
+<script type="text/javascript" src="/comfort-UValCalc.js"></script>
+<script type="text/javascript" src="/comfort-util.js"></script>
+<script type="text/javascript" src="/comfort-units.js"></script>
+
+<!--Functions for custom interaction: -->
+<script type="text/javascript" src="/comfort-misc.js"></script>
+<script type="text/javascript" src="/comfort-createurl.js"></script>
+<script type="text/javascript" src="/comfort-urlobject.js"></script>
+<script type="text/javascript" src="/comfort-bigfoot.js"></script>
+<script type="text/javascript" src="/comfort-shortenURL.js"></script>
+<script type="text/javascript" src="/comfort-modernizr.js"></script>
+
+<!-- Functions That Generate the Graphic Content of the Tool: -->
+<script type="text/javascript" src="/comfort-render.js"></script>
+
+<!-- Functions for custom display interactions: -->
+<script type="text/javascript">
+    // Footnote Options
+    $.bigfoot({
+          activateOnHover: false,
+            deleteOnUnhover: false,
+            popoverDeleteDelay: 250,
+      buttonMarkup: "<div class=\"bigfoot-footnote__container\"> <button class=\"bigfoot-footnote__button\" rel=\"footnote\" id=\"{{SUP:data-footnote-backlink-ref}}\" data-footnote-number=\"{{FOOTNOTENUM}}\" data-footnote-identifier=\"{{FOOTNOTEID}}\" alt=\"See Footnote {{FOOTNOTENUM}}\" data-bigfoot-footnote=\"{{FOOTNOTECONTENT}}\">?</button></div>"
+
+        });
+
+    // Increment Buttons
+    $(function(){
+      $("#ceiling, #wallWidth, #windowHeight, #windowWidth, #glazing, #sill, #distWindow, #uvalue, #lowE, #rvalue, #outdoortemp, #airtemp, #humidity, #airspeed, #clothing, #metabolic, #ceiling2, #wallWidth2, #windowHeight2, #windowWidth2, #glazing2, #sill2, #distWindow2, #uvalue2, #lowE2, #rvalue2, #outdoortemp2, #airtemp2, #humidity2, #airspeed2, #clothing2, #metabolic2, #ceiling3, #wallWidth3, #windowHeight3, #windowWidth3, #glazing3, #sill3, #distWindow3, #uvalue3, #lowE3, #rvalue3, #outdoortemp3, #airtemp3, #humidity3, #airspeed3, #clothing3, #metabolic3").spinner();
+      $("#glazing, #glazing2, #glazing3").spinner("disable");
+    });
+
+    // URL Alert
+    $(function() {
+      $("#URLpop").dialog({
+        autoOpen: false,
+        draggable: false,
+        closeOnEscape: true,
+        buttons: [
+          {text: "Shorten URL",
+          click: function() {
+            var urlToShorten = $("#URLpop textarea").val();
+
+            shorten(urlToShorten, function(response) {
+
+              // replace long url with shortened url
+              $("#URLpop textarea").empty();
+              $("#URLpop textarea").append(response.data.url);
+
+                });
+          }},
+          {text: "Close",
+          click: function() {
+            $(this).dialog("close");
+          }},
+          ],
+        modal: true,
+        width: 450,
+      });
+    });
+          
+          
+    // Disclaimer text      
+    $(document).ready($(function() {
+      $("#disclaimer").dialog({
+        autoOpen: true,
+        draggable: false,
+        closeOnEscape: false,
+        modal: true,
+        width: 350,
+        height: 140,
+        buttons: [
+        {text: "Accept",
+        click: function(){
+          $(this).dialog("close");
+        }},
+        {text: "Decline",
+        click: function() {
+          window.location.href="http://www.payette.com/projects/Research-at-Payette/";
+        }}]
+      })
+    }))
+</script>

@@ -1,0 +1,250 @@
+<div id="inputs">
+    <div id="options">
+      <div id="units">
+        <h2>Units</h2>
+        <input type="button" name="IP" id="IP" value="IP" class="optionButton selected">
+        <input type="button" name="SI" id="SI" value="SI" class="optionButton unselected">
+        <div style="clear:both;"></div>
+      </div>
+      <div id="share">
+        <h2>Share</h2>
+        <input type="button" name="PDF" id="PDF" value="Save as PDF" class="optionButton unselected">
+        <input type="button" name="URL" id="URL" value="Copy URL" class="optionButton unselected">
+        <div style="clear:both;"></div>
+      </div>
+    </div>
+
+
+
+    <form id="form" autocomplete="off">
+
+    <fieldset class="inputgroup">
+
+      <div id="caseWrapper">
+        <legend class="heading first">Fa&ccedil;ade Geometry</legend>
+        <div id="caseSelection">
+          <h2 id="case1Label"><span id="case1Button"></span>Case 1</h2>
+          <h2 id="case2Label" class="unselected"><span id="case2Button" class="unselected"></span>Case 2</h2>
+          <h2 id="case3Label" class="unselected"><span id="case3Button" class="unselected"></span>Case 3</h2>
+        </div>
+      </div>
+      <hr>
+
+      <label for="ceiling">Ceiling Height (<span class="units IP">ft</span>)<sup id="fnref:1"><a href="#fn:1" rel="footnote">?</a></sup></label>
+      <div class="inputWrapperLeft"><input type="text" name="ceiling" id="ceiling" min="1" max="100"  value="12" step="1" class="case1"></div>
+      <div class="inputWrapperCenter"><input type="text" name="ceiling2" id="ceiling2" min="1" max="100"  value="12" step="1" class="case2 unselected"></div>
+      <div class="inputWrapperRight"><input type="text" name="ceiling3" id="ceiling3" min="1" max="100"  value="12" step="1" class="case3 unselected"></div><br>
+
+      <label for="wallWidth">Room Length (<span class="units IP">ft</span>)<sup id="fnref:2"><a href="#fn:2" rel="footnote">?</a></sup></label>
+      <div class="inputWrapperLeft"><input type="text" name="wallWidth" id="wallWidth" value="18" step="1" class="case1"></div>
+      <div class="inputWrapperCenter"><input type="text" name="wallWidth2" id="wallWidth2" value="18" step="1" class="case2 unselected"></div>
+      <div class="inputWrapperRight"><input type="text" name="wallWidth3" id="wallWidth3" value="18" step="1" class="case3 unselected"></div><br>
+
+      <label for="windowHeight">Window Height From Sill (<span class="units IP">ft</span>)<sup id="fnref:3"><a href="#fn:3" rel="footnote">?</a></sup></label>
+      <div class="inputWrapperLeft"><input type="text" name="windowHeight" id="windowHeight" value="8" step="0.5" class="case1"></div>
+      <div class="inputWrapperCenter"><input type="text" name="windowHeight2" id="windowHeight2" value="8" step="0.5" class="case2 unselected"></div>
+      <div class="inputWrapperRight"><input type="text" name="windowHeight3" id="windowHeight3" value="8" step="0.5" class="case3 unselected"></div><br>
+
+      <label for="sill">Sill Height (<span class="units IP">ft</span>)<sup id="fnref:4"><a href="#fn:4" rel="footnote">?</a></sup></label>
+      <div class="inputWrapperLeft"><input type="text" name="sill" id="sill" value="3" step="0.5" class="case1"></div>
+      <div class="inputWrapperCenter"><input type="text" name="sill2" id="sill2" value="3" step="0.5" class="case2 unselected"></div>
+      <div class="inputWrapperRight"><input type="text" name="sill3" id="sill3" value="3" step="0.5" class="case3 unselected"></div><br>
+
+
+      <label id="setGlazing">Set Glazing Amount By</label><br class="glzBR">
+
+      <label for="width" id="windowWidthLabel"><div class="customCheckStyle"><input type="radio" name="glazingRadio" value="windowWidthCheck" id="windowWidthCheck" class="customCheck" checked><label for="windowWidthCheck" id="checkWindWidth"></label></div>Window Width (<span class="units IP">ft</span>)<sup id="fnref:5"><a href="#fn:5" rel="footnote">?</a></sup></label>
+      <div class="inputWrapperLeft"><input type="text" name="width" id="windowWidth" value="4.5" step="0.5" class="case1"></div>
+      <div class="inputWrapperCenter"><input type="text" name="width2" id="windowWidth2" value="4.5" step="0.5" class="case2 unselected"></div>
+      <div class="inputWrapperRight"><input type="text" name="width3" id="windowWidth3" value="4.5" step="0.5" class="case3 unselected"></div><br>
+
+      <label for="glazing" class="inactive" id="glazingLabel"><div class="customCheckStyle"><input type="radio" name="glazingRadio" value="glazingRatioCheck" class="customCheck" id="glazingRatioCheck"><label for="glazingRatioCheck" id="checkGlzRatio" class="unselected"></label></div>Window-to-Wall Ratio (%)<sup id="fnref:6"><a href="#fn:6" rel="footnote">?</a></sup></label>
+      <div class="inputWrapperLeft"><input type="text" name="glazing" class="inactive case1" id="glazing" value="50" step="1"></div>
+      <div class="inputWrapperCenter"><input type="text" name="glazing2" class="inactive case2 unselected" id="glazing2" value="50" step="1"></div>
+      <div class="inputWrapperRight"><input type="text" name="glazing3" class="inactive case3 unselected" id="glazing3" value="50" step="1"></div><br>
+
+
+      <label for="distWindow">Window Separation (<span class="units IP">ft</span>)<sup id="fnref:7"><a href="#fn:7" rel="footnote">?</a></sup></label>
+      <div class="inputWrapperLeft"><input type="text" name="distWindow" id="distWindow" value="6" step="1" class="case1"></div>
+      <div class="inputWrapperCenter"><input type="text" name="distWindow2" id="distWindow2" value="6" step="1" class="case2 unselected"></div>
+      <div class="inputWrapperRight"><input type="text" name="distWindow3" id="distWindow3" value="6" step="1" class="case3 unselected"></div><br>
+    </fieldset>
+
+
+    <fieldset class="inputgroup">
+      <legend class="heading">Facade Performance</legend>
+      <hr>
+
+      <div id="uvaluePop" class="alert">
+        <img src="/images_research_projects/GlazingSelectionTool/close.png" alt="close" class="close">
+        <p><b>Warning!</b> Thermal comfort cannot be achieved given the current glazing geometry and space/occupancy conditions, regardless of glazing performance. This is commonly due to low indoor air temperatures or low clothing values.</p>
+      </div>
+      
+      <label for="uvalue">Window U-Value (<span class="unitsUVal IP">Btu/hr*ft&sup2;*&deg;F</span>)<sup id="fnref:8"><a href="#fn:8" rel="footnote">?</a></sup></label>
+      <div class="inputWrapperLeft"><input type="text" name="uvalue" id="uvalue" min="0" value="0.35" step="0.01" class="case1"></div>
+      <div class="inputWrapperCenter"><input type="text" name="uvalue2" id="uvalue2" value="0.35" step="0.01" class="case2 unselected"></div>
+      <div class="inputWrapperRight"><input type="text" name="uvalue3" id="uvalue3" value="0.35" step="0.01" class="case3 unselected"></div><br>
+
+      <label class="grey" id="calcUValQuestion">What U-Value meets the target PPD?<sup id="fnref:9" class="uValAlert"><a href="#fn:9" rel="footnote">?</a></sup></label>
+      <div class="inputWrapperLeft"><input type="text" name="calcuvalue" id="calcuvalue" value="0.26" class="inactive case1"  disabled></div>
+      <div class="inputWrapperCenter"><input type="text" name="calcuvaluel2" id="calcuvalue2" value="0.26" class="inactive case2 unselected"  disabled></div>
+      <div class="inputWrapperRight"><input type="text" name="calcuvalue3" id="calcuvalue3" value="0.26" class="inactive case3 unselected"  disabled></div><br>
+
+       <label class="grey" id="condRisk">Is there a risk of condensation?<sup id="fnref:10"><a href="#fn:10" rel="footnote">?</a></sup></label>
+      <div class="inputWrapperLeft"><input type="text" name="condRisk1" id="condRisk1" value="NO" class="inactive case1"  disabled></div>
+      <div class="inputWrapperCenter"><input type="text" name="condRisk2" id="condRisk2" value="NO" class="inactive case2 unselected"  disabled></div>
+      <div class="inputWrapperRight"><input type="text" name="condRisk3" id="condRisk3" value="NO" class="inactive case3 unselected"  disabled></div><br>
+  
+  
+  
+      </fieldset>
+
+
+
+    <fieldset class="inputgroup">
+      <legend class="heading">Environmental Conditions</legend>
+      <hr>
+
+      <label for="outdoortemp">Outdoor Temperature (<span class="unitsTemp IP">&deg;F</span>)<sup id="fnref:11"><a href="#fn:11" rel="footnote">?</a></sup></label>
+      <div class="inputWrapperLeft"><input type="text" name="outdoortemp" id="outdoortemp" value="25" class="case1"></div>
+      <div class="inputWrapperCenter"><input type="text" name="outdoortemp2" id="outdoortemp2" value="25" class="case2 unselected"></div>
+      <div class="inputWrapperRight"><input type="text" name="outdoortemp3" id="outdoortemp3" value="25" class="case3 unselected"></div><br>
+
+      <label for="airtemp">Indoor Temperature (<span class="unitsTemp IP">&deg;F</span>)<sup id="fnref:12"><a href="#fn:12" rel="footnote">?</a></sup></label>
+      <div class="inputWrapperLeft"><input type="text" name="airtemp" id="airtemp" value="72" class="case1"></div>
+      <div class="inputWrapperCenter"><input type="text" name="airtemp2" id="airtemp2" value="72" class="case2 unselected"></div>
+      <div class="inputWrapperRight"><input type="text" name="airtemp3" id="airtemp3" value="72" class="case3 unselected"></div><br>
+
+
+      <label for="humidity">Relative Humidity (%)<sup id="fnref:13"><a href="#fn:13" rel="footnote">?</a></sup></label>
+      <div class="inputWrapperLeft"><input type="text" name="humidity" id="humidity" value="20" class="case1"></div>
+      <div class="inputWrapperCenter"><input type="text" name="humidity2" id="humidity2" value="20" class="case2 unselected"></div>
+      <div class="inputWrapperRight"><input type="text" name="humidity3" id="humidity3" value="20" class="case3 unselected"></div><br>
+    </fieldset>
+
+
+    <fieldset class="inputgroup">
+      <legend class="heading expandOptions"><span class="expand" id="advOptions"></span>Advanced Options</legend>
+      <hr>
+      <div class="hideContent">
+        <p class="subtext">It is recommended to use the default values for these variables unless you have an atypical building program and are familiar with their impact on Fanger’s thermal comfort and risk of downdraft models. Note, that the tool will maintain most of these values constant across all cases.</p>
+
+        <label for="lowECheck">Room-side Low-E Coating<sup id="fnref:14"><a href="#fn:14" rel="footnote">?</a></sup></label>
+
+        <div class="inputWrapperLeft"><div class="customCheckStyleCentered case1"><input type="checkbox" name="lowECheckThis" id="lowECheck" class="checkbox customCheck"><label for="lowECheck" id="checkLowE1" class="unselected"></label></div></div>
+
+        <div class="inputWrapperCenter"><div class="customCheckStyleCentered case2"><input type="checkbox" name="lowECheck2" id="lowECheck2" class="checkbox customCheck"><label for="lowECheck2" id="checkLowE2" class="unselected unselected"></label></div></div>
+
+        <div class="inputWrapperRight"><div class="customCheckStyleCentered case3"><input type="checkbox" name="lowECheck3" id="lowECheck3" class="checkbox customCheck"><label for="lowECheck3" id="checkLowE3" class="unselected unselected"></label></div></div><br>
+
+        <label for="lowE" class="inactive" id="lowELabel">Emissivity<sup id="fnref:15"><a href="#fn:15" rel="footnote">?</a></sup></label>
+        <div class="inputWrapperLeft"><input type="text" name="lowE" id="lowE" value="" class="inactive case1" step="0.1"></div>
+        <div class="inputWrapperCenter"><input type="text" name="lowE2" id="lowE2" value="" class="inactive case2 unselected" step="0.1"></div>
+        <div class="inputWrapperRight"><input type="text" name="lowE3" id="lowE3" value="" class="inactive case3 unselected" step="0.1"></div><br>
+
+
+        <label for="rvalue">Wall R-Value (<span class="unitsRVal IP">hr*ft&sup2;*&deg;F/Btu</span>)<sup id="fnref:16"><a href="#fn:16" rel="footnote">?</a></sup></label>
+        <div class="inputWrapperLeft"><input type="text" name="rvalue" id="rvalue" value="20" class="case1"></div>
+        <div class="inputWrapperCenter"><hr class="case2 unselected"></div>
+        <div class="inputWrapperRight"><hr class="case3 unselected"></div><br>
+
+
+        <label for="airspeed">Air Speed (<span class="unitsAirSpeed IP">fpm</span>)<sup id="fnref:17"><a href="#fn:17" rel="footnote">?</a></sup></label>
+        <div class="inputWrapperLeft"><input type="text" name="airspeed" id="airspeed" value="10" step="0.5" class="case1"></div>
+        <div class="inputWrapperCenter"><hr class="case2 unselected"></div>
+        <div class="inputWrapperRight"><hr class="case3 unselected"></div><br>
+
+        <label for="clothing">Clothing (clo)<sup id="fnref:18"><a href="#fn:18" rel="footnote">?</a></sup></label>
+        <div class="inputWrapperLeft"><input type="text" name="clothing" id="clothing" value="0.8" step="0.1" class="case1"></div>
+        <div class="inputWrapperCenter"><hr class="case2 unselected"></div>
+        <div class="inputWrapperRight"><hr class="case3 unselected"></div><br>
+
+        <label for="metabolic">Metabolic Rate (met)<sup id="fnref:19"><a href="#fn:19" rel="footnote">?</a></sup></label>
+        <div class="inputWrapperLeft"><input type="text" name="metabolic" id="metabolic" value="1.2" step="0.1" class="case1"></div>
+        <div class="inputWrapperCenter"><hr class="case2 unselected"></div>
+        <div class="inputWrapperRight"><hr class="case3 unselected"></div><br>
+
+        <hr class="final">
+      </div>
+
+    </fieldset>
+    </form>
+  </div>
+
+<div class="footnotes">
+  <ol>
+    <li class="footnote" id="fn:1"> <!-- ceiling height -->
+          <p><img src="/images_research_projects/GlazingSelectionTool/dims-ceiling.png"><a href="#fnref:1" title="return to article"> ↩</a></p>
+      </li>
+
+      <li class="footnote" id="fn:2"> <!-- room length -->
+          <p><img src="/images_research_projects/GlazingSelectionTool/dims-length.png"><a href="#fnref:2" title="return to article"> ↩</a></p>
+      </li>
+
+      <li class="footnote" id="fn:3"> <!-- window height from sill -->
+        <p><img src="/images_research_projects/GlazingSelectionTool/dims-height.png"><a href="#fnref:3" title="return to article"> ↩</a></p>
+      </li>
+
+      <li class="footnote" id="fn:4"> <!-- sill height -->
+      <p><img src="/images_research_projects/GlazingSelectionTool/dims-sill.png"><a href="#fnref:4" title="return to article"> ↩</a></p>
+      </li>
+
+      <li class="footnote" id="fn:5"> <!-- window width -->  
+          <p><img src="/images_research_projects/GlazingSelectionTool/dims-width.png"><a href="#fnref:5" title="return to article"> ↩</a></p>
+      </li>
+
+      <li class="footnote" id="fn:6"> <!-- window-to-wall ratio -->
+        <p><img src="/images_research_projects/GlazingSelectionTool/dims-ratio.png"><a href="#fnref:6" title="return to article"> ↩</a></p>
+      </li>
+
+      <li class="footnote" id="fn:7"> <!-- window separation -->
+          <p><img src="/images_research_projects/GlazingSelectionTool/dims-sep.png"><a href="#fnref:7" title="return to article"> ↩</a></p>
+      </li>
+
+      <li class="footnote" id="fn:8"> <!-- u value -->
+          <p>Measure of the window’s thermal performance. If the window panes are large (small impact of the frame) use the center of glass U-value. With assemblies where frame elements are prominent, it is recommended to use the assembly U-value. If using a room-side low-e coating, it can be selected under advanced options.<a href="#fnref:8" title="return to article"> ↩</a></p>
+      </li>
+
+      <li class="footnote" id="fn:9"> <!-- calculate u value -->
+          <p>U-value required to meet the PPD threshold at the specified occupant distance from fa&ccedil;ade.<a href="#fnref:9" title="return to article"> ↩</a></p>
+      </li>
+
+      <li class="footnote" id="fn:10"> <!-- conden risk -->
+          <p>If there is a risk of condensation, the interior window surface temperature is within 5°F of the space’s dew point temperature. This happens when the indoor relative humidity is high and the outdoor temperature is low.<a href="#fnref:10" title="return to article"> ↩</a></p>
+      </li>
+      
+      <li class="footnote" id="fn:11"> <!-- outdoor temp -->
+          <p>Coldest expected outdoor temperature under which occupant thermal comfort is being evaluated. This varies with the climate of the project and the time of day that the space is expected to be occupied.<a href="#fnref:11" title="return to article"> ↩</a></p>
+      </li>
+      <li class="footnote" id="fn:12"> <!-- indoor ambient temp -->
+          <p>Temperature of the indoor air. For radiant discomfort calculations it is assumed that this also represents the temperature of the indoor surfaces. Low indoor air temperatures may lead to occupant discomfort regardless of the glazing configuration.<a href="#fnref:12" title="return to article"> ↩</a></p>
+      </li>
+      <li class="footnote" id="fn:13"> <!-- relative humidity -->
+          <p>Relative humidity indoors. This factors into to the thermal comfort calculations as well as the potential for condensation. During winter, this is usually around 20% unless the space is humidified.<a href="#fnref:13" title="return to article"> ↩</a></p>
+      </li>
+      <li class="footnote" id="fn:14"> <!-- room side low e -->
+          <p>Select if the U-value entered is achieved by adding a low-e coating on the interior side of the window. Room-side low-e coatings increase the thermal performance of a window, and reduce the potential for radiant discomfort. However, they also increase the potential for downdraft discomfort and condensation.<a href="#fnref:14" title="return to article"> ↩</a></p>
+       </li>
+       <li class="footnote" id="fn:15"><!-- emissivity -->
+          <p>Emissivity of the low-e coating located on the room-side surface of the inner-most pane of glass. This is obtained from the manufacturer. If unknown assume 0.2.<a href="#fnref:15" title="return to article"> ↩</a></p>
+      </li>
+      <li class="footnote" id="fn:16"><!-- r value -->
+          <p>R-Value of the wall assembly, including thermal bridges.<a href="#fnref:16" title="return to article"> ↩</a></p>
+      </li>
+      <li class="footnote" id="fn:17"> <!-- air speed -->
+          <p>Average indoor air speed induced by the mechanical system. Typically ranges from 10-30 fpm.<a href="#fnref:17" title="return to article"> ↩</a></p>
+      </li>
+      <li class="footnote" id="fn:18"> <!-- clothing -->
+          <p>Insulating value of clothing.<i><br>0.6 clo = trousers/knee-length skirt + long sleeved shirt<br>0.8 clo = trousers/knee-length skirt + undershirt + long sleeved shirt<br>1 clo = trousers/knee-length skirt + undershirt + long sleeved shirt + long sleeve sweater</i><a href="#fnref:18" title="return to article"> ↩</a></p>
+      </li>
+      <li class="footnote" id="fn:19"> <!-- metabolic rate -->
+          <p>Metabolic rate of the occupants. 1 met = seated resting. 1.2 met = typing or standing.<a href="#fnref:19" title="return to article"> ↩</a></p>
+      </li>
+    <li class="footnote" id="fn:20"> <!-- distance from facade -->
+          <p>Expected location of the occupant perpendicular to the fa&ccedil;ade.<a href="#fnref:20" title="return to article"> ↩</a></p>
+      </li>
+      <li class="footnote" id="fn:21"> <!-- ppd -->
+          <p>The Predicted Percentage of Dissatisfied (PPD) is a common metric to define occupants’ predicted satisfactions with their environment. The industry standard is typically 10%, which means that 90% of occupants are thermally comfortable. It is not possible to get a PPD lower than 5%. Note: This tool only estimates occupant dissatisfaction from cold conditions.<a href="#fnref:21" title="return to article"> ↩</a></p>
+      </li>
+  </ol>
+  </div>

@@ -1,0 +1,29 @@
+<div id='comment_errors'><w:sysmsg /></div>
+<form action="/comments" id="comment_form" method="post" autocomplete='off'>
+  <div id='comment_form_wrapper' class='comment_form'>
+    <input id="item_id" name="item_id" type="hidden" value="<w:kb:item:id />" />
+    <a name='comment_form' ></a>
+    
+    <div class="bubble"></div>
+    <div class="inputs">
+      <label for='feedback_body'>Your comments:</label>
+       <textarea id="feedback_body" name="feedback[body]"></textarea>
+      <label for='feedback_name'>Your name (required):</label>
+      <input id="feedback_name" name="feedback[name]" type="text"  />
+      <label for='feedback_email'>Email (required):</label>
+      <input id="feedback_email" name="feedback[email]" type="email"  >
+      <div id='email2'>
+        <p>
+          <label>Email for nonhumans</label>
+          <input id="email" name="email" size="40" type="email" />
+        </p>
+      </div>
+        <label for='feedback_subject'>Website:</label>
+      <input id="feedback_subject" name="feedback[subject]" type="url" />
+      <p>Payette reserves the right to restrict comments that do not contribute to the conversation, contain
+        profanity, or seek to promote a personal or unrelated business.</p>
+       
+      <input name='submit' id='submit_button' type='submit' value="SUBMIT &rarr;" />
+    </div>     
+  </div>
+</form>

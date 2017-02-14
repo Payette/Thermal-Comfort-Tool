@@ -1,0 +1,100 @@
+<!-- start of Payette custom content -->
+      <div id="disclaimer">
+        <h1>Disclaimer</h1>
+        <p>By using the Glazing and Comfort Analysis Tool, you agree to the <a href="/images_research_projects/GlazingSelectionTool/GlazingAndComfortAnalysisToolTermsAndConditions.pdf" target="_blank">Terms and Conditions</a>.</p>
+      </div>
+
+      <div id="facadeWrapper">
+      <div id="case1FacadeWrapper">
+        <div id="case1Chart"></div>
+        <h1 id="case1Heading" class="facadeHeading case1Text">Case 1</h1>
+         <div id="sliderWrapper">
+          <input type="range" name="occupantDist" id="occupantDist" min="0" max="20" value="0" autocomplete="off"/>
+          <output for="occupantDist"><img src="/images_research_projects/GlazingSelectionTool/slider.png" id="occupantImage"></output>
+        </div>
+      </div>
+      <div id="case2FacadeWrapper">
+        <div id="case2Chart"></div>
+        <h1 id="case2Heading" class="facadeHeading greyText">Case 2</h1>
+         <div id="sliderWrapper2">
+          <input type="range" name="occupantDist2" id="occupantDist2" min="0" max="20" value="0" autocomplete="off"/>
+          <output for="occupantDist2"><img src="/images_research_projects/GlazingSelectionTool/slider.png" id="occupantImage2"></output>
+        </div>
+      </div>
+      <div id="case3FacadeWrapper">
+        <div id="case3Chart"></div>
+        <h1 id="case3Heading" class="facadeHeading greyText">Case 3</h1>
+       <div id="sliderWrapper3">
+          <input type="range" name="occupantDist3" id="occupantDist3" min="0" max="20" value="0" autocomplete="off"/>
+          <output for="occupantDist3"><img src="/images_research_projects/GlazingSelectionTool/slider.png" id="occupantImage3"></output>
+        </div>
+      </div>
+      <div style="clear:both;"></div>
+    </div>
+
+    <div id="occupancyWrapper">
+      <form id="occupantSliders" autocomplete="off">
+        <fieldset class="inputgroup">
+          <label for="ppd">Acceptable Percentage of People Dissatisfied from Cold (%)<sup id="fnref:21"><a href="#fn:21" rel="footnote">?</a></sup></label>
+          <div class="occSlider"><input type="range" name="ppd" id="ppd" value="10" min="5" max="30"><p id="ppdOutput">10%</p></div>
+          
+          <label for="distFromFacade">Occupant Distance From Fa&ccedil;ade (<span class="units IP">ft</span>)<sup id="fnref:20"><a href="#fn:20" rel="footnote">?</a></sup></label>
+          <div class="occSlider"><input type="range" name="distFromFacade" id="distFromFacade" value="3" min="1" max="12" step="0.25"><p id="distOutput">3 <span class="units IP">ft</span></p></div><br>
+
+        </fieldset>
+      </form>
+    </div>
+
+    <div id="graphWrapper">
+      <div id="key">
+        <ul>
+          <li><img class="discomfortIcon" src="/images_research_projects/GlazingSelectionTool/triangle-grey.png">Downdraft Discomfort</li>
+          <li><img class="discomfortIcon" src="/images_research_projects/GlazingSelectionTool/circle-grey.png">Radiant Discomfort</li>
+        </ul>
+      </div>
+      
+      <div id="tooltip" class="hidden"></div>
+
+      <div id="thresholdTooltip"></div>
+    </div>
+
+
+
+
+    <div id="explanation">
+      <h1 class="expandExplanation"><span class="expand" id="explainer"></span>Understanding Discomfort and How to Minimize It</h1>
+      <hr>
+      
+      <div class="explanContent">
+      <div class="keepTogether">
+        <img class="diagram" src="/images_research_projects/GlazingSelectionTool/discomfort-downdraft.png">
+        <div class="descripText">
+          <h2><img class="discomfortIcon" src="/images_research_projects/GlazingSelectionTool/triangle-black.png">Downdraft Discomfort</h2>
+          <p>Cold convective air currents, formed by warm room air hitting the cold window surface, create discomfort at the occupant’s feet and ankles. The strength of these currents depends on the height of the window pane, as well as the interior temperature of the glass.</p>
+          <h3>To minimize downdraft discomfort, try:</h3>
+          <ul>
+            <li>decreasing the window height</li>
+            <li>decreasing the window U-Value</li>
+            <li>using a glazing assembly without a room-side low-e coating</li>
+          </ul>
+        </div>
+        <div style="clear:both;"></div>
+      </div>
+
+      <div class="keepTogether">
+        <img class="diagram" src="/images_research_projects/GlazingSelectionTool/discomfort-radiant.png">
+        <div class="descripText">
+          <h2><img class="discomfortIcon" src="/images_research_projects/GlazingSelectionTool/circle-black.png">Radiant Discomfort</h2>
+          <p>Cold interior glass surfaces affect the mean radiant temperature of occupants, and in turn make them feel cold. This discomfort depends on how much the occupant “sees” of the glass, how cold the interior glass surface is and the emissivity of the glass. If the glass has a room-side low-e coating the radiant discomfort will be greatly reduced.</p>
+          <h3>To minimize radiant discomfort, try:</h3>
+          <ul>
+            <li>decreasing the total amount of glazing</li>
+            <li>decreasing the window U-Value</li>
+            <li>increasing the sill height</li>
+            <li>using a glazing assembly with a room-side low-e coating</li>
+          </ul>
+        </div>
+        <div style="clear:both;"></div>
+      </div>
+      </div>
+    </div>
