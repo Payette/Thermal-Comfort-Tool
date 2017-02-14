@@ -1,0 +1,1267 @@
+p.survey {
+  margin.bottom: 5px !important;
+}
+
+.pageIntro hr, .pageIntro p{
+  margin-bottom: 2px;
+ }
+
+
+.pageIntro h1 {
+  margin-bottom: 5px;
+}
+ 
+#graphViewToggle {
+  padding-top: 3px;
+  width: 90px;
+  display: block;
+  float: right;
+  margin-left: 15px;
+  padding-left: 15px;
+  border-left: solid;
+  border-width: thin;
+  border-color: grey;
+}
+
+/* The switch - the box around the slider */
+.switch {
+ position: relative;
+ display: inline-block;
+ width: 20px;
+ height: 35px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+
+/* The slider */
+.slider {
+ position: absolute;
+ cursor: pointer;
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 0;
+ background-color: #ccc;
+ -webkit-transition: .4s;
+ transition: .4s;
+}
+
+.slider:before {
+ position: absolute;
+ content: "";
+ height: 16px;
+ width: 16px;
+ left: 2px;
+ bottom: 15px;
+ background-color: white;
+ -webkit-transition: .4s;
+ transition: .4s;
+}
+
+input:checked + .slider:before {
+ -webkit-transform: translateY(6px);
+ -ms-transform: translateY(11px);
+ transform: translateY(11px);
+}
+
+/* Rounded sliders */
+.slider.round {
+ border-radius: 20px;
+}
+
+.slider.round:before {
+ border-radius: 50%;
+}
+
+#graphViewToggle p {
+    font-family: "museo-sans", sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    padding: 4px 0 0px 26px;
+    margin: 0;
+    float: left;
+}
+
+#graphViewToggle .marked {
+    color: grey;
+}
+
+#graphViewToggle .unmarked {
+    color: #b9b9b9;
+}
+
+.hiddenGraph {
+  display: none;
+}
+
+
+#graphWrapper, #graphWrapper2, #graphWrapper3 {
+  height: auto;
+  position: relative;
+  background-color: rgb(230,230,230);
+  overflow: hidden;
+}
+
+#graphWrapper2 {
+  margin-top: 10px;
+}
+
+#graphWrapper3 {
+  padding-bottom: 10px;
+}
+
+#graphWrapper ul, #graphWrapper2 ul, #graphWrapper3 ul {
+  list-style: none;
+  float: right;
+  margin: 10px 35px 0px -40px;
+  font-family: "museo-sans", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+#graphWrapper ul li, #graphWrapper2 ul li, #graphWrapper3 ul li {
+  display: inline;
+  color: #777777;
+  margin: 0 0 0 15px;
+}
+
+#graphWrapper ul li img, #graphWrapper2 ul li img, #graphWrapper3 ul li img {
+  display: inline;
+  width: 9px;
+  height: 9px;
+  margin: 0 5px 0 0;
+
+}
+
+#key {
+  float: right;
+  background-color: rgb(230,230,230)
+}
+
+
+#graph .creditText {
+  font-family: "museo-sans", sans-serif;
+  font-size: 9px;
+  font-style: italic;
+  display: none;
+}
+
+
+
+#graph .axislabel, #graph .axis text {
+  font-family: "museo-sans", sans-serif;
+  font-size: 12px;
+}
+
+#graph .axislabel {
+  font-weight: 300;
+}
+
+#graph .yaxislabel {
+  font-weight: 700;
+  font-family: "museo-sans", sans-serif;
+  font-size: 12px;
+  fill: #777777;
+}
+
+#graph .axis path,
+#graph .axis line {
+    fill: none;
+}
+
+
+.occupantLine, .occupantLine2, .occupantLine3 {
+  stroke: #000;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 0 6;
+}
+
+#graph .grid line { /* horizontal reference lines */
+  stroke-width: 1;
+  stroke: #000;
+  stroke-linecap: round;
+  stroke-dasharray: 0 4;
+}
+
+#graph .grid path {
+  stroke-width: 0;
+}
+
+#graph #graphXAxis line {
+  stroke-width: .5;
+  stroke: rgb(90,90,90);
+}
+
+#graph #graphYAxis line {
+  stroke-width: 0;
+}
+
+
+#tooltip, #tooltip2, #tooltip3, #thresholdTooltip, #thresholdTooltip2, #thresholdTooltip3 {
+  position: absolute;
+  width: 280px;
+  /*padding: 5px;*/
+  pointer-events: none;
+  /*background-color: rgba(240,240,240,.9);
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);*/
+}
+
+
+
+#tooltip.hidden, #tooltip2.hidden, #tooltip3.hidden, #thresholdTooltip.hidden, #thresholdTooltip2.hidden, #thresholdTooltip3.hidden {
+  display: none;
+}
+
+#tooltip h1, #tooltip2 h1, #tooltip3 h1, #thresholdTooltip h1, #thresholdTooltip2 h1,  #thresholdTooltip3 h1 {
+  font-family: "museo-sans", sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 0 0 3px 0;
+  margin: 0;
+  float: left;
+}
+
+#thresholdTooltip img.icon, #tooltip img.icon, #tooltip2 img.icon, #thresholdTooltip2 img.icon, #tooltip3 img.icon, #thresholdTooltip3 img.icon {
+  display: block;
+  float: left;
+  width: 12px;
+  height: 12px;
+  margin: 0px 3px 0 0;
+  padding: 0;
+}
+
+
+#facadeWrapper {
+  width: 100%
+  overflow: auto;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+#case1FacadeWrapper, #case2FacadeWrapper, #case3FacadeWrapper {
+  float: left;
+}
+
+
+.facadeHeading {
+  font-family: "museo-sans", sans-serif;
+  font-weight: 300;
+  font-size: 11px;
+  margin: 0;
+  display: inline-block;
+  float: left;
+}
+
+#graphViewToggle .heading {
+  font-family: "museo-sans", sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  padding: 0 0 2px 0;
+  margin: 0;
+  width: 190px;
+  }
+
+.greyText {
+  color: #b9b9b9;
+}
+
+.case1Text {
+  color: rgb(0,160,221);
+}
+
+.case2Text {
+  color: rgb(248,151,29);
+}
+
+.case3Text {
+  color: rgb(108,28,131);
+}
+
+
+
+
+.facadelabel {
+  font-family: "museo-sans", sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  fill: #000;
+}
+
+
+.dimline {
+  stroke-width: 1px;
+  stroke: #777;
+  stroke-linecap: butt;
+  shape-rendering: crispEdges;
+}
+
+
+
+
+rect.filled {
+  fill: rgb(190,190,190);
+  stroke: rgb(190,190,190);
+  stroke-width: 1px;
+  stroke-dasharray: 0;
+}
+
+rect.outlined {
+  fill: #fff;
+  stroke: rgb(190,190,190);
+  stroke-width: 1px;
+  stroke-dasharray: 4, 3;
+}
+
+rect.white {
+  fill: #fff;
+}
+
+rect.blue {
+  fill: #E1F0FF;
+}
+
+#occupancyWrapper {
+  margin: 0 0 5px 0;
+}
+
+
+#sliderWrapper, #sliderWrapper2, #sliderWrapper3 {
+  height: 15px;
+  float: left;
+  position: relative;
+  overflow: visible;
+}
+
+form#occupantSliders div.occSlider {
+  width: 193px;
+  height: 20px;
+  float: left;
+  padding: 0px;
+  display: inline-block;
+}
+
+#ppd, #distFromFacade, #ppd2 {
+  display: inline-block;
+  float: left;
+  margin: 0;
+  padding-top: 0;
+}
+
+#ppd p, #ppd2 p {
+  margin: 0;
+}
+
+.occSlider p {
+  float: right;
+  display: inline-block;
+  font-weight: 300;
+  font-size: 12px;
+  color: #777;
+  margin: 0;
+}
+
+output #occupantImage, output #occupantImage2, output #occupantImage3 {
+  position: relative;
+  width: 180px;
+    height: 250px;
+    display: inline-block;
+    bottom: 500px; /* imageHeight + facMargin.bottom*2*/
+  left: -15px; /* - imageWidth/2 */
+  opacity: .8;
+}
+
+
+input[type=range]#ppd, input[type=range]#ppd2, input[type=range]#distFromFacade {
+  -webkit-appearance: none;
+  -ms-appearance: none;
+  position: absolute;
+  width: 160px
+}
+
+input[type=range]#occupantDist, input[type=range]#occupantDist2, input[type=range]#occupantDist3 {
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  position: absolute;
+  width: 100%;
+}
+
+input[type=range]:focus {
+  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+input[type=range]#occupantDist::-ms-track, input[type=range]#occupantDist2::-ms-track, input[type=range]#occupantDist3::-ms-track, input[type=range]#ppd::-ms-track, input[type=range]#ppd2::-ms-track, input[type=range]#distFromFacade::-ms-track {
+  -ms-appearance: none;
+  height: 3px;
+  background-color: #d5d5d5;
+  margin-right: 0;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border:0;
+  color: transparent;
+  width: 100%;
+}
+
+input[type=range]#ppd::-ms-fill-lower, input[type=range]#ppd2::-ms-fill-lower {
+  background: rgb(147,229,0);
+}
+
+input[type=range]#distFromFacade::-ms-fill-lower, input[type=range]#occupantDist::-ms-fill-lower, input[type=range]#occupantDist2::-ms-fill-lower, input[type=range]#occupantDist3::-ms-fill-lower {
+  background: #d5d5d5;
+}
+
+#occupantDist::-moz-range-track, #occupantDist2::-moz-range-track, #occupantDist3::-moz-range-track, #ppd::-moz-range-track, #ppd2::-moz-range-track, #distFromFacade::-moz-range-track {
+  -moz-appearance: none;
+  height: 3px;
+  background-color: #d5d5d5;
+  margin-right: 3px;
+}
+
+input[type=range]#ppd::-moz-range-progress, input[type=range]#ppd2::-moz-range-progress{
+  background-color: rgb(147,229,0);
+}
+
+#occupantDist::-webkit-slider-runnable-track, #occupantDist2::-webkit-slider-runnable-track, #occupantDist3::-webkit-slider-runnable-track, #ppd::-webkit-slider-runnable-track, #ppd2::-webkit-slider-runnable-track, #distFromFacade::-webkit-slider-runnable-track {
+  -webkit-appearance: none;
+  height: 3px;
+  background-color: #d5d5d5;
+  margin-right: 3px;
+  margin-top: 7px;
+}
+
+#occupantDist::-ms-thumb, #occupantDist2::-ms-thumb, #occupantDist3::-ms-thumb, #ppd::-ms-thumb, #ppd2::-ms-thumb, #distFromFacade::-ms-thumb {
+    background-color: #FFF;
+    border: 3px solid rgb(150,150,150);
+    border-radius: 5px;
+    height: 5px;
+    width: 5px;
+}
+
+#occupantDist::-moz-range-thumb, #occupantDist2::-moz-range-thumb, #occupantDist3::-moz-range-thumb, #ppd::-moz-range-thumb, #ppd2::-moz-range-thumb, #distFromFacade::-moz-range-thumb {
+  -moz-appearance: none;
+    background-color: #FFF;
+    border: 3px solid rgb(150,150,150);
+    border-radius: 5px;
+    height: 5px;
+    width: 5px;
+}
+
+#occupantDist::-webkit-slider-thumb, #occupantDist2::-webkit-slider-thumb, #occupantDist3::-webkit-slider-thumb, #ppd::-webkit-slider-thumb, #ppd2::-webkit-slider-thumb, #distFromFacade::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  position: relative;
+  background-color: #FFF;
+  height: 11px;
+  width: 11px;
+  border: 3px solid rgb(150,150,150);
+  border-radius: 5px;
+  margin-top: -3px
+}
+
+
+
+#caseWrapper {
+  overflow: hidden;
+  width: 100%;
+  display: inline-block;
+  height: 16px;
+  padding-bottom: 0;
+}
+
+#caseSelection {
+  display: block;
+  float: right;
+  padding-bottom: 5px;
+}
+
+#caseSelection h2 {
+  display: inline-block;
+  text-align: left;
+  font-size: 10px;
+
+  padding: 0;
+  margin: 0 1px 0 8px;
+  vertical-align: top;
+
+  color: #000;
+
+  cursor: pointer;
+}
+
+
+#caseSelection h2 span {
+  display: block;
+  float: left;
+  width: 12px;
+  height: 12px;
+  margin: 0px 2px 0 0;
+  background-size: 11px 11px;
+}
+
+span#case1Button {
+  background: url(/images_research_projects/GlazingSelectionTool/expand-case1.png) 0 0 no-repeat;
+}
+
+span#case2Button {
+  background: url(/images_research_projects/GlazingSelectionTool/expand-case2.png) 0 0 no-repeat;
+}
+
+span#case3Button {
+  background: url(/images_research_projects/GlazingSelectionTool/expand-case3.png) 0 0 no-repeat;
+}
+
+
+
+#caseSelection h2.unselected, #caseSelection h3.unselected {
+  color: #b9b9b9;
+}
+
+
+span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unselected {
+  background: url(/images_research_projects/GlazingSelectionTool/expand-unselected.png) 0 0 no-repeat;
+  background-size: 11px 11px;
+}
+
+#inputs, #referenceLinks {
+  float: right;
+  width: 390px;
+  font-family: "museo-sans", sans-serif;
+  position: relative;
+  z-index: 0;
+}
+
+#referenceLinks {
+  padding-bottom: 20px;
+ }
+
+#inputs strong {
+  font-weight: 700;
+}
+
+#occupantSliders {
+  width: 550px;
+  font-family: "museo-sans", sans-serif;
+}
+
+
+#inputs h1, #occupantSliders h1 {
+  font-weight: 700px;
+  font-size: 23px;
+  line-height: 23px;
+  margin: 0;
+  padding-bottom: 5px;
+}
+
+#inputs p, #occupantSliders p, #referenceLinks p {
+  font-size: 12px;
+  line-height: 1.4em;
+  font-weight: 300;
+}
+
+#inputs p.subtext {
+  color: #777;
+}
+
+
+#inputs fieldset.inputgroup, #occupantSliders fieldset.inputgroup {
+  border: none;
+  padding: 0;
+  position: relative;
+  margin: 0 0 15px 0;
+}
+
+
+#inputs #legend, #occupantSliders #legend {
+  border: none;
+  padding: 0 0 10px 0;
+  margin-bottom: 20px;
+}
+
+#inputs legend, #occupantSliders legend, #referenceLinks legend {
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  padding: 0 0 1px 0;
+  margin: 0;
+  width: 190px;
+}
+
+#inputs legend.first {
+  float: left;
+}
+
+#inputs ul, #referenceLinks ul, #referenceLinks a {
+  font-family: "museo-sans", sans-serif;
+  color: #b9b9b9;
+  font-weight: 300;
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  text-decoration: none;
+}
+
+#referenceLinks li {
+  padding: 0 0 1px 0;
+}
+
+#inputs a {
+  color: grey;
+}
+
+#referenceLinks a:hover, #inputs a:hover {
+  color: #808080
+}
+
+#inputs hr, #occupantSliders hr {
+  padding: 0;
+  margin: 0 0 5px 0;
+  background: #000;
+  border: none;
+  color: #000;
+  height: 1px;
+  width: 100%;
+}
+
+
+#inputs div.inputWrapperLeft {
+  width: 55px;
+  height: 16px;
+  padding: 2px 0px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+div.inputWrapperLeft span {
+  float:left;
+}
+
+#inputs div.inputWrapperCenter {
+  width: 41px;
+  height: 16px;
+  padding: 2px 0px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+
+div.inputWrapperCenter span {
+  float:left;
+}
+
+#inputs div.inputWrapperRight {
+  width: 56px;
+  height: 16px;
+  padding: 2px 0px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+
+div.inputWrapperRight span {
+  float: right;
+}
+
+
+#inputs div.inputWrapperCenter hr, #inputs div.inputWrapperRight hr {
+  width: 20px;
+  margin: 7px auto;
+  height: 1px;
+  background-color: #b9b9b9;
+}
+
+#inputs div.inputWrapperRight hr {
+  margin: 7px 0 7px 25px;
+}
+
+
+
+
+#inputs input {
+  padding: 2px 3px 1px 1px;
+  margin: 0px 12px 0px 0px;
+  display: inline-block;
+  float: left;
+  width: 25px;
+  height: 13px;
+
+  background-color: rgb(245, 245, 245);
+
+  border: none;
+
+  font-family: "museo-sans", sans-serif;
+  font-weight: 300;
+  font-size: 10px;
+  text-align: right;
+  color: black;
+}
+
+#inputs input.inactive {
+  border-color: rgb(235, 235, 235);
+  border-style: solid;
+  border-width: 1px;
+  cursor: default;
+  background-color: #fff;
+  padding: 1px 2px 0px 0px;
+}
+
+
+
+#inputs input.inactive#calcuvalue, #inputs input.inactive#calcuvalue2, #inputs input.inactive#calcuvalue3, #inputs input.inactive#condRisk1, #inputs input.inactive#condRisk2, #inputs input.inactive#condRisk3 {
+  padding: 0px 11px 0px 2px;
+  font-style: normal;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: none;
+  color: #ADADAD;
+}
+
+#inputs input#calcuvalue3, #inputs input.inactive#condRisk3 {
+  margin: 0 0 0 16px;
+}
+
+#inputs input.inactive#calcuvalue.alert, #inputs input.inactive#calcuvalue2.alert, #inputs input.inactive#calcuvalue3.alert, #inputs input.inactive#condRisk1.alert, #inputs input.inactive#condRisk2.alert, #inputs input.inactive#condRisk3.alert {
+  color: #f72734;
+}
+
+
+
+
+
+br.glzBR {
+  clear: both;
+}
+
+#citySearch {
+  float: left;
+  width: 65px;
+  padding-bottom: 0px;
+}
+
+#inputs #designConditWrapper {
+  width: 160px;
+}
+
+
+#inputs label, #occupantSliders label {
+  margin: 0;
+  padding: 2px 3px 2px 0;
+  float: left;
+  clear: left;
+  text-align: left;
+  display: block;
+
+
+  font-weight: 300;
+  font-size: 12px;
+  height: 16px;
+}
+
+#inputs label {
+  color: #777;
+  width: 226px;
+}
+
+#inputs label.grey {
+  color: #ADADAD;
+}
+
+
+#inputs label.indent {
+  padding-left: 48px;
+  width: 164px;
+}
+
+
+#inputs label.inactive {
+  color: #ADADAD;
+  font-style: italic;
+  font-weight: 300;
+}
+
+
+
+
+#occupantSliders label {
+  color: #000;
+  width: 230px;
+}
+
+#occupantSliders label p {
+  font-size: 12px;
+  color: #777;
+  font-weight: 300;
+  margin: 3px 0 0 0;
+}
+
+
+
+
+/* custom checkbox styling */
+#inputs label input.customCheck {
+  width: 15px;
+}
+
+input[type=checkbox] {
+  visibility: hidden;
+}
+
+#inputs div.customCheckStyle {
+  width: 12px;
+  margin: 0px 5px 0px 20px;
+  position: relative;
+  padding: 0;
+}
+
+#inputs div.customCheckStyleCentered {
+  width: 12px;
+  margin: 0;
+  position: relative;
+  padding: 0;
+}
+
+#inputs div.customCheckStyleCentered.case3{
+  margin-left: 15px;
+}
+
+
+
+/* box for the checkbox */
+#inputs div.customCheckStyle label, #inputs div.customCheckStyleCentered label {
+  cursor: pointer;
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  padding: 1px;
+  top: 1px;
+  left: 0;
+  background: rgb(245, 245, 245);
+}
+
+
+#inputs div.customCheckStyle label.unselected, #inputs div.customCheckStyleCentered label.unselected {
+  border: 1px solid rgb(235, 235, 235);
+  width: 10px;
+  height: 10px;
+  background: #fff;
+}
+
+
+
+
+
+/* tick for inside checkbox */
+#inputs div.customCheckStyle label:after, #inputs div.customCheckStyleCentered label:after {
+  opacity: 1;
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 4px;
+  background: transparent;
+  top: 3px;
+  left: 3px;
+  border: 2px solid #777;
+  border-top: none;
+  border-right: none;
+
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+#inputs div.customCheckStyle label.unselected:after, #inputs div.customCheckStyleCentered label.unselected:after {
+  opacity: 0;
+}
+
+#inputs div.customCheckStyle label.unselected:hover::after, #inputs div.customCheckStyleCentered label.unselected:hover::after {
+  opacity: 0.5;
+  top: 2px;
+  left: 2px;
+}
+
+
+
+#inputs div#condensation {
+  width: 142px;
+  bottom: 40px;
+  left: 218px;
+}
+
+#inputs div#uvaluePop {
+  width: 142px;
+  bottom: 53px;
+  left: 218px;
+  z-index: 1000;
+}
+
+
+
+#inputs div.alert img.close {
+  position: absolute;
+  right: -7px;
+  top: -7px;
+  width: 20px;
+  height: 20px;
+}
+
+
+#inputs div.alert {
+  position: absolute;
+
+  background-color: #fff;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid #f72734;
+
+  display: none;
+}
+
+ #inputs div.alert p {
+  color: #f72734;
+  margin: 0;
+}
+
+
+
+#inputs div#URLpop a:visited, #inputs div#URLpop a:hover, #inputs div#URLpop a:active {
+  color: #777;
+}
+
+#sliderWrapper2, #sliderWrapper3, #occupantImage2, #occupantImage3 {
+  display: none;
+}
+
+
+
+
+#options {
+  overflow: auto;
+  width: 100%;
+  padding: 15px 0px 20px 0px;
+}
+
+div#units {
+  margin-right: 20px;
+  float: left;
+}
+
+div#share {
+  float: right;
+}
+
+#options h2 {
+  color: #000;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  padding: 0;
+  margin: 2px 5px 0 0;
+  display: inline-block;
+  float: left;
+}
+
+
+#options input[type=button].optionButton, #citySearch input[type=button].optionButton {
+  padding: 1px 2px;
+  height: 20px;
+  margin: 0 3px;
+  border-radius: 10px;
+  border: 1px solid #777;
+  cursor: pointer;
+  text-align: center;
+  display: inline-block;
+  float: left;
+}
+
+#Outdoorpop input[type=button] {
+  font-family: "museo-sans", sans-serif;
+  font-size: 12px;
+  padding: 1px 2px;
+  height: 22px;
+  width:125px;
+  margin: 0 3px;
+  border-radius: 10px;
+  border: 1px solid #777;
+  cursor: pointer;
+  text-align: center;
+}
+
+#options input[type=button].optionButton.unselected, #citySearch input[type=button].optionButton.unselected{
+  color: #777;
+  background-color: #fff;
+}
+
+#options input[type=button].optionButton.selected, #citySearch input[type=button].optionButton.selected {
+  color: #fff;
+  background-color: #777;
+}
+
+#options input[type=button].optionButton#PDF, #inputs input[type=button].optionButton#URL,  #inputs input[type=button].optionButton#CSV{
+  width: 60px;
+}
+
+#inputs input[type=button].optionButton#CitySearch{
+  width:50px;
+}
+
+#options input[type=button].optionButton:hover, #citySearch input[type=button].optionButton:hover, #Outdoorpop input[type=button].activeButton:hover{
+  color: #fff;
+  background-color: #777;
+}
+
+
+.expandOptions {
+  margin: 0;
+}
+
+span.expand {
+  padding: 0;
+  display: block;
+  float: left;
+  height: 12px;
+  width: 12px;
+  margin: 2px 5px 0px 0px;
+  background-image: url(/images/expand-small.png);
+  overflow: hidden;
+  position: relative;
+  top: -2px;
+}
+
+.hideContent, .explanContent, .refcontent {
+  display: none;
+}
+
+
+div#Outdoorpop textarea {
+  font-family: "museo-sans", sans-serif;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 300;
+  color: #000;
+  width: 100px;
+  height: 20px;
+  resize: none;
+}
+
+div#Outdoorpop .temperature{
+  width:100px;
+  left:152px;
+  position: relative;
+  padding-top: 25px;
+  padding-bottom: 5px;
+}
+
+div#Outdoorpop .temperatureEmpty{
+  width:100px;
+  left:152px;
+  position: relative;
+  padding-top: 25px;
+  padding-bottom: 5px;
+}
+
+div#Outdoorpop .temperatureEmpty legend{
+  color: grey;
+}
+
+div#Outdoorpop .temperatureEmpty textarea{
+  color: grey;
+}
+
+
+div#Outdoorpop .dropdown{
+  width:200px;
+  left: 105px;
+  position: relative;
+  padding-top: 5px;
+  padding-bottom: 15px;
+}
+
+div#Outdoorpop .dropdown legend, div#Outdoorpop .empty legend, div#Outdoorpop .temperatureEmpty legend, div#Outdoorpop .temperature legend{
+  padding-bottom: 3px;
+}
+
+
+div#Outdoorpop .desButton{
+  width:200px;
+  left: 105px;
+  position: relative;
+  padding-top: 5px;
+  padding-bottom: 15px;
+  text-align: center;
+}
+
+div#Outdoorpop .empty {
+  width:200px;
+  left: 105px;
+  position: relative;
+  padding-top: 5px;
+  padding-bottom: 15px;
+}
+
+div#Outdoorpop .empty legend{
+  color: grey;
+}
+
+div#Outdoorpop select{
+  width:200px;
+}
+
+div#URLpop textarea {
+  font-family: "museo-sans", sans-serif;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 300;
+  color: #000;
+  width: 410px;
+  height: 150px;
+}
+
+div#disclaimer {
+  padding: 10px;
+  background-color: #ffffff;
+}
+
+div#disclaimer p,  div#disclaimer h1, div#Outdoorpop p, div#Outdoorpop h1, div#Outdoorpop legend{
+  font-family: "museo-sans", sans-serif;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 300;
+}
+
+div#disclaimer p, div#Outdoorpop p{
+  font-size: 12px;
+  font-weight: 300;
+}
+
+div#disclaimer a {
+  color: grey;
+  border: none;
+}
+
+div#disclaimer h1, div#Outdoorpop h1{
+  font-size: 16px;
+  font-weight: 700;
+}
+
+
+
+#referenceLinks h1 {
+  margin: 0;
+  padding-bottom: 5px;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+
+  font-family: "museo-sans", sans-serif;
+}
+
+#explanation {
+  padding: 0;
+  margin: 30px 0 0 0;
+}
+
+.keepTogether {
+  margin: 0 0 30px 0;
+}
+
+#explanation hr {
+  padding: 0;
+  margin: 0 0 15px 0;
+  background: #000;
+  border: none;
+  color: #000;
+  height: 1px;
+  width: 100%;
+}
+
+#explanation h1 {
+  margin: 0;
+  padding-bottom: 5px;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+
+  font-family: "museo-sans", sans-serif;
+}
+
+#explanation h2 {
+  margin: 0 0 5px 0;
+  font-weight: 700;
+  font-size: 12px;
+
+  font-family: "museo-sans", sans-serif;
+}
+
+#explanation h3 {
+  font-family: "museo-sans", sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.5;
+  margin: 20px 0 0 0;
+}
+
+#explanation p {
+  font-family: "museo-sans", sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 0;
+   padding: 0;
+}
+
+
+#explanation img.diagram {
+  float: left;
+  width: 140px;
+  margin: 0 20px 0 0;
+}
+
+#explanation img.discomfortIcon {
+  float: left;
+  width: 9px;
+  height: 9px;
+  margin: 0px 5px 0 0;
+  padding: 2px 0;
+}
+
+#explanation div.descripText {
+  float: left;
+  width: 390px;
+}
+
+
+#explanation ul {
+  margin: 0;
+  padding: 0 0 0 10px;
+  font-family: "museo-sans", sans-serif;
+  font-size: 12px;
+}
+
+.refLine.draggable, .refLine2.draggable {
+  cursor: ns-resize;
+}
+
+.occupantLine.draggable, .occupantLine2.draggable, .occupantLine3.draggable {
+  cursor: ew-resize;
+}
+
+#description p {
+  margin-top: 5px;
+  margin-bottom: 8px;
+}
+
+/* -- show cases only when selected -- */
+div.case2, div.case3, #inputs input.case2, #inputs input.case3, hr.case2, hr.case3 {
+  display: none;
+}
+
+
+

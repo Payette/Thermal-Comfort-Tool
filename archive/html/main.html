@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <w:snippet name='html_head'  />
+  <w:content region='page-css' editable='false' />
+  <w:snippet name='javascript-comfort'  />
+  <w:snippet name='comfort-links'  />
+  
+</head>
+<body>
+  <div id="header" class="clearfix">
+    <w:snippet name="header" />
+  </div>
+  <div class="wrapper twoCol clearfix content">
+    
+    
+    <div class="left">
+      <w:snippet name='comfort-left-html'  />
+      
+    </div> <!-- end of div left -->
+    
+    
+    <div class="right">
+      <div class="pageIntro">
+    <w:content region='page-intro' />
+        <p class="survey">Provide feedback, report bugs or sign up for updates <a href="https://www.surveymonkey.com/r/83LF73D">here.</a><br>Read the <a href="/images_research_projects/GlazingSelectionTool/GlazingAndComfortAnalysisToolTermsAndConditions.pdf" target="_blank">Terms &amp; Conditions</a>.</p>
+       </div>
+    <!-- start of Payette custom content -->
+      <w:snippet name='comfort-right-html'  />
+      
+      <div class="referenceLinks">
+    <w:content region='reference-links' />
+        </div>
+    </div> <!-- end of right div -->
+  <div id="URLpop">
+    <textarea>the link</textarea>
+  </div>
+  
+    
+  </div>
+  <div class="wrapper">
+      <w:content region="content_footer" />
+    </div>
+  <div id="footer" class="clearfix">
+    <w:snippet name="footer" />
+  </div>
+    
+  <w:content region='page-js' editable='false' />
+
+  <!-- Assign any parameters from the URL -->
+  <script type="text/javascript" src="/comfort-urlparse.js"></script>
+  <!-- Compute Data -->
+  <script type="text/javascript" src="/comfort-script.js"></script>
+</body>
+</html>
