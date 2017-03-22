@@ -423,12 +423,13 @@ comf.calcFullMRTppd = function(winView, opaView, winFilmCoeff, airTemp, outdoorT
   var winTKelvin = windowTemp + 273.15
   var opaqueTKelvin = opaqueTemp + 273.15
   var indoorTKelvin = indoorSrfTemp + 273.15
+  var indoorView = 1-winView-opaView
 
   // Compute the mrt.
   if (intLowE != true){
-    var ptMRT = pow(winView*(pow(winTKelvin,4)) + opaView*(pow(opaqueTKelvin,4)) + (1-winView-opaView)*(pow(indoorTKelvin,4)), 0.25) - 273.15
+    var ptMRT = pow( opaView*(pow(opaqueTKelvin,4)) + indoorView*(pow(indoorTKelvin,4)) + winView*(pow(winTKelvin,4)), 0.25) - 273.15
   } else {
-    var ptMRT = pow(((winView*(pow(winTKelvin,4)*lowEmissivity) + (opaView*(pow(opaqueTKelvin,4))*0.9) + ((1-winView-opaView)*(pow(indoorTKelvin,4))*0.9))/(winView*lowEmissivity + (1-winView)*0.9)), 0.25) - 273.15
+    var ptMRT = pow( (opaView*pow(opaqueTKelvin,4)) + ((indoorView+((1-lowEmissivity)*winView))*pow(indoorTKelvin,4)) + (lowEmissivity*winView*pow(winTKelvin,4)), 0.25) - 273.15
   }
 
   //Compute the PMV at the point
