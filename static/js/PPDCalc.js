@@ -90,7 +90,7 @@ comf.calcPPDFromDowndraftOLD = function(windSpd, airTemp){
 // Function that computes PPD from downdraft given a certain downdraft velocity and PMV of the occupant.
 // It is based on studies where occupants had cold air blown on their bare ankles.
 // This function is taken from this paper:
-// Stefano Schiavon, Donghyun Rim, Wilmer Pasut, William W Nazaroff. “Sensation of draft at uncovered ankles for women exposed to displacement ventilation and underfloor air distribution systems.” Building and Environment, 96 (2016): 228–236.
+// Liu, Shichao; Schiavon, Stefano; Kabanshi, Alan; & Nazaroff, William W. (2016). Predicted Percentage Dissatisfied with Ankle Draft. Indoor Air. doi: 10.1111/ina.12364. UC Berkeley: Center for the Built Environment. Retrieved from: http://escholarship.org/uc/item/9076254n
 comf.calcPPDFromDowndraft = function(airSpd, pmv){
 	if (airSpd > 0.7) {
       return 9999
