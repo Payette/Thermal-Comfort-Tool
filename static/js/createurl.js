@@ -189,6 +189,9 @@ function createURL(fullURL) {
 			}
 		}
 
+		// Alwatys write the units.
+		paramURL = paramURL + "&uits=" + valDictionary["units"]
+
 		// Write in values for the cases that do not meet the defaults.
 		if (units == "IP") {
 			for (var key in case1Dict) {
