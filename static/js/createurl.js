@@ -190,7 +190,7 @@ function createURL(fullURL) {
 		}
 
 		// Alwatys write the units.
-		paramURL = paramURL + "&uits=" + valDictionary["units"]
+		paramURL = paramURL + "&units=" + valDictionary["units"]
 
 		// Write in values for the cases that do not meet the defaults.
 		if (units == "IP") {
