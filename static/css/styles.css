@@ -23,7 +23,7 @@ body {
 	float: left;
 	width: 550px;
 	padding: 0;
-	margin: 0 20px 0 0;
+	margin: 0 10px 0 0;
 }
 
 #graphViewToggle {
@@ -548,7 +548,7 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 
 
 #inputs, #referenceLinks {
-	float: right;
+	float: left;
 	width: 390px;
 	font-family: "museo-sans", sans-serif;
 	position: relative;
@@ -966,7 +966,7 @@ input[type=checkbox] {
 }
 
 div#units {
-	margin-right: 0px;
+	margin-right: 20px;
 	float: left;
 }
 
