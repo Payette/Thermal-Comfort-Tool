@@ -159,10 +159,8 @@ geo.createGlazingForRect = function(rectHeight, wallLength, glazingRatio, window
 		} else {
 			var numDivisions = 1;
 		}
-
 		//Find the window geometry in the case that the target width is below that of the maximum width acceptable area for breaking up the window into smaller windows.
 		if (windowWidth < maxWidthBreakUp && numDivisions*windowWidth <= wallLength && numDivisions != 1) {
-
 			if (numDivisions == 1) {
 				var divDist = wallLength/2
 			} else if (((numDivisions*windowWidth)+ (numDivisions-1)*(distBreakup-windowWidth)) > wallLength){
@@ -172,15 +170,21 @@ geo.createGlazingForRect = function(rectHeight, wallLength, glazingRatio, window
 				var divDist = distBreakup
 			}
 
-			var btmDivPts = [[(wallLength/2),0,silHeightFinal]]
+			function isOdd(num) { return num % 2;}
+			if (isOdd(numDivisions) == 0){
+				startPtX = (numDivisions / 2) * divDist
+			} else {
+				startPtX = (Math.floor(numDivisions / 2) + 0.5) * divDist
+			}
 
+			var btmDivPts = [[startPtX,0,silHeightFinal]]
 			var remainder = wallLength - (divDist*numDivisions)
-
 			var totalDist = remainder/2
 
 			while (totalDist < wallLength) {
 				totalDist += divDist
-				btmDivPts.push([((wallLength/2)-totalDist),0,silHeightFinal])
+				nextPt = (wallLength / 2) - totalDist
+				btmDivPts.push([nextPt,0,silHeightFinal])
 			}
 
 			//Organize the points to form lines to be used to generate the windows
@@ -231,7 +235,6 @@ geo.createGlazingForRect = function(rectHeight, wallLength, glazingRatio, window
 			}
 		} else {
 			//Find the window geometry in the case that the target width is above the maximum width acceptable area for breaking up the window into smaller windows.
-
 			if (windowWidth > wallLength){
 				windowWidth = wallLength
 			}
