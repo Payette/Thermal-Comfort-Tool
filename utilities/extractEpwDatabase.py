@@ -9,11 +9,11 @@ Returns:
     All of the epw files extracted into a folder called "extracted."
 """
 
-directory  = "E:\epwDatabase\\"
+directory  = "d:\ladybug\\epwDatabase\\"
 compressDir = directory + "compressed\\"
 extractDir = directory + "extracted\\"
 if not os.path.isdir(extractDir):
-    os.path.makedir(extractDir)
+    os.mkdir(extractDir)
 
 def unzip(source_filename, dest_dir):
     with zipfile.ZipFile(source_filename) as zf:
@@ -35,5 +35,5 @@ for folder in os.listdir(compressDir):
     for compFile in os.listdir(totalDir):
         theZipFile = totalDir + compFile
         destination = totalDestinationDir + compFile.split(".zip")[0]
-        #unzip(theZipFile, destination)
+        unzip(theZipFile, destination)
         print "Extracted to " + destination
